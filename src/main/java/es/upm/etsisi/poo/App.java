@@ -31,7 +31,25 @@ public class App {
         } else {
                 switch (comando[0]) {
                     case "prod":
-                        if (comando)
+                        if (comando[1].equals("add")) {
+                            hacerAdd();
+                        } else if (comando[1].equals("list")) {
+                            hacerList();
+                        } else if (comando[1].equals("update")) {
+                            hacerUpdate();
+                        } else if (comando[1].equals("remove")) {
+                            hacerRemove();
+                        }
+                    case "ticket":
+                        if (comando[1].equals("new")) {
+
+                        } else if (comando[1].equals("list")) {
+
+                        } else if (comando[1].equals("remove")) {
+
+                        } else if (comando[1].equals("print")) {
+
+                        }
                 }
         }
         return continuar;
