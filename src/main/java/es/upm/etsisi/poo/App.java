@@ -28,12 +28,14 @@ public class App {
             } else {
                 System.out.println("Comando invalido");
             }
-        } else {
+        }
+        else {
                 switch (comando[0]) {
                     case "prod":
                         if (comando[1].equals("add")) {
                             hacerAdd();
-                        } else if (comando[1].equals("list")) {
+                        }
+                        else if (comando[1].equals("list")) {
                             hacerList();
                         } else if (comando[1].equals("update")) {
                             hacerUpdate();
@@ -71,5 +73,23 @@ public class App {
                 exit""");
     }
 
-    public
+    // añade un nuevo producto con un id nuevo al ticket.
+    public static void hacerAdd (){
+
+    }
+
+    // Muestra la lista de productos.
+    public static void hacerList (){
+
+    }
+
+    //
+    public static void hacerUpdate (){
+
+    }
+
+    //Elimina uno de los productos del ticket
+    public static void hacerRemove (){
+
+    }
 }
