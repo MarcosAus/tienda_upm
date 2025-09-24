@@ -29,21 +29,24 @@ public class App {
                 System.out.println("Comando invalido");
             }
         }
-        else {
-                switch (comando[0]) {
-                    case "prod":
-                        if (comando[1].equals("add")) {
+        else{
+            switch (comando[0]) {
+                case "prod":
+                    if (comando[1].equals("add")) {
                             hacerAdd();
-                        }
-                        else if (comando[1].equals("list")) {
+                    }
+                    else if (comando[1].equals("list")) {
                             hacerList();
-                        } else if (comando[1].equals("update")) {
+                    }
+                    else if (comando[1].equals("update")) {
                             hacerUpdate();
-                        } else if (comando[1].equals("remove")) {
+                    }
+                    else if (comando[1].equals("remove")) {
                             hacerRemove();
-                        }
-                    case "ticket":
-                        if (comando[1].equals("new")) {
+                    }
+                    break;
+                case "ticket":
+                    if (comando[1].equals("new")) {
 
                         } else if (comando[1].equals("list")) {
 
