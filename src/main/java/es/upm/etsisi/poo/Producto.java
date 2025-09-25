@@ -1,6 +1,15 @@
 package es.upm.etsisi.poo;
 
 public class Producto {
+    public enum categorias {MERCH, PAPELERIA, ROPA, LIBRO,
+        ELECTRONICA;
+
+
+        public String categoriasToString(){
+
+            return "";
+        }
+    }
     private int ID;
     private int numero;
     private String nombre;

@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class App {
     private Producto[] productList;
-    private Ticket[] ticketList;
+    private Ticket ticket;
 
     public static void main(String[] args) {
         System.out.println("Welcome to the ticket module App.\nTicket module. Type 'help' to see commands.");
@@ -47,14 +47,15 @@ public class App {
                     break;
                 case "ticket":
                     if (comando[1].equals("new")) {
-
-                        } else if (comando[1].equals("list")) {
-
-                        } else if (comando[1].equals("remove")) {
-
-                        } else if (comando[1].equals("print")) {
-
-                        }
+                    }
+                    else if (comando[1].equals("list")) {
+                    }
+                    else if (comando[1].equals("remove")) {
+                    }
+                    else if (comando[1].equals("print")) {
+                    }
+                default:
+                    System.out.println("Comando invalido");
                 }
         }
         return continuar;
