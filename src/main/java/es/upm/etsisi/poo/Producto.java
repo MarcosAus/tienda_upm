@@ -1,7 +1,7 @@
 package es.upm.etsisi.poo;
 
 public class Producto {
-    public enum categorias {MERCH, PAPELERIA, ROPA, LIBRO,
+    public enum Categoria {MERCH, PAPELERIA, ROPA, LIBRO,
         ELECTRONICA;
 
 
@@ -11,25 +11,15 @@ public class Producto {
         }
     }
     private int ID;
-    private int numero;
     private String nombre;
-    private String categoria;
+    private Categoria categoria;
     private double precio;
 
-    public Producto(int numero, int ID, String nombre, String categoria, double precio) {
-        this.numero = numero;
+    public Producto(int ID, String nombre, Categoria categoria, double precio) {
         this.ID = ID;
         this.nombre = nombre;
         this.categoria = categoria;
         this.precio = precio;
-    }
-
-    public int getNumero() {
-        return numero;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
     }
 
     public double getPrecio() {
@@ -40,11 +30,11 @@ public class Producto {
         this.precio = precio;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 
