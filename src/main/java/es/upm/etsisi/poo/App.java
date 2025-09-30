@@ -1,5 +1,7 @@
 package es.upm.etsisi.poo;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -28,49 +30,62 @@ public class App {
     }
 
     public static boolean ejecutarComando(String[] comando, boolean continuar) {
+        int id;
         if (comando.length < 2) {
-            if (comando[0].equals("help")) {
+            if (comando[0].equalsIgnoreCase("help")) {
                 mostrarComandos();
-            } else if (comando[0].equals("exit")) {
+            } else if (comando[0].equalsIgnoreCase("exit")) {
                 continuar = false;
             } else {
                 System.out.println("Command not valid");
             }
         }
-        else{
+        else {
             switch (comando[0]) {
                 case "prod":
                     switch (comando[1]) {
                         case "add":
                             if (comando.length == 6) {
-                                int id  = Integer.parseInt(comando[2]);
+                                id  = Integer.parseInt(comando[2]);
                                 String nombre = comando[3];
-                                Producto.Categoria categoria = Producto.Categoria.valueOf(comando[4]);
+                                Producto.Categoria categoria = Producto.Categoria.valueOf(comando[4].toUpperCase());
                                 double precio = Double.parseDouble(comando[5]);
                                 hacerAdd(id,nombre,categoria,precio);
+                            } else {
+                                System.out.println("Comando incorrecto");
                             }
                         break;
                         case "list":
-                            hacerList();
+                            hacerList(productList);
 
                         break;
-                        case"update":
-                            hacerUpdate();
+                        case "update":
+                            id = Integer.parseInt(comando[2]);
+                            String campo = comando[3];
+                            hacerUpdate(id, campo);
                         break;
                         case "remove": {
-                            hacerRemove();
+                            id = Integer.parseInt(comando[2]);
+                            hacerRemove(productList, id);
                         }
                     }
                     break;
                 case "ticket":
-                    if (comando[1].equals("new")) {
+                    if (comando[1].equalsIgnoreCase("new")) {
+
                     }
-                    else if (comando[1].equals("list")) {
+                    else if (comando[1].equalsIgnoreCase("list")) {
+
                     }
-                    else if (comando[1].equals("remove")) {
+                    else if (comando[1].equalsIgnoreCase("remove")) {
+
                     }
-                    else if (comando[1].equals("print")) {
+                    else if (comando[1].equalsIgnoreCase("print")) {
+
                     }
+                    break;
+                case "echo":
+                    System.out.println("echo " + comando[1]);
                     break;
                 default:
                         System.out.println("Command not valid");
@@ -115,17 +130,37 @@ public class App {
     }
 
     // Muestra la lista de productos.
-    public static void hacerList (){
+    public static void hacerList (Producto[] listaProductos){
+        System.out.println("Catalog:");
+        int i = 0;
+        while(listaProductos[i] != null && i < (listaProductos.length - 1)){
+            System.out.println(listaProductos[i].productoToString());
+            i++;
+        }
 
     }
 
     //
-    public static void hacerUpdate (){
+    public static void hacerUpdate (int id, String campoValor) {
+        for (int i = 0; i < listSize-1; i++) {
+            if (productList[i].getID() == id) {
 
+            }
+        }
     }
 
     //Elimina uno de los productos del ticket
-    public static void hacerRemove (){
+    public static void hacerRemove (Producto[] arrayProductos, int id){
+        List<Producto> listaProductos = new ArrayList<>();
+        Producto producto = null;
+        for (int i = 0; i < listSize - 1; i++) {
+            listaProductos.add(arrayProductos[i]);
+            if (arrayProductos[i].getID() == id ){
+                producto = arrayProductos[i];
+            }
+        }
+        listaProductos.remove(producto);
+        //POR TERMINAR
 
     }
 }

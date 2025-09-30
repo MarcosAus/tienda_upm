@@ -5,7 +5,7 @@ public class Producto {
         ELECTRONICA;
 
 
-        public String categoriasToString(){
+        public String categoriasToString() {
 
             return "";
         }
@@ -52,6 +52,10 @@ public class Producto {
 
     public void setID(int ID) {
         this.ID = ID;
+    }
+
+    public String productoToString() {
+        return "{class:" + getClass() + ",id:" + getID() + ",name:" + getNombre() +",category:" + getCategoria() + ",price:" + getPrecio() + "}";
     }
 
 }
