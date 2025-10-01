@@ -1,13 +1,23 @@
 package es.upm.etsisi.poo;
 
 public class Producto {
-    public enum Categoria {MERCH, PAPELERIA, ROPA, LIBRO,
-        ELECTRONICA;
+    public enum Categoria {MERCH, STATIONERY, CLOTHES, BOOK, ELECTRONICS;
 
-
-        public String categoriasToString() {
-
-            return "";
+        public static Categoria getCategoria(String categoria) {
+            switch (categoria) {
+                case "MERCH":
+                     return Categoria.MERCH;
+                case "STATIONERY":
+                    return Categoria.STATIONERY;
+                case "CLOTHES":
+                    return Categoria.CLOTHES;
+                case "BOOK":
+                    return Categoria.BOOK;
+                case "ELECTRONICS":
+                    return Categoria.ELECTRONICS;
+                default:
+                    return null;
+            }
         }
     }
     private int ID;
@@ -30,8 +40,8 @@ public class Producto {
         this.precio = precio;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public String getCategoria() {
+        return categoria.toString();
     }
 
     public void setCategoria(Categoria categoria) {
@@ -55,8 +65,9 @@ public class Producto {
     }
 
     public String productoToString() {
-        return "{class:" + getClass() + ",id:" + getID() + ",name:" + getNombre() +",category:" + getCategoria() + ",price:" + getPrecio() + "}";
+        return "{class:Product, id:" + getID() + ", name:" + getNombre() +", category:" + getCategoria() + ", price:" + getPrecio() + "}";
     }
+
 
 }
 
