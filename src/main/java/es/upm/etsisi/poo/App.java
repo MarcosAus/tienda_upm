@@ -15,7 +15,7 @@ public class App {
         boolean continuar = true;
         do {
             System.out.print("tUPM> ");
-            Scanner sc = new Scanner(System.in); // Scanner sc = new Scanner(New File((args))   
+            Scanner sc = new Scanner(System.in); // Scanner sc = new Scanner(New File((args))
             String entrada = sc.nextLine();
             // Aunque pueda dar miedo, este split separa por espacios
             // ignorando los espacios que haya dentro de las comillas
