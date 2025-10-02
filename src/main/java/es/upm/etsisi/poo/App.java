@@ -9,9 +9,9 @@ public class App {
     private static int MAX_LIST = 200;
     private static Ticket ticket;
     private static int MAX_IN_TICKET = 100;
-    private static boolean ticketCreado = false;
 
     public static void main(String[] args) {
+        ticket = new Ticket();
         System.out.println("Welcome to the ticket module App.\nTicket module. Type 'help' to see commands.");
         boolean continuar = true;
         do {
@@ -87,17 +87,19 @@ public class App {
                 case "ticket":
                     if (comando[1].equalsIgnoreCase("new")) {
                         ticket = new Ticket();
+                        System.out.println("ticket new: ok");
                     } else if (comando[1].equalsIgnoreCase("add")) {
-                        if (comando.length == 4 && productList.size() < MAX_LIST && ticketCreado) {
+                        if (comando.length == 4 && productList.size() < MAX_LIST) {
                             // Añade el producto al ticket
+                            id = Integer.parseInt(comando[2]);
+                            ticket.addProducto(busquedaProductoPorID(id),Integer.parseInt(comando[3]));
+                            System.out.println("ticket add: ok");
                         } else {
-                            // Son tres IFs a continuacion porque puede darse que las tres condiciones se cumplan
+                            // Son dos IFs a continuacion porque puede darse que las dos condiciones se cumplan
                             System.out.println("Cannot add Products to a Ticket because: ");
                             if (comando.length != 4) System.out.println("Command format is wrong");
                             if (productList.size() == MAX_LIST) System.out.println("Ticket is full, " +
                                     "cannot add any more Products");
-                            if (!ticketCreado) System.out.println("No Tickets have been created yet. " +
-                                    "Create a Ticket with 'ticket new' and try again");
                         }
 
                     } else if (comando[1].equalsIgnoreCase("remove")) {
@@ -174,6 +176,7 @@ public class App {
             Producto producto = iterator.next();
             System.out.println("    " + producto.productoToString());
         }
+        System.out.println("prod list: ok");
     }
 
     //Actualiza los campos del producto seleccionado
@@ -191,6 +194,7 @@ public class App {
                         producto.setPrecio(Double.parseDouble(valor));
                         break;
                 }
+                System.out.println(producto.productoToString() +"\nprod update: ok");
             }
         }
     }
@@ -204,7 +208,21 @@ public class App {
             if (producto.getID() == id) {
                 arrayProductos.remove(producto);
                 encontrado = true;
+                System.out.println(producto.productoToString() +"\nprod remove: ok");
             }
         }
+    }
+
+    public static Producto busquedaProductoPorID(int id) {
+        Producto producto = null;
+        Iterator<Producto> iterator = productList.iterator();
+        boolean encontrado = false;
+        while (iterator.hasNext() && !encontrado) {
+            producto = iterator.next();
+            if (producto.getID() == id) {
+                encontrado = true;
+            }
+        }
+        return producto;
     }
 }
