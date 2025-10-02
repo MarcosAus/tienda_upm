@@ -7,8 +7,9 @@ import java.util.Scanner;
 public class App {
     private static ArrayList<Producto> productList = new ArrayList<>();
     private static int MAX_LIST = 200;
-    private static ArrayList<Producto> ticketProductos = new ArrayList<>();
+    private static Ticket ticket;
     private static int MAX_IN_TICKET = 100;
+    private static boolean ticketCreado = false;
 
     public static void main(String[] args) {
         System.out.println("Welcome to the ticket module App.\nTicket module. Type 'help' to see commands.");
@@ -51,10 +52,14 @@ public class App {
                                         double precio = Double.parseDouble(comando[5]);
                                         hacerAddProd(id, nombre, categoria, precio);
                                     } else System.out.println("Category is wrong");
-                                } else if (comando.length != 6) {
-                                    System.out.println("Command format wrong");
                                 } else {
-                                    System.out.println("List of Products is full, cannot add any more Products");
+                                    // Son dos IFs a continuacion porque puede darse que ambas condiciones se cumplan
+                                    if (comando.length != 6) {
+                                        System.out.println("Command format is wrong");
+                                    }
+                                    if (productList.size() == MAX_LIST) {
+                                        System.out.println("List of Products is full, cannot add any more Products");
+                                    }
                                 }
                             } catch (NumberFormatException e) {
                                 System.out.println("ID or Price is not a number");
@@ -78,8 +83,19 @@ public class App {
                     break;
                 case "ticket":
                     if (comando[1].equalsIgnoreCase("new")) {
-
-                    } else if (comando[1].equalsIgnoreCase("list")) {
+                        ticket = new Ticket();
+                    } else if (comando[1].equalsIgnoreCase("add")) {
+                        if (comando.length == 4 && productList.size() < MAX_LIST && ticketCreado) {
+                            // Añade el producto al ticket
+                        } else {
+                            // Son tres IFs a continuacion porque puede darse que las tres condiciones se cumplan
+                            System.out.println("Cannot add Products to a Ticket because: ");
+                            if (comando.length != 4) System.out.println("Command format is wrong");
+                            if (productList.size() == MAX_LIST) System.out.println("Ticket is full, " +
+                                    "cannot add any more Products");
+                            if (!ticketCreado) System.out.println("No Tickets have been created yet. " +
+                                    "Create a Ticket with 'ticket new' and try again");
+                        }
 
                     } else if (comando[1].equalsIgnoreCase("remove")) {
 
