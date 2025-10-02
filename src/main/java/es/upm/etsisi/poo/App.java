@@ -26,9 +26,11 @@ public class App {
 
     }
 
+    //Se verifica que comando es y se ejecuta
     public static boolean ejecutarComando(String[] comando, boolean continuar) {
         int id;
         if (comando.length < 2) {
+            //Se comprueba primero si el comando es el help, exit o no es válido en ese orden.
             if (comando[0].equalsIgnoreCase("help")) {
                 mostrarComandos();
             } else if (comando[0].equalsIgnoreCase("exit")) {
@@ -37,7 +39,7 @@ public class App {
                 System.out.println("Command not valid");
             }
         } else {
-            // Comprueba si el comando es prod o list
+            // Se comprueba si el comando empieza por prod o list. De ser así se selecciona el comando y se ejecuta.
             switch (comando[0]) {
                 case "prod":
                     // Comprueba las opciones de prod
@@ -81,6 +83,7 @@ public class App {
                         }
                     }
                     break;
+                //Se comprueban los comandos tipo ticket
                 case "ticket":
                     if (comando[1].equalsIgnoreCase("new")) {
                         ticket = new Ticket();
@@ -134,7 +137,7 @@ public class App {
 
 
     /**
-     * @param id        Numero Identificador del producto a añadir
+     * @param id        Número Identificador del producto a añadir
      * @param nombre    String nombre del producto a añadir
      * @param categoria Atributo de enum Categoria de Producto
      * @param precio    Precio unitario del producto
