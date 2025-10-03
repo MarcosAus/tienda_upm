@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
+/** COSAS QUE FALTAN POR HACER (MARCAR CON UNA X LAS QUE SE VAYAN COMPLETANDO):
+ * METODOS PRINT Y REMOVE DE LA CLASE TICKET
+ * SACAR LOS SWITCH DE PROD Y TICKET DEL MEGASWITCH DE EJECUTARCOMANDO
+ * AÑADIR JAVADOC DE LAS FUNCIONES DEL RESTO DE CLASES, SOLO ESTAN COMENTADAS POR ENCIMA
+ * METODO PARA LEER Y OTRO PARA ESCRIBIR FICHEROS, SERIA UTIL A LA HORA DE PROBAR
+ * COMPRAR PAN, LECHE Y HUEVOS
+ */
+
 public class App {
     private static ArrayList<Producto> productList = new ArrayList<>();
     private static int MAX_LIST = 200;
@@ -19,19 +27,25 @@ public class App {
             System.out.print("tUPM> ");
             String entrada = sc.nextLine();
             // Aunque pueda dar miedo, este split separa por espacios
-            // ignorando los espacios que haya dentro de las comillas
+            // ignorando los espacios que haya dentro de las comillas dobles
             String[] comando = entrada.split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
             continuar = ejecutarComando(comando, continuar);
         } while (continuar);
 
     }
 
-    //Se verifica que comando es y se ejecuta
+
+    /**
+     * @param comando Array de Strings obtenido tras separar por espacios la linea del input
+     * @param continuar Variable booleana que determina si el programa debe seguir ejecutandose
+     * @return El valor true/false de la variable continuar
+     * Metodo que se llama a lo largo del programa para leer la linea de comandos y ejecutar el resto de metodos
+     * del programa, devuelve un boolean para decirle al bucle while del main si debe seguir ejecutandose
+     */
     public static boolean ejecutarComando(String[] comando, boolean continuar) {
         int id;
-        // El comando solo tiene una palabra que DEBE ser help o exit
+        // El comando solo tiene una palabra que DEBE ser help o exit, en caso contrario esta mal
         if (comando.length < 2) {
-            //Se comprueba primero si el comando es el help, exit o no es válido en ese orden
             if (comando[0].equalsIgnoreCase("help")) {
                 mostrarComandos();
             }
@@ -43,11 +57,10 @@ public class App {
             }
         }
 
-        // El comando tiene 2 o mas palabras asi que puede ser prod, ticket o echo
+        // El comando tiene 2 o mas palabras por lo que tiene que ser prod, ticket o echo
         else {
-            // Se comprueba si el comando empieza por prod o list. De ser así se selecciona el comando y se ejecuta
             switch (comando[0]) {
-                // El usuario quiere acceder a los comandos de productos
+                // Comandos tipo prod
                 case "prod":
                     switch (comando[1]) {
                         // El usuario quiere añadir un producto
@@ -80,12 +93,10 @@ public class App {
                             }
                             break;
 
-                        // El usuario quiere ver la lista de productos de la TIENDA (ojo, no del ticket eh)
                         case "list":
                             hacerList(productList);
                             break;
 
-                        // El usuario quiere actualizar un producto, se hace un try-catch por si pone mal el ID
                         case "update":
                             try {
                                 id = Integer.parseInt(comando[2]);
@@ -97,7 +108,6 @@ public class App {
                             }
                             break;
 
-                        // El usuario quiere quitar un producto de la lista de productos de la TIENDA
                         case "remove":
                             try {
                                 id = Integer.parseInt(comando[2]);
@@ -107,23 +117,19 @@ public class App {
                             }
                             break;
 
-                        // El usuario ha puesto un comando prod que no reconocemos
                         default:
                             System.out.println("Unknown prod command");
                             break;
                     }
                     break;
-
-                // El usuario quiere acceder a los comandos de los tickets
+                // Comandos tipo ticket
                 case "ticket":
                     switch (comando[1]) {
-                        // El usuario quiere reiniciar el ticket
                         case "new":
                             ticket = new Ticket();
                             System.out.println("ticket new: ok");
                             break;
 
-                        // El usuario quiere añadir cosas al ticket existente
                         case "add":
                             try {
                                 if (comando.length == 4 && productList.size() < MAX_LIST) {
@@ -146,17 +152,14 @@ public class App {
                             }
                             break;
 
-                        // El usuario quiere quitar cosas del ticket
                         case "remove":
                             // TODO
                             break;
 
-                        // El usuario quiere imprimir el ticket con lo que lleve hasta el momento
                         case "print":
                             // TODO
                             break;
 
-                        // El usuario ha puesto un comando ticket que no conocemos
                         default:
                             System.out.println("Unknown ticket command");
                             break;
@@ -171,6 +174,10 @@ public class App {
         } return continuar;
     }
 
+    /**
+     * Metodo que imprime por pantalla todos los comandos disponibles y las categorias de los productos
+     * Tambien informa del descuento que se aplica si hay 2 o mas unidades de un producto de la misma cateoria
+     */
     public static void mostrarComandos() {
         System.out.println("""
                 Commands
@@ -196,7 +203,7 @@ public class App {
      * @param nombre    String nombre del producto a añadir
      * @param categoria Atributo de enum Categoria de Producto
      * @param precio    Precio unitario del producto
-     * Metodo que añade Productos a la tienda si no existen ya
+     * Metodo que añade Productos a la tienda si no existen ya en el catalogo
      */
     public static void hacerAddProd(int id, String nombre, Producto.Categoria categoria, double precio) {
         if (id >= 0) {
@@ -217,7 +224,10 @@ public class App {
         else System.out.println("ID cannot be negative");
     }
 
-    // Muestra la lista de productos.
+    /**
+     * @param listaProductos ArrayList de productos del catalogo de la tienda
+     * Metodo que imprime por pantalla todos los productos disponibles en la tienda
+     */
     public static void hacerList(ArrayList<Producto> listaProductos) {
         System.out.println("Catalog:");
         Iterator<Producto> iterator = listaProductos.iterator();
@@ -228,7 +238,12 @@ public class App {
         System.out.println("prod list: ok");
     }
 
-    //Actualiza los campos del producto seleccionado
+    /**
+     * @param id Entero que sirve como ID del producto que se quiere buscar
+     * @param campo Dato del producto que se quiere actualizar (nombre, categoria o precio)
+     * @param valor Nuevo valor que se quiere asignar al dato seleccionado en el parametro campo
+     * Metodo para buscar un producto en el catalogo de la tienda y cambiar uno de sus datos
+     */
     public static void hacerUpdate(int id, String campo, String valor) {
         Producto producto = busquedaProductoPorID(id);
 
@@ -258,7 +273,11 @@ public class App {
         else System.out.println("Product not found");
     }
 
-    //Elimina uno de los productos de la tienda
+    /**
+     * @param arrayProductos Array que contiene los productos en stock de la tienda
+     * @param id Entero que indica el ID del producto que se quiere añadir
+     * Metodo que busca (si existe) un producto en el catalogo y si lo encuentra lo borra
+     */
     public static void hacerRemoveProd(ArrayList<Producto> arrayProductos, int id) {
         Producto producto = busquedaProductoPorID(id);
         if (producto != null) {
@@ -267,6 +286,12 @@ public class App {
         }
     }
 
+    /**
+     * @param id Entero que indica el ID del producto que se quiere buscar en la tienda
+     * @return Objeto de clase Producto
+     * Metodo que busca un producto en concreto en la tienda con el ID y, si lo encuentra, lo devuelve
+     * Si no lo encuentra, devuelve null
+     */
     public static Producto busquedaProductoPorID(int id) {
         Producto producto = null;
         Iterator<Producto> iterator = productList.iterator();
