@@ -1,7 +1,5 @@
 package es.upm.etsisi.poo;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Scanner;
 
 /** COSAS QUE FALTAN POR HACER (MARCAR CON UNA X LAS QUE SE VAYAN COMPLETANDO):
@@ -31,7 +29,7 @@ public class App {
             // Aunque pueda dar miedo, este split separa por espacios
             // ignorando los espacios que haya dentro de las comillas dobles
             String[] comando = entrada.split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
-            continuar = ejecutarComando(comando, true);
+            continuar = ejecutarComando(comando, continuar);
         } while (continuar);
 
     }
@@ -51,10 +49,11 @@ public class App {
                 mostrarComandos();
             }
             else if (comando[0].equalsIgnoreCase("exit")) {
+                System.out.println("Closing application. \nGoodbye!");
                 continuar = false;
             }
             else {
-                System.out.println("Command not valid");
+                System.out.println("Unknown command");
             }
         }
 
@@ -67,54 +66,16 @@ public class App {
                     break;
                 // Comandos tipo ticket
                 case "ticket":
-                    switch (comando[1]) {
-                        case "new":
-                            ticket = new Ticket();
-                            System.out.println("ticket new: ok");
-                            break;
-
-                        case "add":
-                            try {
-                                if (comando.length == 4 && productList.getCapacidad() < MAX_IN_TICKET) {
-                                    id = Integer.parseInt(comando[2]);
-                                    int cantidad = Integer.parseInt(comando[3]);
-                                    ticket.addProducto(Utilidades.busquedaProductoPorID(productList.getLista(), id), cantidad);
-                                    hacerPrintTicket();
-                                    System.out.println("ticket add: ok");
-                                }
-                                else {
-                                    System.out.println("Cannot add Products to a Ticket because:");
-                                    if (comando.length != 4) {
-                                        System.out.println("Command format is wrong");
-                                    }
-                                    if (ticket.getNumeroProductos() == MAX_IN_TICKET) {
-                                        System.out.println("Ticket is full, cannot add any more Products");
-                                    }
-                                }
-                            } catch (NumberFormatException e) {
-                                System.out.println("ID or amount is not a number");
-                            }
-                            break;
-
-                        case "remove":
-                            // TODO
-                            break;
-
-                        case "print":
-                            hacerPrintTicket();
-                            System.out.println("ticket print: ok");
-                            break;
-
-                        default:
-                            System.out.println("Unknown ticket command");
-                            break;
-                    }
+                    comandosTicketAux(comando);
                     break;
 
                 // El usuario quiere que la consola haga de papagayo (que repita lo que ponga)
                 case "echo":
                     System.out.println(comando[0] + comando[1]);
                     break;
+
+                default:
+                    System.out.println("Unknown command");
             }
         } return continuar;
     }
@@ -126,13 +87,14 @@ public class App {
      * Si es "list" debe imprimir una lista de productos de la tienda
      * Si es "update" debe actualizar un producto
      * Si es "remove" debe eliminar un producto de la tienda
-     * @param comando Array de Strings que contiene las instrucciones para prod, se revisa el segundo campo
+     * @param comando Array de Strings que contiene las instrucciones para prod, se revisa el segundo elemento
      *                para ver si es un add, list, update o remove
      */
     public static void comandosProdAux(String[] comando) {
         int id;
+
         switch (comando[1]) {
-            // Añadir un producto si no existe
+            // Añadir un producto a la tienda si no existe
             case "add":
                 try {
                     // Para ver si el comando esta bien Y hay espacio en la lista
@@ -167,7 +129,7 @@ public class App {
                 productList.printList();
                 break;
 
-            // Actualizar un producto
+            // Actualizar un producto de la lista de la tienda
             case "update":
                 try {
                     id = Integer.parseInt(comando[2]);
@@ -179,7 +141,7 @@ public class App {
                 }
                 break;
 
-            // Eliminar un producto
+            // Eliminar un producto de la lista de la tienda
             case "remove":
                 try {
                     id = Integer.parseInt(comando[2]);
@@ -187,6 +149,73 @@ public class App {
                 } catch (NumberFormatException e) {
                     System.out.println("ID is not a number");
                 }
+                break;
+        }
+    }
+
+    /**
+     * Metodo auxiliar para manejar el repertorio de comandos relacionados con los ticket
+     * Revisa el segundo campo del array comando para decidir que comando debe ejecutar
+     * Si es "new" debe iniciar un ticket nuevo (borrando asi el anterior)
+     * Si es "add" debe añadir productos al ticket, tras añadirlos mostrara al usuario el ticket actual
+     * Si es "print" debe mostrar el estado actual del ticket, con todos los precios calculados
+     * Si es "remove" debe quitar todas las existencias de un producto del ticket
+     * @param comando Array de Strings que contiene las instrucciones para el comando ticket, se revisa el segundo
+     *                elemento del array para decidir si es un new, add, print o remove
+     */
+    public static void comandosTicketAux(String[] comando) {
+        int id;
+
+        switch (comando[1]) {
+            // Se crea un ticket nuevo, si existe uno se reinicia
+            case "new":
+                ticket = new Ticket();
+                System.out.println("ticket new: ok");
+                break;
+
+            // Se añade un producto al ticket de los que existen en la tienda
+            case "add":
+                try {
+                    if (comando.length == 4 && productList.getCapacidad() < MAX_IN_TICKET) {
+                        id = Integer.parseInt(comando[2]);
+                        int cantidad = Integer.parseInt(comando[3]);
+                        ticket.addProduct(Utilidades.busquedaProductoPorID(productList.getLista(), id), cantidad);
+                        ticket.printTicket();
+                        System.out.println("ticket add: ok");
+                    }
+                    else {
+                        if (comando.length != 4) {
+                            System.out.println("Command format is wrong");
+                        }
+                        if (ticket.getNumeroProductos() == MAX_IN_TICKET) {
+                            System.out.println("Ticket is full, cannot add any more products");
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("ID or amount is not a number");
+                }
+                break;
+
+            // Se quitan todas las existencias de un producto del ticket
+            case "remove":
+                try {
+                    id  = Integer.parseInt(comando[2]);
+                    ticket.removeProduct(id);
+                    System.out.println("ticket remove: ok");
+                } catch (NumberFormatException e) {
+                    System.out.println("ID is not a number");
+                }
+                break;
+
+            // Se imprime el ticket con lo que lleve hasta el momento y con los descuentos aplicados
+            case "print":
+                ticket.printTicket();
+                System.out.println("ticket print: ok");
+                break;
+
+            // Es un comando ticket que no existe en el programa
+            default:
+                System.out.println("Unknown ticket command");
                 break;
         }
     }
@@ -212,55 +241,5 @@ public class App {
                    \s
                 Categories: MERCH, STATIONERY, CLOTHES, BOOK, ELECTRONICS 
                 Discounts if there are ≥2 units in the category: MERCH 0%, STATIONERY 5%, CLOTHES 7%, BOOK 10%, ELECTRONICS 3%.""");
-    }
-
-    public static void hacerPrintTicket() {
-        ArrayList<Producto> productos  = ticket.getProductos();
-        Iterator<Producto> iterator = productos.iterator();
-        while (iterator.hasNext()) {
-            Producto producto = iterator.next();
-            System.out.println(producto.productoToString()+"**discount -"+producto.descuento());
-        }
-        double precio = calcularPrecio();
-        System.out.println("Total price: "+ precio);
-        double descuentos = calcularDescuentoTotal();
-        System.out.println("Total discount: "+ descuentos);
-        System.out.println("Final price: " + (precio - descuentos));
-    }
-
-    public static double calcularPrecio() {
-        double precio = 0;
-        Iterator<Producto> iterator = ticket.getProductos().iterator();
-        while (iterator.hasNext()) {
-            Producto producto = iterator.next();
-            precio += producto.getPrecio();
-        }
-        return precio;
-    }
-
-    public static double calcularDescuentoTotal() {
-        double descuento = 0;
-        int[] cantidadProductos = ticket.getCantidadProductoCategoria();
-        Iterator<Producto> iterator = ticket.getProductos().iterator();
-        while (iterator.hasNext()) {
-            Producto producto = iterator.next();
-            switch (producto.getCategoriaString()) {
-                case "MERCH":
-                    break;
-                case "STATIONERY":
-                    if (cantidadProductos[1] > 1) descuento += producto.descuento();
-                    break;
-                case "CLOTHES":
-                    if (cantidadProductos[2] > 1) descuento += producto.descuento();
-                    break;
-                case "BOOK":
-                    if (cantidadProductos[3] > 1) descuento += producto.descuento();
-                    break;
-                case "ELECTRONICS":
-                    if (cantidadProductos[4] > 1) descuento += producto.descuento();
-                    break;
-            }
-        }
-        return descuento;
     }
 }
