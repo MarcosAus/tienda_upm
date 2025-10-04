@@ -79,6 +79,7 @@ public class App {
                                     id = Integer.parseInt(comando[2]);
                                     int cantidad = Integer.parseInt(comando[3]);
                                     ticket.addProducto(Utilidades.busquedaProductoPorID(productList.getLista(), id), cantidad);
+                                    hacerPrintTicket();
                                     System.out.println("ticket add: ok");
                                 }
                                 else {
@@ -101,6 +102,7 @@ public class App {
 
                         case "print":
                             hacerPrintTicket();
+                            System.out.println("ticket print: ok");
                             break;
 
                         default:
@@ -224,7 +226,6 @@ public class App {
         double descuentos = calcularDescuentoTotal();
         System.out.println("Total discount: "+ descuentos);
         System.out.println("Final price: " + (precio - descuentos));
-        System.out.println("ticket print: ok");
     }
 
     public static double calcularPrecio() {

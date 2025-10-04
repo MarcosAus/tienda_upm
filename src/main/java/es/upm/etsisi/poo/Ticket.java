@@ -26,8 +26,7 @@ public class Ticket {
     //IMPORTANTE. Hay que ordenar el producto a la hora de añadirlo.
     public void addProducto(Producto producto, int cantidad) {
         for (int i = 0; i < cantidad; i++) {
-            String categoria = producto.getCategoriaString();
-            productos.add(new Producto(producto.getID(), producto.getNombre(),Producto.Categoria.getCategoria(categoria), producto.getPrecio()));
+            productos.add(producto);
         }
         // Ordena alfabeticamente los productos del ticket
         productos.sort((p1, p2) -> p1.getNombre().compareToIgnoreCase(p2.getNombre()));
