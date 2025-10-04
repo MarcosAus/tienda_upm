@@ -215,7 +215,7 @@ public class App {
     }
 
     public static void hacerPrintTicket() {
-        ArrayList<Producto> productos  = productList.getLista();
+        ArrayList<Producto> productos  = ticket.getProductos();
         Iterator<Producto> iterator = productos.iterator();
         while (iterator.hasNext()) {
             Producto producto = iterator.next();
