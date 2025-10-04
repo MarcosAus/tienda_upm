@@ -132,7 +132,7 @@ public class App {
 
                         case "add":
                             try {
-                                if (comando.length == 4 && productList.size() < MAX_LIST) {
+                                if (comando.length == 4 && productList.size() < MAX_IN_TICKET) {
                                     id = Integer.parseInt(comando[2]);
                                     int cantidad = Integer.parseInt(comando[3]);
                                     ticket.addProducto(busquedaProductoPorID(id), cantidad);
@@ -143,7 +143,7 @@ public class App {
                                     if (comando.length != 4) {
                                         System.out.println("Command format is wrong");
                                     }
-                                    if (productList.size() == MAX_LIST) {
+                                    if (productList.size() == MAX_IN_TICKET) {
                                         System.out.println("Ticket is full, cannot add any more Products");
                                     }
                                 }
