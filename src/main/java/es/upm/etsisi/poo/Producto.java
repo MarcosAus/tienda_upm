@@ -3,6 +3,7 @@ package es.upm.etsisi.poo;
 public class Producto {
     //Contiene las distintas categorías y organiza los productos en ellas dependiendo de un string
     public enum Categoria {MERCH, STATIONERY, CLOTHES, BOOK, ELECTRONICS;
+
         public static Categoria getCategoria(String categoria) {
             switch (categoria) {
                 case "MERCH":
@@ -44,10 +45,9 @@ public class Producto {
     }
 
     // Devuelve la categoría a la que pertenece el producto
-    public String getCategoria() {
+    public String getCategoriaString() {
         return categoria.toString();
     }
-
     //Cambia la categoría del producto por la dada
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
@@ -75,9 +75,33 @@ public class Producto {
 
     // Devuelve los datos del producto en un string con el formato "{class:Producto, id:-, name:-, category:-, price:-}"
     public String productoToString() {
-        return "{class:Product, id:" + getID() + ", name:" + getNombre() +", category:" + getCategoria() + ", price:" + getPrecio() + "}";
+        return "{class:Product, id:" + getID() + ", name:" + getNombre() +", category:" + getCategoriaString() + ", price:" + getPrecio() + "}";
     }
 
+    public boolean equals(Producto producto){
+        return producto.getID()==this.getID();
+    }
+    public double descuento() {
+        double descuento = 0;
+        switch (categoria){
+            case Categoria.MERCH:
+                descuento = 0;
+                break;
+            case Categoria.STATIONERY:
+                descuento = precio*0.05;
+                break;
+            case Categoria.CLOTHES:
+                descuento = precio*0.07;
+                break;
+            case Categoria.BOOK:
+                descuento = precio*0.1;
+                break;
+            case Categoria.ELECTRONICS:
+                descuento = precio*0.03;
+                break;
+        }
+        return descuento;
+    }
 
 }
 

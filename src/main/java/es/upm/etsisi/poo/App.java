@@ -13,13 +13,15 @@ import java.util.Scanner;
  */
 
 public class App {
-    private static ArrayList<Producto> productList = new ArrayList<>();
     private static int MAX_LIST = 200;
+    private static Inventario productList;
     private static Ticket ticket;
     private static int MAX_IN_TICKET = 100;
 
     public static void main(String[] args) {
         ticket = new Ticket();
+        productList = new Inventario();
+
         System.out.println("Welcome to the ticket module App.\nTicket module. Type 'help' to see commands.");
         boolean continuar = true;
         Scanner sc = new Scanner(System.in); // Scanner sc = new Scanner(New File((args))
@@ -29,11 +31,10 @@ public class App {
             // Aunque pueda dar miedo, este split separa por espacios
             // ignorando los espacios que haya dentro de las comillas dobles
             String[] comando = entrada.split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
-            continuar = ejecutarComando(comando, continuar);
+            continuar = ejecutarComando(comando, true);
         } while (continuar);
 
     }
-
 
     /**
      * Metodo que se llama a lo largo del programa para leer la linea de comandos y ejecutar el resto de metodos
@@ -62,65 +63,7 @@ public class App {
             switch (comando[0]) {
                 // Comandos tipo prod
                 case "prod":
-                    switch (comando[1]) {
-                        // El usuario quiere añadir un producto
-                        case "add":
-                            try {
-                                // Para ver si el comando esta bien Y hay espacio en la lista
-                                if (comando.length == 6 && productList.size() < MAX_LIST) {
-                                    id = Integer.parseInt(comando[2]);
-                                    String nombre = comando[3];
-                                    Producto.Categoria categoria = Producto.Categoria.getCategoria(comando[4]);
-
-                                    if (categoria != null) {
-                                        double precio = Double.parseDouble(comando[5]);
-                                        hacerAddProd(id, nombre, categoria, precio);
-                                    } else System.out.println("Category is wrong");
-                                }
-
-                                // Si no deja es porque el comando esta mal o porque la lista esta llena
-                                // Son dos IFs a continuacion porque puede darse que ambas condiciones se cumplan
-                                else {
-                                    if (comando.length != 6) {
-                                        System.out.println("Command format is wrong");
-                                    }
-                                    if (productList.size() == MAX_LIST) {
-                                        System.out.println("List of Products is full, cannot add any more Products");
-                                    }
-                                }
-                            } catch (NumberFormatException e) {
-                                System.out.println("ID or Price is not a number");
-                            }
-                            break;
-
-                        case "list":
-                            hacerList(productList);
-                            break;
-
-                        case "update":
-                            try {
-                                id = Integer.parseInt(comando[2]);
-                                String campo = comando[3];
-                                String valor = comando[4];
-                                hacerUpdate(id, campo, valor);
-                            } catch (NumberFormatException e) {
-                                System.out.println("ID is not a number");
-                            }
-                            break;
-
-                        case "remove":
-                            try {
-                                id = Integer.parseInt(comando[2]);
-                                hacerRemoveProd(productList, id);
-                            } catch (NumberFormatException e) {
-                                System.out.println("ID is not a number");
-                            }
-                            break;
-
-                        default:
-                            System.out.println("Unknown prod command");
-                            break;
-                    }
+                    comandosProdAux(comando);
                     break;
                 // Comandos tipo ticket
                 case "ticket":
@@ -132,10 +75,10 @@ public class App {
 
                         case "add":
                             try {
-                                if (comando.length == 4 && productList.size() < MAX_IN_TICKET) {
+                                if (comando.length == 4 && productList.getCapacidad() < MAX_IN_TICKET) {
                                     id = Integer.parseInt(comando[2]);
                                     int cantidad = Integer.parseInt(comando[3]);
-                                    ticket.addProducto(busquedaProductoPorID(id), cantidad);
+                                    ticket.addProducto(Utilidades.busquedaProductoPorID(productList.getLista(), id), cantidad);
                                     System.out.println("ticket add: ok");
                                 }
                                 else {
@@ -143,7 +86,7 @@ public class App {
                                     if (comando.length != 4) {
                                         System.out.println("Command format is wrong");
                                     }
-                                    if (productList.size() == MAX_IN_TICKET) {
+                                    if (ticket.getNumeroProductos() == MAX_IN_TICKET) {
                                         System.out.println("Ticket is full, cannot add any more Products");
                                     }
                                 }
@@ -157,7 +100,7 @@ public class App {
                             break;
 
                         case "print":
-                            // TODO
+                            hacerPrintTicket();
                             break;
 
                         default:
@@ -172,6 +115,78 @@ public class App {
                     break;
             }
         } return continuar;
+    }
+
+    /**
+     * Metodo auxiliar para acceder al repertorio de comandos relacionados con los productos de la tienda
+     * Revisa el segundo campo del array comando y decide que comando debe ejecutar
+     * Si es "add" debe añadir un producto
+     * Si es "list" debe imprimir una lista de productos de la tienda
+     * Si es "update" debe actualizar un producto
+     * Si es "remove" debe eliminar un producto de la tienda
+     * @param comando Array de Strings que contiene las instrucciones para prod, se revisa el segundo campo
+     *                para ver si es un add, list, update o remove
+     */
+    public static void comandosProdAux(String[] comando) {
+        int id;
+        switch (comando[1]) {
+            // Añadir un producto si no existe
+            case "add":
+                try {
+                    // Para ver si el comando esta bien Y hay espacio en la lista
+                    if (comando.length == 6 && productList.getCapacidad() < MAX_LIST) {
+                        id = Integer.parseInt(comando[2]);
+                        String nombre = comando[3];
+                        Producto.Categoria categoria = Producto.Categoria.getCategoria(comando[4]);
+
+                        if (categoria != null) {
+                            double precio = Double.parseDouble(comando[5]);
+                            productList.addProduct(id, nombre, categoria, precio);
+                        } else System.out.println("Category is wrong");
+                    }
+
+                    // Si no deja es porque el comando esta mal o porque la lista esta llena
+                    // Son dos IFs a continuacion porque puede darse que ambas condiciones se cumplan
+                    else {
+                        if (comando.length != 6) {
+                            System.out.println("Command length is wrong");
+                        }
+                        if (productList.getCapacidad() == MAX_LIST) {
+                            System.out.println("List of Products is full, cannot add any more Products");
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("ID or Price is not a number");
+                }
+                break;
+
+            // Listar los productos de la tienda
+            case "list":
+                productList.printList();
+                break;
+
+            // Actualizar un producto
+            case "update":
+                try {
+                    id = Integer.parseInt(comando[2]);
+                    String campo = comando[3];
+                    String valor = comando[4];
+                    productList.updateProduct(id, campo, valor);
+                } catch (NumberFormatException e) {
+                    System.out.println("ID is not a number");
+                }
+                break;
+
+            // Eliminar un producto
+            case "remove":
+                try {
+                    id = Integer.parseInt(comando[2]);
+                    productList.removeProduct(id);
+                } catch (NumberFormatException e) {
+                    System.out.println("ID is not a number");
+                }
+                break;
+        }
     }
 
     /**
@@ -197,117 +212,54 @@ public class App {
                 Discounts if there are ≥2 units in the category: MERCH 0%, STATIONERY 5%, CLOTHES 7%, BOOK 10%, ELECTRONICS 3%.""");
     }
 
-
-    /**
-     * Metodo que añade Productos a la tienda si no existen ya en el catalogo
-     * Busca el Producto que se quiere añadir en la tienda y si lo encuentra informa al usuario de que ya existe
-     * Si no encuentra nada con el mismo ID, añade el Producto con los atributos pasados como argumentos
-     * @param id        Número Identificador del producto a añadir
-     * @param nombre    String nombre del producto a añadir
-     * @param categoria Atributo de enum Categoria de Producto
-     * @param precio    Precio unitario del producto
-     */
-    public static void hacerAddProd(int id, String nombre, Producto.Categoria categoria, double precio) {
-        if (id >= 0) {
-            Producto existente = busquedaProductoPorID(id);
-            boolean encontrado = existente != null;
-
-            if (!encontrado) {
-                if (nombre.isEmpty() || nombre.length() > 100) System.out.println("Name length is incorrect");
-                else if (precio < 0) System.out.println("Price cannot be negative");
-                else {
-                    Producto producto = new Producto(id, nombre, categoria, precio);
-                    productList.add(producto);
-                    System.out.println(producto.productoToString() + "\nprod add: ok");
-                }
-            }
-            else System.out.println("A Product with the same ID already exists:\n" + existente.productoToString());
-        }
-        else System.out.println("ID cannot be negative");
-    }
-
-    /**
-     * Metodo que busca e imprime por pantalla todos los productos disponibles en la tienda
-     * @param listaProductos ArrayList de productos del catalogo de la tienda
-     */
-    public static void hacerList(ArrayList<Producto> listaProductos) {
-        System.out.println("Catalog:");
-        Iterator<Producto> iterator = listaProductos.iterator();
+    public static void hacerPrintTicket() {
+        ArrayList<Producto> productos  = productList.getLista();
+        Iterator<Producto> iterator = productos.iterator();
         while (iterator.hasNext()) {
             Producto producto = iterator.next();
-            System.out.println("    " + producto.productoToString());
+            System.out.println(producto.productoToString()+"**discount -"+producto.descuento());
         }
-        System.out.println("prod list: ok");
+        double precio = calcularPrecio();
+        System.out.println("Total price: "+ precio);
+        double descuentos = calcularDescuentoTotal();
+        System.out.println("Total discount: "+ descuentos);
+        System.out.println("Final price: " + (precio - descuentos));
+        System.out.println("ticket print: ok");
     }
 
-    /**
-     * Metodo para buscar un producto en el catalogo de la tienda y cambiar uno de sus datos
-     * El dato a cambiar puede ser el nombre, la categoria o el precio
-     * Si no encuentra el producto, informa al usuario de que no existe en la lista
-     * @param id Entero que sirve como ID del producto que se quiere buscar
-     * @param campo Dato del producto que se quiere actualizar (nombre, categoria o precio)
-     * @param valor Nuevo valor que se quiere asignar al dato seleccionado en el parametro campo
-     */
-    public static void hacerUpdate(int id, String campo, String valor) {
-        Producto producto = busquedaProductoPorID(id);
-
-        if (producto != null) {
-            switch (campo.toUpperCase()) {
-                case "NAME":
-                    producto.setNombre(valor);
-                    break;
-                case "CATEGORY":
-                    Producto.Categoria categoria = Producto.Categoria.getCategoria(valor);
-                    if (categoria != null) producto.setCategoria(categoria);
-                    else System.out.println("Category is wrong");
-                    break;
-                case "PRICE":
-                    try {
-                        producto.setPrecio(Double.parseDouble(valor));
-                    } catch (NumberFormatException e) {
-                        System.out.println("Input Price is not a number");
-                    }
-                    break;
-                default:
-                    System.out.println("Field to change must be NAME|CATEGORY|PRICE");
-            }
-            System.out.println(producto.productoToString() + "\nprod update: ok");
+    public static double calcularPrecio() {
+        double precio = 0;
+        Iterator<Producto> iterator = ticket.getProductos().iterator();
+        while (iterator.hasNext()) {
+            Producto producto = iterator.next();
+            precio += producto.getPrecio();
         }
-
-        else System.out.println("Product not found");
+        return precio;
     }
 
-    /**
-     * Metodo que busca un producto en la tienda y si lo encuentra lo borra e informa al usuario
-     * Si no lo encuentra, informa al usuario de que no existe el producto
-     * @param arrayProductos Array que contiene los productos en stock de la tienda
-     * @param id Entero que indica el ID del producto que se quiere añadir
-     */
-    public static void hacerRemoveProd(ArrayList<Producto> arrayProductos, int id) {
-        Producto producto = busquedaProductoPorID(id);
-        if (producto != null) {
-            arrayProductos.remove(producto);
-            System.out.println("prod remove: ok");
-        }
-        else System.out.println("Product not found");
-    }
-
-    /**
-     * Metodo que busca un Producto en concreto en la tienda con el ID proporcionado y, si lo encuentra, lo devuelve
-     * Si no encuentra ningun producto con ese ID, devuelve null
-     * @param id Entero que indica el ID del producto que se quiere buscar en la tienda
-     * @return Objeto de clase Producto, es null si no se encuentra el Producto buscado
-     */
-    public static Producto busquedaProductoPorID(int id) {
-        Producto producto = null;
-        Iterator<Producto> iterator = productList.iterator();
-        boolean encontrado = false;
-        while (iterator.hasNext() && !encontrado) {
-            producto = iterator.next();
-            if (producto.getID() == id) {
-                encontrado = true;
+    public static double calcularDescuentoTotal() {
+        double descuento = 0;
+        int[] cantidadProductos = ticket.getCantidadProductoCategoria();
+        Iterator<Producto> iterator = ticket.getProductos().iterator();
+        while (iterator.hasNext()) {
+            Producto producto = iterator.next();
+            switch (producto.getCategoriaString()) {
+                case "MERCH":
+                    break;
+                case "STATIONERY":
+                    if (cantidadProductos[1] > 1) descuento += producto.descuento();
+                    break;
+                case "CLOTHES":
+                    if (cantidadProductos[2] > 1) descuento += producto.descuento();
+                    break;
+                case "BOOK":
+                    if (cantidadProductos[3] > 1) descuento += producto.descuento();
+                    break;
+                case "ELECTRONICS":
+                    if (cantidadProductos[4] > 1) descuento += producto.descuento();
+                    break;
             }
         }
-        return producto;
+        return descuento;
     }
 }
