@@ -36,11 +36,11 @@ public class App {
 
 
     /**
+     * Metodo que se llama a lo largo del programa para leer la linea de comandos y ejecutar el resto de metodos
+     * del programa, devuelve un boolean para decirle al bucle while del main si debe seguir ejecutandose
      * @param comando Array de Strings obtenido tras separar por espacios la linea del input
      * @param continuar Variable booleana que determina si el programa debe seguir ejecutandose
      * @return El valor true/false de la variable continuar
-     * Metodo que se llama a lo largo del programa para leer la linea de comandos y ejecutar el resto de metodos
-     * del programa, devuelve un boolean para decirle al bucle while del main si debe seguir ejecutandose
      */
     public static boolean ejecutarComando(String[] comando, boolean continuar) {
         int id;
@@ -199,11 +199,13 @@ public class App {
 
 
     /**
+     * Metodo que añade Productos a la tienda si no existen ya en el catalogo
+     * Busca el Producto que se quiere añadir en la tienda y si lo encuentra informa al usuario de que ya existe
+     * Si no encuentra nada con el mismo ID, añade el Producto con los atributos pasados como argumentos
      * @param id        Número Identificador del producto a añadir
      * @param nombre    String nombre del producto a añadir
      * @param categoria Atributo de enum Categoria de Producto
      * @param precio    Precio unitario del producto
-     * Metodo que añade Productos a la tienda si no existen ya en el catalogo
      */
     public static void hacerAddProd(int id, String nombre, Producto.Categoria categoria, double precio) {
         if (id >= 0) {
@@ -225,8 +227,8 @@ public class App {
     }
 
     /**
+     * Metodo que busca e imprime por pantalla todos los productos disponibles en la tienda
      * @param listaProductos ArrayList de productos del catalogo de la tienda
-     * Metodo que imprime por pantalla todos los productos disponibles en la tienda
      */
     public static void hacerList(ArrayList<Producto> listaProductos) {
         System.out.println("Catalog:");
@@ -239,10 +241,12 @@ public class App {
     }
 
     /**
+     * Metodo para buscar un producto en el catalogo de la tienda y cambiar uno de sus datos
+     * El dato a cambiar puede ser el nombre, la categoria o el precio
+     * Si no encuentra el producto, informa al usuario de que no existe en la lista
      * @param id Entero que sirve como ID del producto que se quiere buscar
      * @param campo Dato del producto que se quiere actualizar (nombre, categoria o precio)
      * @param valor Nuevo valor que se quiere asignar al dato seleccionado en el parametro campo
-     * Metodo para buscar un producto en el catalogo de la tienda y cambiar uno de sus datos
      */
     public static void hacerUpdate(int id, String campo, String valor) {
         Producto producto = busquedaProductoPorID(id);
@@ -274,9 +278,10 @@ public class App {
     }
 
     /**
+     * Metodo que busca un producto en la tienda y si lo encuentra lo borra e informa al usuario
+     * Si no lo encuentra, informa al usuario de que no existe el producto
      * @param arrayProductos Array que contiene los productos en stock de la tienda
      * @param id Entero que indica el ID del producto que se quiere añadir
-     * Metodo que busca (si existe) un producto en el catalogo y si lo encuentra lo borra
      */
     public static void hacerRemoveProd(ArrayList<Producto> arrayProductos, int id) {
         Producto producto = busquedaProductoPorID(id);
@@ -284,13 +289,14 @@ public class App {
             arrayProductos.remove(producto);
             System.out.println("prod remove: ok");
         }
+        else System.out.println("Product not found");
     }
 
     /**
+     * Metodo que busca un Producto en concreto en la tienda con el ID proporcionado y, si lo encuentra, lo devuelve
+     * Si no encuentra ningun producto con ese ID, devuelve null
      * @param id Entero que indica el ID del producto que se quiere buscar en la tienda
-     * @return Objeto de clase Producto
-     * Metodo que busca un producto en concreto en la tienda con el ID y, si lo encuentra, lo devuelve
-     * Si no lo encuentra, devuelve null
+     * @return Objeto de clase Producto, es null si no se encuentra el Producto buscado
      */
     public static Producto busquedaProductoPorID(int id) {
         Producto producto = null;
