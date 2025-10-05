@@ -138,7 +138,7 @@ public class Ticket {
 
             precio += producto.getPrecio();
         }
-        return precio;
+        return Math.round(precio);
     }
 
     /**
@@ -156,7 +156,7 @@ public class Ticket {
                 descuento += producto.descuento();
             }
         }
-        return descuento;
+        return ((double) Math.round(descuento * 1000) /1000);
     }
 
     /**

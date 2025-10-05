@@ -112,7 +112,7 @@ public class App {
             case "add":
                 try {
                     // Para ver si el comando esta bien Y hay espacio en la lista
-                    if (comando.length == 6 && productList.getCapacidad() < MAX_LIST) {
+                    if (comando.length == 6 && productList.getCapacidad() <= MAX_LIST) {
                         id = Integer.parseInt(comando[2]);
                         String nombre = comando[3];
                         Producto.Categoria categoria = Producto.Categoria.getCategoria(comando[4]);
@@ -204,11 +204,15 @@ public class App {
             // Se añade un producto al ticket de los que existen en la tienda
             case "add":
                 try {
-                    if (comando.length == 4 && productList.getCapacidad() < MAX_IN_TICKET) {
+                    if (comando.length == 4 && productList.getCapacidad() <= MAX_IN_TICKET) {
                         id = Integer.parseInt(comando[2]);
                         int cantidad = Integer.parseInt(comando[3]);
-                        ticket.addProduct(Utilidades.busquedaProductoPorID(productList.getLista(), id), cantidad);
-                        ticket.printTicket();
+                        if (cantidad<=MAX_IN_TICKET-ticket.getNumeroProductos()){
+                            ticket.addProduct(Utilidades.busquedaProductoPorID(productList.getLista(), id), cantidad);
+                            ticket.printTicket();
+                        }
+                        else System.out.println("You cannot add more product than the ticket capacity allows");
+
                     }
                     else {
                         if (comando.length != 4) {
