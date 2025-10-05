@@ -1,0 +1,12 @@
+echo "Agrego Libro"
+prod add 1 "Libro POO" BOOK 25
+echo "Agrego Camiseta"
+prod add 2 "Camiseta talla:M UPM" CLOTHES 15
+echo "Listo Productos"
+prod list
+ echo "Actualizo Nombre y Precio del Libro"
+ prod update 1 NAME "Libro POO V2"
+ prod update 1 PRICE 30
+ echo "inserto libro repetido y lo borro"
+  prod add 3 "Libro POO repetido Error" BOOK 25
+  prod remove 3

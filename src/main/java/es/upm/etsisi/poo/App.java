@@ -1,27 +1,33 @@
 package es.upm.etsisi.poo;
 
 import java.util.Scanner;
+import java.io.*;
 
 /** COSAS QUE FALTAN POR HACER (MARCAR CON UNA X LAS QUE SE VAYAN COMPLETANDO):
- * METODOS PRINT Y REMOVE DE LA CLASE TICKET
- * SACAR LOS SWITCH DE PROD Y TICKET DEL MEGASWITCH DE EJECUTARCOMANDO
+ * METODOS PRINT Y REMOVE DE LA CLASE TICKET X
+ * SACAR LOS SWITCH DE PROD Y TICKET DEL MEGASWITCH DE EJECUTARCOMANDO X
  * AÑADIR JAVADOC DE LAS FUNCIONES DEL RESTO DE CLASES, SOLO ESTAN COMENTADAS POR ENCIMA
  * METODO PARA LEER Y OTRO PARA ESCRIBIR FICHEROS, SERIA UTIL A LA HORA DE PROBAR
- * COMPRAR PAN, LECHE Y HUEVOS
  */
 
 public class App {
-    private static int MAX_LIST = 200;
+    private static final int MAX_LIST = 200;
+    private static final int MAX_IN_TICKET = 100;
     private static Inventario productList;
     private static Ticket ticket;
-    private static int MAX_IN_TICKET = 100;
 
     public static void main(String[] args) {
         ticket = new Ticket();
         productList = new Inventario();
 
         System.out.println("Welcome to the ticket module App.\nTicket module. Type 'help' to see commands.");
-        boolean continuar = true;
+
+        if (args.length > 0) {
+            leerFicheros(args[0]);
+            System.out.println("Finished reading commands from file: " + args[0]);
+        }
+
+        boolean continuar;
         Scanner sc = new Scanner(System.in); // Scanner sc = new Scanner(New File((args))
         do {
             System.out.print("tUPM> ");
@@ -29,9 +35,8 @@ public class App {
             // Aunque pueda dar miedo, este split separa por espacios
             // ignorando los espacios que haya dentro de las comillas dobles
             String[] comando = entrada.split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
-            continuar = ejecutarComando(comando, continuar);
+            continuar = ejecutarComando(comando, true);
         } while (continuar);
-
     }
 
     /**
@@ -42,7 +47,6 @@ public class App {
      * @return El valor true/false de la variable continuar
      */
     public static boolean ejecutarComando(String[] comando, boolean continuar) {
-        int id;
         // El comando solo tiene una palabra que DEBE ser help o exit, en caso contrario esta mal
         if (comando.length < 2) {
             if (comando[0].equalsIgnoreCase("help")) {
@@ -71,7 +75,7 @@ public class App {
 
                 // El usuario quiere que la consola haga de papagayo (que repita lo que ponga)
                 case "echo":
-                    System.out.println(comando[0] + comando[1]);
+                    System.out.println("echo " + comando[1]);
                     break;
 
                 default:
@@ -238,8 +242,24 @@ public class App {
                     echo "<texto>"
                     help
                     exit
-                   \s
-                Categories: MERCH, STATIONERY, CLOTHES, BOOK, ELECTRONICS 
+                
+                Categories: MERCH, STATIONERY, CLOTHES, BOOK, ELECTRONICS
                 Discounts if there are ≥2 units in the category: MERCH 0%, STATIONERY 5%, CLOTHES 7%, BOOK 10%, ELECTRONICS 3%.""");
     }
+
+    public static void leerFicheros(String fichero) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fichero))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                if (linea.trim().isEmpty() || linea.trim().startsWith("#")) continue;
+
+                String[] comando = linea.split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+
+                ejecutarComando(comando, true);
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer el fichero: " + e.getMessage());
+        }
+    }
+
 }

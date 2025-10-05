@@ -21,7 +21,7 @@ public class Producto {
             }
         }
     }
-    private int ID; // Id del producto
+    private final int ID; // Id del producto
     private String nombre; // Nombre del producto
     private Categoria categoria; // Categoría del producto
     private double precio; // Precio del producto
@@ -68,16 +68,17 @@ public class Producto {
         return ID;
     }
 
-    //Cambia el id del producto por el dado
-    public void setID(int ID) {
-        this.ID = ID;
-    }
 
     // Devuelve los datos del producto en un string con el formato "{class:Producto, id:-, name:-, category:-, price:-}"
     public String productoToString() {
         return "{class:Product, id:" + getID() + ", name:" + getNombre() +", category:" + getCategoriaString() + ", price:" + getPrecio() + "}";
     }
 
+    /**
+     *
+     * @param producto
+     * @return
+     */
     public boolean equals(Producto producto){
         return producto.getID()==this.getID();
     }
@@ -101,6 +102,18 @@ public class Producto {
                 break;
         }
         return descuento;
+    }
+
+    /**
+     * Metodo que devuelve el Producto como un String
+     * @return String que representa el Producto con todos sus datos
+     */
+    @Override
+    public String toString() {
+        return "{class:Product, id:" + getID() +
+                ", name:'" + getNombre() +
+                "', category:" + getCategoriaString() +
+                ", price:" + getPrecio() + "}";
     }
 
 }

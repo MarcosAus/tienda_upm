@@ -5,7 +5,7 @@ import java.util.Iterator;
 
 public class Inventario {
     private ArrayList<Producto> listaProductos;
-    private final int MAX_CUANTITY = 200;
+
     public Inventario() {
         this.listaProductos = new ArrayList<>();
     }
@@ -36,7 +36,7 @@ public class Inventario {
                 else {
                     Producto producto = new Producto(id, nombre, categoria, precio);
                     listaProductos.add(producto);
-                    System.out.println(producto.productoToString() + "\nprod add: ok");
+                    System.out.println(producto + "\nprod add: ok");
                 }
             }
             else System.out.println("A Product with the same ID already exists:\n" + existente.productoToString());
@@ -86,7 +86,7 @@ public class Inventario {
                     System.out.println("Field to change must be NAME|CATEGORY|PRICE");
                     break;
             }
-            System.out.println(producto.productoToString() + "\nprod update: ok");
+            System.out.println(producto + "\nprod update: ok");
         }
         else {
             System.out.println("Product not found");
@@ -102,6 +102,7 @@ public class Inventario {
         Producto producto = Utilidades.busquedaProductoPorID(listaProductos, id);
 
         if (producto != null) {
+            System.out.println(producto);
             listaProductos.remove(producto);
             System.out.println("prod remove: ok");
         } else {
@@ -117,7 +118,7 @@ public class Inventario {
         Iterator<Producto> iterator = listaProductos.iterator();
         while (iterator.hasNext()) {
             Producto producto = iterator.next();
-            System.out.println("    " + producto.productoToString());
+            System.out.println("    " + producto);
         }
         System.out.println("prod list: ok");
     }

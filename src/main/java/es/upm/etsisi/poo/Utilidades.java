@@ -1,4 +1,5 @@
 package es.upm.etsisi.poo;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -22,9 +23,5 @@ public class Utilidades {
             }
         }
         return resultado;
-    }
-
-    public static void leerFicheros(String fichero) {
-
     }
 }
