@@ -11,11 +11,19 @@ import java.io.*;
  */
 
 public class App {
-    private static final int MAX_LIST = 200;
-    private static final int MAX_IN_TICKET = 100;
-    private static Inventario productList;
-    private static Ticket ticket;
+    private static final int MAX_LIST = 200; // Número máximo de productos en la Tienda
+    private static final int MAX_IN_TICKET = 100; //Número máximo de productos en el Ticket
+    private static Inventario productList; // Array de productos disponibles en la Tienda
+    private static Ticket ticket; //Ticket donde se añadirán los productos deseados
 
+    /**
+     * Metodo principal del programa, inicializa las listas que contendran los productos de inventario y ticket
+     * Saluda al usuario y comprueba si el programa ha recibido un archivo de texto como argumento
+     * Si no hay argumentos, inicia una sesion interactiva donde el usuario debe introducir comandos manualmente
+     * La variable continuar depende de los comandos que introduzca el usuario
+     * @param args Puede contener un fichero que posea comandos predeterminados que se ejecutaran al inicio
+     *             de la app. Si este parametro esta vacio el programa se inicializara normalmente.
+     */
     public static void main(String[] args) {
         ticket = new Ticket();
         productList = new Inventario();
@@ -34,7 +42,7 @@ public class App {
             String entrada = sc.nextLine();
             // Aunque pueda dar miedo, este split separa por espacios
             // ignorando los espacios que haya dentro de las comillas dobles
-            String[] comando = entrada.split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+            String[] comando = entrada.trim().split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
             continuar = ejecutarComando(comando, true);
         } while (continuar);
     }
@@ -47,12 +55,13 @@ public class App {
      * @return El valor true/false de la variable continuar
      */
     public static boolean ejecutarComando(String[] comando, boolean continuar) {
+        String primeraPalabra = comando[0].toLowerCase();
         // El comando solo tiene una palabra que DEBE ser help o exit, en caso contrario esta mal
         if (comando.length < 2) {
-            if (comando[0].equalsIgnoreCase("help")) {
+            if (primeraPalabra.equals("help")) {
                 mostrarComandos();
             }
-            else if (comando[0].equalsIgnoreCase("exit")) {
+            else if (primeraPalabra.equals("exit")) {
                 System.out.println("Closing application. \nGoodbye!");
                 continuar = false;
             }
@@ -63,7 +72,7 @@ public class App {
 
         // El comando tiene 2 o mas palabras por lo que tiene que ser prod, ticket o echo
         else {
-            switch (comando[0]) {
+            switch (primeraPalabra) {
                 // Comandos tipo prod
                 case "prod":
                     comandosProdAux(comando);
@@ -96,8 +105,9 @@ public class App {
      */
     public static void comandosProdAux(String[] comando) {
         int id;
+        String segundaPalabra = comando[1].toLowerCase();
 
-        switch (comando[1]) {
+        switch (segundaPalabra) {
             // Añadir un producto a la tienda si no existe
             case "add":
                 try {
@@ -120,7 +130,7 @@ public class App {
                             System.out.println("Command length is wrong");
                         }
                         if (productList.getCapacidad() == MAX_LIST) {
-                            System.out.println("List of Products is full, cannot add any more Products");
+                            System.out.println("List of Products is full, cannot add any more products");
                         }
                     }
                 } catch (NumberFormatException e) {
@@ -130,29 +140,40 @@ public class App {
 
             // Listar los productos de la tienda
             case "list":
-                productList.printList();
+                if (comando.length == 2) {
+                    productList.printList();
+                }
+                else System.out.println("Command length is wrong");
                 break;
 
             // Actualizar un producto de la lista de la tienda
             case "update":
-                try {
-                    id = Integer.parseInt(comando[2]);
-                    String campo = comando[3];
-                    String valor = comando[4];
-                    productList.updateProduct(id, campo, valor);
-                } catch (NumberFormatException e) {
-                    System.out.println("ID is not a number");
-                }
+                if (comando.length == 5) {
+                    try {
+                        id = Integer.parseInt(comando[2]);
+                        String campo = comando[3].toLowerCase();
+                        String valor = comando[4].toLowerCase();
+                        productList.updateProduct(id, campo, valor);
+                    } catch (NumberFormatException e) {
+                        System.out.println("ID is not a number");
+                    }
+                } else System.out.println("Command length is wrong");
                 break;
 
             // Eliminar un producto de la lista de la tienda
             case "remove":
-                try {
-                    id = Integer.parseInt(comando[2]);
-                    productList.removeProduct(id);
-                } catch (NumberFormatException e) {
-                    System.out.println("ID is not a number");
+                if (comando.length == 3) {
+                    try {
+                        id = Integer.parseInt(comando[2]);
+                        productList.removeProduct(id);
+                    } catch (NumberFormatException e) {
+                        System.out.println("ID is not a number");
+                    }
                 }
+                else System.out.println("Command length is wrong");
+                break;
+            default:
+                System.out.println("Unknown prod command");
                 break;
         }
     }
@@ -169,12 +190,15 @@ public class App {
      */
     public static void comandosTicketAux(String[] comando) {
         int id;
+        String segundaPalabra = comando[1].toLowerCase();
 
-        switch (comando[1]) {
+        switch (segundaPalabra) {
             // Se crea un ticket nuevo, si existe uno se reinicia
             case "new":
-                ticket = new Ticket();
-                System.out.println("ticket new: ok");
+                if (comando.length == 2) {
+                    ticket = new Ticket();
+                    System.out.println("ticket new: ok");
+                } else System.out.println("Command length is wrong");
                 break;
 
             // Se añade un producto al ticket de los que existen en la tienda
@@ -185,11 +209,10 @@ public class App {
                         int cantidad = Integer.parseInt(comando[3]);
                         ticket.addProduct(Utilidades.busquedaProductoPorID(productList.getLista(), id), cantidad);
                         ticket.printTicket();
-                        System.out.println("ticket add: ok");
                     }
                     else {
                         if (comando.length != 4) {
-                            System.out.println("Command format is wrong");
+                            System.out.println("Command length is wrong");
                         }
                         if (ticket.getNumeroProductos() == MAX_IN_TICKET) {
                             System.out.println("Ticket is full, cannot add any more products");
@@ -202,19 +225,24 @@ public class App {
 
             // Se quitan todas las existencias de un producto del ticket
             case "remove":
-                try {
-                    id  = Integer.parseInt(comando[2]);
-                    ticket.removeProduct(id);
-                    System.out.println("ticket remove: ok");
-                } catch (NumberFormatException e) {
-                    System.out.println("ID is not a number");
-                }
+                if (comando.length == 3) {
+                    try {
+                        id  = Integer.parseInt(comando[2]);
+                        boolean eliminado = ticket.removeProduct(id);
+                        if (eliminado) System.out.println("ticket remove: ok");
+                        else System.out.println("No products with that ID were found in ticket");
+                    } catch (NumberFormatException e) {
+                        System.out.println("ID is not a number");
+                    }
+                } else System.out.println("Command length is wrong");
                 break;
 
             // Se imprime el ticket con lo que lleve hasta el momento y con los descuentos aplicados
             case "print":
-                ticket.printTicket();
-                System.out.println("ticket print: ok");
+                if (comando.length == 2) {
+                    ticket.printTicket();
+                    System.out.println("ticket print: ok");
+                } else System.out.println("Command length is wrong");
                 break;
 
             // Es un comando ticket que no existe en el programa
@@ -247,13 +275,17 @@ public class App {
                 Discounts if there are ≥2 units in the category: MERCH 0%, STATIONERY 5%, CLOTHES 7%, BOOK 10%, ELECTRONICS 3%.""");
     }
 
+    /**
+     * Metodo que procesa un fichero de texto linea por linea y ejecuta los comandos que tenga en cascada.
+     * @param fichero String que sirve de nombre para identificar el fichero que se debe leer
+     */
     public static void leerFicheros(String fichero) {
         try (BufferedReader br = new BufferedReader(new FileReader(fichero))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 if (linea.trim().isEmpty() || linea.trim().startsWith("#")) continue;
 
-                String[] comando = linea.split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+                String[] comando = linea.trim().split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
                 ejecutarComando(comando, true);
             }
@@ -261,5 +293,4 @@ public class App {
             System.out.println("Error al leer el fichero: " + e.getMessage());
         }
     }
-
 }

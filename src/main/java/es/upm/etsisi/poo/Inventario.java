@@ -4,16 +4,30 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Inventario {
+    /**
+     * Array de productos que contiene los productos disponibles en la tienda
+     */
     private ArrayList<Producto> listaProductos;
 
+    /**
+     * Constructor de la clase inventario
+     */
     public Inventario() {
         this.listaProductos = new ArrayList<>();
     }
 
+    /**
+     * Metodo que devuelve la cantidad de productos disponibles en la tienda
+     * @return Devuelve un entero que representa el numero total de productos disponibles en la tienda
+     */
     public int getCapacidad() {
         return listaProductos.size();
     }
 
+    /**
+     * Metodo que permite acceder a la lista de productos de la tienda
+     * @return Devuelve una lista con los productos disponibles en la tienda hasta el momento
+     */
     public ArrayList<Producto> getLista() {
         return listaProductos;
     }
@@ -39,7 +53,7 @@ public class Inventario {
                     System.out.println(producto + "\nprod add: ok");
                 }
             }
-            else System.out.println("A Product with the same ID already exists:\n" + existente.productoToString());
+            else System.out.println("A Product with the same ID already exists:\n" + existente);
         }
 
         else System.out.println("ID cannot be negative");

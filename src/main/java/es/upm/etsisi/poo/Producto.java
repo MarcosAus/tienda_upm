@@ -4,8 +4,13 @@ public class Producto {
     //Contiene las distintas categorías y organiza los productos en ellas dependiendo de un string
     public enum Categoria {MERCH, STATIONERY, CLOTHES, BOOK, ELECTRONICS;
 
+        /**
+         * Metodo que devuelve la categoria en formato Enum al pasarle un String como argumento
+         * @param categoria String que comprobaremos si es o no una categoria del enum
+         * @return Devuelve la Categoria en tipo Enum
+         */
         public static Categoria getCategoria(String categoria) {
-            switch (categoria) {
+            switch (categoria.toUpperCase()) {
                 case "MERCH":
                      return Categoria.MERCH;
                 case "STATIONERY":
@@ -21,12 +26,19 @@ public class Producto {
             }
         }
     }
+
     private final int ID; // Id del producto
     private String nombre; // Nombre del producto
     private Categoria categoria; // Categoría del producto
     private double precio; // Precio del producto
 
-    //Constructos de la clase Producto
+    /**
+     * Constructor de la clase Producto
+     * @param ID Numero Identificador del producto
+     * @param nombre String que sirve como nombre del producto
+     * @param categoria Categoria del enum Categoria que define la categoria del producto
+     * @param precio Double que representa el precio individual del producto
+     */
     public Producto(int ID, String nombre, Categoria categoria, double precio) {
         this.ID = ID;
         this.nombre = nombre;
@@ -68,20 +80,19 @@ public class Producto {
         return ID;
     }
 
-
-    // Devuelve los datos del producto en un string con el formato "{class:Producto, id:-, name:-, category:-, price:-}"
-    public String productoToString() {
-        return "{class:Product, id:" + getID() + ", name:" + getNombre() +", category:" + getCategoriaString() + ", price:" + getPrecio() + "}";
-    }
-
     /**
-     *
-     * @param producto
-     * @return
+     * Metodo que comprueba si dos productos son iguales comparando sus IDs
+     * @param producto Objeto Producto con el que se quiere comparar
+     * @return Devuelve true si el objeto comparado es igual que el parametro, false en caso contrario
      */
     public boolean equals(Producto producto){
         return producto.getID()==this.getID();
     }
+
+    /**
+     * Metodo que devuelve el descuento aplicable a un producto en funcion de su categoria
+     * @return Devuelve un double que representa el descuento a aplicar
+     */
     public double descuento() {
         double descuento = 0;
         switch (categoria){
@@ -111,10 +122,9 @@ public class Producto {
     @Override
     public String toString() {
         return "{class:Product, id:" + getID() +
-                ", name:'" + getNombre() +
-                "', category:" + getCategoriaString() +
+                ", name:" + getNombre() +
+                ", category:" + getCategoriaString() +
                 ", price:" + getPrecio() + "}";
     }
-
 }
 

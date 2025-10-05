@@ -4,16 +4,30 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Ticket {
+    /**
+     * Array de productos actuales en el ticket
+     */
     private final ArrayList<Producto> productos;
 
+    /**
+     * Constructor de la clase Ticket
+     */
     public Ticket() {
         this.productos = new ArrayList<>();
     }
 
+    /**
+     * Metodo para acceder a la lista de productos del ticket
+     * @return Devuelve un ArrayList con los productos del ticket
+     */
     public ArrayList<Producto> getProductos() {
         return productos;
     }
 
+    /**
+     * Metodo que devuelve el tamaño del ticket
+     * @return Devuelve el numero de productos que contiene el ticket
+     */
     public int getNumeroProductos() {
         return productos.size();
     }
@@ -30,6 +44,7 @@ public class Ticket {
             }
             // Este sort lo que hace es ordena alfabeticamente los productos del ticket
             productos.sort((p1, p2) -> p1.getNombre().compareToIgnoreCase(p2.getNombre()));
+            System.out.println("ticket add: ok");
         }
         else System.out.println("This product does not exist. No products were added");
     }
@@ -148,17 +163,20 @@ public class Ticket {
      * Metodo que elimina por completo un producto y todas sus apariciones del ticket
      * @param id Numero Identificador del producto que se quiere buscar y eliminar
      */
-    public void removeProduct(int id) {
-        Producto producto = productos.get(id);
+    public boolean removeProduct(int id) {
+        boolean resultado = false;
+        Producto producto = Utilidades.busquedaProductoPorID(productos, id);
         if  (producto != null) {
             Iterator<Producto> iterator = productos.iterator();
             while (iterator.hasNext()) {
                 Producto producto1 = iterator.next();
                 if (producto1.equals(producto)) {
-                    System.out.println(producto1.productoToString());
+                    System.out.println(producto1);
                     iterator.remove();
+                    resultado = true;
                 }
             }
         }
+        return resultado;
     }
 }
