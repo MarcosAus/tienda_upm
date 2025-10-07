@@ -42,7 +42,7 @@ public class Inventario {
      */
     public void addProduct(int id, String nombre, Producto.Categoria categoria, double precio) {
         if (id >= 0) {
-            Producto existente = Utilidades.busquedaProductoPorID(listaProductos, id);
+            Producto existente = Producto.busquedaProductoPorID(listaProductos, id);
 
             if (existente == null) {
                 if (nombre.isEmpty() || nombre.length() > 100) System.out.println("Name length is incorrect");
@@ -67,7 +67,7 @@ public class Inventario {
      * @param valor Nuevo valor del atributo que se quiere actualizar
      */
     public void updateProduct(int id, String campo, String valor) {
-        Producto producto = Utilidades.busquedaProductoPorID(listaProductos, id);
+        Producto producto = Producto.busquedaProductoPorID(listaProductos, id);
 
         if (producto != null) {
             switch (campo.toUpperCase()) {
@@ -113,7 +113,7 @@ public class Inventario {
      * @param id Numero identificador del producto que se desea eliminar
      */
     public void removeProduct(int id) {
-        Producto producto = Utilidades.busquedaProductoPorID(listaProductos, id);
+        Producto producto = Producto.busquedaProductoPorID(listaProductos, id);
 
         if (producto != null) {
             System.out.println(producto);

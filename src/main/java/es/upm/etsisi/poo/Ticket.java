@@ -165,7 +165,7 @@ public class Ticket {
      */
     public boolean removeProduct(int id) {
         boolean resultado = false;
-        Producto producto = Utilidades.busquedaProductoPorID(productos, id);
+        Producto producto = Producto.busquedaProductoPorID(productos, id);
         if  (producto != null) {
             Iterator<Producto> iterator = productos.iterator();
             while (iterator.hasNext()) {

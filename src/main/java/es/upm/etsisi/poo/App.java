@@ -208,7 +208,7 @@ public class App {
                         id = Integer.parseInt(comando[2]);
                         int cantidad = Integer.parseInt(comando[3]);
                         if (cantidad<=MAX_IN_TICKET-ticket.getNumeroProductos()){
-                            ticket.addProduct(Utilidades.busquedaProductoPorID(productList.getLista(), id), cantidad);
+                            ticket.addProduct(Producto.busquedaProductoPorID(productList.getLista(), id), cantidad);
                             ticket.printTicket();
                         }
                         else System.out.println("You cannot add more product than the ticket capacity allows");
