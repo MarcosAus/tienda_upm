@@ -145,7 +145,7 @@ public class App {
                 if (comando.length == 5) {
                     try {
                         id = Integer.parseInt(comando[2]);
-                        String campo = comando[3].toLowerCase();
+                        String campo = comando[3];
                         String valor = comando[4];
                         productList.updateProduct(id, campo, valor);
                     } catch (NumberFormatException e) {
