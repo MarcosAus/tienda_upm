@@ -25,8 +25,6 @@ public class App {
 
         if (args.length > 0) {
             leerFicheros(args[0]);
-            System.out.println("Finished reading commands from file: " + args[0]);
-            return;
         }
 
         boolean continuar;
@@ -280,16 +278,19 @@ public class App {
     public static void leerFicheros(String fichero) {
         try (BufferedReader br = new BufferedReader(new FileReader(fichero))) {
             String linea;
-            while ((linea = br.readLine()) != null) {
+            boolean continuar = true;
+            while ((linea = br.readLine()) != null && continuar) {
                 if (linea.trim().isEmpty() || linea.trim().startsWith("#")) continue;
 
                 String[] comando = linea.trim().split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
-                boolean continuar = ejecutarComando(comando, true);
-                if (!continuar) {
-                    return;
-                }
+                continuar = ejecutarComando(comando, true);
             }
+
+            if (!continuar) {
+                System.exit(0);
+            }
+
         } catch (IOException e) {
             System.out.println("Error al leer el fichero: " + e.getMessage());
         }
