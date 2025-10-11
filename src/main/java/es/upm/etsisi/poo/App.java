@@ -3,13 +3,6 @@ package es.upm.etsisi.poo;
 import java.util.Scanner;
 import java.io.*;
 
-/** COSAS QUE FALTAN POR HACER (MARCAR CON UNA X LAS QUE SE VAYAN COMPLETANDO):
- * METODOS PRINT Y REMOVE DE LA CLASE TICKET X
- * SACAR LOS SWITCH DE PROD Y TICKET DEL MEGASWITCH DE EJECUTARCOMANDO X
- * AÑADIR JAVADOC DE LAS FUNCIONES DEL RESTO DE CLASES, SOLO ESTAN COMENTADAS POR ENCIMA
- * METODO PARA LEER Y OTRO PARA ESCRIBIR FICHEROS, SERIA UTIL A LA HORA DE PROBAR
- */
-
 public class App {
     private static final int MAX_LIST = 200; // Número máximo de productos en la Tienda
     private static final int MAX_IN_TICKET = 100; //Número máximo de productos en el Ticket
@@ -33,10 +26,11 @@ public class App {
         if (args.length > 0) {
             leerFicheros(args[0]);
             System.out.println("Finished reading commands from file: " + args[0]);
+            return;
         }
 
         boolean continuar;
-        Scanner sc = new Scanner(System.in); // Scanner sc = new Scanner(New File((args))
+        Scanner sc = new Scanner(System.in);
         do {
             System.out.print("tUPM> ");
             String entrada = sc.nextLine();
@@ -152,7 +146,7 @@ public class App {
                     try {
                         id = Integer.parseInt(comando[2]);
                         String campo = comando[3].toLowerCase();
-                        String valor = comando[4].toLowerCase();
+                        String valor = comando[4];
                         productList.updateProduct(id, campo, valor);
                     } catch (NumberFormatException e) {
                         System.out.println("ID is not a number");
@@ -291,7 +285,10 @@ public class App {
 
                 String[] comando = linea.trim().split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
-                ejecutarComando(comando, true);
+                boolean continuar = ejecutarComando(comando, true);
+                if (!continuar) {
+                    return;
+                }
             }
         } catch (IOException e) {
             System.out.println("Error al leer el fichero: " + e.getMessage());

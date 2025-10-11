@@ -59,7 +59,7 @@ public class Producto {
         this.precio = precio;
     }
 
-    // Devuelve la categoría a la que pertenece el producto
+    // Devuelve la categoría a la que pertenece el producto en formato String
     public String getCategoriaString() {
         return categoria.toString();
     }
@@ -152,4 +152,3 @@ public class Producto {
         return resultado;
     }
 }
-
