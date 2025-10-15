@@ -1,0 +1,46 @@
+echo "Agrego un producto Base Correcto"
+prod add 1 "Libro POO" BOOK 25
+prod add 2 "Camiseta talla:M UPM" CLOTHES 15
+echo "Agrego un producto erroneo sin parametros"
+prod add
+echo "Agrego un producto erroneo con un solo parametro"
+prod add 1
+echo "Agrego un producto erroneo con un dos parametros"
+prod add 1 "Libro POO"
+echo "Agrego un producto erroneo con un tres parametros"
+prod add 1 "Libro POO" BOOK
+echo "Agrego un producto repetido"
+prod add 1 "Libro POO" BOOK 25
+echo "Agrego un producto erroneo con texto en lugar de id"
+prod add pepe "Libro POO" BOOK 25
+echo "Agrego un producto erroneo con texto mal escrito en lugar de nombre con comillas"
+prod add 2 BOOK BOOK 25
+echo "Agrego un producto  erroneo con texto categoria mal escrita"
+prod add 2 "Libro POO" MACETA 25
+echo "Agrego un producto erroneo con precio categoria mal escrito"
+prod add 2 "Libro POO" BOOK MESA
+echo "Agrego un producto erroneo con precio negativo"
+prod add 2 "Libro POO" BOOK -4
+echo "Agrego un producto correcto de Merch"
+prod add 3 "Llavero UPM" MERCH 7
+echo "Agrego un producto correcto de Papeleria"
+prod add 4 "Libreta UPM" STATIONERY 10
+echo "Agrego un producto correcto de electronica"
+prod add 5 "Raton UPM" ELECTRONICS 9
+echo "Agrego un producto correcto de electronica con comillas en el nombre"
+prod add 6 "Pack 3USB 1GB /"Kingstom/" UPM" ELECTRONICS 20
+echo "Listo todos los productos"
+prod list
+echo "Creo un carrito con cosas, algunas con descuento y otras sin el combinando"
+ticket add 1 2
+ticket add 2 1
+ticket add 3 3
+ticket add 4 2
+ticket remove 4
+ticket add 4 1
+ticket add 2 1
+ticket add 5 1
+ticket add 5 1
+ticket add 6 2
+ticket print
+exit

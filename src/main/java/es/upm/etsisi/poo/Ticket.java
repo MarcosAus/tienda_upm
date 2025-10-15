@@ -42,7 +42,6 @@ public class Ticket {
             for (int i = 0; i < cantidad; i++) {
                 productos.add(producto);
             }
-            // Este sort lo que hace es ordena alfabeticamente los productos del ticket
             productos.sort((p1, p2) -> p1.getNombre().compareToIgnoreCase(p2.getNombre()));
             System.out.println("ticket add: ok");
         }
