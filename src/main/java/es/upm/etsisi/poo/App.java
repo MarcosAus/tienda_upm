@@ -25,7 +25,6 @@ public class App {
 
         if (args.length > 0) {
             leerFicheros(args[0]);
-            System.out.println("Finished reading commands from file: " + args[0]);
             return;
         }
 
@@ -106,7 +105,7 @@ public class App {
             case "add":
                 try {
                     // Para ver si el comando esta bien Y hay espacio en la lista
-                    if (comando.length == 6 && productList.getCapacidad() <= MAX_LIST) {
+                    if (comando.length == 6 && productList.getCapacidad() < MAX_LIST) {
                         id = Integer.parseInt(comando[2]);
                         String nombre = comando[3];
                         Producto.Categoria categoria = Producto.Categoria.getCategoria(comando[4]);
@@ -291,7 +290,7 @@ public class App {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error al leer el fichero: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 }
