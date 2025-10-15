@@ -25,7 +25,7 @@ public class App {
 
         if (args.length > 0) {
             leerFicheros(args[0]);
-            System.out.println("Finished reading commands from file: " + args[0]);
+            return;
         }
 
         boolean continuar;
@@ -266,7 +266,7 @@ public class App {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error al leer el fichero: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 }
