@@ -49,7 +49,6 @@ public class App {
      */
     public static boolean ejecutarComando(String[] comando, boolean continuar) {
         String primeraPalabra = comando[0].toLowerCase();
-        // El comando solo tiene una palabra que DEBE ser help o exit, en caso contrario esta mal
         if (comando.length < 2) {
             if (primeraPalabra.equals("help")) {
                 mostrarComandos();
@@ -63,19 +62,15 @@ public class App {
             }
         }
 
-        // El comando tiene 2 o mas palabras por lo que tiene que ser prod, ticket o echo
         else {
             switch (primeraPalabra) {
-                // Comandos tipo prod
                 case "prod":
                     comandosProdAux(comando);
                     break;
-                // Comandos tipo ticket
                 case "ticket":
                     comandosTicketAux(comando);
                     break;
 
-                // El usuario quiere que la consola haga de papagayo (que repita lo que ponga)
                 case "echo":
                     System.out.println("echo " + comando[1]);
                     break;
@@ -101,10 +96,8 @@ public class App {
         String segundaPalabra = comando[1].toLowerCase();
 
         switch (segundaPalabra) {
-            // Añadir un producto a la tienda si no existe
             case "add":
                 try {
-                    // Para ver si el comando esta bien Y hay espacio en la lista
                     if (comando.length == 6 && productList.getCapacidad() < MAX_LIST) {
                         id = Integer.parseInt(comando[2]);
                         String nombre = comando[3];
@@ -116,8 +109,6 @@ public class App {
                         } else System.out.println("Category is wrong");
                     }
 
-                    // Si no deja es porque el comando esta mal o porque la lista esta llena
-                    // Son dos IFs a continuacion porque puede darse que ambas condiciones se cumplan
                     else {
                         if (comando.length != 6) {
                             System.out.println("Command length is wrong");
@@ -131,7 +122,6 @@ public class App {
                 }
                 break;
 
-            // Listar los productos de la tienda
             case "list":
                 if (comando.length == 2) {
                     productList.printList();
@@ -139,7 +129,6 @@ public class App {
                 else System.out.println("Command length is wrong");
                 break;
 
-            // Actualizar un producto de la lista de la tienda
             case "update":
                 if (comando.length == 5) {
                     try {
@@ -153,7 +142,6 @@ public class App {
                 } else System.out.println("Command length is wrong");
                 break;
 
-            // Eliminar un producto de la lista de la tienda
             case "remove":
                 if (comando.length == 3) {
                     try {
@@ -186,7 +174,6 @@ public class App {
         String segundaPalabra = comando[1].toLowerCase();
 
         switch (segundaPalabra) {
-            // Se crea un ticket nuevo, si existe uno se reinicia
             case "new":
                 if (comando.length == 2) {
                     ticket = new Ticket();
@@ -194,7 +181,6 @@ public class App {
                 } else System.out.println("Command length is wrong");
                 break;
 
-            // Se añade un producto al ticket de los que existen en la tienda
             case "add":
                 try {
                     if (comando.length == 4 && productList.getCapacidad() <= MAX_IN_TICKET) {
@@ -220,7 +206,6 @@ public class App {
                 }
                 break;
 
-            // Se quitan todas las existencias de un producto del ticket
             case "remove":
                 if (comando.length == 3) {
                     try {
@@ -234,7 +219,6 @@ public class App {
                 } else System.out.println("Command length is wrong");
                 break;
 
-            // Se imprime el ticket con lo que lleve hasta el momento y con los descuentos aplicados
             case "print":
                 if (comando.length == 2) {
                     ticket.printTicket();
@@ -242,7 +226,6 @@ public class App {
                 } else System.out.println("Command length is wrong");
                 break;
 
-            // Es un comando ticket que no existe en el programa
             default:
                 System.out.println("Unknown ticket command");
                 break;
