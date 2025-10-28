@@ -1,0 +1,113 @@
+@startuml
+class Producto {
+-ID: final int
+nombre: String
+categoria: Categoria
+-precio: double
+
++Producto(ID,nombre,categoria,precio)
++getPrecio(): double
++setPrecio(precio: double): void
++getCategoriaString(): String
++setCategoria(categoria: Categoria): void
++getNombre(): String
++setNombre(nombre: String): void
++getID(): int
++equals(producto): boolean
++descuento(): double
++toString(): String
+busquedaProductoPorID(productos: ArrayList<Productos>, id: int): Producto
+}
+enum Categoria{
++MERCH
++STATIONARY
++CLOTHES
++BOOK
++ELECTRONICS
++getCategoria(categoria: String): Categoria
+}
+
+class Inventario{
+
++Inventario()
++getCapacidad(): int
++getLista(): ArrayList<Producto>
++addProducto(id: int ,nombre: String,categoria: Categoria, precio: double): void
++updateProduct(id: int,campo: String,valor: String): void
++removeProduct(id: int): void
++printList(): void
+}
+enum Estado{
++VACIO
++ACTIVO
++CERRADO
+}
+class Ticket {
+' NUEVO
+-id: String
+-estado: Estado
+
++Ticket()
++getProductos(): ArrayList<Producto>
++getNumeroProductos(): int
++addproduct(producto: Producto, cantidad: int): void
++getCantidadProductoCategoria(): int[]
++tieneDescuento(categoria: String, cantidadProductos: int[]): boolean
++printTicket(): void
++calcularPrecio(): double
++calcularDescuentoTotal(): double
++removeProduct(id: int): boolean
+' NUEVO
++getEstado(): Estado
+}
+
+class App {
+-MAX_LIST: static final int
+-MAX_IN_TICKET: static final int
+
++main(args: String[]): void
++ejecutarComando(comando: String[], continuar: boolean)
++comandosProdAux(comando: String[])
++comandosTicketAux(comando: String[])
++mostrarComandos
++leerFicheros(fichero: String)
+}
+
+class Usuraio {
+#id: String
+-nombre: String
+-correo: String
+
++Usuario(id: String, nombre: String, correo: String)
++getId(): String
++setID(id: String): void
++getNombre(): String
++setNombre(nombre: String): void
++getCorreo(): String
++setCorreo(correo: String): void
+
+}
+
+class Cliente{
+
++Cliente(id: String, nombre: String, correo: String)
+
+}
+
+class Cajero{
+
++Cajero(id: String, nombre: String, correo: String)
++Cajero(nombre: String, correo: String)
+
+}
+
+Inventario o--> Producto
+App *--> Inventario
+App *--> Ticket
+Ticket o--> Producto
+Usuario <|-- Cliente
+Usuario <|-- Cajero
+
+
+
+@enduml

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Producto {
-    //Contiene las distintas categorías y organiza los productos en ellas dependiendo de un string
     public enum Categoria {MERCH, STATIONERY, CLOTHES, BOOK, ELECTRONICS;
 
         /**

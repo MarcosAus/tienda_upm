@@ -33,8 +33,6 @@ public class App {
         do {
             System.out.print("tUPM> ");
             String entrada = sc.nextLine();
-            // Aunque pueda dar miedo, este split separa por espacios
-            // ignorando los espacios que haya dentro de las comillas dobles
             String[] comando = entrada.trim().split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
             continuar = ejecutarComando(comando, true);
         } while (continuar);
