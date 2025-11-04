@@ -1,9 +1,18 @@
 @startuml
+
+class Utilidades {
++busquedaProductoPorID(productos: ArrayList<Producto>, id: int)
++busquedaCajeroPorID(cajeros: ArrayList<Cajero>, id: String)
+' Posiblemente sea un Map, no un ArrayList
+}
 class Producto {
 -ID: final int
 nombre: String
 categoria: Categoria
 -precio: double
+' NUEVO:
+-fechaEvento: String
+- MAX_NUM_PARTICIPANTES = 100: int
 
 +Producto(ID,nombre,categoria,precio)
 +getPrecio(): double
@@ -97,8 +106,12 @@ class Cliente{
 class Cajero{
 
 +Cajero(id: String, nombre: String, correo: String)
-+Cajero(nombre: String, correo: String)
 
+-{static} validarId(id: String): String
+
+}
+class Empleados {
+' Actua como la clase Inventario, pero para los Cajeros
 }
 
 Inventario o--> Producto
@@ -107,6 +120,8 @@ App *--> Ticket
 Ticket o--> Producto
 Usuario <|-- Cliente
 Usuario <|-- Cajero
+
+
 
 
 

@@ -18,7 +18,7 @@ public class App {
      *             de la app. Si este parametro esta vacio el programa se inicializara normalmente.
      */
     public static void main(String[] args) {
-        ticket = new Ticket();
+        ticket = new Ticket(); // Al haber modificado el constructor, hay que rehacer todas las instancias de Ticket /Marcos
         productList = new Inventario();
 
         System.out.println("Welcome to the ticket module App.\nTicket module. Type 'help' to see commands.");
@@ -185,7 +185,7 @@ public class App {
                         id = Integer.parseInt(comando[2]);
                         int cantidad = Integer.parseInt(comando[3]);
                         if (cantidad<=MAX_IN_TICKET-ticket.getNumeroProductos()){
-                            ticket.addProduct(Producto.busquedaProductoPorID(productList.getLista(), id), cantidad);
+                            ticket.addProduct(Utilidades.busquedaProductoPorID(productList.getLista(), id), cantidad);
                             ticket.printTicket();
                         }
                         else System.out.println("You cannot add more product than the ticket capacity allows");

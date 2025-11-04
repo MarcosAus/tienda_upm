@@ -7,13 +7,24 @@ public class Ticket {
     /**
      * Array de productos actuales en el ticket
      */
+
+    public enum Estado {
+        VACIO, ACTIVO, CERRADO
+    }
     private final ArrayList<Producto> productos;
+    private String id;
+    private Estado estadoTicket;
+    private Cliente cliente;
+    private Cajero cajero;
 
     /**
      * Constructor de la clase Ticket
      */
-    public Ticket() {
+    public Ticket(Cliente cliente, Cajero cajero) {
         this.productos = new ArrayList<>();
+        this.estadoTicket = Estado.VACIO;
+        this.cliente = cliente;
+        this.cajero = cajero;
     }
 
     /**
@@ -164,7 +175,7 @@ public class Ticket {
      */
     public boolean removeProduct(int id) {
         boolean resultado = false;
-        Producto producto = Producto.busquedaProductoPorID(productos, id);
+        Producto producto = Utilidades.busquedaProductoPorID(productos, id);
         if  (producto != null) {
             Iterator<Producto> iterator = productos.iterator();
             while (iterator.hasNext()) {
@@ -177,5 +188,8 @@ public class Ticket {
             }
         }
         return resultado;
+    }
+    public Estado getEstadoTicket() {
+        return estadoTicket;
     }
 }
