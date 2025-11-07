@@ -1,0 +1,151 @@
+@startuml
+Class App {}
+class CLI {}
+Class Product <<abstract>> {
+#id: int
+#name:str
+#price: double
+}
+
+class ControladoraProduct {
+-products:arrayList<Product>
+}
+
+class Ticket{
+-products:arrayList<Product>
+}
+
+enum State{
+EMPTY
+ACTIVE
+CLOSED
+}
+
+Ticket ..>State
+
+class ControladoraTicket {
+-ticket : Ticket
+}
+
+Product --o ControladoraProduct
+Product --o Ticket
+ControladoraTicket --o Ticket
+
+
+
+class ProductBasic{
+
+-id: int
+-name:str
+-category:Category
+-price:double
+}
+
+enum Category {
+MERCH
+ELECTRONICA
+PAPELERIA
+ROPA
+LIBRO
+}
+ProductBasic -->Category
+ProductBasic --|> Product
+
+class ProductPers{
+
+-id:int
+-name:str
+-category:Category
+-price:double
+-texts:ArrayList<Str>
+}
+ProductPers --|> ProductBasic
+
+class ComidaCampus{
+-maxParticipantes:100
+-MINTIME:72
+}
+ComidaCampus --|> Product
+
+class Reuniones{
+-maxParticipantes:100
+-MINTIME:12
+}
+Reuniones --|> Product
+
+class ControladoraUser{
+-Users:ArrayList<User>
+}
+
+class User<<abstract>> {
+}
+User --o ControladoraUser
+class Client {
+-id
+-name
+-dni
+-mail
+-cajero:Cajero
+}
+Client --|> User
+
+
+class Cashier{
+-code:str
+-name
+-mail
+}
+Cashier --|> User
+
+Cashier --o Ticket
+Client --o Ticket
+
+
+class Command <<abstract>>{
+#name:Str
++{abstract}apply(args:String[])
+}
+
+class CommandProd{
++ apply(args : String[])
+}
+CommandProd --|> Command
+
+class CommandAddProd{
+ + apply(args : String[])
+}
+CommandAddProd --|> Command
+CommandAddProd --*CommandProd
+CommandProd --> CommandAddProd
+
+class CommandTicket{
++ apply(args : String[])
+}
+CommandTicket --|> Command
+
+class CommandNewTicket{
+ + apply(args : String[])
+}
+CommandNewTicket --|> Command
+CommandNewTicket --*CommandTicket
+CommandTicket --> CommandNewTicket
+
+
+class CommandUser{
++ apply(args : String[])
+}
+CommandUser --|> Command
+
+class CommandAddUser{
+ + apply(args : String[])
+}
+CommandAddUser --|> Command
+CommandAddUser --*CommandUser
+CommandUser --> CommandAddUser
+
+App --* Command
+App --* CLI
+App --> ControladoraProduct
+App --> ControladoraTicket
+App --> ControladoraUser
+@enduml
