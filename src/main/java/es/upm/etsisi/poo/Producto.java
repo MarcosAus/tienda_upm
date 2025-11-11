@@ -29,7 +29,7 @@ public class Producto {
         }
     }
 
-    private final int ID; // Id del producto
+    private int ID; // Id del producto
     private String nombre; // Nombre del producto
     private Categoria categoria; // Categoría del producto
     private double precio; // Precio del producto
@@ -50,12 +50,13 @@ public class Producto {
         this.categoria = categoria;
         this.precio = precio;
     }
-    public Producto (int ID, String nombre, double precioPersona, int numAsistentes, String fechaEvento) {
-        this.ID = ID;
-        this.nombre = nombre;
-        this.precio = precioPersona;
-        this.fechaEvento = fechaEvento;
-
+    public Producto(int ID, String nombre, double precioPersona, int numAsistentes, String fechaEvento) {
+        if (numAsistentes > MAX_NUM_PARTICIPANTES) {
+            this.ID = ID;
+            this.nombre = nombre;
+            this.precio = precioPersona;
+            this.fechaEvento = fechaEvento;
+        }
     }
 
     // Devuelve el precio del producto

@@ -6,7 +6,7 @@ import java.io.*;
 public class App {
     private static final int MAX_LIST = 200; // Número máximo de productos en la Tienda
     private static final int MAX_IN_TICKET = 100; //Número máximo de productos en el Ticket
-    private static Inventario productList; // Array de productos disponibles en la Tienda
+    private static Inventory productList; // Array de productos disponibles en la Tienda
     private static Ticket ticket; //Ticket donde se añadirán los productos deseados
 
     /**
@@ -19,7 +19,7 @@ public class App {
      */
     public static void main(String[] args) {
         ticket = new Ticket(); // Al haber modificado el constructor, hay que rehacer todas las instancias de Ticket /Marcos
-        productList = new Inventario();
+        productList = new Inventory();
 
         System.out.println("Welcome to the ticket module App.\nTicket module. Type 'help' to see commands.");
 
@@ -185,7 +185,7 @@ public class App {
                         id = Integer.parseInt(comando[2]);
                         int cantidad = Integer.parseInt(comando[3]);
                         if (cantidad<=MAX_IN_TICKET-ticket.getNumeroProductos()){
-                            ticket.addProduct(Utilidades.busquedaProductoPorID(productList.getLista(), id), cantidad);
+                            ticket.addProduct(Utilities.busquedaProductoPorID(productList.getLista(), id), cantidad);
                             ticket.printTicket();
                         }
                         else System.out.println("You cannot add more product than the ticket capacity allows");
@@ -226,6 +226,72 @@ public class App {
 
             default:
                 System.out.println("Unknown ticket command");
+                break;
+        }
+    }
+
+    public static void comandosClienteAux(String[] comando) {
+        String id;
+        String segundaPalabra = comando[1].toLowerCase();
+        switch(segundaPalabra) {
+            case  "add":
+                try {
+                  if (comando.length == 6) {
+                      String clientName = comando[2].toLowerCase();
+                      String clientDNI = comando[3].toLowerCase();
+                      String clientMail = comando[4].toLowerCase();
+                      String cashId = comando[5].toLowerCase();
+                      Clientes.addClient(clientName, clientDNI, clientMail, cashId); //Provisional, no sabemos dónde irá el metodo "addClient" /M
+                  } else {
+                      System.out.println("Command length is wrong");
+                  }
+                } catch(IllegalArgumentException e) {
+                    System.out.println("Name is not text");
+                }
+                break;
+            case "remove":
+                if (comando.length == 3) {
+                    String clientDNI = comando[2].toLowerCase();
+                    Clientes.removeClient(clientDNI);
+                } else System.out.println("Command length is wrong");
+                break;
+            case "list":
+                if (comando.length == 2) {
+                    Clientes.printClientList();
+                } else System.out.println("Command length is wrong");
+                break;
+        }
+    }
+
+    public static void comandosCashierAux(String[] comando) { //Copiado y pegado de Cliente no hecho nada aún
+        String id;
+        String segundaPalabra = comando[1].toLowerCase();
+        switch(segundaPalabra) {
+            case  "add":
+                try {
+                    if (comando.length == 6) {
+                        String clientName = comando[2].toLowerCase();
+                        String clientDNI = comando[3].toLowerCase();
+                        String clientMail = comando[4].toLowerCase();
+                        String cashId = comando[5].toLowerCase();
+                        Clientes.addClient(clientName, clientDNI, clientMail, cashId); //Provisional, no sabemos dónde irá el metodo "addClient" /M
+                    } else {
+                        System.out.println("Command length is wrong");
+                    }
+                } catch(IllegalArgumentException e) {
+                    System.out.println("Name is not text");
+                }
+                break;
+            case "remove":
+                if (comando.length == 3) {
+                    String clientDNI = comando[2].toLowerCase();
+                    Clientes.removeClient(clientDNI);
+                } else System.out.println("Command length is wrong");
+                break;
+            case "list":
+                if (comando.length == 2) {
+                    Clientes.printClientList();
+                } else System.out.println("Command length is wrong");
                 break;
         }
     }

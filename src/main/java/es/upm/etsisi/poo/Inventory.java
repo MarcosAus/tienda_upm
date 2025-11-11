@@ -3,7 +3,7 @@ package es.upm.etsisi.poo;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Inventario {
+public class Inventory {
     /**
      * Array de productos que contiene los productos disponibles en la tienda
      */
@@ -12,7 +12,7 @@ public class Inventario {
     /**
      * Constructor de la clase inventario
      */
-    public Inventario() {
+    public Inventory() {
         this.listaProductos = new ArrayList<>();
     }
 
@@ -42,7 +42,7 @@ public class Inventario {
      */
     public void addProduct(int id, String nombre, Producto.Categoria categoria, double precio) {
         if (id >= 0) {
-            Producto existente = Utilidades.busquedaProductoPorID(listaProductos, id);
+            Producto existente = Utilities.busquedaProductoPorID(listaProductos, id);
 
             if (existente == null) {
                 if (nombre.isEmpty() || nombre.length() > 100) System.out.println("Name length is incorrect");
@@ -67,7 +67,7 @@ public class Inventario {
      * @param valor Nuevo valor del atributo que se quiere actualizar
      */
     public void updateProduct(int id, String campo, String valor) {
-        Producto producto = Utilidades.busquedaProductoPorID(listaProductos, id);
+        Producto producto = Utilities.busquedaProductoPorID(listaProductos, id);
 
         if (producto != null) {
             switch (campo.toUpperCase()) {
@@ -113,7 +113,7 @@ public class Inventario {
      * @param id Numero identificador del producto que se desea eliminar
      */
     public void removeProduct(int id) {
-        Producto producto = Utilidades.busquedaProductoPorID(listaProductos, id);
+        Producto producto = Utilities.busquedaProductoPorID(listaProductos, id);
 
         if (producto != null) {
             System.out.println(producto);

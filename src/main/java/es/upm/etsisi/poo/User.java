@@ -1,11 +1,11 @@
 package es.upm.etsisi.poo;
 
-public class Usuario {
+public class User {
     private String id;
     private String nombre;
     private String correo;
 
-    public Usuario(String id, String nombre, String correo) {
+    public User(String id, String nombre, String correo) {
         this.id = id;
         this.nombre = nombre;
         this.correo = correo;

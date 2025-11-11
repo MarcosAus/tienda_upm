@@ -1,7 +1,7 @@
 @startuml
 Class App {}
 class CLI {}
-Class Product <<abstract>> {
+class Product <<abstract>> {
 #id: int
 #name:str
 #price: double

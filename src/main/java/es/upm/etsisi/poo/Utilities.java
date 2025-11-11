@@ -3,7 +3,7 @@ package es.upm.etsisi.poo;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Utilidades {
+public class Utilities {
     /**
      * Metodo que busca un Producto en concreto en la tienda con el ID proporcionado y, si lo encuentra, lo devuelve
      * Si no encuentra ningun producto con ese ID, devuelve null
@@ -25,18 +25,17 @@ public class Utilidades {
         return resultado;
     }
 
-    public static Cajero buscarCajeroPorID(ArrayList<Cajero> cajeros, String id) {
-        Cajero resultado = null;
+    public static Cashier buscarCajeroPorID(ArrayList<Cashier> cashiers, String id) {
+        Cashier resultado = null;
         boolean existe = false;
-        Iterator<Producto> iterator = cajeros.iterator();
+        Iterator<Cashier> iterator = cashiers.iterator();
         while (iterator.hasNext() && !existe) {
-            Producto producto = iterator.next();
-            if (cajero.getId() == id) {
-                resultado = producto;
+            Cashier cashier = iterator.next();
+            if (cashier.getId().equals(id)) {
+                resultado = cashier;
                 existe = true;
             }
         }
-
         return resultado;
     }
 }

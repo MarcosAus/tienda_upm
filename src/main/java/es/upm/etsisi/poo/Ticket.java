@@ -8,23 +8,23 @@ public class Ticket {
      * Array de productos actuales en el ticket
      */
 
-    public enum Estado {
-        VACIO, ACTIVO, CERRADO
+    public enum State {
+        EMPTY, ACTIVE, CLOSED
     }
     private final ArrayList<Producto> productos;
     private String id;
-    private Estado estadoTicket;
-    private Cliente cliente;
-    private Cajero cajero;
+    private State stateTicket;
+    private Client client;
+    private Cashier cashier;
 
     /**
      * Constructor de la clase Ticket
      */
-    public Ticket(Cliente cliente, Cajero cajero) {
+    public Ticket(Client client, Cashier cashier) {
         this.productos = new ArrayList<>();
-        this.estadoTicket = Estado.VACIO;
-        this.cliente = cliente;
-        this.cajero = cajero;
+        this.stateTicket = State.EMPTY;
+        this.client = client;
+        this.cashier = cashier;
     }
 
     /**
@@ -175,7 +175,7 @@ public class Ticket {
      */
     public boolean removeProduct(int id) {
         boolean resultado = false;
-        Producto producto = Utilidades.busquedaProductoPorID(productos, id);
+        Producto producto = Utilities.busquedaProductoPorID(productos, id);
         if  (producto != null) {
             Iterator<Producto> iterator = productos.iterator();
             while (iterator.hasNext()) {
@@ -189,7 +189,7 @@ public class Ticket {
         }
         return resultado;
     }
-    public Estado getEstadoTicket() {
-        return estadoTicket;
+    public State getEstadoTicket() {
+        return stateTicket;
     }
 }
