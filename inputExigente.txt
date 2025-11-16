@@ -1,35 +1,35 @@
-echo "Agrego un producto Base Correcto"
+echo "Agrego un product Base Correcto"
 prod add 1 "Libro POO" BOOK 25
 prod add 2 "Camiseta talla:M UPM" CLOTHES 15
-echo "Agrego un producto erroneo sin parametros"
+echo "Agrego un product erroneo sin parametros"
 prod add
-echo "Agrego un producto erroneo con un solo parametro"
+echo "Agrego un product erroneo con un solo parametro"
 prod add 1
-echo "Agrego un producto erroneo con un dos parametros"
+echo "Agrego un product erroneo con un dos parametros"
 prod add 1 "Libro POO"
-echo "Agrego un producto erroneo con un tres parametros"
+echo "Agrego un product erroneo con un tres parametros"
 prod add 1 "Libro POO" BOOK
-echo "Agrego un producto repetido"
+echo "Agrego un product repetido"
 prod add 1 "Libro POO" BOOK 25
-echo "Agrego un producto erroneo con texto en lugar de id"
+echo "Agrego un product erroneo con texto en lugar de id"
 prod add pepe "Libro POO" BOOK 25
-echo "Agrego un producto erroneo con texto mal escrito en lugar de nombre con comillas"
+echo "Agrego un product erroneo con texto mal escrito en lugar de nombre con comillas"
 prod add 2 BOOK BOOK 25
-echo "Agrego un producto  erroneo con texto categoria mal escrita"
+echo "Agrego un product  erroneo con texto categoria mal escrita"
 prod add 2 "Libro POO" MACETA 25
-echo "Agrego un producto erroneo con precio categoria mal escrito"
+echo "Agrego un product erroneo con precio categoria mal escrito"
 prod add 2 "Libro POO" BOOK MESA
-echo "Agrego un producto erroneo con precio negativo"
+echo "Agrego un product erroneo con precio negativo"
 prod add 2 "Libro POO" BOOK -4
-echo "Agrego un producto correcto de Merch"
+echo "Agrego un product correcto de Merch"
 prod add 3 "Llavero UPM" MERCH 7
-echo "Agrego un producto correcto de Papeleria"
+echo "Agrego un product correcto de Papeleria"
 prod add 4 "Libreta UPM" STATIONERY 10
-echo "Agrego un producto correcto de electronica"
+echo "Agrego un product correcto de electronica"
 prod add 5 "Raton UPM" ELECTRONICS 9
-echo "Agrego un producto correcto de electronica con comillas en el nombre"
+echo "Agrego un product correcto de electronica con comillas en el nombre"
 prod add 6 "Pack 3USB 1GB /"Kingstom/" UPM" ELECTRONICS 20
-echo "Listo todos los productos"
+echo "Listo todos los products"
 prod list
 echo "Creo un carrito con cosas, algunas con descuento y otras sin el combinando"
 ticket add 1 2

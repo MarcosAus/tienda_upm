@@ -1,9 +1,6 @@
 package es.upm.etsisi.poo;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
-public class Producto {
+public class Product {
     public enum Categoria {MERCH, STATIONERY, CLOTHES, BOOK, ELECTRONICS;
 
         /**
@@ -44,13 +41,13 @@ public class Producto {
      * @param categoria Categoria del enum Categoria que define la categoria del producto
      * @param precio Double que representa el precio individual del producto
      */
-    public Producto(int ID, String nombre, Categoria categoria, double precio) {
+    public Product(int ID, String nombre, Categoria categoria, double precio) {
         this.ID = ID;
         this.nombre = nombre;
         this.categoria = categoria;
         this.precio = precio;
     }
-    public Producto(int ID, String nombre, double precioPersona, int numAsistentes, String fechaEvento) {
+    public Product(int ID, String nombre, double precioPersona, int numAsistentes, String fechaEvento) {
         if (numAsistentes > MAX_NUM_PARTICIPANTES) {
             this.ID = ID;
             this.nombre = nombre;
@@ -95,11 +92,11 @@ public class Producto {
 
     /**
      * Metodo que comprueba si dos productos son iguales comparando sus IDs
-     * @param producto Objeto Producto con el que se quiere comparar
+     * @param product Objeto Producto con el que se quiere comparar
      * @return Devuelve true si el objeto comparado es igual que el parametro, false en caso contrario
      */
-    public boolean equals(Producto producto){
-        return producto.getID()==this.getID();
+    public boolean equals(Product product){
+        return product.getID()==this.getID();
     }
 
     /**

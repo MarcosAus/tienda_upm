@@ -97,7 +97,7 @@ class Cashier{
 }
 Cashier --|> User
 
-Cashier --o Ticket
+Ticket --* Cashier
 Client --o Ticket
 
 

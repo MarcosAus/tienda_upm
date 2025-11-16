@@ -1,11 +1,11 @@
-echo "Agrego un producto Base Correcto"
+echo "Agrego un product Base Correcto"
 prod add 1 "Libro POO" BOOK 25
 prod add 2 "Camiseta talla:M UPM" CLOTHES 15
 echo "Creo un carrito demasiado grande y lo descarto"
 ticket add 1 99
 ticket add 2 2
 ticket new
-echo "Creo un productos de mas"
+echo "Creo un products de mas"
 prod add 3 "Generic Merch UPM" MERCH 3
 prod add 4 "Generic Merch UPM" MERCH 4
 prod add 5 "Generic Merch UPM" MERCH 5

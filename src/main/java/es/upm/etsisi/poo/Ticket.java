@@ -11,7 +11,7 @@ public class Ticket {
     public enum State {
         EMPTY, ACTIVE, CLOSED
     }
-    private final ArrayList<Producto> productos;
+    private final ArrayList<Product> products;
     private String id;
     private State stateTicket;
     private Client client;
@@ -21,7 +21,7 @@ public class Ticket {
      * Constructor de la clase Ticket
      */
     public Ticket(Client client, Cashier cashier) {
-        this.productos = new ArrayList<>();
+        this.products = new ArrayList<>();
         this.stateTicket = State.EMPTY;
         this.client = client;
         this.cashier = cashier;
@@ -31,8 +31,8 @@ public class Ticket {
      * Metodo para acceder a la lista de productos del ticket
      * @return Devuelve un ArrayList con los productos del ticket
      */
-    public ArrayList<Producto> getProductos() {
-        return productos;
+    public ArrayList<Product> getProductos() {
+        return products;
     }
 
     /**
@@ -40,20 +40,20 @@ public class Ticket {
      * @return Devuelve el numero de productos que contiene el ticket
      */
     public int getNumeroProductos() {
-        return productos.size();
+        return products.size();
     }
 
     /**
      * Metodo que añade productos al ticket
-     * @param producto Objeto clase Producto que se quiere meter al ticket
+     * @param product Objeto clase Producto que se quiere meter al ticket
      * @param cantidad El numero de productos que se deben añadir al ticket
      */
-    public void addProduct(Producto producto, int cantidad) {
-        if (producto != null) {
+    public void addProduct(Product product, int cantidad) {
+        if (product != null) {
             for (int i = 0; i < cantidad; i++) {
-                productos.add(producto);
+                products.add(product);
             }
-            productos.sort((p1, p2) -> p1.getNombre().compareToIgnoreCase(p2.getNombre()));
+            products.sort((p1, p2) -> p1.getNombre().compareToIgnoreCase(p2.getNombre()));
             System.out.println("ticket add: ok");
         }
         else System.out.println("This product does not exist. No products were added");
@@ -66,9 +66,9 @@ public class Ticket {
      */
     public int[] getCantidadProductoCategoria() {
         int[] resultado = new int[5];
-        Iterator<Producto> iterator = productos.iterator();
+        Iterator<Product> iterator = products.iterator();
         while (iterator.hasNext()) {
-            Producto p = iterator.next();
+            Product p = iterator.next();
             switch (p.getCategoriaString()) {
                 case "MERCH":
                     // MERCH NO TIENE DESCUENTO
@@ -119,14 +119,14 @@ public class Ticket {
         double descuentos = calcularDescuentoTotal();
         int[] descuentoPorCategoria = getCantidadProductoCategoria();
 
-        ArrayList<Producto> productos  = this.getProductos();
-        Iterator<Producto> iterator = productos.iterator();
+        ArrayList<Product> products = this.getProductos();
+        Iterator<Product> iterator = products.iterator();
         while (iterator.hasNext()) {
-            Producto producto = iterator.next();
+            Product product = iterator.next();
 
-            System.out.print(producto);
-            if (tieneDescuento(producto.getCategoriaString(),descuentoPorCategoria)) {
-                System.out.print("**discount -"+producto.descuento());
+            System.out.print(product);
+            if (tieneDescuento(product.getCategoriaString(),descuentoPorCategoria)) {
+                System.out.print("**discount -"+ product.descuento());
             }
             System.out.println();
         }
@@ -142,11 +142,11 @@ public class Ticket {
      */
     public double calcularPrecio() {
         double precio = 0;
-        Iterator<Producto> iterator = this.getProductos().iterator();
+        Iterator<Product> iterator = this.getProductos().iterator();
         while (iterator.hasNext()) {
-            Producto producto = iterator.next();
+            Product product = iterator.next();
 
-            precio += producto.getPrecio();
+            precio += product.getPrecio();
         }
         return Math.round(precio);
     }
@@ -158,12 +158,12 @@ public class Ticket {
     public double calcularDescuentoTotal() {
         double descuento = 0;
         int[] cantidadProductos = this.getCantidadProductoCategoria();
-        Iterator<Producto> iterator = this.getProductos().iterator();
+        Iterator<Product> iterator = this.getProductos().iterator();
         while (iterator.hasNext()) {
-            Producto producto = iterator.next();
+            Product product = iterator.next();
 
-            if (tieneDescuento(producto.getCategoriaString(), cantidadProductos)) {
-                descuento += producto.descuento();
+            if (tieneDescuento(product.getCategoriaString(), cantidadProductos)) {
+                descuento += product.descuento();
             }
         }
         return ((double) Math.round(descuento * 1000) /1000);
@@ -175,13 +175,13 @@ public class Ticket {
      */
     public boolean removeProduct(int id) {
         boolean resultado = false;
-        Producto producto = Utilities.busquedaProductoPorID(productos, id);
-        if  (producto != null) {
-            Iterator<Producto> iterator = productos.iterator();
+        Product product = Utilities.busquedaProductoPorID(products, id);
+        if  (product != null) {
+            Iterator<Product> iterator = products.iterator();
             while (iterator.hasNext()) {
-                Producto producto1 = iterator.next();
-                if (producto1.equals(producto)) {
-                    System.out.println(producto1);
+                Product product1 = iterator.next();
+                if (product1.equals(product)) {
+                    System.out.println(product1);
                     iterator.remove();
                     resultado = true;
                 }

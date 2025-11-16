@@ -3,10 +3,10 @@ package es.upm.etsisi.poo;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Empleados {
+public class Employees {
     private ArrayList<Cashier> listaEmpleados;
 
-    public Empleados() {
+    public Employees() {
         this.listaEmpleados = new ArrayList<>();
     }
 

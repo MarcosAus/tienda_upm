@@ -1,10 +1,14 @@
 package es.upm.etsisi.poo;
 
+import java.util.Stack;
+
 public class Cashier extends User {
+    Stack<Ticket> tickets;
 
     public Cashier(String id, String nombre, String correo) {
         super(validarId(id), nombre, correo); /*Si el id del cajero no empieza por "UW", el cajero se crea igual.
                                                Esto lo arreglaremos en App (abierto a revisar) /M */
+        this.tickets = new Stack<>();
     }
 
 

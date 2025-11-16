@@ -11,17 +11,17 @@ prod update 1 PRICE 30
 echo "inserto libro repetido y lo borro"
 prod add 3 "Libro POO repetido Error" BOOK 25
 prod remove 3
-echo "Agrego un producto al ticket e imprimo el ticket"
+echo "Agrego un product al ticket e imprimo el ticket"
 ticket add 1 2
 ticket print
 ticket new
-echo "Agrego dos productos al ticket e imprimo el ticket"
+echo "Agrego dos products al ticket e imprimo el ticket"
 ticket add 1 2
 ticket add 2 1
 ticket print
 ticket new
-echo "Agrego un producto al ticket e inicio un nuevo ticket"
-echo "Agrego un producto al ticket e imprimo un nuevo ticket"
+echo "Agrego un product al ticket e inicio un nuevo ticket"
+echo "Agrego un product al ticket e imprimo un nuevo ticket"
 ticket add 2 1
 ticket new
 ticket add 1 2

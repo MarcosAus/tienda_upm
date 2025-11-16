@@ -7,13 +7,13 @@ public class Inventory {
     /**
      * Array de productos que contiene los productos disponibles en la tienda
      */
-    private ArrayList<Producto> listaProductos;
+    private ArrayList<Product> listaProducts;
 
     /**
      * Constructor de la clase inventario
      */
     public Inventory() {
-        this.listaProductos = new ArrayList<>();
+        this.listaProducts = new ArrayList<>();
     }
 
     /**
@@ -21,15 +21,15 @@ public class Inventory {
      * @return Devuelve un entero que representa el numero total de productos disponibles en la tienda
      */
     public int getCapacidad() {
-        return listaProductos.size();
+        return listaProducts.size();
     }
 
     /**
      * Metodo que permite acceder a la lista de productos de la tienda
      * @return Devuelve una lista con los productos disponibles en la tienda hasta el momento
      */
-    public ArrayList<Producto> getLista() {
-        return listaProductos;
+    public ArrayList<Product> getLista() {
+        return listaProducts;
     }
 
     /**
@@ -40,17 +40,17 @@ public class Inventory {
      * @param categoria Categorio a la que pertenece el producto
      * @param precio Precio del producto
      */
-    public void addProduct(int id, String nombre, Producto.Categoria categoria, double precio) {
+    public void addProduct(int id, String nombre, Product.Categoria categoria, double precio) {
         if (id >= 0) {
-            Producto existente = Utilities.busquedaProductoPorID(listaProductos, id);
+            Product existente = Utilities.busquedaProductoPorID(listaProducts, id);
 
             if (existente == null) {
                 if (nombre.isEmpty() || nombre.length() > 100) System.out.println("Name length is incorrect");
                 else if (precio < 0) System.out.println("Price cannot be negative");
                 else {
-                    Producto producto = new Producto(id, nombre, categoria, precio);
-                    listaProductos.add(producto);
-                    System.out.println(producto + "\nprod add: ok");
+                    Product product = new Product(id, nombre, categoria, precio);
+                    listaProducts.add(product);
+                    System.out.println(product + "\nprod add: ok");
                 }
             }
             else System.out.println("A Product with the same ID already exists:\n" + existente);
@@ -67,18 +67,18 @@ public class Inventory {
      * @param valor Nuevo valor del atributo que se quiere actualizar
      */
     public void updateProduct(int id, String campo, String valor) {
-        Producto producto = Utilities.busquedaProductoPorID(listaProductos, id);
+        Product product = Utilities.busquedaProductoPorID(listaProducts, id);
 
-        if (producto != null) {
+        if (product != null) {
             switch (campo.toUpperCase()) {
                 case "NAME":
-                    producto.setNombre(valor);
+                    product.setNombre(valor);
                     break;
 
                 case "CATEGORY":
-                    Producto.Categoria categoria = Producto.Categoria.getCategoria(valor);
+                    Product.Categoria categoria = Product.Categoria.getCategoria(valor);
                     if (categoria != null) {
-                        producto.setCategoria(categoria);
+                        product.setCategoria(categoria);
                     } else {
                         System.out.println("Category is wrong");
                     }
@@ -90,7 +90,7 @@ public class Inventory {
                         if (nuevoPrecio < 0) {
                             System.out.println("Price cannot be negative");
                         }
-                        producto.setPrecio(nuevoPrecio);
+                        product.setPrecio(nuevoPrecio);
                     } catch (NumberFormatException e) {
                         System.out.println("Input Price is not a number");
                     }
@@ -100,7 +100,7 @@ public class Inventory {
                     System.out.println("Field to change must be NAME|CATEGORY|PRICE");
                     break;
             }
-            System.out.println(producto + "\nprod update: ok");
+            System.out.println(product + "\nprod update: ok");
         }
         else {
             System.out.println("Product not found");
@@ -113,11 +113,11 @@ public class Inventory {
      * @param id Numero identificador del producto que se desea eliminar
      */
     public void removeProduct(int id) {
-        Producto producto = Utilities.busquedaProductoPorID(listaProductos, id);
+        Product product = Utilities.busquedaProductoPorID(listaProducts, id);
 
-        if (producto != null) {
-            System.out.println(producto);
-            listaProductos.remove(producto);
+        if (product != null) {
+            System.out.println(product);
+            listaProducts.remove(product);
             System.out.println("prod remove: ok");
         } else {
             System.out.println("Product not found");
@@ -129,10 +129,10 @@ public class Inventory {
      */
     public void printList() {
         System.out.println("Catalog:");
-        Iterator<Producto> iterator = listaProductos.iterator();
+        Iterator<Product> iterator = listaProducts.iterator();
         while (iterator.hasNext()) {
-            Producto producto = iterator.next();
-            System.out.println("    " + producto);
+            Product product = iterator.next();
+            System.out.println("    " + product);
         }
         System.out.println("prod list: ok");
     }

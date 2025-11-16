@@ -4,8 +4,6 @@ import java.util.Scanner;
 import java.io.*;
 
 public class App {
-    private static final int MAX_LIST = 200; // Número máximo de productos en la Tienda
-    private static final int MAX_IN_TICKET = 100; //Número máximo de productos en el Ticket
     private static Inventory productList; // Array de productos disponibles en la Tienda
     private static Ticket ticket; //Ticket donde se añadirán los productos deseados
 
@@ -56,7 +54,7 @@ public class App {
                 continuar = false;
             }
             else {
-                System.out.println("Unknown command");
+                System.out.println(Utilities.UNKNOWN_COMMAND);
             }
         }
 
@@ -74,7 +72,7 @@ public class App {
                     break;
 
                 default:
-                    System.out.println("Unknown command");
+                    System.out.println(Utilities.UNKNOWN_COMMAND);
             }
         } return continuar;
     }
@@ -89,17 +87,17 @@ public class App {
      * @param comando Array de Strings que contiene las instrucciones para prod, se revisa el segundo elemento
      *                para ver si es un add, list, update o remove
      */
-    public static void comandosProdAux(String[] comando) {
+    /* public static void comandosProdAux(String[] comando) {
         int id;
         String segundaPalabra = comando[1].toLowerCase();
 
         switch (segundaPalabra) {
             case "add":
                 try {
-                    if (comando.length == 6 && productList.getCapacidad() < MAX_LIST) {
+                    if (comando.length == 6 && productList.getCapacidad() < Utilities.MAX_LIST) {
                         id = Integer.parseInt(comando[2]);
                         String nombre = comando[3];
-                        Producto.Categoria categoria = Producto.Categoria.getCategoria(comando[4]);
+                        Product.Categoria categoria = Product.Categoria.getCategoria(comando[4]);
 
                         if (categoria != null) {
                             double precio = Double.parseDouble(comando[5]);
@@ -111,7 +109,7 @@ public class App {
                         if (comando.length != 6) {
                             System.out.println("Command length is wrong");
                         }
-                        if (productList.getCapacidad() == MAX_LIST) {
+                        if (productList.getCapacidad() == Utilities.MAX_LIST) {
                             System.out.println("List of Products is full, cannot add any more products");
                         }
                     }
@@ -156,6 +154,7 @@ public class App {
                 break;
         }
     }
+    */
 
     /**
      * Metodo auxiliar para manejar el repertorio de comandos relacionados con los ticket
@@ -167,7 +166,8 @@ public class App {
      * @param comando Array de Strings que contiene las instrucciones para el comando ticket, se revisa el segundo
      *                elemento del array para decidir si es un new, add, print o remove
      */
-    public static void comandosTicketAux(String[] comando) {
+
+    /* public static void comandosTicketAux(String[] comando) {
         int id;
         String segundaPalabra = comando[1].toLowerCase();
 
@@ -181,10 +181,10 @@ public class App {
 
             case "add":
                 try {
-                    if (comando.length == 4 && productList.getCapacidad() <= MAX_IN_TICKET) {
+                    if (comando.length == 4 && productList.getCapacidad() <= Utilities.MAX_IN_TICKET) {
                         id = Integer.parseInt(comando[2]);
                         int cantidad = Integer.parseInt(comando[3]);
-                        if (cantidad<=MAX_IN_TICKET-ticket.getNumeroProductos()){
+                        if (cantidad<=Utilities.MAX_IN_TICKET-ticket.getNumeroProductos()){
                             ticket.addProduct(Utilities.busquedaProductoPorID(productList.getLista(), id), cantidad);
                             ticket.printTicket();
                         }
@@ -195,7 +195,7 @@ public class App {
                         if (comando.length != 4) {
                             System.out.println("Command length is wrong");
                         }
-                        if (ticket.getNumeroProductos() == MAX_IN_TICKET) {
+                        if (ticket.getNumeroProductos() == Utilities.MAX_IN_TICKET) {
                             System.out.println("Ticket is full, cannot add any more products");
                         }
                     }
@@ -229,6 +229,7 @@ public class App {
                 break;
         }
     }
+    */
 
     public static void comandosClienteAux(String[] comando) {
         String id;
