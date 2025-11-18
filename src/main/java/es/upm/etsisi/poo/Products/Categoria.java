@@ -1,4 +1,4 @@
-package es.upm.etsisi.poo;
+package es.upm.etsisi.poo.Products;
 
 public enum Categoria {
     MERCH(0.07), STATIONERY(0.05), CLOTHES(0.07), BOOK(0.1), ELECTRONICS(0.3);

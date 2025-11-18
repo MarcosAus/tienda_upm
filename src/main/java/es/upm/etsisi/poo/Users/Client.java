@@ -1,4 +1,4 @@
-package es.upm.etsisi.poo;
+package es.upm.etsisi.poo.Users;
 
 public class Client extends User {
     private String cashId;

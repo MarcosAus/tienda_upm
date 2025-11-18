@@ -1,8 +1,12 @@
 package es.upm.etsisi.poo;
 
+import es.upm.etsisi.poo.Users.Cashier;
+import es.upm.etsisi.poo.Users.Client;
+import es.upm.etsisi.poo.Users.User;
+
 import java.util.HashMap;
 
-public class CashierManager extends UserManager {
+public class CashierManager extends UserHandler {
     private Cashier cashier;
     private HashMap<String, User> userRecord;
     public CashierManager(Cashier cashier) {

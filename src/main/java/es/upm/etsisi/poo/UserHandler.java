@@ -1,12 +1,14 @@
 package es.upm.etsisi.poo;
 
+import es.upm.etsisi.poo.Users.User;
+
 import java.util.HashMap;
 
-public class UserManager {
+public class UserHandler {
     private User user;
     private HashMap<String, User> usersRecord;
 
-    public UserManager(User user) {
+    public UserHandler(User user) {
         this.user = user;
         this.usersRecord = new HashMap<>();
     }

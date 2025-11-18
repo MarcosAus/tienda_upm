@@ -1,4 +1,6 @@
-package es.upm.etsisi.poo;
+package es.upm.etsisi.poo.Users;
+
+import es.upm.etsisi.poo.Ticket;
 
 import java.util.Stack;
 

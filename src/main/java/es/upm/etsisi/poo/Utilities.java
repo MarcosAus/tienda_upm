@@ -1,5 +1,8 @@
 package es.upm.etsisi.poo;
 
+import es.upm.etsisi.poo.Products.Product;
+import es.upm.etsisi.poo.Users.Cashier;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 

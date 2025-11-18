@@ -1,9 +1,11 @@
 package es.upm.etsisi.poo;
 
+import es.upm.etsisi.poo.Products.Product;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductHandeler {
+public class ProductHandler {
     private List<Product> productList = new ArrayList<>();
 
     public boolean addProduct(Product product) {

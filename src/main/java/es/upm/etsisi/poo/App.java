@@ -1,8 +1,9 @@
 package es.upm.etsisi.poo;
 
+import es.upm.etsisi.poo.Commands.CommandProd;
+import es.upm.etsisi.poo.Commands.CommandTicket;
+
 import javax.smartcardio.CommandAPDU;
-import java.util.Scanner;
-import java.io.*;
 
 public class App {
     private static Inventory productList; // Array de productos disponibles en la Tienda

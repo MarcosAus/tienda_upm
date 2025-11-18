@@ -2,11 +2,11 @@
 Skinparam groupInheritance 2
 skinparam backgroundColor #CFEFFA
 namespace Commands #FFFEDB {
-
 }
 namespace Products #FFFEDB {
 }
-
+namespace Users #FFFEDB {
+}
 
 Class App {}
 class CLI {}
@@ -39,11 +39,11 @@ CLOSED
 Ticket ..>State
 
 class TicketHandler {
--ticket : Ticket
+-ticket : ArrayList<Ticket>
 }
 
 Product --o Ticket
-TicketHandler --o Ticket
+TicketHandler o-- Ticket
 
 
 
@@ -75,29 +75,29 @@ class Products.ProductPers{
 }
 ProductBasic <|--  ProductPers
 
-class Products.ComidaCampus{
+class Products.CampusMeels{
 -maxParticipantes:100
 -MINTIME:72
 }
 
 
-class Products.Reuniones{
+class Products.Meetings{
 -maxParticipantes:100
 -MINTIME:12
 }
 
-Product <|-- ComidaCampus
-Product <|-- Reuniones
+Product <|-- CampusMeels
+Product <|-- Meetings
 
 class UserHandler{
 -Users:ArrayList<User>
 }
 
-abstract class User<<abstract>> {
+abstract class Users.User<<abstract>> {
 }
 UserHandler o-- User
 
-class Client {
+class Users.Client {
 -id
 -name
 -dni
@@ -107,15 +107,15 @@ class Client {
 
 User <|-- Client
 
-class Cashier{
+class Users.Cashier{
 -code:str
 -name
 -mail
 }
 User <|-- Cashier
 
-Ticket --* Cashier
-Client --o Ticket
+Ticket --o Cashier
+Client o-- Ticket
 
 
 abstract class Commands.Command <<abstract>>{
@@ -130,8 +130,11 @@ class Commands.CommandProd{
 class Commands.CommandProdEx{
  + apply(args : String[])
 }
-CommandProdEx --*CommandProd
-CommandProd --> CommandProdEx
+
+CommandProd *-- CommandProdEx
+
+App *-- CommandProd
+
 
 class Commands.CommandTicket{
 + apply(args : String[])
@@ -140,9 +143,10 @@ class Commands.CommandTicket{
 class Commands.CommandTicketEx{
  + apply(args : String[])
 }
-CommandTicketEx --*CommandTicket
-CommandTicket --> CommandTicketEx
 
+
+CommandTicket *-- CommandTicketEx
+App *-[norank]- CommandTicket
 
 class Commands.CommandUser{
 + apply(args : String[])
@@ -152,17 +156,16 @@ class Commands.CommandUserEx{
  + apply(args : String[])
 }
 
-CommandUserEx --*CommandUser
-CommandUser --> CommandUserEx
+
+
+CommandUser *-- CommandUserEx
+App *-[norank]- CommandUser
 
 App --* CLI
 
-App --* Command
+App *-- Command
 Command <|-- CommandProdEx
-Command <|-- CommandProd
-Command <|-- CommandTicket
 Command <|-- CommandTicketEx
-Command <|-- CommandUser
 Command <|-- CommandUserEx
 
 App --> ProductHandler
