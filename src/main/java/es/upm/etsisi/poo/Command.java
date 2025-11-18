@@ -1,7 +1,14 @@
 package es.upm.etsisi.poo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Command {
-    protected String[] slicedCommand;
+    private List<Command> commands = new ArrayList<>();
+
+
+
+    /*protected String[] slicedCommand;
 
     public Command(String args) {
         this.slicedCommand = sliceCommand(args);
@@ -10,4 +17,6 @@ public abstract class Command {
     public String[] sliceCommand(String args) {
         return args.trim().split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
     }
+
+     */
 }

@@ -1,13 +1,28 @@
 @startuml
+Skinparam groupInheritance 2
+skinparam backgroundColor #CFEFFA
+namespace Commands #FFFEDB {
+
+}
+namespace Products #FFFEDB {
+}
+
+
 Class App {}
 class CLI {}
-class Product <<abstract>> {
+class Products.Product  {
 #id: int
 #name:str
 #price: double
 }
+enum Products.ProductType{
+REUNIONES
+COMIDACAMPUS
+PRODUCTBASIC
+}
+Product --> ProductType
 
-class ControladoraProduct {
+class ProductHandler {
 -products:arrayList<Product>
 }
 
@@ -23,17 +38,16 @@ CLOSED
 
 Ticket ..>State
 
-class ControladoraTicket {
+class TicketHandler {
 -ticket : Ticket
 }
 
-Product --o ControladoraProduct
 Product --o Ticket
-ControladoraTicket --o Ticket
+TicketHandler --o Ticket
 
 
 
-class ProductBasic{
+class Products.ProductBasic{
 
 -id: int
 -name:str
@@ -41,7 +55,7 @@ class ProductBasic{
 -price:double
 }
 
-enum Category {
+enum Products.Category {
 MERCH
 ELECTRONICA
 PAPELERIA
@@ -49,9 +63,9 @@ ROPA
 LIBRO
 }
 ProductBasic -->Category
-ProductBasic --|> Product
+Product <|-- ProductBasic
 
-class ProductPers{
+class Products.ProductPers{
 
 -id:int
 -name:str
@@ -59,27 +73,30 @@ class ProductPers{
 -price:double
 -texts:ArrayList<Str>
 }
-ProductPers --|> ProductBasic
+ProductBasic <|--  ProductPers
 
-class ComidaCampus{
+class Products.ComidaCampus{
 -maxParticipantes:100
 -MINTIME:72
 }
-ComidaCampus --|> Product
 
-class Reuniones{
+
+class Products.Reuniones{
 -maxParticipantes:100
 -MINTIME:12
 }
-Reuniones --|> Product
 
-class ControladoraUser{
+Product <|-- ComidaCampus
+Product <|-- Reuniones
+
+class UserHandler{
 -Users:ArrayList<User>
 }
 
-class User<<abstract>> {
+abstract class User<<abstract>> {
 }
-User --o ControladoraUser
+UserHandler o-- User
+
 class Client {
 -id
 -name
@@ -87,65 +104,77 @@ class Client {
 -mail
 -cajero:Cajero
 }
-Client --|> User
 
+User <|-- Client
 
 class Cashier{
 -code:str
 -name
 -mail
 }
-Cashier --|> User
+User <|-- Cashier
 
 Ticket --* Cashier
 Client --o Ticket
 
 
-class Command <<abstract>>{
+abstract class Commands.Command <<abstract>>{
 #name:Str
 +{abstract}apply(args:String[])
 }
 
-class CommandProd{
+class Commands.CommandProd{
 + apply(args : String[])
 }
-CommandProd --|> Command
 
-class CommandAddProd{
+class Commands.CommandProdEx{
  + apply(args : String[])
 }
-CommandAddProd --|> Command
-CommandAddProd --*CommandProd
-CommandProd --> CommandAddProd
+CommandProdEx --*CommandProd
+CommandProd --> CommandProdEx
 
-class CommandTicket{
+class Commands.CommandTicket{
 + apply(args : String[])
 }
-CommandTicket --|> Command
 
-class CommandNewTicket{
+class Commands.CommandTicketEx{
  + apply(args : String[])
 }
-CommandNewTicket --|> Command
-CommandNewTicket --*CommandTicket
-CommandTicket --> CommandNewTicket
+CommandTicketEx --*CommandTicket
+CommandTicket --> CommandTicketEx
 
 
-class CommandUser{
+class Commands.CommandUser{
 + apply(args : String[])
 }
-CommandUser --|> Command
 
-class CommandAddUser{
+class Commands.CommandUserEx{
  + apply(args : String[])
 }
-CommandAddUser --|> Command
-CommandAddUser --*CommandUser
-CommandUser --> CommandAddUser
+
+CommandUserEx --*CommandUser
+CommandUser --> CommandUserEx
+
+App --* CLI
 
 App --* Command
-App --* CLI
-App --> ControladoraProduct
-App --> ControladoraTicket
-App --> ControladoraUser
+Command <|-- CommandProdEx
+Command <|-- CommandProd
+Command <|-- CommandTicket
+Command <|-- CommandTicketEx
+Command <|-- CommandUser
+Command <|-- CommandUserEx
+
+App --> ProductHandler
+
+ProductHandler --o Product
+
+
+App --> TicketHandler
+App --> UserHandler
+
+CommandUserEx .[norank].> UserHandler
+CommandProdEx .[norank].> ProductHandler
+CommandTicketEx .[norank].> TicketHandler
+
 @enduml

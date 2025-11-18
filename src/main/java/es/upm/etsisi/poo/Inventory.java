@@ -72,7 +72,7 @@ public class Inventory {
         if (product != null) {
             switch (campo.toUpperCase()) {
                 case "NAME":
-                    product.setNombre(valor);
+                    product.setName(valor);
                     break;
 
                 case "CATEGORY":
@@ -90,7 +90,7 @@ public class Inventory {
                         if (nuevoPrecio < 0) {
                             System.out.println("Price cannot be negative");
                         }
-                        product.setPrecio(nuevoPrecio);
+                        product.setPrice(nuevoPrecio);
                     } catch (NumberFormatException e) {
                         System.out.println("Input Price is not a number");
                     }

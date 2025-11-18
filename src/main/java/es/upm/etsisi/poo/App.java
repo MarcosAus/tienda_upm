@@ -1,5 +1,6 @@
 package es.upm.etsisi.poo;
 
+import javax.smartcardio.CommandAPDU;
 import java.util.Scanner;
 import java.io.*;
 
@@ -16,10 +17,22 @@ public class App {
      *             de la app. Si este parametro esta vacio el programa se inicializara normalmente.
      */
     public static void main(String[] args) {
+
+        CommandProd commandsProducts = new CommandProd();
+        CommandTicket commandsTickets = new CommandTicket();
+        CommandAPDU commandsAPDU = new CommandAPDU();
+
+        // IMPORTANTE: LOS SWITCH QUE SE USABAN AQUÍ SE DEBERÍAN USAR EN CLI.
+        CLI cli = new CLI(commandsProducts, commandsTickets, commandsAPDU);
+        cli.start();
+
+        //Estas dos líneas creo que deberíand de estar en TicketHandler
         ticket = new Ticket(); // Al haber modificado el constructor, hay que rehacer todas las instancias de Ticket /Marcos
         productList = new Inventory();
 
         System.out.println("Welcome to the ticket module App.\nTicket module. Type 'help' to see commands.");
+
+        /* Esto se gestiona en CLI. Queda por implementar lo de leer fichero
 
         if (args.length > 0) {
             leerFicheros(args[0]);
@@ -33,8 +46,9 @@ public class App {
             String entrada = sc.nextLine();
             String[] comando = entrada.trim().split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
             continuar = ejecutarComando(comando, true);
-        } while (continuar);
+        } while (continuar);*/
     }
+
 
     /**
      * Metodo que se llama a lo largo del programa para leer la linea de comandos y ejecutar el resto de metodos
@@ -43,7 +57,7 @@ public class App {
      * @param continuar Variable booleana que determina si el programa debe seguir ejecutandose
      * @return El valor true/false de la variable continuar
      */
-    public static boolean ejecutarComando(String[] comando, boolean continuar) {
+    /*public static boolean ejecutarComando(String[] comando, boolean continuar) {
         String primeraPalabra = comando[0].toLowerCase();
         if (comando.length < 2) {
             if (primeraPalabra.equals("help")) {
@@ -75,7 +89,7 @@ public class App {
                     System.out.println(Utilities.UNKNOWN_COMMAND);
             }
         } return continuar;
-    }
+    }*/
 
     /**
      * Metodo auxiliar para acceder al repertorio de comandos relacionados con los productos de la tienda
@@ -231,7 +245,7 @@ public class App {
     }
     */
 
-    public static void comandosClienteAux(String[] comando) {
+    /*public static void comandosClienteAux(String[] comando) {
         String id;
         String segundaPalabra = comando[1].toLowerCase();
         switch(segundaPalabra) {
@@ -262,9 +276,9 @@ public class App {
                 } else System.out.println("Command length is wrong");
                 break;
         }
-    }
+    }*/
 
-    public static void comandosCashierAux(String[] comando) { //Copiado y pegado de Cliente no hecho nada aún
+    /*public static void comandosCashierAux(String[] comando) { //Copiado y pegado de Cliente no hecho nada aún
         String id;
         String segundaPalabra = comando[1].toLowerCase();
         switch(segundaPalabra) {
@@ -295,13 +309,13 @@ public class App {
                 } else System.out.println("Command length is wrong");
                 break;
         }
-    }
+    }*/
 
     /**
      * Metodo que imprime por pantalla todos los comandos disponibles y las categorias de los productos
      * Tambien informa del descuento que se aplica si hay 2 o mas unidades de un producto de la misma cateoria
      */
-    public static void mostrarComandos() {
+    /*public static void mostrarComandos() {
         System.out.println("""
                 Commands
                     prod add <id> "<name>" <category> <price>
@@ -318,13 +332,13 @@ public class App {
                 
                 Categories: MERCH, STATIONERY, CLOTHES, BOOK, ELECTRONICS
                 Discounts if there are ≥2 units in the category: MERCH 0%, STATIONERY 5%, CLOTHES 7%, BOOK 10%, ELECTRONICS 3%.""");
-    }
+    } */
 
     /**
      * Metodo que procesa un fichero de texto linea por linea y ejecuta los comandos que tenga en cascada.
      * @param fichero String que sirve de nombre para identificar el fichero que se debe leer
      */
-    public static void leerFicheros(String fichero) {
+    /*public static void leerFicheros(String fichero) {
         try (BufferedReader br = new BufferedReader(new FileReader(fichero))) {
             String linea;
             while ((linea = br.readLine()) != null) {
@@ -340,5 +354,5 @@ public class App {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-    }
+    }*/
 }

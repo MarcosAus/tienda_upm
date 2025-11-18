@@ -53,7 +53,7 @@ public class Ticket {
             for (int i = 0; i < cantidad; i++) {
                 products.add(product);
             }
-            products.sort((p1, p2) -> p1.getNombre().compareToIgnoreCase(p2.getNombre()));
+            products.sort((p1, p2) -> p1.getName().compareToIgnoreCase(p2.getName()));
             System.out.println("ticket add: ok");
         }
         else System.out.println("This product does not exist. No products were added");
@@ -146,7 +146,7 @@ public class Ticket {
         while (iterator.hasNext()) {
             Product product = iterator.next();
 
-            precio += product.getPrecio();
+            precio += product.getPrice();
         }
         return Math.round(precio);
     }
