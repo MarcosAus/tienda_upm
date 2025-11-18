@@ -1,13 +1,13 @@
 @startuml
 Class App {}
 class CLI {}
-class Product <<abstract>> {
+abstract class Product {
 #id: int
 #name:str
 #price: double
 }
 
-class ControladoraProduct {
+class ProductHandler {
 -products:arrayList<Product>
 }
 
@@ -15,21 +15,20 @@ class Ticket{
 -products:arrayList<Product>
 }
 
-enum State{
+enum status {
 EMPTY
 ACTIVE
 CLOSED
 }
 
-Ticket ..>State
-
-class ControladoraTicket {
+Ticket --> status
+class TicketHandler {
 -ticket : Ticket
 }
 
-Product --o ControladoraProduct
+Product --o ProductHandler
 Product --o Ticket
-ControladoraTicket --o Ticket
+TicketHandler --o Ticket
 
 
 
@@ -61,25 +60,25 @@ class ProductPers{
 }
 ProductPers --|> ProductBasic
 
-class ComidaCampus{
+class CampusMeals{
 -maxParticipantes:100
 -MINTIME:72
 }
-ComidaCampus --|> Product
+CampusMeals --|> Product
 
-class Reuniones{
+class Meeting{
 -maxParticipantes:100
 -MINTIME:12
 }
-Reuniones --|> Product
+Meeting --|> Product
 
-class ControladoraUser{
+class UserHandler{
 -Users:ArrayList<User>
 }
 
-class User<<abstract>> {
+abstract class User {
 }
-User --o ControladoraUser
+User --o UserHandler
 class Client {
 -id
 -name
@@ -97,55 +96,60 @@ class Cashier{
 }
 Cashier --|> User
 
-Ticket --* Cashier
-Client --o Ticket
+Cashier o-- Ticket
+Client o-- Ticket
 
 
-class Command <<abstract>>{
+abstract class Command{
 #name:Str
 +{abstract}apply(args:String[])
 }
 
 class CommandProd{
+-commands : arrayList<commands>
 + apply(args : String[])
 }
-CommandProd --|> Command
 
 class CommandAddProd{
  + apply(args : String[])
 }
 CommandAddProd --|> Command
 CommandAddProd --*CommandProd
-CommandProd --> CommandAddProd
+ProductHandler<-- CommandAddProd
 
 class CommandTicket{
+-commands : arrayList<commands>
 + apply(args : String[])
 }
-CommandTicket --|> Command
+
 
 class CommandNewTicket{
  + apply(args : String[])
 }
 CommandNewTicket --|> Command
 CommandNewTicket --*CommandTicket
-CommandTicket --> CommandNewTicket
+TicketHandler <-- CommandNewTicket
 
 
 class CommandUser{
+-commands : arrayList<commands>
 + apply(args : String[])
 }
-CommandUser --|> Command
 
 class CommandAddUser{
  + apply(args : String[])
 }
 CommandAddUser --|> Command
 CommandAddUser --*CommandUser
-CommandUser --> CommandAddUser
+UserHandler <-- CommandAddUser
 
 App --* Command
 App --* CLI
-App --> ControladoraProduct
-App --> ControladoraTicket
-App --> ControladoraUser
+App --> ProductHandler
+App --> TicketHandler
+App --> UserHandler
+
+App *-- CommandProd
+App *-- CommandTicket
+App *-- CommandUser
 @enduml
