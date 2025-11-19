@@ -1,6 +1,6 @@
 package es.upm.etsisi.poo.Commands;
 
-import es.upm.etsisi.poo.Inventory;
+import es.upm.etsisi.poo.Products.Inventory;
 import es.upm.etsisi.poo.Ticket;
 import es.upm.etsisi.poo.Utilities;
 

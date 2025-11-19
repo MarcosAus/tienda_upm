@@ -1,9 +1,5 @@
 package es.upm.etsisi.poo.Commands;
 
-import es.upm.etsisi.poo.Inventory;
-import es.upm.etsisi.poo.Products.Product;
-import es.upm.etsisi.poo.Utilities;
-
 public class CommandProd {
 
 

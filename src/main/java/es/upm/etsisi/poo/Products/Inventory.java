@@ -1,6 +1,6 @@
-package es.upm.etsisi.poo;
+package es.upm.etsisi.poo.Products;
 
-import es.upm.etsisi.poo.Products.Product;
+import es.upm.etsisi.poo.Utilities;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -78,9 +78,9 @@ public class Inventory {
                     break;
 
                 case "CATEGORY":
-                    Product.Categoria categoria = Product.Categoria.getCategoria(valor);
-                    if (categoria != null) {
-                        product.setCategoria(categoria);
+                    Category category = Category.getCategory(valor);
+                    if (category != null) {
+                        product.setCategoria(category);
                     } else {
                         System.out.println("Category is wrong");
                     }

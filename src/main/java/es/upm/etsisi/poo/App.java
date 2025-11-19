@@ -2,6 +2,8 @@ package es.upm.etsisi.poo;
 
 import es.upm.etsisi.poo.Commands.CommandProd;
 import es.upm.etsisi.poo.Commands.CommandTicket;
+import es.upm.etsisi.poo.Products.Inventory;
+import es.upm.etsisi.poo.Products.ProductHandler;
 
 import javax.smartcardio.CommandAPDU;
 

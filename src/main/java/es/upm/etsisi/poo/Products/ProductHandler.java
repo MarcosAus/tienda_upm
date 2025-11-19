@@ -1,8 +1,4 @@
-package es.upm.etsisi.poo;
-
-import es.upm.etsisi.poo.Products.Product;
-import es.upm.etsisi.poo.Products.ProductBasic;
-import es.upm.etsisi.poo.Products.ProductPers;
+package es.upm.etsisi.poo.Products;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,19 +7,18 @@ public class ProductHandler {
     private List<Product> productList = new ArrayList<>();
 
 
-
-
-
     // Añade un producto a la lista de productos. No lo añade si el id se repite.
     public boolean addProduct(Product product) {
-        boolean añadido = false;
+        boolean add = true;
         for (int i = 0; i<this.productList.size(); i++) {
             if (this.productList.get(i).getId() == product.getId()) {
-                this.productList.add(product);
-                añadido = true;
+                add = false;
             }
         }
-        return añadido;
+        if (add) {
+            this.productList.add(product);
+        }
+        return add;
     }
 
 
@@ -47,25 +42,52 @@ public class ProductHandler {
         return encontrado;
     }
 
+
     //Da la lista de produtos.
     public List<Product> getProductList() {
         return productList;
     }
 
+
     // Actualiza el producto. El nombre, categoria o precio respectivamente.
-    public void updataProductName(int id ,String newName) {
+    public void updateProduct(int id, String field, String newFact) {
+        switch (field) {
+            case "NAME":
+                updateProductName(id,newFact);
+                break;
+            case "CATEGORY":
+                Category newCategory = Category.getCategory(newFact);
+                updateProductCategory(id,newCategory);
+                break;
+            case "PRICE":
+                double price = Double.parseDouble(newFact);
+                updateProductPrice(id,price);
+        }
+
+    }
+
+    public void updateProductName(int id ,String newName) {
         getProduct(id).setNombre(newName);
     }
-    public boolean updataProductCategory(int id, State newState) {
-        boolean resultado = false;
-        if (productList.get(id).getClass().equals(ProductBasic.class) || productList.get(id).getClass().equals(ProductPers.class){
-            productList.get(id);
-            resultado = true;
+
+    public void updateProductCategory(int id, Category newCategory) {
+        Product p = productList.get(id);
+        if (p instanceof ProductBasic productBasic){
+            productBasic.setCategory(newCategory);
         }
-        return resultado;
+        if(p instanceof ProductPers productPers){
+            productPers.setCategory(newCategory);
+        }
     }
-    public void updataProductPrice(int id, double newPrice) {
+
+    public void updateProductPrice(int id, double newPrice) {
         getProduct(id).setPrecio(newPrice);
     }
 
+
+    public void listProducts() {
+        for (Product product : productList) {
+            System.out.println(product.toString());
+        }
+    }
 }

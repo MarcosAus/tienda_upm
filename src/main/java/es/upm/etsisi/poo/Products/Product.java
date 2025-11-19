@@ -38,6 +38,4 @@ public abstract class Product {
     public abstract String toString();
 
     public abstract double precioTotal();
-
-    public abstract String getCategoriaString();
 }
