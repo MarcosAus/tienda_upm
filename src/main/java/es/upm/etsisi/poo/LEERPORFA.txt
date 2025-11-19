@@ -1,0 +1,29 @@
+Este documento se va ha usar para poner anotaciones y proximo trabajo a realizar. Mirar el proyecto. Si no sabeis que hacer DESPUES
+de haberlo mirado seguir la lista de "to do" en orden:
+-Crear comandos de user
+-Crear comandos de productos
+-Crear comandos de Ticket
+
+-Limpiar comentarios basura de codigo que ya no se usa.
+
+
+Dudas grupales de organización:
+Leer esto de vez en cuando. Si teneis alguna duda gorda de organización, en plan que cambien el uml mucho, ponerla aquí. Si leis
+alguna si os pare bien el cambio lo poneis. Si 3 personas están de acuerdo se hace el cambio. Si 4 lo están se borra la anotación
+y se hace el cambio:
+-Tuga propone: xd
+
+
+
+
+
+
+Anotacciones por hacer. Aquí se ponen notas de cosas que estan a medio hacer porque requieren que x cosa se termine:
+- TicketHandler remove y show tickets. Se necesita terminar el cashier porque este guarda los tickets. Dependiendo de
+    como se acaben guardando se tendra que hacer el metodo en consecuencia.
+- ProductHandler remove product. Necesita que se cree una manera de comunicar esta clase con el ticketHandeler para
+    borrar el producto solicitado en los tickets y en los productos.
+
+
+
+

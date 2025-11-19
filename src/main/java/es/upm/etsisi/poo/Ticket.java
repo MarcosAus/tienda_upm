@@ -1,42 +1,52 @@
 package es.upm.etsisi.poo;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import es.upm.etsisi.poo.Products.Category;
 import es.upm.etsisi.poo.Products.Product;
-import es.upm.etsisi.poo.Users.Cashier;
-import es.upm.etsisi.poo.Users.Client;
+import es.upm.etsisi.poo.Products.ProductBasic;
+import es.upm.etsisi.poo.Products.ProductPers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Iterator;
+
 
 public class Ticket {
     /**
      * Array de productos actuales en el ticket
      */
-
-    public enum State {
-        EMPTY, ACTIVE, CLOSED
-    }
     private final ArrayList<Product> products;
     private String id;
     private State stateTicket;
-    private Client client;
-    private Cashier cashier;
+    private final String fechaApertura;
+    private  String fechaCierre;
+
 
     /**
      * Constructor de la clase Ticket
      */
-    public Ticket(Client client, Cashier cashier) {
+    public Ticket(String id) {
+        this.id = id;
         this.products = new ArrayList<>();
         this.stateTicket = State.EMPTY;
-        this.client = client;
-        this.cashier = cashier;
+        this.fechaApertura = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm"));
     }
 
-    /**
-     * Metodo para acceder a la lista de productos del ticket
-     * @return Devuelve un ArrayList con los productos del ticket
-     */
-    public ArrayList<Product> getProductos() {
+    public String getId() {return id;}
+    public String getFechaApertura(){ return fechaApertura;}
+    public String getFechaCierre(){ return fechaCierre;}
+    public State getStateTicket() {
+        return stateTicket;
+    }
+    public ArrayList<Product> getProducts() {
         return products;
+    }
+    public void setFechaDeCierre(String fecha){this.fechaCierre = fecha;}
+    public void setStateTicket(State stateTicket) {
+        this.stateTicket = stateTicket;
     }
 
     /**
@@ -46,6 +56,13 @@ public class Ticket {
     public int getNumeroProductos() {
         return products.size();
     }
+
+    public void updateState(State stateTicket) {
+        this.stateTicket = stateTicket;
+    }
+
+    //Todo lo que sigue debería de estar en el handler
+
 
     /**
      * Metodo que añade productos al ticket
@@ -57,7 +74,7 @@ public class Ticket {
             for (int i = 0; i < cantidad; i++) {
                 products.add(product);
             }
-            products.sort((p1, p2) -> p1.getName().compareToIgnoreCase(p2.getName()));
+            products.sort((p1, p2) -> p1.getNombre().compareToIgnoreCase(p2.getNombre()));
             System.out.println("ticket add: ok");
         }
         else System.out.println("This product does not exist. No products were added");
@@ -68,27 +85,14 @@ public class Ticket {
      * Metodo que revisa la cantidad de productos de una misma categoria que hay en el ticket
      * @return Devuelve un Array de enteros donde cada elemento representa el numero de productos de una categoria
      */
-    public int[] getCantidadProductoCategoria() {
-        int[] resultado = new int[5];
-        Iterator<Product> iterator = products.iterator();
-        while (iterator.hasNext()) {
-            Product p = iterator.next();
-            switch (p.getCategoriaString()) {
-                case "MERCH":
-                    // MERCH NO TIENE DESCUENTO
-                    break;
-                case "STATIONERY":
-                    resultado[1] = resultado[1] + 1;
-                    break;
-                case "CLOTHES":
-                    resultado[2] = resultado[2] + 1;
-                    break;
-                case "BOOK":
-                    resultado[3] = resultado[3] + 1;
-                    break;
-                case "ELECTRONICS":
-                    resultado[4] = resultado[4] + 1;
-                    break;
+    public Map<Category,Integer> getCantidadProductoCategoria() {
+        Map<Category,Integer> resultado = new HashMap<>();
+        Product productGeneric;
+        for(int i = 0; i < products.size(); i++){
+            productGeneric = products.get(i);
+            if(productGeneric instanceof ProductBasic){
+                ProductBasic pb = (ProductBasic)productGeneric;
+                resultado.put(pb.getCategoria(),resultado.getOrDefault(pb.getCategoria(),0)+1);
             }
         }
         return resultado;
@@ -121,17 +125,21 @@ public class Ticket {
     public void printTicket() {
         double precio = calcularPrecio();
         double descuentos = calcularDescuentoTotal();
-        int[] descuentoPorCategoria = getCantidadProductoCategoria();
+        Map<Category, Integer> descuentoPorCategoria = getCantidadProductoCategoria();
 
-        ArrayList<Product> products = this.getProductos();
+        ArrayList<Product> products = this.getProducts();
         Iterator<Product> iterator = products.iterator();
         while (iterator.hasNext()) {
             Product product = iterator.next();
 
             System.out.print(product);
-            if (tieneDescuento(product.getCategoriaString(),descuentoPorCategoria)) {
-                System.out.print("**discount -"+ product.descuento());
+            if (product instanceof ProductBasic) {
+                ProductBasic pb = (ProductBasic)product;
+                if (pb.getCategoria().getDiscount()!=0) { // Solo tendrá en cuenta los descuentos >0
+                    System.out.print("**discount -"+ pb.getCategoria().getDiscount());
+                }
             }
+
             System.out.println();
         }
 
@@ -146,11 +154,11 @@ public class Ticket {
      */
     public double calcularPrecio() {
         double precio = 0;
-        Iterator<Product> iterator = this.getProductos().iterator();
+        Iterator<Product> iterator = this.getProducts().iterator();
         while (iterator.hasNext()) {
             Product product = iterator.next();
 
-            precio += product.getPrice();
+            precio += product.precioTotal();
         }
         return Math.round(precio);
     }
@@ -161,14 +169,19 @@ public class Ticket {
      */
     public double calcularDescuentoTotal() {
         double descuento = 0;
-        int[] cantidadProductos = this.getCantidadProductoCategoria();
-        Iterator<Product> iterator = this.getProductos().iterator();
+        Map<Category, Integer> cantidadProductos = this.getCantidadProductoCategoria();
+        Iterator<Product> iterator = this.getProducts().iterator();
         while (iterator.hasNext()) {
             Product product = iterator.next();
-
-            if (tieneDescuento(product.getCategoriaString(), cantidadProductos)) {
-                descuento += product.descuento();
+            if(product instanceof ProductBasic){
+                ProductBasic pb = (ProductBasic)product;
+                if (pb.getCategoria().getDiscount()!=0) {
+                    descuento += pb.getCategoria().getDiscount();
+                }
             }
+
+
+
         }
         return ((double) Math.round(descuento * 1000) /1000);
     }

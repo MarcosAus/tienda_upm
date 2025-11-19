@@ -19,7 +19,7 @@ public class User {
         return this.correo;
     }
 
-    protected String getId() {
+    public String getId() {
         return this.id;
     }
 }

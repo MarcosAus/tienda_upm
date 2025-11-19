@@ -13,6 +13,24 @@ public class Cashier extends User {
         this.tickets = new Stack<>();
     }
 
+    // Te dice si Cashier creo el ticket
+    public boolean isCashierInCharge(int idTicket) {
+        int busqueda=0;
+        while(busqueda<tickets.size()){
+            if(tickets.get(busqueda).getId()==TId){
+                tickets.get(busqueda).printTicket();
+                busqueda =  tickets.size();
+            }
+            busqueda++;
+        }
+    }
+
+    public void printAllTickets() {
+        for (int i = 0; i<tickets.size(); i++) {
+            tickets.get(i).printTicket();
+        }
+    }
+
 
     private static String validarId(String id) {
         if (id == null) {
@@ -27,4 +45,6 @@ public class Cashier extends User {
             return id;
         }
     }
+
+
 }

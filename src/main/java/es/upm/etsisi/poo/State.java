@@ -1,5 +1,5 @@
 package es.upm.etsisi.poo;
 
-public enum Status {
+public enum State {
     EMPTY,ACTIVE,CLOSED;
 }

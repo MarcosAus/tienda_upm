@@ -19,5 +19,9 @@ public class UserHandler {
         // Lógica para registrar un usuario
     }
 
+    public User getUserById(int id) {
+        return usersRecord.get(id);
+    }
+
 
 }

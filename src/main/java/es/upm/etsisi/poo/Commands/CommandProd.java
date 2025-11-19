@@ -4,9 +4,11 @@ import es.upm.etsisi.poo.Inventory;
 import es.upm.etsisi.poo.Products.Product;
 import es.upm.etsisi.poo.Utilities;
 
-public class CommandProd extends Command {
+public class CommandProd {
 
-    private Inventory productList;
+
+
+    /*private Inventory productList;
 
     public CommandProd(String args, Inventory productList) {
         super(args);
@@ -69,5 +71,5 @@ public class CommandProd extends Command {
             }
         }
         else System.out.println(Utilities.LENGTH_WRONG);
-    }
+    }*/
 }

@@ -43,7 +43,7 @@ public class Utilities {
         Iterator<Product> iterator = products.iterator();
         while (iterator.hasNext() && !existe) {
             Product product = iterator.next();
-            if (product.getID() == id) {
+            if (product.getId() == id) {
                 resultado = product;
                 existe = true;
             }
@@ -63,5 +63,12 @@ public class Utilities {
             }
         }
         return resultado;
+    }
+    public static String generadorNum(int cantidad){
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0 ; i<cantidad; i++){
+            sb.append((int)(Math.random()*10));
+        }
+        return sb.toString();
     }
 }

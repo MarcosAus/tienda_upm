@@ -6,8 +6,13 @@ import es.upm.etsisi.poo.Commands.CommandTicket;
 import javax.smartcardio.CommandAPDU;
 
 public class App {
+    // IMPORTANTE: VARIABLES ANTIGUAS. YA NO SE USAN ASÍ QUE HAY QUE BORRARLAS.
     private static Inventory productList; // Array de productos disponibles en la Tienda
     private static Ticket ticket; //Ticket donde se añadirán los productos deseados
+
+    private TicketHandler ticketHandler;
+    private UserHandler userHandler;
+    private ProductHandler productHandler;
 
     /**
      * Metodo principal del programa, inicializa las listas que contendran los productos de inventario y ticket
@@ -23,7 +28,9 @@ public class App {
         CommandTicket commandsTickets = new CommandTicket();
         CommandAPDU commandsAPDU = new CommandAPDU();
 
-        // IMPORTANTE: LOS SWITCH QUE SE USABAN AQUÍ SE DEBERÍAN USAR EN CLI.
+        //Se crean los handlers
+
+
         CLI cli = new CLI(commandsProducts, commandsTickets, commandsAPDU);
         cli.start();
 
@@ -49,6 +56,7 @@ public class App {
             continuar = ejecutarComando(comando, true);
         } while (continuar);*/
     }
+
 
 
     /**

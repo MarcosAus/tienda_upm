@@ -1,9 +1,9 @@
 package es.upm.etsisi.poo.Products;
 
 public class ProductBasic extends Product {
-        private final Categoria categoria;
+        private Category categoria;
 
-        public ProductBasic(Categoria categoria,String name,int id, double price){
+        public ProductBasic(Category categoria, String name, int id, double price){
                 super(id,name,price);
                 this.categoria = categoria;
         }
@@ -19,7 +19,9 @@ public class ProductBasic extends Product {
                 return getPrecio();
         }
 
-        public Categoria getCategoria() {
+        public Category getCategoria() {
                 return categoria;
         }
+
+        public void setCategory(Category categoria) {this.categoria = categoria;}
 }

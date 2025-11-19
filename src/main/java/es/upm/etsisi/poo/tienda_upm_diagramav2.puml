@@ -15,12 +15,6 @@ class Products.Product  {
 #name:str
 #price: double
 }
-enum Products.ProductType{
-REUNIONES
-COMIDACAMPUS
-PRODUCTBASIC
-}
-Product --> ProductType
 
 class ProductHandler {
 -products:arrayList<Product>
@@ -161,7 +155,7 @@ class Commands.CommandUserEx{
 CommandUser *-- CommandUserEx
 App *-[norank]- CommandUser
 
-App --* CLI
+App *-- CLI
 
 App *-- Command
 Command <|-- CommandProdEx

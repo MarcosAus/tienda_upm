@@ -8,7 +8,7 @@ public class ProductPers extends ProductBasic {
     private ArrayList<String> textos ;
     private final int maxTextos;
 
-    public ProductPers(Categoria categoria, int id, String name, double price, int maxTextos){
+    public ProductPers(Category categoria, int id, String name, double price, int maxTextos){
         super(categoria,name,id,price);
         this.maxTextos = maxTextos;
         textos = new ArrayList<>();
