@@ -42,7 +42,7 @@ public class Inventory {
      * @param categoria Categorio a la que pertenece el producto
      * @param precio Precio del producto
      */
-    public void addProduct(int id, String nombre, Product.Categoria categoria, double precio) {
+    public void addProduct(int id, String nombre, Category categoria, double precio) {
         if (id >= 0) {
             Product existente = Utilities.busquedaProductoPorID(listaProducts, id);
 

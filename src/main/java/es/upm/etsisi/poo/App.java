@@ -1,6 +1,7 @@
 package es.upm.etsisi.poo;
 
 import es.upm.etsisi.poo.Commands.CommandProd;
+import es.upm.etsisi.poo.Commands.CommandProdAdd;
 import es.upm.etsisi.poo.Commands.CommandTicket;
 import es.upm.etsisi.poo.Products.Inventory;
 import es.upm.etsisi.poo.Products.ProductHandler;
@@ -32,13 +33,14 @@ public class App {
 
         //Se crean los handlers
 
-
         CLI cli = new CLI(commandsProducts, commandsTickets, commandsAPDU);
         cli.start();
 
         //Estas dos líneas creo que deberíand de estar en TicketHandler
-        ticket = new Ticket(); // Al haber modificado el constructor, hay que rehacer todas las instancias de Ticket /Marcos
         productList = new Inventory();
+
+
+        CommandProdAdd commandProdAdd = new CommandProdAdd("prod add", productList);
 
         System.out.println("Welcome to the ticket module App.\nTicket module. Type 'help' to see commands.");
 

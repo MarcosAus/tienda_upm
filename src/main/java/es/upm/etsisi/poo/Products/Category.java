@@ -14,6 +14,7 @@ public enum Category {
         return discount;
     }
 
+    /**
     public static String CategoryName(Category category){
         String name = null;
         switch (category){
@@ -56,4 +57,5 @@ public enum Category {
         }
         return category;
     }
+     **/
 }

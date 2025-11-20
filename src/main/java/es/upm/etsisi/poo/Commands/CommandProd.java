@@ -1,7 +1,13 @@
 package es.upm.etsisi.poo.Commands;
 
-public class CommandProd {
+import java.util.ArrayList;
 
+public class CommandProd {
+    private ArrayList<Command> commands;
+
+    public CommandProd(ArrayList<Command> commands) {
+        this.commands = commands;
+    }
 
 
     /*private Inventory productList;

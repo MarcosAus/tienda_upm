@@ -56,7 +56,7 @@ public class ProductHandler {
                 updateProductName(id,newFact);
                 break;
             case "CATEGORY":
-                Category newCategory = Category.getCategory(newFact);
+                Category newCategory = Category.valueOf(newFact);
                 updateProductCategory(id,newCategory);
                 break;
             case "PRICE":

@@ -41,7 +41,7 @@ public class ProductPers extends ProductBasic {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{class:Product, id:");
+        sb.append("{class:ProductPersonalized, id:");
         sb.append(getId());
         sb.append(", name:");
         sb.append(getNombre());
@@ -49,19 +49,23 @@ public class ProductPers extends ProductBasic {
         sb.append(getCategoria());
         sb.append(", price:");
         sb.append(getPrecio());
-        sb.append("}\n");
-        sb.append("{");
-        for(int i =0 ; i<textos.size();i++){
-            sb.append(textos.get(i));
-            sb.append(",");
+        sb.append(", maxPersonal:");
+        sb.append(maxTextos);
+        if (!textos.isEmpty()) {
+            sb.append(", personalizationList:[");
+            for(int i =0 ; i<textos.size();i++){
+                sb.append(textos.get(i));
+                sb.append(",");
+            }
+            sb.append("]}");
         }
-        sb.append("}");
+
 
         return sb.toString();
     }
 
     @Override
-    public double precioTotal() {
+    public double TotalPrice() {
         int aumento = (textos.size()/10)+1;
         return this.getPrecio() * aumento;
     }

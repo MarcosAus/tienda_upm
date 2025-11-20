@@ -19,8 +19,8 @@ public class TicketHandler {
         int idChosen = -1;
 
         // Si se encuentra un ticket con el mismo
-        for (int i = 0; i<this.tickets.size();i++){
-            if(this.tickets.get(i).getId()==idT){
+        for (int i = 0; i<this.tickets.size();i++) {
+            if(this.tickets.get(i).getId()==idT) {
                 idChosen=-2;
             }
         }

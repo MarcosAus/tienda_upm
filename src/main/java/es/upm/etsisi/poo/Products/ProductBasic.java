@@ -15,7 +15,7 @@ public class ProductBasic extends Product {
                         ", price:" + getPrecio() + "}";
         }
         @Override
-        public double precioTotal(){
+        public double TotalPrice(){
                 return getPrecio();
         }
 

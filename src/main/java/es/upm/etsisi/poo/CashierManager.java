@@ -14,9 +14,11 @@ public class CashierManager extends UserHandler {
         this.cashier = cashier;
         this.userRecord = new HashMap<>();
     }
+
     public void addTicket(Ticket ticket) {
         cashier.tickets.push(ticket);
     }
+
     public void registerClient(Client client) {
         registerUser(client);
     }

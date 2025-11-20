@@ -1,11 +1,14 @@
 package es.upm.etsisi.poo.Products;
 
 public class Meetings extends Product {
-    private static final int maxParticipantes = 100;
-    private static final  int minTime = 12;
+    private  int maxParticipantes;
+    private static final int minTime = 12;
+    private String fechaCaducidad;
 
-    public Meetings(int id, String name, double price) {
+    public Meetings(int id, String name, double price,int maxParticipantes,String fechaCaducidad) {
         super(id, name, price);
+        this.maxParticipantes = maxParticipantes;
+        this.fechaCaducidad = fechaCaducidad;
     }
 
     public int getMaxParticipantes() {
@@ -17,15 +20,17 @@ public class Meetings extends Product {
 
     @Override
     public String toString() {
-        return "{class:Product, id:" + getId() +
-                ", name:" + getNombre() +
-                ", price per person:" + getPrecio() +
-                ", Type of product:  "+ this.getClass().getSimpleName() +
-                " }";
+        StringBuilder sb = new StringBuilder();
+        sb.append("{class:Meeting, id:");
+        sb.append(getId());
+        sb.append(", name:");
+        sb.append(getNombre());
+        sb.append(", price:");
+        sb.append(getPrecio());
     }
 
     @Override
-    public double precioTotal() {
+    public double TotalPrice() {
         return getPrecio();
     }
 }

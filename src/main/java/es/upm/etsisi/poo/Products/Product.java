@@ -37,5 +37,5 @@ public abstract class Product {
     @Override
     public abstract String toString();
 
-    public abstract double precioTotal();
+    public abstract double TotalPrice();
 }

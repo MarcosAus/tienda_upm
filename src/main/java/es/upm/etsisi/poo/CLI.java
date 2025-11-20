@@ -20,6 +20,7 @@ public class CLI {
     }
 
 
+
     public void start() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Welcome to the ticket module App.\n" +

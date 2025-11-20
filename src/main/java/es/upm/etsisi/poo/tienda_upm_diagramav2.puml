@@ -69,7 +69,7 @@ class Products.ProductPers{
 }
 ProductBasic <|--  ProductPers
 
-class Products.CampusMeels{
+class Products.CampusMeals{
 -maxParticipantes:100
 -MINTIME:72
 }
@@ -80,7 +80,7 @@ class Products.Meetings{
 -MINTIME:12
 }
 
-Product <|-- CampusMeels
+Product <|-- CampusMeals
 Product <|-- Meetings
 
 class UserHandler{
@@ -108,7 +108,7 @@ class Users.Cashier{
 }
 User <|-- Cashier
 
-Ticket --o Cashier
+Cashier o-- Ticket
 Client o-- Ticket
 
 

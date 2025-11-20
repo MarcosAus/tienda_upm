@@ -1,11 +1,14 @@
 package es.upm.etsisi.poo.Products;
 
-public class CampusMeels extends Product {
-    private static final int maxParticipantes = 100;
-    private static final  int minTime = 72;
+public class CampusMeals extends Product {
+    private  int maxParticipantes;
+    private static final int minTime = 72;
+    private String dateOfEnd;
 
-    public CampusMeels(int id, String name, double price) {
+    public CampusMeals(int id, String name, double price, String dateOfEnd, int maxParticipantes) {
         super(id, name, price);
+        this.dateOfEnd = dateOfEnd;
+        this.maxParticipantes = maxParticipantes;
     }
 
     public int getMaxParticipantes() {
@@ -25,7 +28,7 @@ public class CampusMeels extends Product {
     }
 
     @Override
-    public double precioTotal() {
+    public double TotalPrice() {
         return getPrecio();
     }
 }

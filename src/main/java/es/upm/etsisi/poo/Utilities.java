@@ -28,29 +28,6 @@ public class Utilities {
     public static final String TICKET_PRINT_OK = "ticket print: ok";
     public static final String UNKNOWN_COMMAND = "Unknown command";
 
-
-
-    /**
-     * Metodo que busca un Producto en concreto en la tienda con el ID proporcionado y, si lo encuentra, lo devuelve
-     * Si no encuentra ningun producto con ese ID, devuelve null
-     * @param products: ArrayList donde se va a buscar el producto.
-     * @param id: Entero que indica el ID del producto que se quiere buscar en la tienda
-     * @return Objeto de clase Producto, es null si no se encuentra el Producto buscado
-     */
-    public static Product busquedaProductoPorID(ArrayList<Product> products, int id) {
-        Product resultado = null;
-        boolean existe = false;
-        Iterator<Product> iterator = products.iterator();
-        while (iterator.hasNext() && !existe) {
-            Product product = iterator.next();
-            if (product.getId() == id) {
-                resultado = product;
-                existe = true;
-            }
-        }
-        return resultado;
-    }
-
     public static Cashier buscarCajeroPorID(ArrayList<Cashier> cashiers, String id) {
         Cashier resultado = null;
         boolean existe = false;
