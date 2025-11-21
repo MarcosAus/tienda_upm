@@ -1,4 +1,9 @@
-package es.upm.etsisi.poo.Products;
+package es.upm.etsisi.poo;
+
+import es.upm.etsisi.poo.Products.Category;
+import es.upm.etsisi.poo.Products.Product;
+import es.upm.etsisi.poo.Products.ProductBasic;
+import es.upm.etsisi.poo.Products.ProductPers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +52,9 @@ public class ProductHandler {
     public List<Product> getProductList() {
         return productList;
     }
+
+    //Devuelve la cantidad de productos
+    public int getHandlerSize(){ return productList.size();}
 
 
     // Actualiza el producto. El nombre, categoria o precio respectivamente.

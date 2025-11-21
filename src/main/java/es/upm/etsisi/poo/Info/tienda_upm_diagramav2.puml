@@ -7,6 +7,18 @@ namespace Products #FFFEDB {
 }
 namespace Users #FFFEDB {
 }
+nameSpace Info  #FFAA99{
+
+}
+note top of Info
+<size:9>Aquí se guardan archivos que poco tienen que ver con el programa en si</size>
+<size:9>No creo que se deba representar en el diagrama pero es más visual</size>
+end note
+
+Class Utilities{
+}
+
+Info -[hidden]- Utilities
 
 Class App {}
 class CLI {}
@@ -121,7 +133,7 @@ class Commands.CommandProd{
 + apply(args : String[])
 }
 
-class Commands.CommandProdEx{
+class Commands.CommandsForProd.CommandProdEx{
  + apply(args : String[])
 }
 
@@ -134,7 +146,7 @@ class Commands.CommandTicket{
 + apply(args : String[])
 }
 
-class Commands.CommandTicketEx{
+class Commands.CommandsForTicket.CommandTicketEx{
  + apply(args : String[])
 }
 
@@ -146,7 +158,7 @@ class Commands.CommandUser{
 + apply(args : String[])
 }
 
-class Commands.CommandUserEx{
+class Commands.CommandsForUser.CommandUserEx{
  + apply(args : String[])
 }
 

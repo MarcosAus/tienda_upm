@@ -39,6 +39,11 @@ public class Ticket {
         }
         return resultado;
     }
+
+    public State getTicketState() {
+        return this.stateTicket;
+    }
+
     public void updateState(State stateTicket) {
         this.stateTicket = stateTicket;
     }

@@ -1,23 +1,29 @@
-package es.upm.etsisi.poo.Commands;
+package es.upm.etsisi.poo.Commands.CommandsForProd;
 
-import es.upm.etsisi.poo.Products.Inventory;
-import es.upm.etsisi.poo.Products.Product;
-import es.upm.etsisi.poo.Products.ProductBasic;
+import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Products.Category;
+import es.upm.etsisi.poo.ProductHandler;
 import es.upm.etsisi.poo.Utilities;
 
-public class CommandProdAdd extends Command{
-    private Inventory productList;
+public class CommandProdAdd extends Command {
+    private ProductHandler productHandler;
 
-    public CommandProdAdd(String name,  Inventory productList) {
+    public CommandProdAdd(String name,  ProductHandler productList) {
         super(name);
-        this.productList = productList;
+        this.productHandler = productList;
     }
 
-    public void execute(String[] args) throws Exception{
+
+    @Override
+    public boolean isThisCommand(String name){
+        return  this.name.equals(name.toLowerCase().substring(0,name.length()));
+    }
+
+    @Override
+    public void execute(String[] args){
         int id;
         try {
-            if (args.length == 6 && productList.getCapacidad() < Utilities.MAX_LIST) {
+            if (args.length == 6 && productHandler.getHandlerSize() < Utilities.MAX_LIST) {
                 id = Integer.parseInt(args[2]);
                 String name = args[3];
                 Category category;
@@ -29,7 +35,9 @@ public class CommandProdAdd extends Command{
                 }
                 if (category != null) {
                     double precio = Double.parseDouble(args[5]);
-                    productList.addProduct(id, name, category, precio);
+                    // IMPORTANTE: Para quien lo arregle que cree un producto dentro de este metodo a ser posible. Si es necesario podéis modificar el constructor para que guarde
+                    // otro handler o añadir una función al handler que cree el producto.
+                    productHandler.addProduct(id, name, category, precio);
                 } else System.out.println(Utilities.CATEGORY_WRONG);
 
             } else {
@@ -37,7 +45,7 @@ public class CommandProdAdd extends Command{
                 if (args.length != 6) {
                     System.out.println(Utilities.LENGTH_WRONG);
                 }
-                if (productList.getCapacidad() == Utilities.MAX_LIST) {
+                if (productHandler.getHandlerSize() == Utilities.MAX_LIST) {
                     System.out.println(Utilities.PRODUCT_LIST_FULL);
                 }
             }

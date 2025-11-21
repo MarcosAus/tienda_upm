@@ -1,12 +1,12 @@
 package es.upm.etsisi.poo;
 
-import es.upm.etsisi.poo.Commands.CommandProd;
-import es.upm.etsisi.poo.Commands.CommandProdAdd;
-import es.upm.etsisi.poo.Commands.CommandTicket;
+import es.upm.etsisi.poo.Commands.*;
+import es.upm.etsisi.poo.Commands.CommandsForProd.*;
+import es.upm.etsisi.poo.Commands.CommandsForTicket.*;
+import es.upm.etsisi.poo.Commands.CommandsForUser.*;
 import es.upm.etsisi.poo.Products.Inventory;
-import es.upm.etsisi.poo.Products.ProductHandler;
 
-import javax.smartcardio.CommandAPDU;
+import java.util.ArrayList;
 
 public class App {
     // IMPORTANTE: VARIABLES ANTIGUAS. YA NO SE USAN ASÍ QUE HAY QUE BORRARLAS.
@@ -27,16 +27,75 @@ public class App {
      */
     public static void main(String[] args) {
 
-        CommandProd commandsProducts = new CommandProd();
-        CommandTicket commandsTickets = new CommandTicket();
-        CommandAPDU commandsAPDU = new CommandAPDU();
+        //Se generan los comandos de la aplicación
+        ArrayList<Command> commandsPArray = CreateCommandsProducts();
+        ArrayList<Command> commandsTArray = CreateCommandsTicket();
+        ArrayList<Command> commandsUArray = CreateCommandsUser();
+
+        //Se crean las clases que contienen todos los comoandos. Están divididas en función del handler principal que usan.
+        CommandProd commandsProducts = new CommandProd(commandsPArray);
+        CommandTicket commandsTickets = new CommandTicket(commandsTArray);
+        CommandUser commandsUser = new CommandUser(commandsUArray);
 
         //Se crean los handlers
+        ProductHandler productHandler = new ProductHandler();
+        TicketHandler ticketHandler = new TicketHandler();
+        UserHandler userHandler = new UserHandler();
 
-        CLI cli = new CLI(commandsProducts, commandsTickets, commandsAPDU);
+        //Se crean los commandos
+        //Los comandos deben tener un nombre igual en minusculas al comando en sí. Ej: TickedAdd tiene que tener name = "ticket add"
+        // IMPORTANTE: le he pedido ha chat gpt que coja las variables del comentario de abajo y las ponga en cada contenedor de comandos. No se si lo ha hecho bien. Puede que tenga algun fallito
+        commandsProducts.addCommand(new CommandProdAdd("prod add ", productHandler));
+        commandsProducts.addCommand(new CommandProdAddFood("prod addFood ", productHandler));
+        commandsProducts.addCommand(new CommandProdAddMeeting("prod addMeeting ", productHandler));
+        commandsProducts.addCommand(new CommandProdList("prod list ", productHandler));
+        commandsProducts.addCommand(new CommandProdRemove("prod remove ", productHandler));
+        commandsProducts.addCommand(new CommandProdUpdate("prod update ", productHandler));
+
+        commandsTickets.addCommand(new CommandTicketAdd("ticket add ", ticketHandler));
+        commandsTickets.addCommand(new CommandTicketList("ticket list ", ticketHandler));
+        commandsTickets.addCommand(new CommandTicketNew("ticket new ", ticketHandler));
+        commandsTickets.addCommand(new CommandTicketPrint("ticket print ", ticketHandler));
+        commandsTickets.addCommand(new CommandTicketRemove("ticket remove ", ticketHandler));
+
+        commandsUser.addCommand(new CommandsUserRemoveCashier("cash add ", userHandler));
+        commandsUser.addCommand(new CommandUserAddCashier("cash remove ", userHandler));
+        commandsUser.addCommand(new CommandUserAddClient("client add ", userHandler));
+        commandsUser.addCommand(new CommandUserListCash("cash list ", userHandler));
+        commandsUser.addCommand(new CommandUserListClients("client list ", userHandler));
+        commandsUser.addCommand(new CommandUserListTicketsCashier("cash tickets ", userHandler));
+        commandsUser.addCommand(new CommandUserRemove("cash remove ", userHandler));
+
+        /*
+        CommandProdAdd commandProdAdd = new CommandProdAdd("prod add ", productHandler);
+        CommandProdAddFood commandProdAddFood = new CommandProdAddFood("prod addFood ", productHandler);
+        CommandProdAddMeeting commandProdAddMeeting = new CommandProdAddMeeting("prod addMeeting ", productHandler);
+        CommandProdList commandProdList = new CommandProdList("prod list ", productHandler);
+        CommandProdRemove commandProdRemove = new CommandProdRemove("prod remove ", productHandler);
+        CommandProdUpdate commandProdUpdate = new CommandProdUpdate("prod update ", productHandler);
+
+        CommandTicketAdd commandTicketAdd = new CommandTicketAdd("ticket add ", ticketHandler);
+        CommandTicketList commandTicketList = new CommandTicketList("ticket list ", ticketHandler);
+        CommandTicketNew commandTicketNew = new CommandTicketNew("ticket new ", ticketHandler);
+        CommandTicketPrint commandTicketPrint = new CommandTicketPrint("ticket print ", ticketHandler);
+        CommandTicketRemove commandTicketRemove = new CommandTicketRemove("ticket remove ", ticketHandler);
+
+        CommandsUserRemoveCashier commandsUserRemoveCashier = new CommandsUserRemoveCashier("cash add ", userHandler);
+        CommandUserAddCashier commandUserAddCashier = new CommandUserAddCashier("cash remove ", userHandler);
+        CommandUserAddClient commandUserAddClient = new CommandUserAddClient("client add ", userHandler);
+        CommandUserListCash commandUserListCash = new CommandUserListCash("cash list ", userHandler);
+        CommandUserListClients commandUserListClients = new CommandUserListClients("client list ", userHandler);
+        CommandUserListTicketsCashier commandUserListTicketsCashier = new CommandUserListTicketsCashier("cash tickets ", userHandler);
+        CommandUserRemove commandUserRemove = new CommandUserRemove("cash remove ", userHandler);
+        */
+
+
+        CLI cli = new CLI(commandsProducts, commandsTickets, commandsUser);
         cli.start();
 
-        //Estas dos líneas creo que deberíand de estar en TicketHandler
+
+
+        /* Esto se gestiona en CLI. Queda por implementar lo de leer fichero
         productList = new Inventory();
 
 
@@ -44,7 +103,7 @@ public class App {
 
         System.out.println("Welcome to the ticket module App.\nTicket module. Type 'help' to see commands.");
 
-        /* Esto se gestiona en CLI. Queda por implementar lo de leer fichero
+
 
         if (args.length > 0) {
             leerFicheros(args[0]);
@@ -59,6 +118,21 @@ public class App {
             String[] comando = entrada.trim().split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
             continuar = ejecutarComando(comando, true);
         } while (continuar);*/
+    }
+
+    private static ArrayList<Command> CreateCommandsUser() {
+        ArrayList<Command> commandsU = new ArrayList<>();
+        return commandsU;
+    }
+
+    private static ArrayList<Command> CreateCommandsProducts() {
+        ArrayList<Command> commandsP = new ArrayList<>();
+        return commandsP;
+    }
+
+    private static ArrayList<Command> CreateCommandsTicket() {
+        ArrayList<Command> commandsT = new ArrayList<>();
+        return commandsT;
     }
 
 

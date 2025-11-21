@@ -12,8 +12,10 @@ public abstract class Command {
         this.name = name;
     }
 
+    public abstract boolean isThisCommand(String name);
+
     public String[] sliceCommand(String args) {
         return args.trim().split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
     }
-    public abstract void execute(String[] args) throws Exception;
+    public abstract void execute(String[] args);
 }

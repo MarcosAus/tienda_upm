@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class TicketHandler {
     private ArrayList<Ticket> tickets;
 
-    public TicketHandler(App app){
+    public TicketHandler(){
         this.tickets = new ArrayList<>();
     }
 
@@ -20,7 +20,8 @@ public class TicketHandler {
 
         // Si se encuentra un ticket con el mismo
         for (int i = 0; i<this.tickets.size();i++) {
-            if(this.tickets.get(i).getId()==idT) {
+            if(Integer.parseInt(this.tickets.get(i).getId())==idT) {
+
                 idChosen=-2;
             }
         }
@@ -44,7 +45,7 @@ public class TicketHandler {
     private int auxFindIdForTicket(int TId){
         int result=TId , busqueda=0;
         while(busqueda<tickets.size()){
-            if(tickets.get(busqueda).getId()==TId){
+            if(Integer.parseInt(tickets.get(busqueda).getId())==TId){
                 result = auxFindIdForTicket(result + 1);
             }
             busqueda++;
@@ -57,7 +58,7 @@ public class TicketHandler {
         Ticket actTicket = tickets.get(TId);
         try {
             actTicket.addProduct(newproduct, cantidad);
-            if (actTicket.getEstadoTicket().equals(State.EMPTY)){
+            if (actTicket.getTicketState().equals(State.EMPTY)){
                 actTicket.updateState(State.ACTIVE);
             }
         }
@@ -71,7 +72,8 @@ public class TicketHandler {
         Ticket actTicket = null;
         int busqueda=0;
         while(busqueda<tickets.size()){
-            if(tickets.get(busqueda).getId()==TId){
+            if(Integer.parseInt(tickets.get(busqueda).getId())==TId){
+
                 actTicket = tickets.get(busqueda);
             }
             busqueda++;
@@ -83,7 +85,7 @@ public class TicketHandler {
     public boolean removeTicket(int TId){
         boolean result = false;
         for (int i = 0; i<this.tickets.size(); i++){
-            if(this.tickets.get(i).getId()==TId){
+            if(Integer.parseInt(this.tickets.get(i).getId())==TId){
                 tickets.remove(i);
                 result = true;
             }
@@ -95,7 +97,7 @@ public class TicketHandler {
     public void printTicketsClose(int TId){
         int busqueda=0;
         while(busqueda<tickets.size()){
-            if(tickets.get(busqueda).getId()==TId){
+            if(Integer.parseInt(tickets.get(busqueda).getId())==TId){
                 tickets.get(busqueda).printTicket();
                 tickets.get(busqueda).updateState(State.CLOSED);
                 busqueda = tickets.size();
@@ -108,7 +110,7 @@ public class TicketHandler {
     public void printTicketsShow(int TId){
         int busqueda=0;
         while(busqueda<tickets.size()){
-            if(tickets.get(busqueda).getId()==TId){
+            if(Integer.parseInt(tickets.get(busqueda).getId())==TId){
                 tickets.get(busqueda).printTicket();
                 busqueda =  tickets.size();
             }

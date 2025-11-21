@@ -4,15 +4,35 @@ import es.upm.etsisi.poo.Products.Inventory;
 import es.upm.etsisi.poo.Ticket;
 import es.upm.etsisi.poo.Utilities;
 
-public class CommandTicket extends Command {
-    private Ticket ticket;
-    private Inventory productList;
-    public CommandTicket(String args, Ticket ticket, Inventory productList) {
-        super(args);
-        this.ticket = ticket;
-        this.productList = productList;
+import java.util.ArrayList;
+
+public class CommandTicket {
+    //private Ticket ticket;    Variables antiguas por eliminar
+    //private Inventory productList;
+    private ArrayList<Command> commands;
+
+    public CommandTicket(ArrayList<Command> commands) {
+        this.commands = commands;
     }
-    public void ticketNew() {
+
+    public void checkCommand(String[] commanddiv, String actCommand) {
+        int counter = 0;
+        boolean flag = false;
+        while (counter < commands.size() && !flag) {
+            flag = commands.get(counter).isThisCommand(actCommand);
+            counter++;
+        }
+        if (flag) {
+            commands.get(counter).execute(commanddiv);
+        }
+    }
+
+    public void addCommand(Command command) {
+        commands.add(command);
+    }
+
+
+    /*public void ticketNew() {
         if (slicedCommand.length == 2) {
             ticket = new Ticket();
             System.out.println(Utilities.TICKET_NEW_OK);
@@ -61,5 +81,5 @@ public class CommandTicket extends Command {
             ticket.printTicket();
             System.out.println(Utilities.TICKET_PRINT_OK);
         } else System.out.println(Utilities.LENGTH_WRONG);
-    }
+    }*/
 }

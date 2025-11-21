@@ -17,6 +17,7 @@ public class Utilities {
     public static final String CATEGORY_WRONG = "Category is wrong";
     public static final String LENGTH_WRONG = "Command length is wrong";
     public static final String ID_NOT_NUMBER = "ID is not a number";
+    public static final String ID_NOT_IN_BOUNDARIES = "ID needs to be between 1 and 99999";
     public static final String ID_PRICE_NOT_NUMBER = "ID or price is not a number";
     public static final String PRODUCT_LIST_FULL = "List of Products is full, cannot add any more products";
     public static final String TICKET_NEW_OK = "ticket new: ok";

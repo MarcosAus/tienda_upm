@@ -7,11 +7,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserHandler {
-    private Us  er user;
     private HashMap<String, User> usersRecord;
 
-    public UserHandler(User user) {
-        this.user = user;
+    public UserHandler() {
         this.usersRecord = new HashMap<>();
     }
     public void signUp(User user) {

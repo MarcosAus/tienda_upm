@@ -1,0 +1,59 @@
+Este documento se va ha usar para poner anotaciones y proximo trabajo a realizar. Mirar el proyecto. Si no sabeis que hacer DESPUES
+de haberlo mirado seguir la lista de "to do" en orden:
+-[ ]Los comandos de product estaban usando Inventory. Añadir los metodos necesarios al handeler y corregir los comandos de product que había creado Marcos.
+-[ ]Crear comandos de user
+-[ ]Crear comandos de Ticket
+-[ ]En CLI, no se contampla que el usuario escriba EchO como comando. No se me ocurre como arreglarlo. (a ser posible no pongais echo en el dispacher,
+    soy tuga y estoy intentando evitar eso ya que dividir del comndo es más ineficiente cuando solo quieres volverlo a copiar por consola)
+
+-[ ]Limpiar comentarios basura de codigo que ya no se usa.
+
+-[X]Crear comandos de productos
+
+Dudas grupales de organización y preguntas:
+Leer esto de vez en cuando. Si teneis alguna duda gorda de organización, en plan que cambien el uml mucho, ponerla aquí. Si leis
+alguna si os pare bien el cambio lo poneis. Si 3 personas están de acuerdo se hace el cambio. Si 4 lo están se borra la anotación
+y se hace el cambio:
+-Tuga propone:xd esto es un ejemplo
+    Danni y uwu aprueban / Marcos prefiere no cambiarlo
+
+-Tuga: No entiendo que hace slicedCommand en command. Osea lo entiendo pero necesito usarlo en CLI para saber que tipo de comando es el que
+    está solicitando el usuario. Command es una clase abstracta así que no puedo llamar a ese metodo desde CLI y se me haría raro
+    llamar a un comando aleatorio como add prod para dividir el texto del usuario. He puesto En CLI un metodo igual ya que solo
+    solo se tiene que dividir el comando una vez por cada bucle while del CLI y no se usa fuera del CLI.
+-Tuga: Todos los comandos estaban creados con inventory pero se supone que productHandler se encarga de eso asi que lo he cambiado. Si estoy equivocado
+    es solo una variable, cambiarla.
+-Tuga: Existe un problema qu ese puede dar a muy largo plazo. Si un commando empieza exactamente igual que otro y el otro es más corto entonces el largo nunca
+    ejecutara porque teoricamente el inicio del comando corto coincide con el inicio del comando del usuario. En nuestro programa no ocurre si el nombre del
+    commando incluye un espacio al final. Podemos dejarlo asi, que es lo que propongo hacer ya que que los comandos sean similares puede ser un fallo de diseño
+    o crear un sistema que detecte eso lo cual me parece mucho trabajo.
+
+
+
+
+
+Anotacciones por hacer. Aquí se ponen notas de cosas que estan a medio hacer porque requieren que x cosa se termine:
+- TicketHandler remove y show tickets. Se necesita terminar el cashier porque este guarda los tickets. Dependiendo de
+    como se acaben guardando se tendra que hacer el metodo en consecuencia.
+- ProductHandler remove product. Necesita que se cree una manera de comunicar esta clase con el ticketHandeler para
+    borrar el producto solicitado en los tickets y en los productos.
+
+
+ACLARACIONES:
+-Ahora en comandos se ha creado un nuevo metodo, isThisCommands. Este verifica si el inicio del comando coincide con su nombre, Entonces el nombre de los commandos debe ser igual
+    inicio del commando.
+
+-En la clase enum no es necesario hacer metodos que pasen de enum a string ni viceversa porque ya existen dos metodos de los
+enum que resuelve ese problema, una cosa es que como solo necesitas imprimir por pantalla las categorias en mayusculas no es
+necesario crear un toString, en caso de que el string tenga que ser distintos si seria necesario
+
+    categoria.name() = te devuelve la categoria en string por ejemplo MERCH
+
+    Categoria.valueOf(String) = en el string tiene que estar el nombre de la categoria , si no existe la categoria o esta mal
+    escrita te devuelve una excepcion IllegalArgumentException. Por lo que simplemente para manejar eso usamos un try catch y cuando
+    salga por ese error decimos que la categoria esta mal escrita.
+
+Por lo que lo siento hugo me voy a cargar tu codigo
+
+
+

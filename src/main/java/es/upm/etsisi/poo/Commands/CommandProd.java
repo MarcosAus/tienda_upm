@@ -9,6 +9,22 @@ public class CommandProd {
         this.commands = commands;
     }
 
+    public void checkCommand(String[] commanddiv, String actCommand) {
+        int counter = 0;
+        boolean flag = false;
+        while (counter < commands.size() && !flag) {
+            flag = commands.get(counter).isThisCommand(actCommand);
+            counter++;
+        }
+        if (flag) {
+            commands.get(counter).execute(commanddiv);
+        }
+    }
+
+    public void addCommand(Command command) {
+        commands.add(command);
+    }
+
 
     /*private Inventory productList;
 
