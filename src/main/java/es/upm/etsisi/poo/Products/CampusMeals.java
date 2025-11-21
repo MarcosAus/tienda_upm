@@ -20,11 +20,19 @@ public class CampusMeals extends Product {
 
     @Override
     public String toString() {
-        return "{class:Product, id:" + getId() +
-                ", name:" + getNombre() +
-                ", price per person:" + getPrecio() +
-                ", Type of product:  "+ this.getClass().getSimpleName() +
-                " }";
+        StringBuilder sb = new StringBuilder();
+        sb.append("{class:CampusMeals, id:");
+        sb.append(getId());
+        sb.append(", name:");
+        sb.append(getNombre());
+        sb.append(", price:");
+        sb.append(getPrecio());
+        sb.append(", date of Event:");
+        sb.append(dateOfEnd);
+        sb.append(", max people allowed:");
+        sb.append(maxParticipantes);
+
+        return sb.toString();
     }
 
     @Override
