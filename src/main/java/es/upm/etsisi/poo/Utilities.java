@@ -49,4 +49,18 @@ public class Utilities {
         }
         return sb.toString();
     }
+
+    public static Product busquedaProductoPorID(ArrayList<Product> listaProducts, int id) {
+        Product resultado = null;
+        boolean existe = false;
+        Iterator<Product> iterator = listaProducts.iterator();
+        while (iterator.hasNext() && !existe) {
+            Product product = iterator.next();
+            if (product.getId() == id) {
+                resultado = product;
+                existe = true;
+            }
+        }
+        return resultado;
+    }
 }

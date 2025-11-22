@@ -7,7 +7,7 @@ import es.upm.etsisi.poo.Users.User;
 import java.util.HashMap;
 
 public class CashierManager extends UserHandler {
-    private Cashier cashier;
+    /*private Cashier cashier;
     private HashMap<String, User> userRecord;
     public CashierManager(Cashier cashier) {
         super(cashier);
@@ -21,6 +21,6 @@ public class CashierManager extends UserHandler {
 
     public void registerClient(Client client) {
         registerUser(client);
-    }
+    }*/
 
 }

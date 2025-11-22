@@ -32,7 +32,7 @@ public class TicketHandler {
         else {
             idChosen=auxFindIdForTicket(idT+1);
         }
-        Ticket actTicket = new Ticket(idT);
+        Ticket actTicket = new Ticket(String.format("%05d",idT));
         tickets.add(actTicket);
         return idChosen;
     }

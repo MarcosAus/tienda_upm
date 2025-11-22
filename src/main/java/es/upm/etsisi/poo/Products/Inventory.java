@@ -42,7 +42,7 @@ public class Inventory {
      * @param categoria Categorio a la que pertenece el producto
      * @param precio Precio del producto
      */
-    public void addProduct(int id, String nombre, Category categoria, double precio) {
+    /*public void addProduct(int id, String nombre, Category categoria, double precio) {
         if (id >= 0) {
             Product existente = Utilities.busquedaProductoPorID(listaProducts, id);
 
@@ -59,7 +59,7 @@ public class Inventory {
         }
 
         else System.out.println("ID cannot be negative");
-    }
+    }*/
 
     /**
      * Metodo que busca un producto dentro del inventario y cambia el atributo deseado
@@ -68,7 +68,7 @@ public class Inventory {
      * @param campo Atributo que se quiere actualizar, puede ser el nombre, la categoria o el precio
      * @param valor Nuevo valor del atributo que se quiere actualizar
      */
-    public void updateProduct(int id, String campo, String valor) {
+    /*public void updateProduct(int id, String campo, String valor) {
         Product product = Utilities.busquedaProductoPorID(listaProducts, id);
 
         if (product != null) {
@@ -107,14 +107,14 @@ public class Inventory {
         else {
             System.out.println("Product not found");
         }
-    }
+    }*/
 
     /**
      * Metodo que busca un producto en el inventario y lo elimina de la lista
      * Si no lo encuentra, informa al usuario de ello
      * @param id Numero identificador del producto que se desea eliminar
      */
-    public void removeProduct(int id) {
+    /*public void removeProduct(int id) {
         Product product = Utilities.busquedaProductoPorID(listaProducts, id);
 
         if (product != null) {
@@ -124,12 +124,12 @@ public class Inventory {
         } else {
             System.out.println("Product not found");
         }
-    }
+    }*/
 
     /**
      * Metodo que imprime la lista de productos del inventario por pantalla
      */
-    public void printList() {
+    /*public void printList() {
         System.out.println("Catalog:");
         Iterator<Product> iterator = listaProducts.iterator();
         while (iterator.hasNext()) {
@@ -137,5 +137,5 @@ public class Inventory {
             System.out.println("    " + product);
         }
         System.out.println("prod list: ok");
-    }
+    }*/
 }

@@ -3,6 +3,8 @@ package es.upm.etsisi.poo.Commands.CommandsForProd;
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Products.Category;
 import es.upm.etsisi.poo.ProductHandler;
+import es.upm.etsisi.poo.Products.Product;
+import es.upm.etsisi.poo.Products.ProductBasic;
 import es.upm.etsisi.poo.Utilities;
 
 public class CommandProdAdd extends Command {
@@ -35,9 +37,13 @@ public class CommandProdAdd extends Command {
                 }
                 if (category != null) {
                     double precio = Double.parseDouble(args[5]);
-                    // IMPORTANTE: Para quien lo arregle que cree un producto dentro de este metodo a ser posible. Si es necesario podéis modificar el constructor para que guarde
-                    // otro handler o añadir una función al handler que cree el producto.
-                    productHandler.addProduct(id, name, category, precio);
+                    // IMPORTANTE: ESTO NO FUNCIONA. Antes le solicitaba a product handeler que creara el producto. Esto
+                    // no lo podemos hacer. Tenemos que detectar que tipo de producto esta creando el usuario y crearlo en
+                    // el propio comando. Por ahora crea solo un Product basic para que no de error
+                    Product product;
+                    product = new ProductBasic(category, name, id, precio);
+
+                    productHandler.addProduct(product);
                 } else System.out.println(Utilities.CATEGORY_WRONG);
 
             } else {

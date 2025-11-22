@@ -69,13 +69,14 @@ public class Ticket {
             }
         }
     }
+
     public boolean removeProduct(int id) {
         boolean resultado = false;
-        Product product = busquedaProductoPorID(products, id);
+        Product product = busquedaProductoPorID(items, id).getProduct();
         if  (product != null) {
-            Iterator<Product> iterator = products.iterator();
+            Iterator<TicketItem> iterator = items.iterator();
             while (iterator.hasNext()) {
-                Product product1 = iterator.next();
+                Product product1 = iterator.next().getProduct();
                 if (product1.equals(product)) {
                     System.out.println(product1);
                     iterator.remove();
@@ -85,6 +86,7 @@ public class Ticket {
         }
         return resultado;
     }
+
     public  TicketItem busquedaProductoPorID(ArrayList<TicketItem> products, int id) {
         TicketItem resultado = null;
         int indice=0;
@@ -100,8 +102,8 @@ public class Ticket {
     public Map<Category,Integer> getCantidadProductoCategoria() {
         Map<Category,Integer> resultado = new HashMap<>();
         Product productGeneric;
-        for (int i = 0; i < products.size(); i++) {
-            productGeneric = products.get(i);
+        for (int i = 0; i < items.size(); i++) {
+            productGeneric = items.get(i).getProduct();
             if (productGeneric instanceof ProductBasic) { // *** EXPLICAR
                 ProductBasic pb = (ProductBasic)productGeneric;
                 resultado.put(pb.getCategoria(),resultado.getOrDefault(pb.getCategoria(),0)+1);
@@ -132,10 +134,10 @@ public class Ticket {
         double descuentos = calcularDescuentoTotal();
         Map<Category, Integer> descuentoPorCategoria = getCantidadProductoCategoria();
 
-        ArrayList<Product> products = this.getProducts();
-        Iterator<Product> iterator = products.iterator();
+        ArrayList<TicketItem> products = this.getProducts();
+        Iterator<TicketItem> iterator = products.iterator();
         while (iterator.hasNext()) {
-            Product product = iterator.next();
+            Product product = iterator.next().getProduct();
 
             System.out.print(product);
             if (product instanceof ProductBasic) {
@@ -156,9 +158,9 @@ public class Ticket {
 
     public double calcularPrecio() {
         double precio = 0;
-        Iterator<Product> iterator = this.getProducts().iterator();
+        Iterator<TicketItem> iterator = this.getProducts().iterator();
         while (iterator.hasNext()) {
-            Product product = iterator.next();
+            Product product = iterator.next().getProduct();
 
             precio += product.TotalPrice();
         }
@@ -169,9 +171,9 @@ public class Ticket {
     public double calcularDescuentoTotal() {
         double descuento = 0;
         Map<Category, Integer> cantidadProductos = this.getCantidadProductoCategoria();
-        Iterator<Product> iterator = this.getProducts().iterator();
+        Iterator<TicketItem> iterator = this.getProducts().iterator();
         while (iterator.hasNext()) {
-            Product product = iterator.next();
+            Product product = iterator.next().getProduct();
             if(product instanceof ProductBasic){
                 ProductBasic pb = (ProductBasic)product;
                 if (pb.getCategoria().getDiscount()!=0) {
