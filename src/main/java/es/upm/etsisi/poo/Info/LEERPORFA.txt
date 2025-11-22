@@ -1,3 +1,12 @@
+IMPORTANTE: LA APP YA COMPILA. La mayoria de los comandos no funcionan o estan por implementar. Si un comando no ha sido implementado mostrara "Does nothing and wins"
+Solo quedaría ir comando a comando corrigiendo el execute. Os sugiero empezar a corregir en el orden de que hay abajo en el to do. También podeis eliminar la parte de
+Inventory, CashierManager; y partes de otras clases que estan terminadas pero tienen comentarios basura. SI VEIS ALGÚN METODO MAL COMENTADO CORREGIRLO, suy tuga y he
+he tenído que sobrescribirlos varias veces entonces es posible que esten mal. No hace falta que mireis todos los comentarios del programa pero si estais con prod add por
+ejemplo revisar que los metodos que usais tienen tod o correcto. Os sugiero hacer una check list de los comandos que funcionan y los que no para que podamos ir descartando
+trabajo. Y si alguien quiere completar el uml lo agradecería (con sus metodos y variables). Si eso que la persona que se ponga con el uml que haga otra versión, si la versión
+con tod o es legible entonces esa es la definitiva, si la versión con tod o no es legible dejamos la versión actual y la que tiene tod o para el profe. En caso de que
+pase lo segundo yo me encargo de intentarlo organizar. Creo que eso es lo que queda por hacer.
+
 Este documento se va ha usar para poner anotaciones y proximo trabajo a realizar. Mirar el proyecto. Si no sabeis que hacer DESPUES
 de haberlo mirado seguir la lista de "to do" en orden:
 -[ ]Los comandos de product estaban usando Inventory. Añadir los metodos necesarios al handeler y corregir los comandos de product que había creado Marcos.
