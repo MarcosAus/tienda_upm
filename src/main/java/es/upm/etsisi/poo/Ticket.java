@@ -63,30 +63,24 @@ public class Ticket {
                         }
                     }
                     else{
+                        if (product instanceof CampusMeals || product instanceof Meetings){
+
+                        }
                         items.add(new TicketItem(product, cantidad));
                     }
                 }
             }
         }
     }
-
     public boolean removeProduct(int id) {
         boolean resultado = false;
-        Product product = busquedaProductoPorID(items, id).getProduct();
-        if  (product != null) {
-            Iterator<TicketItem> iterator = items.iterator();
-            while (iterator.hasNext()) {
-                Product product1 = iterator.next().getProduct();
-                if (product1.equals(product)) {
-                    System.out.println(product1);
-                    iterator.remove();
-                    resultado = true;
-                }
-            }
+        TicketItem tI = busquedaProductoPorID(items, id);
+        if  (tI != null) {
+            items.remove(tI);
+            resultado = true;
         }
         return resultado;
     }
-
     public  TicketItem busquedaProductoPorID(ArrayList<TicketItem> products, int id) {
         TicketItem resultado = null;
         int indice=0;
@@ -114,41 +108,17 @@ public class Ticket {
     }
 
 
-    public boolean tieneDescuento(String categoria, int[] cantidadProductos) {
-        switch (categoria) {
-            case "STATIONERY":
-                return cantidadProductos[1] > 1;
-            case "CLOTHES":
-                return cantidadProductos[2] > 1;
-            case "BOOK":
-                return cantidadProductos[3] > 1;
-            case "ELECTRONICS":
-                return cantidadProductos[4] > 1;
-            default:
-                return false;
-        }
+    public boolean tieneDescuento(Category categoria,Map<Category,Integer> cantidad) {
+        return (cantidad.getOrDefault(categoria,0)>=2);
     }
 
     public void printTicket() {
-        double precio = calcularPrecio();
-        double descuentos = calcularDescuentoTotal();
-        Map<Category, Integer> descuentoPorCategoria = getCantidadProductoCategoria();
+        double precioTotal = 0;
+        double descuentoTotal = 0;
+        Map<Category, Integer> cantidadProductoCategoria = getCantidadProductoCategoria();
 
-        ArrayList<TicketItem> products = this.getProducts();
-        Iterator<TicketItem> iterator = products.iterator();
-        while (iterator.hasNext()) {
-            Product product = iterator.next().getProduct();
 
-            System.out.print(product);
-            if (product instanceof ProductBasic) {
-                ProductBasic pb = (ProductBasic)product;
-                if (pb.getCategoria().getDiscount()!=0) { // Solo tendrá en cuenta los descuentos >0
-                    System.out.print("**discount -"+ pb.getCategoria().getDiscount());
-                }
-            }
 
-            System.out.println();
-        }
 
         System.out.println("Total price: "+ precio);
         System.out.println("Total discount: "+ descuentos);
@@ -156,35 +126,23 @@ public class Ticket {
     }
 
 
-    public double calcularPrecio() {
-        double precio = 0;
-        Iterator<TicketItem> iterator = this.getProducts().iterator();
-        while (iterator.hasNext()) {
-            Product product = iterator.next().getProduct();
-
-            precio += product.TotalPrice();
+    public double calcularPrecioProducto(TicketItem tI ) {
+        double precioTotal = 0;
+        Product product = tI.getProduct();
+        if(product instanceof Meetings || product instanceof CampusMeals) {
+            precioTotal = pro
         }
-        return Math.round(precio);
     }
 
 
-    public double calcularDescuentoTotal() {
+    public double calcularDescuentoProducto(Product product,Map<Category,Integer> cantidad) {
         double descuento = 0;
-        Map<Category, Integer> cantidadProductos = this.getCantidadProductoCategoria();
-        Iterator<TicketItem> iterator = this.getProducts().iterator();
-        while (iterator.hasNext()) {
-            Product product = iterator.next().getProduct();
-            if(product instanceof ProductBasic){
-                ProductBasic pb = (ProductBasic)product;
-                if (pb.getCategoria().getDiscount()!=0) {
-                    descuento += pb.getCategoria().getDiscount();
-                }
+        if(product instanceof ProductBasic) {
+            if(tieneDescuento(((ProductBasic) product).getCategoria(),cantidad)) {
+                return ((ProductBasic) product).getCategoria().getDiscount()*product.getPrecio();
             }
-
-
-
         }
-        return ((double) Math.round(descuento * 1000) /1000);
+        return descuento;
     }
 
 }
