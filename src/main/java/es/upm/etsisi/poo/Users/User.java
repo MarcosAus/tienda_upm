@@ -1,6 +1,6 @@
 package es.upm.etsisi.poo.Users;
 
-public class User {
+public abstract class User {
     private String id;
     private String nombre;
     private String correo;

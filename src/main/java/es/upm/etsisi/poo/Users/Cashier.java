@@ -1,6 +1,7 @@
 package es.upm.etsisi.poo.Users;
 
 import es.upm.etsisi.poo.Ticket;
+import es.upm.etsisi.poo.Utilities;
 
 import java.util.Stack;
 
@@ -12,6 +13,44 @@ public class Cashier extends User {
                                                Esto lo arreglaremos en App (abierto a revisar) /M */
         this.tickets = new Stack<>();
     }
+
+    //Getter tickets
+    public Stack<Ticket> getTickets() {
+        return tickets;
+    }
+
+    //Adds all the tickets from a stack
+    public void addTicketsFromOtherUser(Stack<Ticket> newTickets){
+        int ticketsToAdd = newTickets.size();
+        for (int i = 0; i<ticketsToAdd; i++){
+            tickets.push(newTickets.pop());
+        }
+    }
+
+    //Adds a section of the Stack of tickets from other user. Start incluido, end no incluido
+    public void addSectionOfTicketsFromOtherUser(Stack<Ticket> newTickets, int start, int end){
+        int ticketsToAdd = newTickets.size();
+        Ticket actTicket = null;
+        for (int i = start; i<end; i++){
+            actTicket = newTickets.get(i);
+            tickets.push(actTicket);
+        }
+    }
+
+    public void addTicket(Ticket ticket) {
+        tickets.add(ticket);
+    }
+
+    //Elimina el ticket en base a un String
+    public void removeTicket(String id){
+        tickets.removeIf(t -> t.getId().equals(id));
+    }
+    //Elimina un ticket en vase a un int
+    public void removeTicket(int id){
+        tickets.removeIf(t -> t.getId().equals(String.format("%05d", id)));
+    }
+
+
 
     // Devuelve el Cashier que creo el ticket
     public boolean isCashierInCharge(int idTicket) {
@@ -48,6 +87,4 @@ public class Cashier extends User {
             return id;
         }
     }
-
-
 }

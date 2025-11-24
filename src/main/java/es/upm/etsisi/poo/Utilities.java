@@ -50,6 +50,16 @@ public class Utilities {
         return sb.toString();
     }
 
+    //Cambia el id al formato correcto como String
+    public String idToString(int id){
+        return String.format("%05d", id);
+    }
+
+    //Cambia el id a un int
+    public int idToInt(String id){
+        return Integer.parseInt(id);
+    }
+
     public static Product busquedaProductoPorID(ArrayList<Product> listaProducts, int id) {
         Product resultado = null;
         boolean existe = false;
