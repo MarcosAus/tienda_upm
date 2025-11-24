@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.Products;
 
 public class Meetings extends Product {
     private  int maxParticipantes;
+    private static int MAXPEOPLEALLOWED = 100;
     private static final int minTime = 12;
     private String dateOfEnd;
 
@@ -21,7 +22,7 @@ public class Meetings extends Product {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{class:Meeting, id:");
+        sb.append("class:Meeting, id:");
         sb.append(getId());
         sb.append(", name:");
         sb.append(getNombre());

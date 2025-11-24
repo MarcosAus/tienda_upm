@@ -73,13 +73,17 @@ public class Ticket {
         }
     }
     public boolean removeProduct(int id) {
-        boolean resultado = false;
-        TicketItem tI = busquedaProductoPorID(items, id);
-        if  (tI != null) {
-            items.remove(tI);
-            resultado = true;
+        if(this.stateTicket != State.CLOSED) {
+            boolean resultado = false;
+            TicketItem tI = busquedaProductoPorID(items, id);
+            if  (tI != null) {
+                items.remove(tI);
+                resultado = true;
+            }
+            return resultado;
         }
-        return resultado;
+        else return false;
+
     }
     public  TicketItem busquedaProductoPorID(ArrayList<TicketItem> products, int id) {
         TicketItem resultado = null;
@@ -107,42 +111,61 @@ public class Ticket {
         return resultado;
     }
 
+    public String printTicket() {
+        if (stateTicket != State.CLOSED) {
+            double precioTotal = 0;
+            double precio;
+            double descuento;
+            StringBuilder sb = new StringBuilder("Ticket: ").append(id);
+            Product product;
+            double descuentoTotal = 0;
+            Map<Category, Integer> cantidadProductoCategoria = getCantidadProductoCategoria();
+            for(TicketItem tI : items) {
+                product = tI.getProduct();
+                precio= calcularPrecioProducto(tI);
+                descuento=calcularDescuentoProducto(tI,cantidadProductoCategoria);
+                sb.append("{");
+                sb.append(tI.getProduct().toString());
+                if(product instanceof Meetings || product instanceof CampusMeals) {
+                    sb.append(", actual people in event:");
+                    sb.append(tI.getAmount());
+                }
+                sb.append("}");
+                if(product instanceof ProductBasic && descuento>0) {
+                    sb.append(" **discount -").append(precio*descuento);
+                    sb.append("\n");
+                }
+            }
+            System.out.println("Total price: "+ precioTotal);
+            System.out.println("Total discount: "+ descuentoTotal);
+            System.out.println("Final price: " + (precioTotal - descuentoTotal));
+            stateTicket = State.CLOSED;
+            return sb.toString();
+        }
+        else return "ERROR";
 
-    public boolean tieneDescuento(Category categoria,Map<Category,Integer> cantidad) {
-        return (cantidad.getOrDefault(categoria,0)>=2);
     }
 
-    public void printTicket() {
-        double precioTotal = 0;
-        double descuentoTotal = 0;
-        Map<Category, Integer> cantidadProductoCategoria = getCantidadProductoCategoria();
-
-
-
-
-        System.out.println("Total price: "+ precio);
-        System.out.println("Total discount: "+ descuentos);
-        System.out.println("Final price: " + (precio - descuentos));
-    }
-
-
-    public double calcularPrecioProducto(TicketItem tI ) {
+    private double calcularPrecioProducto(TicketItem tI ) {
         double precioTotal = 0;
         Product product = tI.getProduct();
         if(product instanceof Meetings || product instanceof CampusMeals) {
-            precioTotal = pro
+            precioTotal = product.getPrecio()*tI.getAmount();
+        } else if (product instanceof ProductPers) {
+            precioTotal =product.TotalPrice();
         }
+        else precioTotal= product.getPrecio();
+        return precioTotal;
     }
 
-
-    public double calcularDescuentoProducto(Product product,Map<Category,Integer> cantidad) {
+    private double calcularDescuentoProducto(TicketItem tI,Map<Category,Integer> cantidad) {
+        Product product = tI.getProduct();
         double descuento = 0;
         if(product instanceof ProductBasic) {
-            if(tieneDescuento(((ProductBasic) product).getCategoria(),cantidad)) {
-                return ((ProductBasic) product).getCategoria().getDiscount()*product.getPrecio();
+            if(cantidad.getOrDefault(((ProductBasic) product).getCategoria(),0)>=2) {
+                return ((ProductBasic) product).getCategoria().getDiscount();
             }
         }
         return descuento;
     }
-
 }

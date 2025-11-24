@@ -41,14 +41,14 @@ public class ProductPers extends ProductBasic {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{class:ProductPersonalized, id:");
+        sb.append("class:ProductPersonalized, id:");
         sb.append(getId());
         sb.append(", name:");
         sb.append(getNombre());
         sb.append(", category:");
         sb.append(getCategoria());
         sb.append(", price:");
-        sb.append(getPrecio());
+        sb.append(TotalPrice());
         sb.append(", maxPersonal:");
         sb.append(maxTextos);
         if (!textos.isEmpty()) {
@@ -57,7 +57,7 @@ public class ProductPers extends ProductBasic {
                 sb.append(textos.get(i));
                 sb.append(",");
             }
-            sb.append("]}");
+            sb.append("]");
         }
 
 

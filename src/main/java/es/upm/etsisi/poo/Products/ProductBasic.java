@@ -9,10 +9,10 @@ public class ProductBasic extends Product {
         }
         @Override
         public String toString(){
-                return "{class:Product, id:" + getId() +
+                return "class:Product, id:" + getId() +
                         ", name:" + getNombre() +
                         ", category:" + categoria.name() +
-                        ", price:" + getPrecio() + "}";
+                        ", price:" + getPrecio();
         }
         @Override
         public double TotalPrice(){
