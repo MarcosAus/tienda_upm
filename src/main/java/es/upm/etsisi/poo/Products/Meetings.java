@@ -6,10 +6,10 @@ public class Meetings extends Product {
     private static final int minTime = 12;
     private String dateOfEnd;
 
-    public Meetings(int id, String name, double price,int maxParticipantes,String dateOfEnd) {
+    public Meetings(int id, String name, double price, String dateOfEnd, int maxParticipantes) {
         super(id, name, price);
-        this.maxParticipantes = maxParticipantes;
         this.dateOfEnd = dateOfEnd;
+        this.maxParticipantes = maxParticipantes;
     }
 
     public int getMaxParticipantes() {

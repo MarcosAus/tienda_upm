@@ -27,6 +27,7 @@ public class Utilities {
     public static final String TICKET_REMOVE_OK = "ticket remove: ok";
     public static final String NO_PRODUCTS_WITH_THAT_ID_IN_TICKET = "No products with that ID were found in ticket";
     public static final String TICKET_PRINT_OK = "ticket print: ok";
+    public static final String ID_PRICE_AMOUNT_NOT_NUMBER = "ID, price or amount is not a number";
     public static final String UNKNOWN_COMMAND = "Unknown command";
 
     public static Cashier buscarCajeroPorID(ArrayList<Cashier> cashiers, String id) {
@@ -72,5 +73,15 @@ public class Utilities {
             }
         }
         return resultado;
+    }
+
+    public static int idAleatorio(ProductHandler productHandler) {
+        int idRandom = -1;
+        while(idRandom == -1 || productHandler.getProduct(idRandom) != null) {
+            double generate = (double) idRandom;
+            generate = Math.random() * (200);
+            idRandom = (int) generate;
+        }
+        return idRandom;
     }
 }

@@ -46,8 +46,8 @@ public class App {
         //Los comandos deben tener un nombre igual en minusculas al comando en sí. Ej: TickedAdd tiene que tener name = "ticket add"
         // IMPORTANTE: le he pedido ha chat gpt que coja las variables del comentario de abajo y las ponga en cada contenedor de comandos. No se si lo ha hecho bien. Puede que tenga algun fallito
         commandsProducts.addCommand(new CommandProdAdd("prod add ", productHandler));
-        commandsProducts.addCommand(new CommandProdAddFood("prod addFood ", productHandler));
-        commandsProducts.addCommand(new CommandProdAddMeeting("prod addMeeting ", productHandler));
+        commandsProducts.addCommand(new CommandProdAddFoodMeeting("prod addFood ", productHandler));
+        commandsProducts.addCommand(new CommandProdAddFoodMeeting("prod addMeeting ", productHandler));
         commandsProducts.addCommand(new CommandProdList("prod list ", productHandler));
         commandsProducts.addCommand(new CommandProdRemove("prod remove ", productHandler));
         commandsProducts.addCommand(new CommandProdUpdate("prod update ", productHandler));
