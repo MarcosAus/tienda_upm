@@ -4,9 +4,8 @@ import es.upm.etsisi.poo.Users.Cashier;
 import es.upm.etsisi.poo.Users.Client;
 import es.upm.etsisi.poo.Users.User;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class UserHandler {
     private HashMap<String, Client> clientsRecord;
@@ -38,13 +37,40 @@ public class UserHandler {
         }
     }
     public void listCashierRecord() {
-        for (Cashier cash : cashiersRecord.values()) {
+        Map<String, Cashier> cashierRecordSorted =
+                cashiersRecord.entrySet()
+                        .stream()
+                        .sorted(Comparator.comparing(e -> e.getValue().getName()))
+                        .collect(
+                                Collectors.toMap(
+                                        Map.Entry::getKey,
+                                        Map.Entry::getValue,
+                                        (a,b) -> a,
+                                        LinkedHashMap::new
+                                )
+                        );
+        for (Cashier cash : cashierRecordSorted.values()) {
             System.out.println("Cashier{identifier = " + cash.getId() + ", name = " + cash.getName() + ", email = " + cash.getMail());
         }
     }
     public void listClientRecord() {
-        for (Client client : clientsRecord.values()) {
+        Map<String, Client> clientRecordSorted =
+                clientsRecord.entrySet()
+                        .stream()
+                        .sorted(Comparator.comparing(e -> e.getValue().getName()))
+                        .collect(
+                                Collectors.toMap(
+                                        Map.Entry::getKey,
+                                        Map.Entry::getValue,
+                                        (a,b) -> a,
+                                        LinkedHashMap::new
+                                )
+                        );
+        for (Client client : clientRecordSorted.values()) {
             System.out.println("Client{identifier = " + client.getId() + ", name = " + client.getName() + ", email = " + client.getMail());
         }
+    }
+    public void listTicketsCashier(String idCash) {
+        //Todo
     }
 }

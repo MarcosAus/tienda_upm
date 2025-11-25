@@ -64,7 +64,7 @@ public class App {
         commandsUser.addCommand(new CommandUserListCash("cash list ", userHandler));
         commandsUser.addCommand(new CommandUserListClients("client list ", userHandler));
         commandsUser.addCommand(new CommandUserListTicketsCashier("cash tickets ", userHandler));
-        commandsUser.addCommand(new CommandUserRemove("cash remove ", userHandler));
+        commandsUser.addCommand(new CommandUserRemoveClient("cash remove ", userHandler));
 
         /*
         CommandProdAdd commandProdAdd = new CommandProdAdd("prod add ", productHandler);
