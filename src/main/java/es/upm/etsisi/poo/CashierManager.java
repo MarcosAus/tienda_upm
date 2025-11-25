@@ -16,7 +16,7 @@ public class CashierManager extends UserHandler {
     }
 
     public void addTicket(Ticket ticket) {
-        cashier.tickets.push(ticket);
+        cashier.getTickets().push(ticket);
     }
 
     public void registerClient(Client client) {

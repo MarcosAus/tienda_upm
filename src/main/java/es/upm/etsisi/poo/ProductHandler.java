@@ -75,7 +75,7 @@ public class ProductHandler {
     }
 
     public void updateProductName(int id ,String newName) {
-        getProduct(id).setNombre(newName);
+        getProduct(id).setName(newName);
     }
 
     public void updateProductCategory(int id, Category newCategory) {
@@ -83,13 +83,13 @@ public class ProductHandler {
         if (p instanceof ProductBasic productBasic){
             productBasic.setCategory(newCategory);
         }
-        if(p instanceof ProductPers productPers){
+        if (p instanceof ProductPers productPers){
             productPers.setCategory(newCategory);
         }
     }
 
     public void updateProductPrice(int id, double newPrice) {
-        getProduct(id).setPrecio(newPrice);
+        getProduct(id).setPrice(newPrice);
     }
 
 

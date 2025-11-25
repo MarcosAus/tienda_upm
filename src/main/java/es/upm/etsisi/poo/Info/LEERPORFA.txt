@@ -66,5 +66,9 @@ necesario crear un toString, en caso de que el string tenga que ser distintos si
 
 Por lo que lo siento hugo me voy a cargar tu codigo
 
+-Marcos: CAMBIO IMPORTANTE
+    UserHandler ahora tiene dos HashMap (uno para clientes y otro para cajeros) en lugar de solo uno, ya que para añadir, listar y eliminar
+    cada tipo de usuario del registro existente, es mucho más cómodo y eficiente tener dos registros distintos en lugar de uno unificado.
+
 
 

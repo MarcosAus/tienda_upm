@@ -16,13 +16,13 @@ public abstract class Product {
         return this.precio;
     }
 
-    public  void setPrecio(double precio){
+    public  void setPrice(double precio){
         this.precio = precio;
     }
     public String getNombre() {
         return nombre;
     }
-    public void setNombre(String nombre) {
+    public void setName(String nombre) {
         this.nombre = nombre;
     }
 

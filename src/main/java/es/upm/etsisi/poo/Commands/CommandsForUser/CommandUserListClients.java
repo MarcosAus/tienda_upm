@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.Commands.CommandsForUser;
 
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.UserHandler;
+import es.upm.etsisi.poo.Utilities;
 
 public class CommandUserListClients extends Command {
     private UserHandler userHandler;
@@ -17,6 +18,10 @@ public class CommandUserListClients extends Command {
 
     @Override
     public void execute(String[] args) {
-        System.out.print("Does nothing and wins");
+        try {
+            userHandler.listClientRecord();
+        } catch (Exception e) {
+            System.out.println(Utilities.LENGTH_WRONG);
+        }
     }
 }

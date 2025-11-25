@@ -1,35 +1,50 @@
 package es.upm.etsisi.poo;
 
+import es.upm.etsisi.poo.Users.Cashier;
 import es.upm.etsisi.poo.Users.Client;
 import es.upm.etsisi.poo.Users.User;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class UserHandler {
-    private HashMap<String, User> usersRecord;
+    private HashMap<String, Client> clientsRecord;
+    private HashMap<String, Cashier> cashiersRecord;
 
     public UserHandler() {
-        this.usersRecord = new HashMap<>();
+        this.clientsRecord = new HashMap<>();
+        this.cashiersRecord = new HashMap<>();
     }
-    public void signUp(User user) {
-        usersRecord.put(user.getId(), user);
+    public HashMap<String, Client> getClientsRecord() {
+        return clientsRecord;
     }
-
+    public HashMap<String, Cashier> getCashiersRecord() {
+        return cashiersRecord;
+    }
     public void registerUser(User user) {
-        // Lógica para registrar un usuario
+        if (user instanceof Client) {
+            clientsRecord.putIfAbsent(user.getId(), (Client) user);
+        } else if (user instanceof Cashier) {
+            cashiersRecord.putIfAbsent(user.getId(), (Cashier) user);
+        }
     }
 
     public User getUserById(String id) {
-        return usersRecord.get(id);
-    }
-    public ArrayList<Client> getClients() {
-        ArrayList<Client> clients = new ArrayList<>();
-        for (User user : usersRecord.values()) {
-            if (user instanceof Client) {
-                clients.add((Client) user);
-            }
+        if (id.contains("UW")) {
+            return cashiersRecord.get(id);
+        } else {
+            return clientsRecord.get(id);
         }
-        return clients;
+    }
+    public void listCashierRecord() {
+        for (Cashier cash : cashiersRecord.values()) {
+            System.out.println("Cashier{identifier = " + cash.getId() + ", name = " + cash.getName() + ", email = " + cash.getMail());
+        }
+    }
+    public void listClientRecord() {
+        for (Client client : clientsRecord.values()) {
+            System.out.println("Client{identifier = " + client.getId() + ", name = " + client.getName() + ", email = " + client.getMail());
+        }
     }
 }

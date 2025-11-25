@@ -1,8 +1,10 @@
 package es.upm.etsisi.poo.Commands;
 
 import java.util.ArrayList;
-
-public class CommandProd {
+import es.upm.etsisi.poo.Products.Inventory;
+import es.upm.etsisi.poo.Products.Product;
+import es.upm.etsisi.poo.Utilities;
+public class CommandProd extends Command {
     private ArrayList<Command> commands;
 
     public CommandProd(ArrayList<Command> commands) {
@@ -24,9 +26,7 @@ public class CommandProd {
     public void addCommand(Command command) {
         commands.add(command);
     }
-
-
-    /*private Inventory productList;
+    private Inventory productList;
 
     public CommandProd(String args, Inventory productList) {
         super(args);
@@ -38,7 +38,7 @@ public class CommandProd {
             if (slicedCommand.length == 6 && productList.getCapacidad() < Utilities.MAX_LIST) {
                 id = Integer.parseInt(slicedCommand[2]);
                 String nombre = slicedCommand[3];
-                Product.Categoria categoria = Product.Categoria.getCategoria(slicedCommand[4]);
+                Product.Category categoria = Product.Categoria.getCategoria(slicedCommand[4]);
 
                 if (categoria != null) {
                     double precio = Double.parseDouble(slicedCommand[5]);
@@ -89,5 +89,5 @@ public class CommandProd {
             }
         }
         else System.out.println(Utilities.LENGTH_WRONG);
-    }*/
+    }
 }

@@ -11,11 +11,11 @@ public abstract class User {
         this.correo = correo;
     }
 
-    protected String getNombre() {
+    public String getName() {
         return this.nombre;
     }
 
-    protected String getCorreo() {
+    public String getMail() {
         return this.correo;
     }
 

@@ -20,18 +20,20 @@ public class CommandUserAddCashier extends Command {
 
     @Override
     public void execute(String[] args) {
-        try{
-            if(args.length != 5){
-                int id;
-                id = Integer.parseInt(args[2]);
-                String nombre;
-                nombre = args[3];
-                String email;
-                email = args[4];
-                Cashier cashier = new Cashier();
-                userHandler.registerUser();
+        try {
+            if (args.length == 5) {
+                String id = args[2];
+                String nombre = args[3];
+                String email = args[4];
+                Cashier cashier = new Cashier(id, nombre, email);
+                userHandler.registerUser(cashier);
             }
-            else {
+            else if (args.length == 4) {
+                String nombre = args[2];
+                String email = args[3];
+                Cashier cashier = new Cashier(null, nombre, email);
+                userHandler.registerUser(cashier);
+            } else {
                 System.out.println("Error: wrong comand legth ");
             }
 
