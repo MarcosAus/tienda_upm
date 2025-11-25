@@ -66,9 +66,12 @@ necesario crear un toString, en caso de que el string tenga que ser distintos si
 
 Por lo que lo siento hugo me voy a cargar tu codigo
 
--Marcos: CAMBIO IMPORTANTE
-    UserHandler ahora tiene dos HashMap (uno para clientes y otro para cajeros) en lugar de solo uno, ya que para añadir, listar y eliminar
-    cada tipo de usuario del registro existente, es mucho más cómodo y eficiente tener dos registros distintos en lugar de uno unificado.
+-Marcos: CAMBIOS IMPORTANTES
+    * UserHandler ahora tiene dos HashMap (uno para clientes y otro para cajeros) en lugar de solo uno, ya que para añadir, listar y eliminar
+      cada tipo de usuario del registro existente, es mucho más cómodo y eficiente tener dos registros distintos en lugar de uno unificado.
 
+    * A la hora de listar los clientes y los cajeros, hay que hacerlo en orden alfabético, pero como utilizamos una estructura HashMap,
+      he tenido que recurrir a una forma muy complicada de hacerlo (ya que no creo que haya otra forma sin joder aún más lo que ya tenemos).
+      Si se os ocurre otra forma o lo que sea avisad y lo cambiamos.
 
 

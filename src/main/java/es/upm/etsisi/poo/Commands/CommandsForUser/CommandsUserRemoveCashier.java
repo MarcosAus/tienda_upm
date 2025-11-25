@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.Commands.CommandsForUser;
 
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.UserHandler;
+import es.upm.etsisi.poo.Utilities;
 
 public class CommandsUserRemoveCashier extends Command {
     private UserHandler userHandler;
@@ -17,6 +18,10 @@ public class CommandsUserRemoveCashier extends Command {
 
     @Override
     public void execute(String[] args) {
-        System.out.print("Does nothing and wins");
+        if (args.length == 3) {
+            userHandler.getCashiersRecord().remove(args[2]);
+        } else {
+            System.out.println(Utilities.LENGTH_WRONG);
+        }
     }
 }

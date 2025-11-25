@@ -18,9 +18,9 @@ public class CommandUserListClients extends Command {
 
     @Override
     public void execute(String[] args) {
-        try {
+        if (args.length == 2) {
             userHandler.listClientRecord();
-        } catch (Exception e) {
+        } else {
             System.out.println(Utilities.LENGTH_WRONG);
         }
     }

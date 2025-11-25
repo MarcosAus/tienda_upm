@@ -3,6 +3,7 @@ package es.upm.etsisi.poo.Commands.CommandsForUser;
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Utilities;
+import jdk.jshell.execution.Util;
 
 public class CommandUserListCash extends Command {
     private UserHandler userHandler;
@@ -18,11 +19,9 @@ public class CommandUserListCash extends Command {
 
     @Override
     public void execute(String[] args) {
-        try {
-            if (args.length == 2) {
-                userHandler.listCashierRecord();
-            }
-        } catch (Exception e) {
+        if (args.length == 2) {
+            userHandler.listCashierRecord();
+        } else {
             System.out.println(Utilities.LENGTH_WRONG);
         }
     }

@@ -2,6 +2,8 @@ package es.upm.etsisi.poo.Commands.CommandsForUser;
 
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.UserHandler;
+import es.upm.etsisi.poo.Utilities;
+import jdk.jshell.execution.Util;
 
 public class CommandUserListTicketsCashier extends Command {
     private UserHandler userHandler;
@@ -17,7 +19,11 @@ public class CommandUserListTicketsCashier extends Command {
 
     @Override
     public void execute(String[] args) {
-        System.out.print("Does nothing and wins");
+        if (args.length == 3) {
+            userHandler.listTicketsCashier(args[2]);
+        } else {
+            System.out.println(Utilities.LENGTH_WRONG);
+        }
     }
 
 }
