@@ -108,7 +108,7 @@ public class TicketHandler {
     }
 
     //Imprime el ticket pero se queda habierto al contrario qe printTicketClose
-    public void printTicketsShow(int TId){
+    public void printTicketsShow(int TId) {
         int busqueda=0;
         while(busqueda<tickets.size()){
             if(Integer.parseInt(tickets.get(busqueda).getId())==TId){

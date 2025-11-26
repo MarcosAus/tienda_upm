@@ -9,7 +9,7 @@ import java.util.*;
 
 
 public class Ticket {
-    private final ArrayList<TicketItem> items;
+    private ArrayList<TicketItem> items;
     private String id;
     private State stateTicket;
     private static final int MAXSIZE = 100;

@@ -29,7 +29,7 @@ public class CashierHandler extends UserHandler {
             System.out.println("No product with id "+ticketId+" was found");
         }
     }
-    public void removeTicket(String ticketId, String cashId, String prodId) {
+    public void removeTicket(String ticketId, String cashId, int prodId) {
         Ticket actTicket = this.getCashiersRecord().get(cashId).getTickets().get(ticketId);
         try {
             actTicket.removeProduct(prodId); //Hay que cambiar las clases de Ticket para que su id sea String, no int. - Marcos
