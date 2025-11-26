@@ -21,7 +21,7 @@ public class CommandsUserRemoveCashier extends Command {
     public void execute(String[] args) {
         if (args.length == 3) {
             Cashier cashier = userHandler.getCashiersRecord().get(args[2]);
-            for(int i = 0; i < cashier.getTickets().size(); i++){
+            for (int i = 0; i < cashier.getTickets().size(); i++){
                 cashier.removeTicket(cashier.getTickets().get(i).getId());
             }
             userHandler.getCashiersRecord().remove(cashier.getId());

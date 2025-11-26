@@ -22,7 +22,7 @@ public class Cashier extends User {
     //Adds all the tickets from a stack
     public void addTicketsFromOtherUser(Stack<Ticket> newTickets){
         int ticketsToAdd = newTickets.size();
-        for (int i = 0; i<ticketsToAdd; i++){
+        for (int i = 0; i<ticketsToAdd; i++) {
             tickets.push(newTickets.pop());
         }
     }

@@ -22,11 +22,12 @@ public class CommandTicketNew extends Command {
     public void execute(String[] args) {
         Ticket ticket;
         int id;
-        if (args.length == 2) {
-            try{
-                id = Integer.parseInt(args[1]);
-                if(id <= 1 || id >= 99999 ){
+        if (args.length == 5) {
+            try {
+                id = Integer.parseInt(args[2]);
+                if (id <= 1 || id >= 99999 ){
                     ticket = new Ticket(String.format("%05d", id));
+
                     System.out.println(Utilities.TICKET_NEW_OK);
                 }
                 else{
