@@ -11,8 +11,8 @@ Dani añade esto al commit. Tuga: Metodos de user actualizados (clients y cash).
 
 Este documento se va ha usar para poner anotaciones y proximo trabajo a realizar. Mirar el proyecto. Si no sabeis que hacer DESPUES
 de haberlo mirado seguir la lista de "to do" en orden:
--[ ]Los comandos de product estaban usando Inventory. Añadir los metodos necesarios al handeler y corregir los comandos de product que había creado Marcos.
--[ ]Crear comandos de user
+-[X]Los comandos de product estaban usando Inventory. Añadir los metodos necesarios al handeler y corregir los comandos de product que había creado Marcos.
+-[X]Crear comandos de user| LEER AUNQUE ESTE MARCADO!(Faltaría un retoque en remove por culpa de una cosa en Cliente +info en ANOTACIONES)
 -[ ]Crear comandos de Ticket
 -[ ]En CLI, no se contampla que el usuario escriba EchO como comando. No se me ocurre como arreglarlo. (a ser posible no pongais echo en el dispacher,
     soy tuga y estoy intentando evitar eso ya que dividir del comndo es más ineficiente cuando solo quieres volverlo a copiar por consola)
@@ -32,6 +32,9 @@ y se hace el cambio:
     está solicitando el usuario. Command es una clase abstracta así que no puedo llamar a ese metodo desde CLI y se me haría raro
     llamar a un comando aleatorio como add prod para dividir el texto del usuario. He puesto En CLI un metodo igual ya que solo
     solo se tiene que dividir el comando una vez por cada bucle while del CLI y no se usa fuera del CLI.
+    Soy Hugo y he borrado el de command porque tienes toda la razón y el otro no se usa.
+
+
 -Tuga: Todos los comandos estaban creados con inventory pero se supone que productHandler se encarga de eso asi que lo he cambiado. Si estoy equivocado
     es solo una variable, cambiarla.
 -Tuga: Existe un problema qu ese puede dar a muy largo plazo. Si un commando empieza exactamente igual que otro y el otro es más corto entonces el largo nunca
@@ -48,6 +51,8 @@ Anotacciones por hacer. Aquí se ponen notas de cosas que estan a medio hacer po
     como se acaben guardando se tendra que hacer el metodo en consecuencia.
 - ProductHandler remove product. Necesita que se cree una manera de comunicar esta clase con el ticketHandeler para
     borrar el producto solicitado en los tickets y en los productos.
+-En Cliente se tiene que tener constancia de su propio Ticket para a su vez este poder ser borrado cuando borras
+    el cliente en cuestión.
 
 
 ACLARACIONES:
@@ -63,8 +68,6 @@ necesario crear un toString, en caso de que el string tenga que ser distintos si
     Categoria.valueOf(String) = en el string tiene que estar el nombre de la categoria , si no existe la categoria o esta mal
     escrita te devuelve una excepcion IllegalArgumentException. Por lo que simplemente para manejar eso usamos un try catch y cuando
     salga por ese error decimos que la categoria esta mal escrita.
-
-Por lo que lo siento hugo me voy a cargar tu codigo
 
 -Marcos: CAMBIOS IMPORTANTES
     * UserHandler ahora tiene dos HashMap (uno para clientes y otro para cajeros) en lugar de solo uno, ya que para añadir, listar y eliminar

@@ -50,7 +50,7 @@ public class UserHandler {
                                 )
                         );
         for (Cashier cash : cashierRecordSorted.values()) {
-            System.out.println("Cashier{identifier = " + cash.getId() + ", name = " + cash.getName() + ", email = " + cash.getMail());
+            System.out.println("Cash{identifier = " + cash.getId() + ", name = " + cash.getName() + ", email = " + cash.getMail() + "}");
         }
     }
     public void listClientRecord() {
@@ -67,10 +67,16 @@ public class UserHandler {
                                 )
                         );
         for (Client client : clientRecordSorted.values()) {
-            System.out.println("Client{identifier = " + client.getId() + ", name = " + client.getName() + ", email = " + client.getMail());
+            System.out.println("Client{identifier = " + client.getId() + ", name = " + client.getName() + ", email = " + client.getMail() + ", cash = " + client.getCashier().getId());
         }
     }
     public void listTicketsCashier(String idCash) {
-        //Todo
+        Cashier cashier = cashiersRecord.get(idCash);
+        Ticket ticketAux;
+        System.out.println("Tickets:");
+        for(int i = 0; i < cashier.getTickets().size(); i++) {
+            ticketAux = cashier.getTickets().get(i);
+            System.out.printf("%22s -> %6s",ticketAux.getId(),ticketAux.getTicketState());
+        }
     }
 }

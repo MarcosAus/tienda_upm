@@ -4,6 +4,7 @@ import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Commands.CommandUser;
 import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Users.Cashier;
+import es.upm.etsisi.poo.Users.User;
 import es.upm.etsisi.poo.Utilities;
 
 public class CommandUserAddCashier extends Command {
@@ -25,16 +26,16 @@ public class CommandUserAddCashier extends Command {
                 String id = args[2];
                 String nombre = args[3];
                 String email = args[4];
-                Cashier cashier = new Cashier(id, nombre, email);
+                User cashier = new Cashier(id, nombre, email);
                 userHandler.registerUser(cashier);
             }
             else if (args.length == 4) {
                 String nombre = args[2];
                 String email = args[3];
-                Cashier cashier = new Cashier(null, nombre, email);
+                User cashier = new Cashier(null, nombre, email);
                 userHandler.registerUser(cashier);
             } else {
-                System.out.println("Error: wrong comand legth ");
+                System.out.println(Utilities.LENGTH_WRONG);
             }
 
         } catch (Exception e) {

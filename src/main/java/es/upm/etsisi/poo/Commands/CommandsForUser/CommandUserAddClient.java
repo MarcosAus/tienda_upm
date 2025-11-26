@@ -3,6 +3,8 @@ package es.upm.etsisi.poo.Commands.CommandsForUser;
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Users.Cashier;
+import es.upm.etsisi.poo.Users.Client;
+import es.upm.etsisi.poo.Users.User;
 import es.upm.etsisi.poo.Utilities;
 
 public class CommandUserAddClient extends Command {
@@ -21,11 +23,12 @@ public class CommandUserAddClient extends Command {
     public void execute(String[] args) {
         try {
             if (args.length == 6) {
-                String id = args[2];
-                String nombre = args[3];
+                String nombre = args[2];
+                String id = args[3];
                 String email = args[4];
-                Cashier cashier = new Cashier(id, nombre, email);
-                userHandler.registerUser(cashier);
+                Cashier cashier = userHandler.getCashiersRecord().get(args[5]);
+                User client = new Client(id, nombre, email, cashier);
+                userHandler.registerUser(client);
             } else {
                 System.out.println(Utilities.LENGTH_WRONG);
             }

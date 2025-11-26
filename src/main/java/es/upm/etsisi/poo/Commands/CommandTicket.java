@@ -7,8 +7,6 @@ import es.upm.etsisi.poo.Utilities;
 import java.util.ArrayList;
 
 public class CommandTicket {
-    //private Ticket ticket;    Variables antiguas por eliminar
-    //private Inventory productList;
     private ArrayList<Command> commands;
 
     public CommandTicket(ArrayList<Command> commands) {
@@ -18,12 +16,18 @@ public class CommandTicket {
     public void checkCommand(String[] commanddiv, String actCommand) {
         int counter = 0;
         boolean flag = false;
-        while (counter < commands.size() && !flag) {
-            flag = commands.get(counter).isThisCommand(actCommand);
-            counter++;
-        }
-        if (flag) {
-            commands.get(counter).execute(commanddiv);
+        try {
+            while (counter < commands.size() && !flag) {
+                flag = commands.get(counter).isThisCommand(actCommand);
+                if (!flag) {
+                    counter++;
+                }
+            }
+            if (flag) {
+                commands.get(counter).execute(commanddiv);
+            }
+        }catch (Exception e){
+            System.out.println(Utilities.UNKNOWN_COMMAND);
         }
     }
 
