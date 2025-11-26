@@ -1,16 +1,16 @@
 package es.upm.etsisi.poo.Commands.CommandsForTicket;
 
+import es.upm.etsisi.poo.CashierHandler;
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Ticket;
-import es.upm.etsisi.poo.TicketHandler;
 import es.upm.etsisi.poo.Utilities;
 
 public class CommandTicketNew extends Command {
-    private TicketHandler ticketHandler;
+    private CashierHandler cashierHandler;
 
-    public CommandTicketNew(String name, TicketHandler ticketHandler) {
+    public CommandTicketNew(String name, CashierHandler cashierHandler) {
         super(name);
-        this.ticketHandler = ticketHandler;
+        this.cashierHandler = cashierHandler;
     }
 
     @Override
@@ -26,8 +26,10 @@ public class CommandTicketNew extends Command {
             try {
                 id = Integer.parseInt(args[2]);
                 if (id <= 1 || id >= 99999 ){
-                    ticket = new Ticket(String.format("%05d", id));
+                    //No sé qué hace o hacía esto antes, así que lo comento para no perderlo en caso de necesitarlo. - Marcos
 
+                    // ticket = new Ticket(String.format("%05d", id));
+                    cashierHandler.newTicketWithId(args[2], args[3]);
                     System.out.println(Utilities.TICKET_NEW_OK);
                 }
                 else{
@@ -42,6 +44,9 @@ public class CommandTicketNew extends Command {
 
 
 
-        } else System.out.println(Utilities.LENGTH_WRONG);
+        } else if (args.length == 4) {
+            cashierHandler.newTicketWithId();
+        }
+        else System.out.println(Utilities.LENGTH_WRONG);
     }
 }

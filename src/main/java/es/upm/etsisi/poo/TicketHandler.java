@@ -15,7 +15,7 @@ public class TicketHandler {
 
     //Crea un nuevo ticket. Si encuentra que existe un ticket con el id marcado buscará el siguien id libre más cercano.
     //Luego lo añade al array. Devulvuelve el id usado.
-    public int newTicket(int idT){
+    public int newTicket(String idT){
         int idChosen = -1;
 
         // Si se encuentra un ticket con el mismo
@@ -38,7 +38,8 @@ public class TicketHandler {
     }
 
     public int newTicket(){
-
+        //Genera un ticket con id aleatorio
+        //todo
         return -1;
     }
     // Metodo auxiliar para buscar el siguiente id libre.
