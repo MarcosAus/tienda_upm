@@ -12,8 +12,9 @@ public class CashierHandler extends UserHandler {
     public void newTicketWithId(String ticketId, String cashId) {
         this.getCashiersRecord().get(cashId).getTickets().put(ticketId, new Ticket(ticketId));
     }
-    public void newTicketNoId() {
-
+    public void newTicketNoId(String cashId) {
+        Ticket newTicket = new Ticket();
+        this.getCashiersRecord().get(cashId).getTickets().put(newTicket.getId(), newTicket);
     }
 
     public void addTicket(String ticketId, String cashId, Product newproduct , int cantidad) {

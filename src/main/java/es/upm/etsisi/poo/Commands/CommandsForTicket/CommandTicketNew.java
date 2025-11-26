@@ -45,7 +45,7 @@ public class CommandTicketNew extends Command {
 
 
         } else if (args.length == 4) {
-            cashierHandler.newTicketWithId();
+            cashierHandler.newTicketNoId(args[2]);
         }
         else System.out.println(Utilities.LENGTH_WRONG);
     }

@@ -19,6 +19,9 @@ public class Ticket {
         this.items = new ArrayList<>();
         this.stateTicket = State.EMPTY;
     }
+    public Ticket() {
+
+    }
 
     public String getId() {return id;}
     public State getStateTicket() {
