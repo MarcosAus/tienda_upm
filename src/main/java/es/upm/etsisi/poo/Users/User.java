@@ -1,12 +1,12 @@
 package es.upm.etsisi.poo.Users;
 
 public abstract class User {
-    private String id;
+    private String dni;
     private String nombre;
     private String correo;
 
-    public User(String id, String nombre, String correo) {
-        this.id = id;
+    public User(String dni, String nombre, String correo) {
+        this.dni = dni;
         this.nombre = nombre;
         this.correo = correo;
     }
@@ -20,6 +20,6 @@ public abstract class User {
     }
 
     public String getId() {
-        return this.id;
+        return this.dni;
     }
 }

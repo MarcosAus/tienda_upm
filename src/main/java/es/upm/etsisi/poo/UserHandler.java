@@ -8,8 +8,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class UserHandler {
-    private HashMap<String, Client> clientsRecord;
-    private HashMap<String, Cashier> cashiersRecord;
+    private HashMap<String, Client> users; // fixme Se usa users como en el planing
 
     public UserHandler() {
         this.clientsRecord = new HashMap<>();

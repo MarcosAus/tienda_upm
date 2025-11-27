@@ -23,9 +23,20 @@ Info -[hidden]- Utilities
 Class App {}
 class CLI {}
 class Products.Product  {
-#id: int
-#name:str
-#price: double
+    #id: int
+    #name:str
+    #price: double
+    --
+    ..getters/setters..
+    +getPrecio()
+    +setPrice(double precio)
+    +getNombre()
+    +setName(String nombre)
+    +getId()
+    ..Otros metodos..
+    +equals(Product product)
+    +toString()
+    +TotalPrice()
 }
 
 class ProductHandler {
@@ -54,11 +65,16 @@ TicketHandler o-- Ticket
 
 
 class Products.ProductBasic{
-
--id: int
--name:str
--category:Category
--price:double
+    -id: int
+    -name:str
+    -category:Category
+    -price:double
+    --
+    +toString()
+    +TotalPrice()
+    ..getters/setters..
+    +getCategoria()
+    +setCategory(categoria)
 }
 
 enum Products.Category {
@@ -72,12 +88,16 @@ ProductBasic -->Category
 Product <|-- ProductBasic
 
 class Products.ProductPers{
+    -texts:ArrayList<Str>
+    -int maxTextos
 
--id:int
--name:str
--category:Category
--price:double
--texts:ArrayList<Str>
+    +addTexto(String texto)
+    +toString()
+    TotalPrice()
+    ..getters..
+    +getTextos()
+    +getMaxTextos()
+
 }
 ProductBasic <|--  ProductPers
 
@@ -88,8 +108,16 @@ class Products.CampusMeals{
 
 
 class Products.Meetings{
--maxParticipantes:100
--MINTIME:12
+    -int maxParticipantes:100
+    -int minTime:12
+    -String dateOfEnd
+    --
+    ..getters..
+    +getMaxParticipantes()
+    +getMinTime()
+    ..Otros..
+    +toString()
+    +TotalPrice()
 }
 
 Product <|-- CampusMeals
