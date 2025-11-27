@@ -19,7 +19,7 @@ public class CommandUserRemoveClient extends Command {
     @Override
     public void execute(String[] args) {
         if (args.length == 3) {
-            //También habría que eliminar el ticket asociado al Cliente
+            userHandler.getClientsRecord().get(args[2]).getCashier().removeTicket(userHandler.getClientsRecord().get(args[2]).getTicket().getId());
             userHandler.getClientsRecord().remove(args[2]);
         } else {
             System.out.println(Utilities.LENGTH_WRONG);

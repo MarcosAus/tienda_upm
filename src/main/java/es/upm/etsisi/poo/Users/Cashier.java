@@ -4,10 +4,11 @@ import es.upm.etsisi.poo.Ticket;
 import es.upm.etsisi.poo.Utilities;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 public class Cashier extends User {
-    HashMap<String,Ticket> tickets;
+    HashMap<String, Ticket> tickets;
 
     public Cashier(String id, String nombre, String correo) {
         super(validarId(id), nombre, correo); /*Si el id del cajero no empieza por "UW", el cajero se crea igual.
@@ -16,67 +17,68 @@ public class Cashier extends User {
     }
 
     //Getter tickets
-    public HashMap<String,Ticket> getTickets() {
+    public HashMap<String, Ticket> getTickets() {
         return tickets;
     }
 
 
     //Adds all the tickets from a stack
-    public void addTicketsFromOtherUser(HashMap<String,Ticket> newTickets){
-        int ticketsToAdd = newTickets.size();
-        for (int i = 0; i<ticketsToAdd; i++) {
-            tickets.push(newTickets.pop());
-        }
+    public void addTicketsFromOtherUser(HashMap<String, Ticket> newTickets) {
+        tickets.putAll(newTickets);
     }
 
     //Adds a section of the Stack of tickets from other user. Start incluido, end no incluido
-    public void addSectionOfTicketsFromOtherUser(Stack<Ticket> newTickets, int start, int end){
+    public void addSectionOfTicketsFromOtherUser(HashMap<String, Ticket> newTickets, int start, int end) {
         int ticketsToAdd = newTickets.size();
         Ticket actTicket = null;
-        for (int i = start; i<end; i++){
+        for (int i = start; i < end; i++) {
             actTicket = newTickets.get(i);
             tickets.push(actTicket);
         }
     }
 
     public void addTicket(Ticket ticket) {
-        tickets.add(ticket);
+        tickets.put(ticket.getId(), ticket);
     }
 
     //Elimina el ticket en base a un String
-    public void removeTicket(String id){
-        tickets.removeIf(t -> t.getId().equals(id));
-    }
-    //Elimina un ticket en vase a un int
-    public void removeTicket(int id){
-        tickets.removeIf(t -> t.getId().equals(String.format("%05d", id)));
+    public void removeTicket(String id) {
+        for(Map.Entry<String, Ticket> entrada : tickets.entrySet()){
+            if(tickets.get(entrada.getKey()).getId().equals(id)){
+                tickets.remove(entrada.getKey());
+            }
+        }
     }
 
+    //Elimina un ticket en vase a un int
+    public void removeTicket(int id) {
+        for(Map.Entry<String, Ticket> entrada : tickets.entrySet()){
+            if(Integer.parseInt(tickets.get(entrada.getKey()).getId()) == id){
+                tickets.remove(entrada.getKey());
+            }
+        }
+
+    }
 
 
     // Devuelve el Cashier que creo el ticket
-    public boolean isCashierInCharge(int idTicket) {
+    public boolean isCashierInCharge(String idTicket) {
         boolean inCharge = false;
-        int busqueda=0;
-        while(busqueda<tickets.size()){
-            if(Integer.parseInt(tickets.get(busqueda).getId())==idTicket){
-                tickets.get(busqueda).printTicket();
-                busqueda =  tickets.size();
+        for(Map.Entry<String, Ticket> entrada : tickets.entrySet()){
+            if(tickets.get(entrada.getKey()).getId().equals(idTicket)){
                 inCharge = true;
             }
-            busqueda++;
         }
         return inCharge;
     }
 
     public void printAllTickets() {
-        for (int i = 0; i<tickets.size(); i++) {
-            tickets.get(i).printTicket();
+        for (Map.Entry<String, Ticket> entrada : tickets.entrySet()) {
+            tickets.get(entrada.getKey()).printTicket();
         }
     }
 
-
-    private static String validarId(String id) {
+    private static String validarId (String id){
         if (id == null) {
             int numRandom;
             StringBuilder idAleatorio = new StringBuilder("UW");

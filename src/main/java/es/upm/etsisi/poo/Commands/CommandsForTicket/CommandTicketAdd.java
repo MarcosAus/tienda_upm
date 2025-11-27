@@ -1,18 +1,18 @@
 package es.upm.etsisi.poo.Commands.CommandsForTicket;
 
+import es.upm.etsisi.poo.*;
 import es.upm.etsisi.poo.Commands.Command;
-import es.upm.etsisi.poo.TicketHandler;
-import es.upm.etsisi.poo.UserHandler;
+import es.upm.etsisi.poo.Products.Product;
 import es.upm.etsisi.poo.Users.Cashier;
 import es.upm.etsisi.poo.Users.User;
 
 public class CommandTicketAdd extends Command {
-    private UserHandler userHandler;
-    private TicketHandler ticketHandler;
-    public CommandTicketAdd(String name, UserHandler userHandler, TicketHandler ticketHandler) {
+    private CashierHandler cashierHandler;
+    private ProductHandler productHandler;
+    public CommandTicketAdd(String name, CashierHandler cashierHandler, ProductHandler productHandler) {
         super(name);
-        this.userHandler = userHandler;
-        this.ticketHandler = ticketHandler;
+        this.cashierHandler = cashierHandler;
+        this.productHandler = productHandler;
     }
 
     @Override
@@ -23,8 +23,13 @@ public class CommandTicketAdd extends Command {
     @Override
     public void execute(String[] args) {
        if (args.length == 6) {
-           Cashier cashier = userHandler.getCashiersRecord().get(args[3]);
+           Ticket ticket = new Ticket(args[2]);
+           Cashier cashier = cashierHandler.getCashiersRecord().get(args[3]);
+           Product product =
+           cashierHandler.addTicket(args[2], args[3], );
 
-       }
+
+
+       }else System.out.println(Utilities.LENGTH_WRONG);
     }
 }

@@ -40,6 +40,7 @@ public class App {
         //Se crean los handlers
         ProductHandler productHandler = new ProductHandler();
         TicketHandler ticketHandler = new TicketHandler();
+        CashierHandler cashierHandler = new CashierHandler(ticketHandler);
         UserHandler userHandler = new UserHandler();
 
         //Se crean los commandos
@@ -52,9 +53,9 @@ public class App {
         commandsProducts.addCommand(new CommandProdRemove("prod remove ", productHandler));
         commandsProducts.addCommand(new CommandProdUpdate("prod update ", productHandler));
 
-        commandsTickets.addCommand(new CommandTicketAdd("ticket add ", ticketHandler));
+        commandsTickets.addCommand(new CommandTicketAdd("ticket add ", cashierHandler));
         commandsTickets.addCommand(new CommandTicketList("ticket list ", ticketHandler));
-        commandsTickets.addCommand(new CommandTicketNew("ticket new ", ticketHandler));
+        commandsTickets.addCommand(new CommandTicketNew("ticket new ", cashierHandler));
         commandsTickets.addCommand(new CommandTicketPrint("ticket print ", ticketHandler));
         commandsTickets.addCommand(new CommandTicketRemove("ticket remove ", ticketHandler));
 
