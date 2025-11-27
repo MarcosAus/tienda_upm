@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Stack;
 
 public class Cashier extends User {
-    HashMap<String,Ticket> tickets;
+    HashMap<String,Ticket> tickets; //fixme tickets a cambiado de un Stack a un HasMap
 
     public Cashier(String id, String nombre, String correo) {
         super(validarId(id), nombre, correo); /*Si el id del cajero no empieza por "UW", el cajero se crea igual.

@@ -7,8 +7,6 @@ trabajo. Y si alguien quiere completar el uml lo agradecería (con sus metodos y
 con tod o es legible entonces esa es la definitiva, si la versión con tod o no es legible dejamos la versión actual y la que tiene tod o para el profe. En caso de que
 pase lo segundo yo me encargo de intentarlo organizar. Creo que eso es lo que queda por hacer.
 
-Dani añade esto al commit. Tuga: Metodos de user actualizados (clients y cash). Comando addCashier terminado. Comando addClient terminado.
-
 Este documento se va ha usar para poner anotaciones y proximo trabajo a realizar. Mirar el proyecto. Si no sabeis que hacer DESPUES
 de haberlo mirado seguir la lista de "to do" en orden:
 -[X]Los comandos de product estaban usando Inventory. Añadir los metodos necesarios al handeler y corregir los comandos de product que había creado Marcos.

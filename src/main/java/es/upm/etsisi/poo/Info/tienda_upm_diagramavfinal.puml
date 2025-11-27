@@ -1,0 +1,291 @@
+@startuml
+Skinparam groupInheritance 2
+skinparam backgroundColor #CFEFFA
+namespace Commands #FFFEDB {
+}
+namespace Products #FFFEDB {
+}
+namespace Users #FFFEDB {
+}
+nameSpace Info  #FFAA99{
+
+}
+note top of Info
+<size:9>Aquí se guardan archivos que poco tienen que ver con el programa en si</size>
+<size:9>No creo que se deba representar en el diagrama pero es más visual</size>
+end note
+
+Class Utilities{
+}
+
+Info -[hidden]left- Utilities
+
+Class App {}
+class CLI {
+    -CommandProd
+    -CommandTicket
+    -CommandUser
+}
+
+class Products.Product  {
+#id: int
+#name:str
+#price: double
+}
+
+class ProductHandler {
+    -products:arrayList<Product>
+
+    +addProduct(Product)
+    +removeProduct(int id)
+    +getProduct(int id)
+    +getProductList()
+    +getHandlerSize()
+    +updateProduct(id,field,newFact)
+    +updateProductName(id ,newName)
+    +updateProductCategory(id,newCat)
+    +updateProductPrice(id, newPrice)
+    +listProducts()
+}
+
+class Ticket{
+    -items:arrayList<TicketItem>
+    -id:String
+    -stateTicket:State
+    -MAXSIZE=100
+
+    +getId()
+    +getTicketState()
+    +updateState(State stateTicket)
+    +addProduct(Product product, int cantidad)
+    +removeProduct(int id)
+    +busquedaProductoPorID(ArrayList<TicketItem>, int)
+    +getCantidadProductoCategoria()
+    +printTicket()
+    +calcularPrecioProducto(TicketItem tI )
+    +calcularDescuentoProducto(TicketItem,Map<Category,Integer>)
+}
+
+class TicketItem{
+    -product:Product
+    -amount:int
+
+    getProduct()
+    getAmount()
+    addAmount(int n)
+    subtotal()
+}
+TicketItem -right-o Ticket
+TicketItem o-[norank]- Product
+
+
+
+
+enum State{
+EMPTY
+ACTIVE
+CLOSED
+}
+
+Ticket ..>State
+
+class TicketHandler {
+    -ticket : ArrayList<Ticket>
+
+    +newTicket(String idT)
+    +auxFindIdForTicket(int TId)
+    +addTicket(int TId, Product newproduct ,int cantidad)
+    +getTicket(int TId)
+    +removeTicket(int TId)
+    +printTicketsClose(int TId)
+    +printTicketsShow(int TId)
+}
+
+
+TicketHandler o-- Ticket
+
+
+
+
+
+class Products.ProductBasic{
+
+-id: int
+-name:str
+-category:Category
+-price:double
+}
+
+enum Products.Category {
+MERCH
+ELECTRONICA
+PAPELERIA
+ROPA
+LIBRO
+}
+ProductBasic -->Category
+Product <|-- ProductBasic
+
+class Products.ProductPers{
+
+-id:int
+-name:str
+-category:Category
+-price:double
+-texts:ArrayList<Str>
+}
+ProductBasic <|--  ProductPers
+
+class Products.CampusMeals{
+    -maxParticipantes
+    -MAXPEOPLEALLOWED:100
+    -minTime:72
+    String dateOfEnd
+
+    +getMaxParticipantes()
+    +getMinTime()
+    +toString()
+    +TotalPrice()
+
+}
+
+
+class Products.Meetings{
+-maxParticipantes:100
+-MINTIME:12
+}
+
+Product <|-- CampusMeals
+Product <|-- Meetings
+
+class UserHandler{
+    -Users:ArrayList<User>
+
+    +getClientsRecord()
+    +getCashiersRecord()
+    +registerUser(User user)
+    +getUserById(String id)
+    +listCashierRecord()
+    listClientRecord()
+    listTicketsCashier(String idCash)
+}
+
+abstract class Users.User<<abstract>> {
+    -String dni
+    -String nombre
+    -String correo
+    ..getters..
+    +getName()
+    +getMail()
+    +getId()
+}
+UserHandler o-- User
+
+class Users.Client {
+    -cajero:Cajero
+    -ticket:Ticket
+
+    +getCashier()
+    +setTicketToClient()
+    +getTicket()
+}
+
+User <|-- Client
+
+class Users.Cashier{
+    -tickets:HashMap<String,Ticket>
+
+    +getTickets()
+    +addTicketsFromOtherUser(HashMap<String,Ticket>)
+    +addSectionOfTicketsFromOtherUser(Stack<Ticket>, int, int)
+    +addTicket(Ticket)
+    +removeTicket(String id)
+    +removeTicket(int id)
+    +isCashierInCharge(int idTicket)
+    +printAllTickets()
+    +validarId(String id)
+}
+User <|-- Cashier
+
+Cashier o-- Ticket
+Client o-- Ticket
+
+
+abstract class Commands.Command <<abstract>>{
+    #name:Str
+
+    +{abstract}isThisCommand(args:String[])
+    +{abstract}execute(args:String[])
+}
+
+class Commands.CommandProd{
+    - ArrayList<Command> commands
+    + checkCommand(String[] comdiv, String actCom)
+    + addCommand(Command command)
+}
+
+class Commands.CommandsForProd.CommandProdEx{
+    -ProductHandler handler
+    + isThisCommand(String name)
+    + apply(args : String[])
+}
+
+CommandProd *-- CommandProdEx
+
+App *-- CommandProd
+
+
+class Commands.CommandTicket{
+    - ArrayList<Command> commands
+    + checkCommand(String[] comdiv, String actCom)
+    + addCommand(Command command)
+}
+
+class Commands.CommandsForTicket.CommandTicketEx{
+     -TicketHandler handler
+     + isThisCommand(String name)
+     + apply(args : String[])
+}
+
+
+CommandTicket *-- CommandTicketEx
+App *-[norank]- CommandTicket
+
+class Commands.CommandUser{
+    - ArrayList<Command> commands
+    + checkCommand(String[] comdiv, String actCom)
+    + addCommand(Command command)
+}
+
+class Commands.CommandsForUser.CommandUserEx{
+    -UserHandler handler
+    + isThisCommand(String name)
+    + apply(args : String[])
+}
+
+
+
+CommandUser *-- CommandUserEx
+App *-[norank]- CommandUser
+
+App *-- CLI
+
+App *-- Command
+Command <|-- CommandProdEx
+Command <|-- CommandTicketEx
+Command <|-- CommandUserEx
+
+App --> ProductHandler
+
+ProductHandler --o Product
+
+
+App --> TicketHandler
+App --> UserHandler
+
+CommandUserEx .[norank].> UserHandler
+CommandProdEx .[norank].> ProductHandler
+CommandTicketEx .[norank].> TicketHandler
+
+CLI -[hidden]right- ProductHandler
+@enduml

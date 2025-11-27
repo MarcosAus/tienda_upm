@@ -3,14 +3,15 @@ package es.upm.etsisi.poo.Commands.CommandsForTicket;
 import es.upm.etsisi.poo.CashierHandler;
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Ticket;
+import es.upm.etsisi.poo.TicketHandler;
 import es.upm.etsisi.poo.Utilities;
 
 public class CommandTicketNew extends Command {
-    private CashierHandler cashierHandler;
+    private TicketHandler ticketHandler;
 
-    public CommandTicketNew(String name, CashierHandler cashierHandler) {
+    public CommandTicketNew(String name, TicketHandler ticketHandler) {
         super(name);
-        this.cashierHandler = cashierHandler;
+        this.ticketHandler = ticketHandler;
     }
 
     @Override
@@ -29,7 +30,7 @@ public class CommandTicketNew extends Command {
                     //No sé qué hace o hacía esto antes, así que lo comento para no perderlo en caso de necesitarlo. - Marcos
 
                     // ticket = new Ticket(String.format("%05d", id));
-                    cashierHandler.newTicketWithId(args[2], args[3]);
+                    ticketHandler.newTicketWithId(args[2], args[3]);
                     System.out.println(Utilities.TICKET_NEW_OK);
                 }
                 else{

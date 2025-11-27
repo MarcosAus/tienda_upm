@@ -9,7 +9,7 @@ import es.upm.etsisi.poo.Users.User;
 public class CommandTicketAdd extends Command {
     private UserHandler userHandler;
     private TicketHandler ticketHandler;
-    public CommandTicketAdd(String name, UserHandler userHandler, TicketHandler ticketHandler) {
+    public CommandTicketAdd(String name, TicketHandler ticketHandler, UserHandler userHandler) {
         super(name);
         this.userHandler = userHandler;
         this.ticketHandler = ticketHandler;
@@ -24,7 +24,6 @@ public class CommandTicketAdd extends Command {
     public void execute(String[] args) {
        if (args.length == 6) {
            Cashier cashier = userHandler.getCashiersRecord().get(args[3]);
-
        }
     }
 }
