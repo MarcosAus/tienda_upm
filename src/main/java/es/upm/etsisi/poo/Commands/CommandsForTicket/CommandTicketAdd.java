@@ -23,13 +23,11 @@ public class CommandTicketAdd extends Command {
     @Override
     public void execute(String[] args) {
        if (args.length == 6) {
-           Ticket ticket = new Ticket(args[2]);
-           Cashier cashier = cashierHandler.getCashiersRecord().get(args[3]);
-           Product product =
-           cashierHandler.addTicket(args[2], args[3], );
-
-
-
+           String idTicket = args[2];
+           String idCash = args[3];
+           Product product = productHandler.getProduct(Integer.parseInt(args[4]));
+           int amount = Integer.parseInt(args[5]);
+           cashierHandler.addTicket(idTicket, idCash, product, amount);
        }else System.out.println(Utilities.LENGTH_WRONG);
     }
 }

@@ -53,7 +53,7 @@ public class App {
         commandsProducts.addCommand(new CommandProdRemove("prod remove ", productHandler));
         commandsProducts.addCommand(new CommandProdUpdate("prod update ", productHandler));
 
-        commandsTickets.addCommand(new CommandTicketAdd("ticket add ", cashierHandler));
+        commandsTickets.addCommand(new CommandTicketAdd("ticket add ", cashierHandler, productHandler));
         commandsTickets.addCommand(new CommandTicketList("ticket list ", ticketHandler));
         commandsTickets.addCommand(new CommandTicketNew("ticket new ", cashierHandler));
         commandsTickets.addCommand(new CommandTicketPrint("ticket print ", ticketHandler));
