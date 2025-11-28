@@ -8,10 +8,12 @@ import es.upm.etsisi.poo.Utilities;
 
 public class CommandTicketNew extends Command {
     private TicketHandler ticketHandler;
+    CashierHandler cashierHandler;
 
-    public CommandTicketNew(String name, TicketHandler ticketHandler) {
+    public CommandTicketNew(String name, TicketHandler ticketHandler, CashierHandler cashierHandler) {
         super(name);
         this.ticketHandler = ticketHandler;
+        this.cashierHandler = cashierHandler;
     }
 
     @Override
@@ -30,13 +32,13 @@ public class CommandTicketNew extends Command {
                     //No sé qué hace o hacía esto antes, así que lo comento para no perderlo en caso de necesitarlo. - Marcos
 
                     // ticket = new Ticket(String.format("%05d", id));
-                    ticketHandler.newTicketWithId(args[2], args[3]);
+                    cashierHandler.newTicketWithId(Integer.parseInt(args[2]), args[3]);
+                    ticketHandler.newTicket(Integer.parseInt(args[2]));
                     System.out.println(Utilities.TICKET_NEW_OK);
                 }
-                else{
+                else {
                     System.out.println(Utilities.ID_NOT_IN_BOUNDARIES);
                 }
-
             }
             catch(Exception e){
                 System.out.println(Utilities.ID_NOT_NUMBER);
@@ -47,6 +49,7 @@ public class CommandTicketNew extends Command {
 
         } else if (args.length == 4) {
             cashierHandler.newTicketNoId(args[2]);
+            ticketHandler.newTicket(Integer.parseInt(args[2]));
         }
         else System.out.println(Utilities.LENGTH_WRONG);
     }

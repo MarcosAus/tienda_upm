@@ -10,20 +10,22 @@ import java.util.*;
 
 public class Ticket {
     private ArrayList<TicketItem> items;
-    private String id;
+    private int id;
     private State stateTicket;
     private static final int MAXSIZE = 100;
 
-    public Ticket(String id) {
-        this.id = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm"))+"-"+id ;
+    public Ticket(int id) {
+        this.id = id;
         this.items = new ArrayList<>();
         this.stateTicket = State.EMPTY;
     }
     public Ticket() {
-
+        this.id = (int)(Math.random()*100000);
+        this.items = new ArrayList<>();
+        this.stateTicket = State.EMPTY;
     }
 
-    public String getId() {return id;}
+    public int getId() {return id;}
     public State getStateTicket() {
         return stateTicket;
     }
@@ -76,7 +78,7 @@ public class Ticket {
         }
     }
     public boolean removeProduct(int id) {
-        if(this.stateTicket != State.CLOSED) {
+        if (this.stateTicket != State.CLOSED) {
             boolean resultado = false;
             TicketItem tI = busquedaProductoPorID(items, id);
             if  (tI != null) {

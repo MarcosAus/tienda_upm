@@ -1,18 +1,21 @@
 package es.upm.etsisi.poo.Commands.CommandsForTicket;
 
+import es.upm.etsisi.poo.CashierHandler;
 import es.upm.etsisi.poo.Commands.Command;
+import es.upm.etsisi.poo.ProductHandler;
+import es.upm.etsisi.poo.Products.Product;
 import es.upm.etsisi.poo.TicketHandler;
-import es.upm.etsisi.poo.UserHandler;
-import es.upm.etsisi.poo.Users.Cashier;
-import es.upm.etsisi.poo.Users.User;
+import es.upm.etsisi.poo.Utilities;
 
 public class CommandTicketAdd extends Command {
-    private UserHandler userHandler;
+    private CashierHandler cashierHandler;
     private TicketHandler ticketHandler;
-    public CommandTicketAdd(String name, TicketHandler ticketHandler, UserHandler userHandler) {
+    private ProductHandler productHandler;
+    public CommandTicketAdd(String name, TicketHandler ticketHandler, CashierHandler cashierHandler, ProductHandler productHandler) {
         super(name);
-        this.userHandler = userHandler;
+        this.cashierHandler = cashierHandler;
         this.ticketHandler = ticketHandler;
+        this.productHandler = productHandler;
     }
 
     @Override
@@ -23,7 +26,13 @@ public class CommandTicketAdd extends Command {
     @Override
     public void execute(String[] args) {
        if (args.length == 6) {
-           Cashier cashier = userHandler.getCashiersRecord().get(args[3]);
+           Product productToAdd = productHandler.getProduct(Integer.parseInt(args[4]));
+           cashierHandler.addToTicket(Integer.parseInt(args[2]), args[3], productToAdd, Integer.parseInt(args[5]));
+           ticketHandler.addTicket(Integer.parseInt(args[2]), productToAdd, Integer.parseInt(args[5]));
+       } else if (args.length > 6) {
+           // Rellenar con añadir productos personalizables
+       } else {
+              System.out.println(Utilities.LENGTH_WRONG);
        }
     }
 }

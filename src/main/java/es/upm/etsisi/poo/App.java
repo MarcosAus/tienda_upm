@@ -41,6 +41,7 @@ public class App {
         ProductHandler productHandler = new ProductHandler();
         TicketHandler ticketHandler = new TicketHandler();
         UserHandler userHandler = new UserHandler();
+        CashierHandler cashierHandler = new CashierHandler();
 
         //Se crean los commandos
         //Los comandos deben tener un nombre igual en minusculas al comando en sí. Ej: TickedAdd tiene que tener name = "ticket add"
@@ -54,7 +55,7 @@ public class App {
 
         commandsTickets.addCommand(new CommandTicketAdd("ticket add ", ticketHandler, userHandler));
         commandsTickets.addCommand(new CommandTicketList("ticket list ", ticketHandler));
-        commandsTickets.addCommand(new CommandTicketNew("ticket new ", ticketHandler));
+        commandsTickets.addCommand(new CommandTicketNew("ticket new ", ticketHandler, cashierHandler));
         commandsTickets.addCommand(new CommandTicketPrint("ticket print ", ticketHandler));
         commandsTickets.addCommand(new CommandTicketRemove("ticket remove ", ticketHandler));
 
