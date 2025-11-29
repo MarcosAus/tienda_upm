@@ -23,7 +23,7 @@ public class CashierHandler extends UserHandler {
                 actTicket.updateState(State.ACTIVE);
             }
         }
-        catch (Exception noProductWithprodId){
+        catch (Exception noProductWithprodId) {
             System.out.println("No product with id "+ ticketId +" was found");
         }
     }

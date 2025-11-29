@@ -1,5 +1,7 @@
 package es.upm.etsisi.poo.Users;
 
+import es.upm.etsisi.poo.Ticket;
+
 public abstract class User {
     private String dni;
     private String nombre;
@@ -22,4 +24,14 @@ public abstract class User {
     public String getId() {
         return this.dni;
     }
+
+
+    public Cashier getThisCash(){   return null;}
+
+    public Client getThisCli(){    return null;}
+
+    public boolean isCash() {   return false;}
+
+    public void addTicket(Ticket ticket) {}
+    public void removeTicket() {}
 }

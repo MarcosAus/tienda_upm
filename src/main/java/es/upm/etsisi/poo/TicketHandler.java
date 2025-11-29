@@ -37,10 +37,13 @@ public class TicketHandler {
         return idChosen;
     }
 
-    public void newTicket(){
+    public int newTicket(){
         //Genera un ticket con id aleatorio
-        tickets.add(new Ticket());
+        Ticket actTicket = new Ticket();
+        tickets.add(actTicket);
+        return actTicket.getId();
     }
+
     // Metodo auxiliar para buscar el siguiente id libre.
     private int auxFindIdForTicket(int TId){
         int result=TId , busqueda=0;

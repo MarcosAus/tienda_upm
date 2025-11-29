@@ -4,15 +4,17 @@ import es.upm.etsisi.poo.CashierHandler;
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Commands.CommandTicket;
 import es.upm.etsisi.poo.TicketHandler;
+import es.upm.etsisi.poo.UserHandler;
+import es.upm.etsisi.poo.Users.Cashier;
 import es.upm.etsisi.poo.Utilities;
 
 public class CommandTicketPrint extends Command {
     private TicketHandler ticketHandler;
-    private CashierHandler cashierHandler;
-    public CommandTicketPrint(String name, TicketHandler ticketHandler, CashierHandler cashierHandler) {
+    private UserHandler userHandler;
+    public CommandTicketPrint(String name, TicketHandler ticketHandler, UserHandler userHandler) {
         super(name);
         this.ticketHandler = ticketHandler;
-        this.cashierHandler = cashierHandler;
+        this.userHandler = userHandler;
     }
 
     @Override
@@ -23,8 +25,13 @@ public class CommandTicketPrint extends Command {
     @Override
     public void execute(String[] args) {
         if (args.length == 4) {
-            cashierHandler.printTicket(Integer.parseInt(args[2]), args[3]);
-            ticketHandler.removeTicket(Integer.parseInt(args[2]));
+            try {
+                Cashier cashier = userHandler.getCashiersRecord().get(args[3]);
+                cashier.printTicket(Integer.parseInt(args[2]));
+                ticketHandler.removeTicket(Integer.parseInt(args[2]));
+            } catch (NullPointerException e) {
+                System.out.println(Utilities.CASHIER_ID_NOT_EXISTS);
+            }
         } else {
             System.out.println(Utilities.LENGTH_WRONG);
         }

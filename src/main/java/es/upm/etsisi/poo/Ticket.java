@@ -54,26 +54,28 @@ public class Ticket {
     }
 
     public void addProduct(Product product, int cantidad) {
-        if(this.stateTicket != State.CLOSED) {
+        if (this.stateTicket != State.CLOSED) {
             stateTicket = State.ACTIVE;
-            if(cantidad+this.getNumeroProductos()< MAXSIZE) {
-                if(product!=null) {
+            if (cantidad + this.getNumeroProductos() < MAXSIZE) {
+                if (product != null) {
                     TicketItem tI = busquedaProductoPorID(items,product.getId());
                     if (tI != null) {
-                        if(product instanceof ProductBasic) {
+                        if (product instanceof ProductBasic) {
                             tI.addAmount(cantidad);
                         }
                         else if(product instanceof CampusMeals || product instanceof Meetings) {
                             System.out.println("no se puede añadir mas de una misma comida o reunion al ticket");
                         }
                     }
-                    else{
+                    else {
                         if (product instanceof CampusMeals || product instanceof Meetings){
 
                         }
                         items.add(new TicketItem(product, cantidad));
                     }
                 }
+            } else {
+                System.out.println(Utilities.CAPACITY_REACHED);
             }
         }
     }
@@ -166,7 +168,7 @@ public class Ticket {
     private double calcularDescuentoProducto(TicketItem tI,Map<Category,Integer> cantidad) {
         Product product = tI.getProduct();
         double descuento = 0;
-        if(product instanceof ProductBasic) {
+        if (product instanceof ProductBasic) {
             if(cantidad.getOrDefault(((ProductBasic) product).getCategoria(),0)>=2) {
                 return ((ProductBasic) product).getCategoria().getDiscount();
             }

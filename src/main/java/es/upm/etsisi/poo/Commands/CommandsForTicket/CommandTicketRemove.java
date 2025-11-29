@@ -3,16 +3,18 @@ package es.upm.etsisi.poo.Commands.CommandsForTicket;
 import es.upm.etsisi.poo.CashierHandler;
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.TicketHandler;
+import es.upm.etsisi.poo.UserHandler;
+import es.upm.etsisi.poo.Users.Cashier;
 import es.upm.etsisi.poo.Utilities;
 import jdk.jshell.execution.Util;
 
 public class CommandTicketRemove extends Command {
     private TicketHandler ticketHandler;
-    private CashierHandler cashierHandler;
-    public CommandTicketRemove(String name, TicketHandler ticketHandler, CashierHandler cashierHandler) {
+    private UserHandler userHandler;
+    public CommandTicketRemove(String name, TicketHandler ticketHandler, UserHandler userHandler) {
         super(name);
         this.ticketHandler = ticketHandler;
-        this.cashierHandler = cashierHandler;
+        this.userHandler = userHandler;
     }
 
     @Override
@@ -23,8 +25,13 @@ public class CommandTicketRemove extends Command {
     @Override
     public void execute(String[] args) {
         if (args.length == 5) {
-            cashierHandler.removeTicket(Integer.parseInt(args[2]), args[3], Integer.parseInt(args[4]));
-            ticketHandler.removeTicket(Integer.parseInt(args[2]));
+            try {
+                Cashier cashier = userHandler.getCashiersRecord().get(args[3]);
+                cashier.removeTicket(Integer.parseInt(args[2]));
+                ticketHandler.removeTicket(Integer.parseInt(args[2]));
+            } catch (NullPointerException e) {
+                System.out.println(Utilities.CASHIER_ID_NOT_EXISTS);
+            }
         } else {
             System.out.println(Utilities.LENGTH_WRONG);
         }

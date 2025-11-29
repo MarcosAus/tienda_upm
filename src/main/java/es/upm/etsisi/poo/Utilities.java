@@ -29,7 +29,9 @@ public class Utilities {
     public static final String TICKET_PRINT_OK = "ticket print: ok";
     public static final String ID_PRICE_AMOUNT_NOT_NUMBER = "ID, price or amount is not a number";
     public static final String UNKNOWN_COMMAND = "Unknown command";
-
+    public static final String CASHIER_ID_NOT_EXISTS = "CashId does not match any cashiers";
+    public static final String CLIENT_ID_NOT_EXISTS = "ClientId does not match any clients";
+    public static final String CAPACITY_REACHED = "Capacity has been reached";
     public static Cashier buscarCajeroPorID(ArrayList<Cashier> cashiers, String id) {
         Cashier resultado = null;
         boolean existe = false;
