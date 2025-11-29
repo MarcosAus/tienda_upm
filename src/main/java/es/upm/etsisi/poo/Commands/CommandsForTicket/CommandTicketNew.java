@@ -7,8 +7,8 @@ import es.upm.etsisi.poo.Users.Client;
 import es.upm.etsisi.poo.Users.User;
 
 public class CommandTicketNew extends Command {
-    private TicketHandler ticketHandler;
-    private UserHandler userHandler;
+    private final TicketHandler ticketHandler;
+    private final UserHandler userHandler;
 
     public CommandTicketNew(String name, TicketHandler ticketHandler, UserHandler userHandler) {
         super(name);
@@ -20,6 +20,7 @@ public class CommandTicketNew extends Command {
     public boolean isThisCommand(String name) {
         return  this.name.equals(name.toLowerCase().substring(0,name.length()));
     }
+
 
     @Override
     public void execute(String[] args) {
@@ -81,19 +82,24 @@ public class CommandTicketNew extends Command {
             Client actClient;
             Cashier actCashier;
 
-            actUser = userHandler.getUserById(args[3]);
+            actUser = userHandler.getUserById(args[2]);
             if (actUser != null) {
                 actCashier = actUser.getThisCash();
-                actUser = userHandler.getUserById(args[4]);
+                actUser = userHandler.getUserById(args[3]);
                 if (actUser != null) {
-
                     actClient = actUser.getThisCli();
-                    idChosen = ticketHandler.newTicket();
-                    ticket = ticketHandler.getTicket(idChosen);
-                    actCashier.addTicket(ticket);
-                    actClient.addTicket(ticket);
-                    System.out.println("The ticket have"+ idChosen +" as his id.");
-                    System.out.println(Utilities.TICKET_NEW_OK);
+                    if (actCashier == null || actClient == null) {
+                        System.out.println("The selected ids dont mach with the command. Please insert the ids of a cashier and a client.");
+                    }
+                    else {
+
+                        idChosen = ticketHandler.newTicket();
+                        ticket = ticketHandler.getTicket(idChosen);
+                        actCashier.addTicket(ticket);
+                        actClient.addTicket(ticket);
+                        System.out.println("The ticket have" + idChosen + " as his id.");
+                        System.out.println(Utilities.TICKET_NEW_OK);
+                    }
 
                 }
                 else{

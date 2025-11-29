@@ -25,37 +25,35 @@ alguna si os pare bien el cambio lo poneis. Si 3 personas están de acuerdo se h
 y se hace el cambio:
 -Tuga propone:xd esto es un ejemplo
     Danni y uwu aprueban / Marcos prefiere no cambiarlo
-
--Tuga: No entiendo que hace slicedCommand en command. Osea lo entiendo pero necesito usarlo en CLI para saber que tipo de comando es el que
-    está solicitando el usuario. Command es una clase abstracta así que no puedo llamar a ese metodo desde CLI y se me haría raro
-    llamar a un comando aleatorio como add prod para dividir el texto del usuario. He puesto En CLI un metodo igual ya que solo
-    solo se tiene que dividir el comando una vez por cada bucle while del CLI y no se usa fuera del CLI.
-    Soy Hugo y he borrado el de command porque tienes toda la razón y el otro no se usa.
-
-
--Tuga: Todos los comandos estaban creados con inventory pero se supone que productHandler se encarga de eso asi que lo he cambiado. Si estoy equivocado
-    es solo una variable, cambiarla.
--Tuga: Existe un problema qu ese puede dar a muy largo plazo. Si un commando empieza exactamente igual que otro y el otro es más corto entonces el largo nunca
-    ejecutara porque teoricamente el inicio del comando corto coincide con el inicio del comando del usuario. En nuestro programa no ocurre si el nombre del
-    commando incluye un espacio al final. Podemos dejarlo asi, que es lo que propongo hacer ya que que los comandos sean similares puede ser un fallo de diseño
-    o crear un sistema que detecte eso lo cual me parece mucho trabajo.
-
-
+-Tuga: //fixme
+    Los cajeros pueden modificar todos los tickets o solo los que han creado? Entiendo que todos.
+-Tuga: //fixme
+    Debería de haber un limite de productos en ProductHandler. En el comando add product es posible que el usuario quiera generar un nuevo producto. Si
+    no quedan ids posibles el comando se quedaría buscando infinitamente una id. Tambien hay una parte del codigo en la que se busca un id aleatiorio. Si
+    se esta muy cerca del limite de ids posibles el programa se quedará en bucle buscando una id nueva. Deberiamos tambien cambiar eso para que busque ids
+    de manera ordenada.
+-Tuga: //fixme
+    Por qué maxTextos esta en el constructor de ProductPers? Si lo cambiais eleminar el sundo constructor. Solo se usa en el comando add prod.
+-Tuga: //fixme Esto intentar entenderlo. Es largo pero involucra la infraestructura del codigo y probablemente lo pregunten.
+    Creo firmemente y con susdicha razon con todº el respeto respetable de este multiverso y sin querer ofender a nadie de corazon, y juro por mi madre, padre, familia
+    completa y conocidos que no quiero que nadie se ofenda, que no hace falta poner dos Hasmaps en UserHandler. Si, es más comodo de programar. Y si, puede que tardemos menos
+    haciendolo de esa manera. Pero, por la estructura del codigo que hemos escogido veo mejor hacer un unico hasmap. El motivo es que hemos creado una clase abstracta users
+    especificamente para meterlo todª en un unico hasmap, si no tiene mucho sentido crear la clase abstracta. De otra manera es imposible yaque tiene que haber un tipo de
+    variable en el hasmap, no puedes poner cashiers y clients. Entonces me podrías preguntar por qué hemos hecho una clase abstracta y no dos normales. Esto es porque de
+    esta manera es más facil almacenar a los usuarios ya que todos ellos tienen cosas en comun que pueden hacer, me refiero a algunos metodos, y de esta manera se pueden
+    poner metodos generales y otros especificos. Luego tambien me podreis decir que se podría hacer eso mismo con 2 hasmap porque cashier puede hacer cosas que client no
+    puede. En ese caso tendríamos que haber usado una clase normal llamada clientes y luego una clase extendida llama cashiers pero este ni siquiera es nuestro caso porque
+    para, por ejemplo, habrir un ticket necesitar un cajero y un cliente, no valen dos cajeros. Y aun así de todas formas se podrían poner 2 hasmap porque sigue siendo más
+    facil pero es que todos los handlers se comportan de la misma manera y si cambiamos este es incosistente. He estado revisandolo y parace que en eficiencia de computacional
+    ambas formas de acerlo son practucamente iguales. Podeis mirar todos los comandos de ticket de este commit para ver como lo he hecho. Si teneís dudas preguntarme. Si al
+    final usais dos hasmap borrar lo mio.
 
 
 
 Anotacciones por hacer. Aquí se ponen notas de cosas que estan a medio hacer porque requieren que x cosa se termine:
-- TicketHandler remove y show tickets. Se necesita terminar el cashier porque este guarda los tickets. Dependiendo de
-    como se acaben guardando se tendra que hacer el metodo en consecuencia.
-- ProductHandler remove product. Necesita que se cree una manera de comunicar esta clase con el ticketHandeler para
-    borrar el producto solicitado en los tickets y en los productos.
--En Cliente se tiene que tener constancia de su propio Ticket para a su vez este poder ser borrado cuando borras
-    el cliente en cuestión.
 
 
 ACLARACIONES:
--Ahora en comandos se ha creado un nuevo metodo, isThisCommands. Este verifica si el inicio del comando coincide con su nombre, Entonces el nombre de los commandos debe ser igual
-    inicio del commando.
 
 -En la clase enum no es necesario hacer metodos que pasen de enum a string ni viceversa porque ya existen dos metodos de los
 enum que resuelve ese problema, una cosa es que como solo necesitas imprimir por pantalla las categorias en mayusculas no es
@@ -75,4 +73,13 @@ necesario crear un toString, en caso de que el string tenga que ser distintos si
       he tenido que recurrir a una forma muy complicada de hacerlo (ya que no creo que haya otra forma sin joder aún más lo que ya tenemos).
       Si se os ocurre otra forma o lo que sea avisad y lo cambiamos.
 
+
+
+Borrar esto cuando lo veais. Es una checklist que tengo(tuga) para saber que tengo que hacer
+-compilar o o
+- ticket new x o
+- ticket add x o
+- ticket remove x o
+- ticket print x o
+- ticket list x o
 

@@ -10,6 +10,7 @@ import java.util.List;
 
 public class ProductHandler {
     private List<Product> productList = new ArrayList<>();
+    private int capacity = 99999; //fixme leer el LEERPORFA
 
 
     // Añade un producto a la lista de productos. No lo añade si el id se repite.
@@ -97,5 +98,15 @@ public class ProductHandler {
         for (Product product : productList) {
             System.out.println(product.toString());
         }
+    }
+
+    // Metodo que devuelve cuantos productos se pueden crear nuevos hasta quedarse sin ids posibles.
+    public int capacityLeft() {
+        return capacity - productList.size();
+
+    }
+
+    public int getCapacity() {
+        return capacity;
     }
 }

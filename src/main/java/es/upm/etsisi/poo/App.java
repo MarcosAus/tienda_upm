@@ -52,10 +52,10 @@ public class App {
         commandsProducts.addCommand(new CommandProdRemove("prod remove ", productHandler));
         commandsProducts.addCommand(new CommandProdUpdate("prod update ", productHandler));
 
-        commandsTickets.addCommand(new CommandTicketAdd("ticket add ", ticketHandler, userHandler));
-        commandsTickets.addCommand(new CommandTicketList("ticket list ", ticketHandler));
+        commandsTickets.addCommand(new CommandTicketAdd("ticket add ", ticketHandler, userHandler, productHandler));
+        commandsTickets.addCommand(new CommandTicketList("ticket list ", ticketHandler, userHandler));
         commandsTickets.addCommand(new CommandTicketNew("ticket new ", ticketHandler, userHandler));
-        commandsTickets.addCommand(new CommandTicketPrint("ticket print ", ticketHandler));
+        commandsTickets.addCommand(new CommandTicketPrint("ticket print ", ticketHandler, userHandler));
         commandsTickets.addCommand(new CommandTicketRemove("ticket remove ", ticketHandler, userHandler));
 
         commandsUser.addCommand(new CommandsUserRemoveCashier("cash add ", userHandler));

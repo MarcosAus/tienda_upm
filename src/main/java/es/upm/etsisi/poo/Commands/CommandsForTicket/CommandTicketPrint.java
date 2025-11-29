@@ -25,10 +25,17 @@ public class CommandTicketPrint extends Command {
     @Override
     public void execute(String[] args) {
         if (args.length == 4) {
-            try {
-                Cashier cashier = userHandler.getCashiersRecord().get(args[3]);
-                cashier.printTicket(Integer.parseInt(args[2]));
-                ticketHandler.removeTicket(Integer.parseInt(args[2]));
+            try {// Se comprueba que los datos del usuario están bien.
+                int idTicket = Integer.parseInt(args[2]);
+                Cashier cashier = userHandler.getUserById(args[3]).getThisCash();
+
+                if (cashier != null) { // Si el cashies es un cajero se puede poner el ticket a close ya que este como tal no se elimina.
+                    cashier.printTicket(Integer.parseInt(args[2]));
+                    ticketHandler.removeTicket(Integer.parseInt(args[2]));
+                }
+                else {
+                    System.out.println(Utilities.ID_NOT_OF_A_CASIER);
+                }
             } catch (NullPointerException e) {
                 System.out.println(Utilities.CASHIER_ID_NOT_EXISTS);
             }
