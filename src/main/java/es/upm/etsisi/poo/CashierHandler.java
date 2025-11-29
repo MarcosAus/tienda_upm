@@ -3,13 +3,11 @@ package es.upm.etsisi.poo;
 import es.upm.etsisi.poo.Products.Product;
 
 public class CashierHandler extends UserHandler {
-    private TicketHandler ticketHandler;
-    public CashierHandler(TicketHandler ticketHandler) {
+    public CashierHandler() {
         super();
-        this.ticketHandler = ticketHandler;
     }
 
-    public void newTicketWithId(String ticketId, String cashId) {
+    public void newTicketWithId(int ticketId, String cashId) {
         this.getCashiersRecord().get(cashId).getTickets().put(ticketId, new Ticket(ticketId));
     }
     public void newTicketNoId(String cashId) {
@@ -17,7 +15,7 @@ public class CashierHandler extends UserHandler {
         this.getCashiersRecord().get(cashId).getTickets().put(newTicket.getId(), newTicket);
     }
 
-    public void addTicket(String ticketId, String cashId, Product newproduct , int cantidad) {
+    public void addToTicket(int ticketId, String cashId, Product newproduct , int cantidad) {
         Ticket actTicket = this.getCashiersRecord().get(cashId).getTickets().get(ticketId);
         try {
             actTicket.addProduct(newproduct, cantidad);
@@ -25,11 +23,11 @@ public class CashierHandler extends UserHandler {
                 actTicket.updateState(State.ACTIVE);
             }
         }
-        catch (Exception noProductWithprodId){
-            System.out.println("No product with id "+ticketId+" was found");
+        catch (Exception noProductWithprodId) {
+            System.out.println("No product with id "+ ticketId +" was found");
         }
     }
-    public void removeTicket(String ticketId, String cashId, int prodId) {
+    public void removeTicket(int ticketId, String cashId, int prodId) {
         Ticket actTicket = this.getCashiersRecord().get(cashId).getTickets().get(ticketId);
         try {
             actTicket.removeProduct(prodId); //Hay que cambiar las clases de Ticket para que su id sea String, no int. - Marcos
@@ -37,7 +35,7 @@ public class CashierHandler extends UserHandler {
             System.out.println("No product with id "+ticketId+" was found");
         }
     }
-    public void printTicket(String ticketId, String cashId) {
+    public void printTicket(int ticketId, String cashId) {
         Ticket actTicket = this.getCashiersRecord().get(cashId).getTickets().get(ticketId);
         actTicket.printTicket();
     }

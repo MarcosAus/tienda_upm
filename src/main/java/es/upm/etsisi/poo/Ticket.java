@@ -10,20 +10,22 @@ import java.util.*;
 
 public class Ticket {
     private ArrayList<TicketItem> items;
-    private String id;
+    private int id;
     private State stateTicket;
     private static final int MAXSIZE = 100;
 
-    public Ticket(String id) {
-        this.id = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy-MM-dd-HH:mm"))+"-"+id ;
+    public Ticket(int id) {
+        this.id = id;
         this.items = new ArrayList<>();
         this.stateTicket = State.EMPTY;
     }
     public Ticket() {
-
+        this.id = (int)(Math.random()*100000);
+        this.items = new ArrayList<>();
+        this.stateTicket = State.EMPTY;
     }
 
-    public String getId() {return id;}
+    public int getId() {return id;}
     public State getStateTicket() {
         return stateTicket;
     }
@@ -52,31 +54,33 @@ public class Ticket {
     }
 
     public void addProduct(Product product, int cantidad) {
-        if(this.stateTicket != State.CLOSED) {
+        if (this.stateTicket != State.CLOSED) {
             stateTicket = State.ACTIVE;
-            if(cantidad+this.getNumeroProductos()< MAXSIZE) {
-                if(product!=null) {
+            if (cantidad + this.getNumeroProductos() < MAXSIZE) {
+                if (product != null) {
                     TicketItem tI = busquedaProductoPorID(items,product.getId());
                     if (tI != null) {
-                        if(product instanceof ProductBasic) {
+                        if (product instanceof ProductBasic) {
                             tI.addAmount(cantidad);
                         }
                         else if(product instanceof CampusMeals || product instanceof Meetings) {
                             System.out.println("no se puede añadir mas de una misma comida o reunion al ticket");
                         }
                     }
-                    else{
+                    else {
                         if (product instanceof CampusMeals || product instanceof Meetings){
 
                         }
                         items.add(new TicketItem(product, cantidad));
                     }
                 }
+            } else {
+                System.out.println(Utilities.CAPACITY_REACHED);
             }
         }
     }
     public boolean removeProduct(int id) {
-        if(this.stateTicket != State.CLOSED) {
+        if (this.stateTicket != State.CLOSED) {
             boolean resultado = false;
             TicketItem tI = busquedaProductoPorID(items, id);
             if  (tI != null) {
@@ -164,7 +168,7 @@ public class Ticket {
     private double calcularDescuentoProducto(TicketItem tI,Map<Category,Integer> cantidad) {
         Product product = tI.getProduct();
         double descuento = 0;
-        if(product instanceof ProductBasic) {
+        if (product instanceof ProductBasic) {
             if(cantidad.getOrDefault(((ProductBasic) product).getCategoria(),0)>=2) {
                 return ((ProductBasic) product).getCategoria().getDiscount();
             }

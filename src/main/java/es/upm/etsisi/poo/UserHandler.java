@@ -8,18 +8,28 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class UserHandler {
-    private HashMap<String, Client> users; // fixme Se usa users como en el planing
+    private HashMap<String, Client> clientsRecord;
+    private HashMap<String, Cashier> cashiersRecord;
 
     public UserHandler() {
         this.clientsRecord = new HashMap<>();
         this.cashiersRecord = new HashMap<>();
     }
+
+    //fixme En este metodo estoy usando clientsRecord como si fuera un unico hasmap. Tambien en el metodo getUserById
+    public int getUserAmonut() {
+        return clientsRecord.size(); //fixme Repito. Estoy usando clientsRecords como si fuera un hasmap de usuarios generico.
+    }
+
     public HashMap<String, Client> getClientsRecord() {
         return clientsRecord;
     }
+
     public HashMap<String, Cashier> getCashiersRecord() {
+
         return cashiersRecord;
     }
+
     public void registerUser(User user) {
         if (user instanceof Client) {
             clientsRecord.putIfAbsent(user.getId(), (Client) user);

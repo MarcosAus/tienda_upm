@@ -2,13 +2,16 @@ package es.upm.etsisi.poo.Users;
 
 import es.upm.etsisi.poo.Ticket;
 
+import java.util.HashMap;
+
 public class Client extends User {
     private final Cashier cashier;
-    private Ticket ticket;
+    private HashMap<String, Ticket> tickets;
 
     public Client(String dni, String nombre, String correo, Cashier cash){
         super(dni,nombre,correo);
         this.cashier = cash;
+        this.tickets = new HashMap<>();
     }
 
     public Cashier getCashier() {
@@ -22,11 +25,21 @@ public class Client extends User {
         this.ticket = ticket;
     }
 
-    public Ticket getTicket() {
-        if (ticket != null) {
-            return ticket;
-        } else {
-            return null;
-        }
+    @Override
+    public Client getThisCli(){
+        return this;
+    }
+
+    @Override
+    public void addTicket(Ticket ticket) {
+        tickets.put(String.format("%05d", ticket.getId()), ticket);
+    }
+
+    public void removeTicketFromClient(Ticket ticket) {
+
+    }
+
+    public Ticket getTicket(String id) {
+        return tickets.get(id);
     }
 }

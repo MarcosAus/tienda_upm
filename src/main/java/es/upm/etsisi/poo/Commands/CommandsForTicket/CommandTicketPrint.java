@@ -1,14 +1,20 @@
 package es.upm.etsisi.poo.Commands.CommandsForTicket;
 
+import es.upm.etsisi.poo.CashierHandler;
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Commands.CommandTicket;
 import es.upm.etsisi.poo.TicketHandler;
+import es.upm.etsisi.poo.UserHandler;
+import es.upm.etsisi.poo.Users.Cashier;
+import es.upm.etsisi.poo.Utilities;
 
 public class CommandTicketPrint extends Command {
     private TicketHandler ticketHandler;
-    public CommandTicketPrint(String name, TicketHandler ticketHandler) {
+    private UserHandler userHandler;
+    public CommandTicketPrint(String name, TicketHandler ticketHandler, UserHandler userHandler) {
         super(name);
         this.ticketHandler = ticketHandler;
+        this.userHandler = userHandler;
     }
 
     @Override
@@ -18,6 +24,23 @@ public class CommandTicketPrint extends Command {
 
     @Override
     public void execute(String[] args) {
-        System.out.print("Does nothing and wins");
+        if (args.length == 4) {
+            try {// Se comprueba que los datos del usuario están bien.
+                int idTicket = Integer.parseInt(args[2]);
+                Cashier cashier = userHandler.getUserById(args[3]).getThisCash();
+
+                if (cashier != null) { // Si el cashies es un cajero se puede poner el ticket a close ya que este como tal no se elimina.
+                    cashier.printTicket(Integer.parseInt(args[2]));
+                    ticketHandler.removeTicket(Integer.parseInt(args[2]));
+                }
+                else {
+                    System.out.println(Utilities.ID_NOT_OF_A_CASIER);
+                }
+            } catch (NullPointerException e) {
+                System.out.println(Utilities.CASHIER_ID_NOT_EXISTS);
+            }
+        } else {
+            System.out.println(Utilities.LENGTH_WRONG);
+        }
     }
 }

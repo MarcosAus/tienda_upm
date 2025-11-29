@@ -15,12 +15,12 @@ public class TicketHandler {
 
     //Crea un nuevo ticket. Si encuentra que existe un ticket con el id marcado buscará el siguien id libre más cercano.
     //Luego lo añade al array. Devulvuelve el id usado.
-    public int newTicket(String idT){
+    public int newTicket(int idT){
         int idChosen = -1;
 
         // Si se encuentra un ticket con el mismo
         for (int i = 0; i<this.tickets.size();i++) {
-            if(Integer.parseInt(this.tickets.get(i).getId())==idT) {
+            if (this.tickets.get(i).getId() == idT) {
 
                 idChosen=-2;
             }
@@ -32,21 +32,23 @@ public class TicketHandler {
         else {
             idChosen=auxFindIdForTicket(idT+1);
         }
-        Ticket actTicket = new Ticket(String.format("%05d",idT));
+        Ticket actTicket = new Ticket(idT);
         tickets.add(actTicket);
         return idChosen;
     }
 
     public int newTicket(){
         //Genera un ticket con id aleatorio
-        //todo
-        return -1;
+        Ticket actTicket = new Ticket();
+        tickets.add(actTicket);
+        return actTicket.getId();
     }
+
     // Metodo auxiliar para buscar el siguiente id libre.
     private int auxFindIdForTicket(int TId){
         int result=TId , busqueda=0;
-        while(busqueda<tickets.size()){
-            if(Integer.parseInt(tickets.get(busqueda).getId())==TId){
+        while (busqueda < tickets.size()) {
+            if (tickets.get(busqueda).getId() == TId){
                 result = auxFindIdForTicket(result + 1);
             }
             busqueda++;
@@ -73,7 +75,7 @@ public class TicketHandler {
         Ticket actTicket = null;
         int busqueda=0;
         while(busqueda<tickets.size()){
-            if(Integer.parseInt(tickets.get(busqueda).getId())==TId){
+            if (tickets.get(busqueda).getId() == TId){
 
                 actTicket = tickets.get(busqueda);
             }
@@ -85,11 +87,13 @@ public class TicketHandler {
     // Elimina el ticket. Si no encuentra un ricket con TId da false.
     public boolean removeTicket(int TId){
         boolean result = false;
-        for (int i = 0; i<this.tickets.size(); i++){
-            if(Integer.parseInt(this.tickets.get(i).getId())==TId){
+        int i = 0;
+        while (i < this.tickets.size() && !result) {
+            if (this.tickets.get(i).getId() == TId) {
                 tickets.remove(i);
                 result = true;
             }
+            i++;
         }
         return result;
     }
@@ -98,7 +102,7 @@ public class TicketHandler {
     public void printTicketsClose(int TId){
         int busqueda=0;
         while(busqueda<tickets.size()){
-            if(Integer.parseInt(tickets.get(busqueda).getId())==TId){
+            if (tickets.get(busqueda).getId() == TId){
                 tickets.get(busqueda).printTicket();
                 tickets.get(busqueda).updateState(State.CLOSED);
                 busqueda = tickets.size();
@@ -111,7 +115,7 @@ public class TicketHandler {
     public void printTicketsShow(int TId) {
         int busqueda=0;
         while(busqueda<tickets.size()){
-            if(Integer.parseInt(tickets.get(busqueda).getId())==TId){
+            if (tickets.get(busqueda).getId() == TId){
                 tickets.get(busqueda).printTicket();
                 busqueda =  tickets.size();
             }

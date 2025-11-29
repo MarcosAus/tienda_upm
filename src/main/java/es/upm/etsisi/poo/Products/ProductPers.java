@@ -14,6 +14,13 @@ public class ProductPers extends ProductBasic {
         textos = new ArrayList<>();
     }
 
+    //fixme leer el LEERPORFA
+    public ProductPers(Category categoria, int id, String name, double price){
+        super(categoria,name,id,price);
+        this.maxTextos = 10;
+        textos = new ArrayList<>();
+    }
+
     //Devuelve una vista del arraylist de textos de esta manera se evita que se pueda modificar el array original.
     //el metodo unmodifiableList te devuelve una lista no modificable (es decir , no se permite añadir , eliminar,etc)
     //pero que si permite lectura y lo implementa mediante un wrapper en donde devuelve un objeto unmodifiableList
@@ -69,4 +76,7 @@ public class ProductPers extends ProductBasic {
         int aumento = (textos.size()/10)+1;
         return this.getPrecio() * aumento;
     }
+
+    @Override
+    public ProductPers getProductPers(){return this;}
 }
