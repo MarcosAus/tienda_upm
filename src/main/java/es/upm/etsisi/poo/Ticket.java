@@ -1,31 +1,29 @@
 package es.upm.etsisi.poo;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import es.upm.etsisi.poo.Products.*;
+import jdk.jshell.execution.Util;
 
 import java.util.*;
 
 
 public class Ticket {
     private ArrayList<TicketItem> items;
-    private int id;
+    private String id;
     private State stateTicket;
     private static final int MAXSIZE = 100;
 
-    public Ticket(int id) {
+    public Ticket(String id) {
         this.id = id;
         this.items = new ArrayList<>();
         this.stateTicket = State.EMPTY;
     }
     public Ticket() {
-        this.id = (int)(Math.random()*100000);
+        this.id = Utilities.numGenerator(5);
         this.items = new ArrayList<>();
         this.stateTicket = State.EMPTY;
     }
 
-    public int getId() {return id;}
+    public String getId() {return id;}
     public State getStateTicket() {
         return stateTicket;
     }
@@ -35,16 +33,10 @@ public class Ticket {
     public int getNumeroProductos() {
         int resultado = 0;
         for(TicketItem item : items ) {
-            if(item.getProduct() instanceof CampusMeals || item.getProduct() instanceof Meetings){
-                resultado++;
-            }
-            else {
-                resultado += item.getAmount();
-            }
+            resultado+= item.getProduct().amountTicket(item.getAmount());
         }
         return resultado;
     }
-
     public State getTicketState() {
         return this.stateTicket;
     }
@@ -109,70 +101,37 @@ public class Ticket {
         Product productGeneric;
         for (int i = 0; i < items.size(); i++) {
             productGeneric = items.get(i).getProduct();
-            if (productGeneric instanceof ProductBasic) { // *** EXPLICAR
-                ProductBasic pb = (ProductBasic)productGeneric;
-                resultado.put(pb.getCategoria(),resultado.getOrDefault(pb.getCategoria(),0)+1);
-                //
-            }
+            resultado.put(productGeneric.getCategory(),resultado.getOrDefault(productGeneric.getCategory(),0)+1);
         }
         return resultado;
     }
 
-    public String printTicket() {
-        if (stateTicket != State.CLOSED) {
-            double precioTotal = 0;
-            double precio;
-            double descuento;
-            StringBuilder sb = new StringBuilder("Ticket: ").append(id);
-            Product product;
-            double descuentoTotal = 0;
-            Map<Category, Integer> cantidadProductoCategoria = getCantidadProductoCategoria();
-            for(TicketItem tI : items) {
-                product = tI.getProduct();
-                precio= calcularPrecioProducto(tI);
-                descuento=calcularDescuentoProducto(tI,cantidadProductoCategoria);
-                sb.append("{");
-                sb.append(tI.getProduct().toString());
-                if(product instanceof Meetings || product instanceof CampusMeals) {
-                    sb.append(", actual people in event:");
-                    sb.append(tI.getAmount());
-                }
-                sb.append("}");
-                if(product instanceof ProductBasic && descuento>0) {
-                    sb.append(" **discount -").append(precio*descuento);
-                    sb.append("\n");
-                }
-            }
-            System.out.println("Total price: "+ precioTotal);
-            System.out.println("Total discount: "+ descuentoTotal);
-            System.out.println("Final price: " + (precioTotal - descuentoTotal));
-            stateTicket = State.CLOSED;
-            return sb.toString();
-        }
-        else return "ERROR";
-
-    }
-
-    private double calcularPrecioProducto(TicketItem tI ) {
+    public String toString() {
+        int cantidadCategoria;
         double precioTotal = 0;
-        Product product = tI.getProduct();
-        if(product instanceof Meetings || product instanceof CampusMeals) {
-            precioTotal = product.getPrecio()*tI.getAmount();
-        } else if (product instanceof ProductPers) {
-            precioTotal =product.TotalPrice();
+        Product product;
+        double descuentoTotal = 0;
+        Map<Category, Integer> cantidadProductoCategoria = getCantidadProductoCategoria();
+        StringBuilder sb = new StringBuilder("Ticket: ").append(id);
+        for(TicketItem tI : items) {
+            cantidadCategoria =  cantidadProductoCategoria.getOrDefault(tI.getProduct().getCategory(),0);
+            product = tI.getProduct();
+            sb.append(product.toString(tI.getAmount(),cantidadCategoria));
+            if(cantidadCategoria>=2){
+                descuentoTotal += product.TotalPrice()* product.getDiscount();
+            }
+            precioTotal += product.TotalPrice();
         }
-        else precioTotal= product.getPrecio();
-        return precioTotal;
+        System.out.println("Total price: "+ precioTotal);
+        System.out.println("Total discount: "+ descuentoTotal);
+        System.out.println("Final price: " + (precioTotal - descuentoTotal));
+        stateTicket=State.CLOSED;
+        return sb.toString();
     }
 
-    private double calcularDescuentoProducto(TicketItem tI,Map<Category,Integer> cantidad) {
-        Product product = tI.getProduct();
-        double descuento = 0;
-        if (product instanceof ProductBasic) {
-            if(cantidad.getOrDefault(((ProductBasic) product).getCategoria(),0)>=2) {
-                return ((ProductBasic) product).getCategoria().getDiscount();
-            }
-        }
-        return descuento;
+    public String printTicketCash() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(id).append("->").append(stateTicket);
+        return sb.toString();
     }
 }

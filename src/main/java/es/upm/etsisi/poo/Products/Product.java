@@ -36,11 +36,9 @@ public abstract class Product {
 
     @Override
     public abstract String toString();
-
-    public ProductBasic getProductBasic(){ return null;}
-    public Product getProductPers(){ return null;}
-    public Meetings getMeetings(){ return null;}
-    public CampusMeals getCampusMeals(){ return null;}
-
+    public abstract String toString(int num , int amount);
+    public abstract Category getCategory();
     public abstract double TotalPrice();
+    public abstract double getDiscount();
+    public abstract int amountTicket(int amount);
 }

@@ -6,30 +6,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Inventory {
-    /**
-     * Array de productos que contiene los productos disponibles en la tienda
-     */
     private ArrayList<Product> listaProducts;
+    private static final int MAXPRODS  =200;
 
-    /**
-     * Constructor de la clase inventario
-     */
+
     public Inventory() {
         this.listaProducts = new ArrayList<>();
     }
 
-    /**
-     * Metodo que devuelve la cantidad de productos disponibles en la tienda
-     * @return Devuelve un entero que representa el numero total de productos disponibles en la tienda
-     */
     public int getCapacidad() {
         return listaProducts.size();
     }
 
-    /**
-     * Metodo que permite acceder a la lista de productos de la tienda
-     * @return Devuelve una lista con los productos disponibles en la tienda hasta el momento
-     */
     public ArrayList<Product> getLista() {
         return listaProducts;
     }

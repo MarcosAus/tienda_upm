@@ -15,6 +15,7 @@ public class Utilities {
     //Mensajes de salida:
 
     public static final String CATEGORY_WRONG = "Category is wrong";
+    public static final String TICKET_IS_CLOSED = "Can not modify the ticket when is closed";
     public static final String LENGTH_WRONG = "Command length is wrong";
     public static final String ID_NOT_NUMBER = "ID is not a number";
     public static final String INT_NOT_NUMBER = "The command has invalid number.";
@@ -48,7 +49,7 @@ public class Utilities {
         }
         return resultado;
     }
-    public static String generadorNum(int cantidad){
+    public static String numGenerator(int cantidad){
         StringBuilder sb = new StringBuilder();
         for(int i = 0 ; i<cantidad; i++){
             sb.append((int)(Math.random()*10));
