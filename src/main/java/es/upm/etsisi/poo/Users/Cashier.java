@@ -50,7 +50,7 @@ public class Cashier extends User {
         try {
             tickets.remove(ticketActual.getId());
         } catch (Exception noProductWithProdId) {
-            System.out.println("No product with id " + ticketId + " was found");
+            System.out.println("No ticket with id " + ticketId + " was found");
         }
     }
 

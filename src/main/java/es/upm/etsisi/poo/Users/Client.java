@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class Client extends User {
     private final Cashier cashier;
-    private HashMap<String, Ticket> tickets;
+    private HashMap<Integer, Ticket> tickets;
 
     public Client(String dni, String nombre, String correo, Cashier cash){
         super(dni,nombre,correo);
@@ -22,7 +22,7 @@ public class Client extends User {
     //métodos como sugerencia.
 
     public void setTicketToClient(Ticket ticket) {
-        this.ticket = ticket;
+        tickets.put(ticket.getId(),ticket);
     }
 
     @Override
@@ -32,14 +32,21 @@ public class Client extends User {
 
     @Override
     public void addTicket(Ticket ticket) {
-        tickets.put(String.format("%05d", ticket.getId()), ticket);
+        tickets.put(ticket.getId(), ticket);
     }
 
-    public void removeTicketFromClient(Ticket ticket) {
-
+    public void removeTicketFromClient(int idTicket) {
+        Ticket ticketActual = tickets.get(idTicket);
+        try {
+            tickets.remove(ticketActual.getId());
+        } catch (Exception noTicketWithTicketId) {
+            System.out.println("No ticket with id " + idTicket + " was found");
+        }
     }
 
     public Ticket getTicket(String id) {
         return tickets.get(id);
     }
+
+    public HashMap<Integer, Ticket> getTickets() { return tickets;}
 }

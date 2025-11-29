@@ -6,12 +6,12 @@ import es.upm.etsisi.poo.Commands.CommandsForTicket.*;
 import es.upm.etsisi.poo.Commands.CommandsForUser.*;
 import es.upm.etsisi.poo.Products.Inventory;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class App {
-    // IMPORTANTE: VARIABLES ANTIGUAS. YA NO SE USAN ASÍ QUE HAY QUE BORRARLAS.
-    private static Inventory productList; // Array de productos disponibles en la Tienda
-    private static Ticket ticket; //Ticket donde se añadirán los productos deseados
 
     private TicketHandler ticketHandler;
     private UserHandler userHandler;
@@ -91,7 +91,9 @@ public class App {
 
 
         CLI cli = new CLI(commandsProducts, commandsTickets, commandsUser);
-        cli.start();
+        if(args[0] != null) {
+            cli.start(args[0]);
+        } else cli.start();
 
 
 
@@ -425,21 +427,5 @@ public class App {
      * Metodo que procesa un fichero de texto linea por linea y ejecuta los comandos que tenga en cascada.
      * @param fichero String que sirve de nombre para identificar el fichero que se debe leer
      */
-    /*public static void leerFicheros(String fichero) {
-        try (BufferedReader br = new BufferedReader(new FileReader(fichero))) {
-            String linea;
-            while ((linea = br.readLine()) != null) {
-                if (linea.trim().isEmpty() || linea.trim().startsWith("#")) continue;
 
-                String[] comando = linea.trim().split(" (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
-
-                boolean continuar = ejecutarComando(comando, true);
-                if (!continuar) {
-                    return;
-                }
-            }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }*/
 }

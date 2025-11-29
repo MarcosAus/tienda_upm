@@ -2,6 +2,8 @@ package es.upm.etsisi.poo.Commands.CommandsForUser;
 
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.UserHandler;
+import es.upm.etsisi.poo.Users.Cashier;
+import es.upm.etsisi.poo.Users.Client;
 import es.upm.etsisi.poo.Utilities;
 
 public class CommandUserRemoveClient extends Command {
@@ -19,7 +21,10 @@ public class CommandUserRemoveClient extends Command {
     @Override
     public void execute(String[] args) {
         if (args.length == 3) {
-            userHandler.getClientsRecord().get(args[2]).getCashier().removeTicket(userHandler.getClientsRecord().get(args[2]).getTicket().getId());
+            Client client = userHandler.getClientsRecord().get(args[2]);
+            for (int i = 0; i < client.getTickets().size(); i++){
+                client.removeTicketFromClient(client.getTickets().get(i).getId());
+            }
             userHandler.getClientsRecord().remove(args[2]);
         } else {
             System.out.println(Utilities.LENGTH_WRONG);
