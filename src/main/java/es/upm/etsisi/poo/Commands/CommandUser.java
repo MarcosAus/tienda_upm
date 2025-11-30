@@ -1,5 +1,6 @@
 package es.upm.etsisi.poo.Commands;
 
+import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.Utilities;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class CommandUser{
                 commands.get(counter).execute(commanddiv);
             }
         }catch (Exception e){
-            System.out.println(Utilities.UNKNOWN_COMMAND);
+            System.out.println(Comments.UNKNOWN_COMMAND);
         }
     }
 

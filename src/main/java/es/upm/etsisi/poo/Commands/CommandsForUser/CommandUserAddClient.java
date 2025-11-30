@@ -1,6 +1,7 @@
 package es.upm.etsisi.poo.Commands.CommandsForUser;
 
 import es.upm.etsisi.poo.Commands.Command;
+import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Users.Cashier;
 import es.upm.etsisi.poo.Users.Client;
@@ -30,10 +31,10 @@ public class CommandUserAddClient extends Command {
                 User client = new Client(id, nombre, email, cashier);
                 userHandler.registerUser(client);
             } else {
-                System.out.println(Utilities.LENGTH_WRONG);
+                System.out.println(Comments.LENGTH_WRONG);
             }
         } catch (Exception e) {
-            System.out.println(Utilities.ID_NOT_NUMBER);
+            System.out.println(Comments.ID_NOT_NUMBER);
         }
     }
 }

@@ -4,11 +4,7 @@ import es.upm.etsisi.poo.Commands.*;
 import es.upm.etsisi.poo.Commands.CommandsForProd.*;
 import es.upm.etsisi.poo.Commands.CommandsForTicket.*;
 import es.upm.etsisi.poo.Commands.CommandsForUser.*;
-import es.upm.etsisi.poo.Products.Inventory;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class App {
@@ -91,7 +87,7 @@ public class App {
 
 
         CLI cli = new CLI(commandsProducts, commandsTickets, commandsUser);
-        if(args[0] != null) {
+        if (args[0] != null) {
             cli.start(args[0]);
         } else cli.start();
 

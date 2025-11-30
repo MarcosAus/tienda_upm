@@ -2,11 +2,10 @@ package es.upm.etsisi.poo.Commands.CommandsForTicket;
 
 import es.upm.etsisi.poo.*;
 import es.upm.etsisi.poo.Commands.Command;
-import es.upm.etsisi.poo.Products.Product;
-import es.upm.etsisi.poo.Products.ProductBasic;
-import es.upm.etsisi.poo.Products.ProductPers;
+import es.upm.etsisi.poo.Products.*;
 import es.upm.etsisi.poo.Users.Cashier;
-import es.upm.etsisi.poo.Users.User;
+
+import java.time.Duration;
 
 public class CommandTicketAdd extends Command {
     private UserHandler userhandler;
@@ -29,72 +28,57 @@ public class CommandTicketAdd extends Command {
     @Override
     public void execute(String[] args) {
        if (args.length >= 6) {
-           try{
+           try {
                //Se separan todas las variables que se dan en el comando
                int amount = Integer.parseInt(args[5]);
                Ticket actTicket = ticketHandler.getTicket(Integer.parseInt(args[2]));
-               Product actProduct = productHandler.getProduct(Integer.parseInt(args[4]));
                Cashier actCashier = userhandler.getUserById(args[3]).getThisCash();
+               Product actProduct = productHandler.getProduct(Integer.parseInt(args[4]));
 
                if (actCashier != null) {// Se comprueban posibles errores que se pueden dar con las variables dadas por el usuario.
                    if (actProduct != null) {
                        if (actTicket != null) {
-                           //Se comprueba si se quieren poner personalizaciones.
-                           if ((args.length > 6) && productHandler.capacityLeft() > 0) {//Se comprueba si el producto se puede personalizar. Si es el caso se crea un producto personalizado nuevo
-                               if(actProduct.getProductPers() != null){
-                                   ProductPers actProductPers = (ProductPers) actProduct.getProductPers();
-                                   int newID = actProductPers.getId() + 1, counter = productHandler.getCapacity();
-                                   while(productHandler.getProduct(newID)!= null && counter > 0) {
-                                       counter--;
-                                       newID++;
-                                       if(newID > productHandler.getCapacity()){
-                                           newID = 0;
-                                       }
-                                   }
-                                   ProductPers newProductP = new ProductPers(actProductPers.getCategoria(),newID,
-                                           actProductPers.getNombre(), actProductPers.getPrecio(), actProductPers.getMaxTextos());
-                                   for(int i = 6; i < args.length ; i++){
-                                       if(args[i].startsWith("--p")){
-                                           newProductP.addTexto(args[i].substring(3));
-                                       }
-                                   }
-
-                                   actTicket.addProduct(newProductP, amount);
-
+                           if (args.length==6){//CASO PRODUCT BASIC , MEETING , CAMPUSMEALS y PRODUCTO PERS SIN PERSONALIZAR
+                               if (actProduct.isPersonalizable()){
+                                   ProductPers newProduct =
+                                           new ProductPers(actProduct.getCategory(),actProduct.getId(),actProduct.getName(),
+                                                   actProduct.getPrecio(),((ProductPers) actProduct).getMaxTextos());
+                                   actTicket.addProduct(newProduct,amount);
                                }
-                               else if(actProduct.getProductBasic() != null){
-                                   ProductBasic actProductBasic = (ProductBasic) actProduct.getProductBasic();
-                                   int newID = actProductBasic.getId() + 1, counter = productHandler.getCapacity();
-                                   while(productHandler.getProduct(newID)!= null && counter > 0) {
-                                       counter--;
-                                       newID++;
-                                       if(newID > productHandler.getCapacity()){
-                                           newID = 0;
-                                       }
+                               else {
+                                   if (actProduct.getMinTime().isZero()) {
+                                       ProductBasic newProduct =
+                                               new ProductBasic(actProduct.getCategory(),actProduct.getName(),actProduct.getId(),
+                                                       actProduct.getPrecio());
+                                        actTicket.addProduct(newProduct,amount);
                                    }
-                                   ProductPers newProductP = new ProductPers(actProductBasic.getCategoria(),newID,
-                                           actProductBasic.getNombre(), actProductBasic.getPrecio());
-                                   for(int i = 6; i < args.length ; i++){
-                                       if(args[i].startsWith("--p")){
-                                           newProductP.addTexto(args[i].substring(3));
-                                       }
+                                   else if (actProduct.getMinTime().compareTo(Duration.ofHours(72))==0){
+                                       CampusMeals newProduct=
+                                               new CampusMeals(actProduct.getId(),actProduct.getName(),actProduct.getPrecio(),
+                                                       ((CampusMeals) actProduct).getDateOfEnd(),((CampusMeals) actProduct).getMaxParticipantes());
+                                       actTicket.addProduct(newProduct,amount);
                                    }
-                                   actTicket.addProduct(newProductP, amount);
-
-                               }
-                               else{
-                                   System.out.println("This tipe of product cant be personalice.");
+                                   else{
+                                       Meetings newProduct=
+                                               new Meetings(actProduct.getId(),actProduct.getName(),actProduct.getPrecio(),
+                                                       ((Meetings) actProduct).getDateOfEnd(),((Meetings) actProduct).getMaxParticipantes());
+                                       actTicket.addProduct(newProduct,amount);
+                                   }
                                }
                            }
-                           else{//En caso de que no sea un producto personalizado.
-                               actTicket.addProduct(actProduct, amount);
+                           else {
+                               if(actProduct.isPersonalizable()){
+                                   ProductPers newProduct =
+                                           new ProductPers(actProduct.getCategory(),actProduct.getId(),actProduct.getName(),
+                                                   actProduct.getPrecio(),((ProductPers) actProduct).getMaxTextos());
+                                   for (int i = 6; i < args.length; i++){ //CASO PRODUCTO PERS
+                                        if(args[i].contains("--p"))
+                                   }
+                               }
+
                            }
-
-                           actTicket.addProduct(actProduct,amount);
-                           System.out.println("Ticket added successfully.");
-
                        }
-                       else{
+                       else {
                            System.out.println(Utilities.TICKET_ID_NOT_FOUND);
                        }
                    }
@@ -102,15 +86,12 @@ public class CommandTicketAdd extends Command {
                        System.out.println(Utilities.PRODUCT_NOT_FOUND);
                    }
                }
-               else  {
+               else {
                    System.out.println(Utilities.CASHIER_ID_NOT_EXISTS);
                }
            } catch (Exception e) {
                System.out.println(Utilities.INT_NOT_NUMBER);
            }
-
-
-
        } else {
               System.out.println(Utilities.LENGTH_WRONG);
        }

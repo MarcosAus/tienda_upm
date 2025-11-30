@@ -5,12 +5,19 @@ import es.upm.etsisi.poo.Users.Cashier;
 import es.upm.etsisi.poo.Users.Client;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TicketHandler {
     private ArrayList<Ticket> tickets;
 
-    public TicketHandler(){
+    public TicketHandler() {
         this.tickets = new ArrayList<>();
+    }
+    public ArrayList<Ticket> getTickets() {
+        return tickets;
     }
 
     //Crea un nuevo ticket. Si encuentra que existe un ticket con el id marcado buscará el siguien id libre más cercano.
@@ -101,8 +108,8 @@ public class TicketHandler {
     // Imprime el ticket y lo cierra
     public void printTicketsClose(int TId){
         int busqueda=0;
-        while(busqueda<tickets.size()){
-            if (tickets.get(busqueda).getId() == TId){
+        while(busqueda<tickets.size()) {
+            if (tickets.get(busqueda).getId() == TId) {
                 tickets.get(busqueda).printTicket();
                 tickets.get(busqueda).updateState(State.CLOSED);
                 busqueda = tickets.size();

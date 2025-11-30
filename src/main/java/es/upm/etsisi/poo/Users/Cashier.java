@@ -1,10 +1,8 @@
 package es.upm.etsisi.poo.Users;
 
 import es.upm.etsisi.poo.Ticket;
-import es.upm.etsisi.poo.Utilities;
 
 import java.util.HashMap;
-import java.util.Stack;
 
 public class Cashier extends User {
     HashMap<Integer,Ticket> tickets; //fixme tickets a cambiado de un Stack a un HasMap
@@ -19,25 +17,6 @@ public class Cashier extends User {
     public HashMap<Integer,Ticket> getTickets() {
         return tickets;
     }
-
-//
-//    //Adds all the tickets from a stack
-//    public void addTicketsFromOtherUser(HashMap<String,Ticket> newTickets){
-//        int ticketsToAdd = newTickets.size();
-//        for (int i = 0; i<ticketsToAdd; i++) {
-//            tickets.push(newTickets.pop());
-//        }
-//    }
-//
-//    //Adds a section of the Stack of tickets from other user. Start incluido, end no incluido
-//    public void addSectionOfTicketsFromOtherUser(Stack<Ticket> newTickets, int start, int end){
-//        int ticketsToAdd = newTickets.size();
-//        Ticket actTicket = null;
-//        for (int i = start; i<end; i++){
-//            actTicket = newTickets.get(i);
-//            tickets.push(actTicket);
-//        }
-//    }
 
     @Override
     public void addTicket(Ticket ticket) {
@@ -104,5 +83,9 @@ public class Cashier extends User {
     @Override
     public boolean isCash() {
         return true;
+    }
+
+    public int extractNumericId(String cashierId) {
+        return Integer.parseInt(cashierId.substring(2));
     }
 }

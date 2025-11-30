@@ -1,5 +1,8 @@
 package es.upm.etsisi.poo.Products;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class Meetings extends Product {
     private  int maxParticipantes;
     private static int MAXPEOPLEALLOWED = 100;
@@ -15,8 +18,12 @@ public class Meetings extends Product {
     public int getMaxParticipantes() {
         return maxParticipantes;
     }
-    public int getMinTime() {
-        return minTime;
+
+    public Duration getMinTime() {
+        return Duration.ofHours(minTime);
+    }
+    public String getDateOfEnd() {
+        return dateOfEnd;
     }
 
     @Override
@@ -25,7 +32,7 @@ public class Meetings extends Product {
         sb.append("{class:Meeting, id:");
         sb.append(getId());
         sb.append(", name:");
-        sb.append(getNombre());
+        sb.append(getName());
         sb.append(", price:");
         sb.append(getPrecio());
         sb.append(", date of Event:");
@@ -42,7 +49,7 @@ public class Meetings extends Product {
         sb.append("{class:Meeting, id:");
         sb.append(getId());
         sb.append(", name:");
-        sb.append(getNombre());
+        sb.append(getName());
         sb.append(", price:");
         sb.append(getPrecio()*num);
         sb.append(", date of Event:");
@@ -71,5 +78,14 @@ public class Meetings extends Product {
 
     public Category getCategory() {
         return Category.MEETINGS;
+    }
+    @Override
+    public boolean isPersonalizable() {
+        return false;
+    }
+
+    @Override
+    public LocalDateTime getStartDate() {
+        return LocalDateTime.parse(dateOfEnd);
     }
 }

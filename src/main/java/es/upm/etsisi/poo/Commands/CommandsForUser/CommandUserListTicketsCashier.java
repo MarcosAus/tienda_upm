@@ -1,6 +1,7 @@
 package es.upm.etsisi.poo.Commands.CommandsForUser;
 
 import es.upm.etsisi.poo.Commands.Command;
+import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Utilities;
 import jdk.jshell.execution.Util;
@@ -22,7 +23,7 @@ public class CommandUserListTicketsCashier extends Command {
         if (args.length == 3) {
             userHandler.listTicketsCashier(args[2]);
         } else {
-            System.out.println(Utilities.LENGTH_WRONG);
+            System.out.println(Comments.LENGTH_WRONG);
         }
     }
 

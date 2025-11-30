@@ -88,4 +88,21 @@ public class UserHandler {
             System.out.printf("%22s -> %6s",ticketAux.getId(),ticketAux.getTicketState());
         }
     }
+//    public void listTickets() {
+//        Map<String, Cashier> ticketsSorted =
+//                cashiersRecord.entrySet()
+//                        .stream()
+//                        .sorted(Comparator.comparing(e -> e.getValue().extractNumericId(e.getValue().getId())))
+//                        .collect(
+//                                Collectors.toMap(
+//                                        Map.Entry::getKey,
+//                                        Map.Entry::getValue,
+//                                        (a,b) -> a,
+//                                        LinkedHashMap::new
+//                                )
+//                        );
+//        for (Ticket ticket : ticketsSorted.values()) {
+//
+//        }
+//    }
 }

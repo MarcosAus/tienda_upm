@@ -1,5 +1,8 @@
 package es.upm.etsisi.poo.Products;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public abstract class Product {
 
     private int id;
@@ -19,7 +22,7 @@ public abstract class Product {
     public  void setPrice(double precio){
         this.precio = precio;
     }
-    public String getNombre() {
+    public String getName() {
         return nombre;
     }
     public void setName(String nombre) {
@@ -34,6 +37,8 @@ public abstract class Product {
         return product.getId()==this.getId();
     }
 
+    public abstract boolean isPersonalizable();
+
     @Override
     public abstract String toString();
     public abstract String toString(int num , int amount);
@@ -41,4 +46,8 @@ public abstract class Product {
     public abstract double TotalPrice();
     public abstract double getDiscount();
     public abstract int amountTicket(int amount);
+    public abstract Duration getMinTime();
+    public LocalDateTime getStartDate() {
+        return null;
+    }
 }

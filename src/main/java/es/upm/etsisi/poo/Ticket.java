@@ -1,18 +1,21 @@
 package es.upm.etsisi.poo;
 
 import es.upm.etsisi.poo.Products.*;
-import jdk.jshell.execution.Util;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
 public class Ticket {
     private ArrayList<TicketItem> items;
-    private String id;
+    private int id;
     private State stateTicket;
     private static final int MAXSIZE = 100;
+    private String ticketDate;
 
-    public Ticket(String id) {
+    public Ticket(int id) {
         this.id = id;
         this.items = new ArrayList<>();
         this.stateTicket = State.EMPTY;
@@ -21,12 +24,13 @@ public class Ticket {
         this.id = Utilities.numGenerator(5);
         this.items = new ArrayList<>();
         this.stateTicket = State.EMPTY;
+        this.ticketDate = LocalDate.now().toString();
     }
 
-    public String getId() {return id;}
-    public State getStateTicket() {
-        return stateTicket;
+    public String getTicketDate() {
+        return ticketDate;
     }
+    public int getId() {return id;}
     public ArrayList<TicketItem> getProducts() {
         return items;
     }
@@ -37,6 +41,11 @@ public class Ticket {
         }
         return resultado;
     }
+
+    public boolean ticketIsFull() {
+        return this.getNumeroProductos() == MAXSIZE;
+    }
+
     public State getTicketState() {
         return this.stateTicket;
     }
@@ -75,7 +84,7 @@ public class Ticket {
         if (this.stateTicket != State.CLOSED) {
             boolean resultado = false;
             TicketItem tI = busquedaProductoPorID(items, id);
-            if  (tI != null) {
+            if (tI != null) {
                 items.remove(tI);
                 resultado = true;
             }
@@ -87,10 +96,10 @@ public class Ticket {
     public  TicketItem busquedaProductoPorID(ArrayList<TicketItem> products, int id) {
         TicketItem resultado = null;
         int indice=0;
-        while(indice<products.size() && products.get(indice).getProduct().getId()!=id) {
+        while (indice<products.size() && products.get(indice).getProduct().getId()!=id) {
             indice++;
         }
-        if(indice<products.size()) {
+        if (indice<products.size()) {
             resultado = products.get(indice);
         }
         return resultado;
@@ -106,32 +115,55 @@ public class Ticket {
         return resultado;
     }
 
-    public String toString() {
+    public void printTicket() {
         int cantidadCategoria;
         double precioTotal = 0;
         Product product;
         double descuentoTotal = 0;
         Map<Category, Integer> cantidadProductoCategoria = getCantidadProductoCategoria();
         StringBuilder sb = new StringBuilder("Ticket: ").append(id);
-        for(TicketItem tI : items) {
+        for (TicketItem tI : items) {
             cantidadCategoria =  cantidadProductoCategoria.getOrDefault(tI.getProduct().getCategory(),0);
             product = tI.getProduct();
             sb.append(product.toString(tI.getAmount(),cantidadCategoria));
-            if(cantidadCategoria>=2){
+            if (cantidadCategoria>=2){
                 descuentoTotal += product.TotalPrice()* product.getDiscount();
             }
             precioTotal += product.TotalPrice();
         }
+        System.out.println(sb);
         System.out.println("Total price: "+ precioTotal);
         System.out.println("Total discount: "+ descuentoTotal);
         System.out.println("Final price: " + (precioTotal - descuentoTotal));
-        stateTicket=State.CLOSED;
-        return sb.toString();
+        stateTicket = State.CLOSED;
+        ticketDate = LocalDate.now().toString();
+
+    }
+    public boolean checkIfTicketCanClose() {
+        LocalDateTime now = LocalDateTime.now();
+
+        for (TicketItem item : items) {
+            Product p = item.getProduct();
+
+            Duration minTime = p.getMinTime();
+            LocalDateTime eventDate = p.getStartDate();
+
+            if (eventDate == null || minTime.isZero()) {
+                continue;
+            }
+
+            Duration timeLeft = Duration.between(now, eventDate);
+
+            if (timeLeft.compareTo(minTime) < 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    public String printTicketCash() {
+    public String listTicket() {
         StringBuilder sb = new StringBuilder();
-        sb.append(id).append("->").append(stateTicket);
+        sb.append(id).append("->").append(stateTicket.toString());
         return sb.toString();
     }
 }

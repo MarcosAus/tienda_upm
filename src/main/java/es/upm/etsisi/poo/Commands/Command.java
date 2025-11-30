@@ -1,10 +1,5 @@
 package es.upm.etsisi.poo.Commands;
 
-import es.upm.etsisi.poo.Products.Inventory;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class Command {
     protected String name;
 

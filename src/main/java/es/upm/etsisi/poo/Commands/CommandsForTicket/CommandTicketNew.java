@@ -58,11 +58,11 @@ public class CommandTicketNew extends Command {
 
                         }
                         else{
-                            System.out.println("User not found");
+                            System.out.println(Utilities.USER_NOT_FOUND);
                         }
                     }
                     else {
-                        System.out.println("User not found");
+                        System.out.println(Utilities.USER_NOT_FOUND);
                     }
 
                 }
@@ -98,18 +98,18 @@ public class CommandTicketNew extends Command {
                         actCashier.addTicket(ticket);
                         actClient.addTicket(ticket);
                         System.out.println("The ticket have" + idChosen + " as his id.");
-                        System.out.println(Utilities.TICKET_NEW_OK);
+                        System.out.println(Comments.TICKET_NEW_OK);
                     }
 
                 }
                 else{
-                    System.out.println("User not found");
+                    System.out.println(Comments.USER_NOT_FOUND);
                 }
             }
             else {
-                System.out.println("User not found");
+                System.out.println(Comments.USER_NOT_FOUND);
             }
         }
-        else System.out.println(Utilities.LENGTH_WRONG);
+        else System.out.println(Comments.LENGTH_WRONG);
     }
 }

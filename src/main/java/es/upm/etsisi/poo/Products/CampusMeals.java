@@ -1,5 +1,8 @@
 package es.upm.etsisi.poo.Products;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class CampusMeals extends Product {
     private  int maxParticipantes;
     private static int MAXPEOPLEALLOWED = 100;
@@ -12,11 +15,16 @@ public class CampusMeals extends Product {
         this.maxParticipantes = maxParticipantes;
     }
 
+    public String getDateOfEnd() {
+        return dateOfEnd;
+    }
+
     public int getMaxParticipantes() {
         return maxParticipantes;
     }
-    public int getMinTime() {
-        return minTime;
+
+    public Duration getMinTime() {
+        return Duration.ofHours(minTime);
     }
 
     @Override
@@ -25,7 +33,7 @@ public class CampusMeals extends Product {
         sb.append("{class:CampusMeals, id:");
         sb.append(getId());
         sb.append(", name:");
-        sb.append(getNombre());
+        sb.append(getName());
         sb.append(", price:");
         sb.append(getPrecio());
         sb.append(", date of Event:");
@@ -42,7 +50,7 @@ public class CampusMeals extends Product {
         sb.append("{class:CampusMeals, id:");
         sb.append(getId());
         sb.append(", name:");
-        sb.append(getNombre());
+        sb.append(getName());
         sb.append(", price:");
         sb.append(getPrecio()*num);
         sb.append(", date of Event:");
@@ -72,5 +80,15 @@ public class CampusMeals extends Product {
 
     public Category getCategory() {
         return Category.CAMPUSMEALS;
+    }
+
+    @Override
+    public boolean isPersonalizable() {
+        return false;
+    }
+
+    @Override
+    public LocalDateTime getStartDate() {
+        return LocalDateTime.parse(dateOfEnd);
     }
 }

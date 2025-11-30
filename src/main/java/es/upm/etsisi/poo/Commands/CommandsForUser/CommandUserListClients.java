@@ -1,6 +1,7 @@
 package es.upm.etsisi.poo.Commands.CommandsForUser;
 
 import es.upm.etsisi.poo.Commands.Command;
+import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Utilities;
 
@@ -21,7 +22,7 @@ public class CommandUserListClients extends Command {
         if (args.length == 2) {
             userHandler.listClientRecord();
         } else {
-            System.out.println(Utilities.LENGTH_WRONG);
+            System.out.println(Comments.LENGTH_WRONG);
         }
     }
 }

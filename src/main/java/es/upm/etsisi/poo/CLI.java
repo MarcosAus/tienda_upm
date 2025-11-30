@@ -60,7 +60,7 @@ public class CLI {
 
     }
 
-    public void start(String fichero){
+    public void start(String fichero) {
         try (BufferedReader br = new BufferedReader(new FileReader(fichero))) {
             String linea;
             while ((linea = br.readLine()) != null) {

@@ -1,8 +1,7 @@
 package es.upm.etsisi.poo.Commands.CommandsForTicket;
 
-import es.upm.etsisi.poo.CashierHandler;
 import es.upm.etsisi.poo.Commands.Command;
-import es.upm.etsisi.poo.Commands.CommandTicket;
+import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.TicketHandler;
 import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Users.Cashier;
@@ -34,13 +33,13 @@ public class CommandTicketPrint extends Command {
                     ticketHandler.removeTicket(Integer.parseInt(args[2]));
                 }
                 else {
-                    System.out.println(Utilities.ID_NOT_OF_A_CASIER);
+                    System.out.println(Comments.ID_NOT_OF_A_CASIER);
                 }
             } catch (NullPointerException e) {
-                System.out.println(Utilities.CASHIER_ID_NOT_EXISTS);
+                System.out.println(Comments.CASHIER_ID_NOT_EXISTS);
             }
         } else {
-            System.out.println(Utilities.LENGTH_WRONG);
+            System.out.println(Comments.LENGTH_WRONG);
         }
     }
 }

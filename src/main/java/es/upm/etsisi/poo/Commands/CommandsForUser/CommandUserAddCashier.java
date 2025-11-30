@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.Commands.CommandsForUser;
 
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Commands.CommandUser;
+import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Users.Cashier;
 import es.upm.etsisi.poo.Users.User;
@@ -35,11 +36,11 @@ public class CommandUserAddCashier extends Command {
                 User cashier = new Cashier(null, nombre, email);
                 userHandler.registerUser(cashier);
             } else {
-                System.out.println(Utilities.LENGTH_WRONG);
+                System.out.println(Comments.LENGTH_WRONG);
             }
 
         } catch (Exception e) {
-            System.out.println(Utilities.ID_NOT_NUMBER);
+            System.out.println(Comments.ID_NOT_NUMBER);
         }
 
     }

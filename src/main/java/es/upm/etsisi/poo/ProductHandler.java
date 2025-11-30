@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ProductHandler {
     private List<Product> productList = new ArrayList<>();
-    private int capacity = 99999; //fixme leer el LEERPORFA
+    private static final int capacity = 200; //fixme leer el LEERPORFA
 
 
     // Añade un producto a la lista de productos. No lo añade si el id se repite.
@@ -40,10 +40,12 @@ public class ProductHandler {
     //Devuelve el producto en base a un id. Null si no se encuentra.
     public Product getProduct(int id) {
         Product encontrado = null;
-        for (int i = 0; i < productList.size(); i++) {
-            if (productList.get(i).getId() == id) {
-                encontrado = productList.get(i);
+        int indice = 0;
+        while(indice<productList.size() && encontrado==null) {
+            if( productList.get(indice).getId() == id) {
+                encontrado = productList.get(indice);
             }
+            indice++;
         }
         return encontrado;
     }
@@ -95,6 +97,7 @@ public class ProductHandler {
 
 
     public void listProducts() {
+        System.out.println("Catalog:\n");
         for (Product product : productList) {
             System.out.println(product.toString());
         }

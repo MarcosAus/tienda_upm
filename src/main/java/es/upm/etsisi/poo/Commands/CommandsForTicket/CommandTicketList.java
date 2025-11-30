@@ -1,14 +1,12 @@
 package es.upm.etsisi.poo.Commands.CommandsForTicket;
 
-import es.upm.etsisi.poo.CashierHandler;
+import es.upm.etsisi.poo.*;
 import es.upm.etsisi.poo.Commands.Command;
-import es.upm.etsisi.poo.TicketHandler;
-import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Users.Cashier;
-import es.upm.etsisi.poo.Utilities;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashMap;
 
 public class CommandTicketList extends Command {
     private TicketHandler ticketHandler;
@@ -30,14 +28,19 @@ public class CommandTicketList extends Command {
     @Override
     public void execute(String[] args) {
         if (args.length == 2) {
-            ArrayList<Cashier> arrayCashOrdenado = new ArrayList<>();
-            for (int i = 0; i < arrayCashOrdenado.size(); i++) {
-                if( arrayCashOrdenado.get(i).isCash()){
-                    System.out.println(arrayCashOrdenado.get(i).toString());
-                }
+            ArrayList<Cashier> cashiers = new ArrayList<>(userHandler.getCashiersRecord().values());
+
+            cashiers.sort((c1, c2) -> {
+                int id1 = Integer.parseInt(c1.getId().substring(2));
+                int id2 = Integer.parseInt(c2.getId().substring(2));
+                return Integer.compare(id1, id2);
+            });
+
+            for (Cashier cashier : cashiers) {
+                cashier.printAllTickets();
             }
         } else {
-            System.out.println(Utilities.LENGTH_WRONG);
+            System.out.println(Comments.LENGTH_WRONG);
         }
     }
 }

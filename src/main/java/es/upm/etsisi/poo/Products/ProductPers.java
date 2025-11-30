@@ -45,7 +45,7 @@ public class ProductPers extends ProductBasic {
         sb.append("{class:ProductPersonalized, id:");
         sb.append(getId());
         sb.append(", name:");
-        sb.append(getNombre());
+        sb.append(getName());
         sb.append(", category:");
         sb.append(getCategory());
         sb.append(", price:");
@@ -60,7 +60,7 @@ public class ProductPers extends ProductBasic {
         sb.append("{class:ProductPersonalized, id:");
         sb.append(getId());
         sb.append(", name:");
-        sb.append(getNombre());
+        sb.append(getName());
         sb.append(", category:");
         sb.append(getCategory());
         sb.append(", price:");
@@ -90,4 +90,8 @@ public class ProductPers extends ProductBasic {
         return this.getPrecio() * aumento;
     }
 
+    @Override
+    public boolean isPersonalizable() {
+        return true;
+    }
 }

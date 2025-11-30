@@ -36,6 +36,9 @@ public class Utilities {
     public static final String CLIENT_ID_NOT_EXISTS = "ClientId does not match any clients";
     public static final String CAPACITY_REACHED = "Capacity has been reached";
     public static final String ID_NOT_OF_A_CASIER = "ID is not a CASIER";
+    public static final String USER_NOT_FOUND = "User not found";
+    public static final String TICKET_REMOVED_SUCCESSFULLY = "Ticket removed successfully";
+    
     public static Cashier buscarCajeroPorID(ArrayList<Cashier> cashiers, String id) {
         Cashier resultado = null;
         boolean existe = false;
@@ -49,12 +52,15 @@ public class Utilities {
         }
         return resultado;
     }
-    public static String numGenerator(int cantidad){
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0 ; i<cantidad; i++){
-            sb.append((int)(Math.random()*10));
+    public static int numGenerator(int cantidad) {
+        int resultado=0;
+        int multiplicador=1;
+        for (int i = 0; i < cantidad; i++) {
+            double generate = Math.random() * (10);
+            resultado += (int) generate * multiplicador;
+            multiplicador *= 10;
         }
-        return sb.toString();
+        return resultado;
     }
 
     //Cambia el id al formato correcto como String
