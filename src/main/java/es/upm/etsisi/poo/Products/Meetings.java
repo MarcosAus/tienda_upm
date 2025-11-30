@@ -18,7 +18,6 @@ public class Meetings extends Product {
     public int getMaxParticipantes() {
         return maxParticipantes;
     }
-
     public Duration getMinTime() {
         return Duration.ofHours(minTime);
     }

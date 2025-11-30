@@ -5,9 +5,10 @@ import java.time.LocalDateTime;
 
 public class CampusMeals extends Product {
     private  int maxParticipantes;
+    private String dateOfEnd;
     private static int MAXPEOPLEALLOWED = 100;
     private static final int minTime = 72;
-    private String dateOfEnd;
+
 
     public CampusMeals(int id, String name, double price, String dateOfEnd, int maxParticipantes) {
         super(id, name, price);

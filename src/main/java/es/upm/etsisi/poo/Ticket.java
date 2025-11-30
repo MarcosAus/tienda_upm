@@ -116,28 +116,32 @@ public class Ticket {
     }
 
     public void printTicket() {
-        int cantidadCategoria;
-        double precioTotal = 0;
-        Product product;
-        double descuentoTotal = 0;
-        Map<Category, Integer> cantidadProductoCategoria = getCantidadProductoCategoria();
-        StringBuilder sb = new StringBuilder("Ticket: ").append(id);
-        for (TicketItem tI : items) {
-            cantidadCategoria =  cantidadProductoCategoria.getOrDefault(tI.getProduct().getCategory(),0);
-            product = tI.getProduct();
-            sb.append(product.toString(tI.getAmount(),cantidadCategoria));
-            if (cantidadCategoria>=2){
-                descuentoTotal += product.TotalPrice()* product.getDiscount();
+        if(checkIfTicketCanClose()){
+            int cantidadCategoria;
+            double precioTotal = 0;
+            Product product;
+            double descuentoTotal = 0;
+            Map<Category, Integer> cantidadProductoCategoria = getCantidadProductoCategoria();
+            StringBuilder sb = new StringBuilder("Ticket: ").append(id);
+            for (TicketItem tI : items) {
+                cantidadCategoria =  cantidadProductoCategoria.getOrDefault(tI.getProduct().getCategory(),0);
+                product = tI.getProduct();
+                sb.append(product.toString(tI.getAmount(),cantidadCategoria));
+                if (cantidadCategoria>=2){
+                    descuentoTotal += product.TotalPrice()* product.getDiscount();
+                }
+                precioTotal += product.TotalPrice();
             }
-            precioTotal += product.TotalPrice();
+            System.out.println(sb);
+            System.out.println("Total price: "+ precioTotal);
+            System.out.println("Total discount: "+ descuentoTotal);
+            System.out.println("Final price: " + (precioTotal - descuentoTotal));
+            stateTicket = State.CLOSED;
+            ticketDate = LocalDate.now().toString();
         }
-        System.out.println(sb);
-        System.out.println("Total price: "+ precioTotal);
-        System.out.println("Total discount: "+ descuentoTotal);
-        System.out.println("Final price: " + (precioTotal - descuentoTotal));
-        stateTicket = State.CLOSED;
-        ticketDate = LocalDate.now().toString();
-
+        else{
+            System.out.println("The meals or meeting is expired ......");
+        }
     }
     public boolean checkIfTicketCanClose() {
         LocalDateTime now = LocalDateTime.now();

@@ -72,8 +72,14 @@ public class CommandTicketAdd extends Command {
                                            new ProductPers(actProduct.getCategory(),actProduct.getId(),actProduct.getName(),
                                                    actProduct.getPrecio(),((ProductPers) actProduct).getMaxTextos());
                                    for (int i = 6; i < args.length; i++){ //CASO PRODUCTO PERS
-                                        if(args[i].contains("--p"))
+                                        if(args[i].startsWith("--p")){
+                                            if(!newProduct.isFull()) newProduct.addTexto(args[i].substring(3));
+                                            else{
+                                                System.out.println("No se pueden añadir mas textos");
+                                            }
+                                        }
                                    }
+                                   actTicket.addProduct(newProduct,amount);
                                }
 
                            }

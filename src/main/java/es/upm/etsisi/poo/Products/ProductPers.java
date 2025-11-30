@@ -89,6 +89,9 @@ public class ProductPers extends ProductBasic {
         int aumento = (textos.size()/10)+1;
         return this.getPrecio() * aumento;
     }
+    public boolean isFull(){
+        return textos.size() == maxTextos;
+    }
 
     @Override
     public boolean isPersonalizable() {
