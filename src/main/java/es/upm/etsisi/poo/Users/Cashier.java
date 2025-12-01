@@ -55,8 +55,8 @@ public class Cashier extends User {
     }
 
     public void printAllTickets() {
-        for (int i = 0; i<tickets.size(); i++) {
-            tickets.get(i).printTicket();
+        for (Ticket ticket : tickets.values()) {
+            tickets.get(ticket.getId()).printTicket();
         }
     }
 
@@ -87,5 +87,11 @@ public class Cashier extends User {
 
     public int extractNumericId(String cashierId) {
         return Integer.parseInt(cashierId.substring(2));
+    }
+    public void listAllTickets() {
+        for (Ticket ticket : tickets.values()) {
+            String listTicket = ticket.listTicket();
+            System.out.println(listTicket);
+        }
     }
 }

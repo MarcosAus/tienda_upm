@@ -167,7 +167,11 @@ public class Ticket {
 
     public String listTicket() {
         StringBuilder sb = new StringBuilder();
-        sb.append(id).append("->").append(stateTicket.toString());
+        if (!ticketDate.isEmpty()) {
+            sb.append(ticketDate).append('-').append(id).append("->").append(stateTicket.toString());
+        } else {
+            sb.append(id).append("->").append(stateTicket.toString());
+        }
         return sb.toString();
     }
 }

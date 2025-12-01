@@ -32,7 +32,7 @@ public class CommandTicketList extends Command {
             });
 
             for (Cashier cashier : cashiers) {
-                cashier.printAllTickets();
+                cashier.listAllTickets();
             }
         } else {
             System.out.println(Comments.LENGTH_WRONG);

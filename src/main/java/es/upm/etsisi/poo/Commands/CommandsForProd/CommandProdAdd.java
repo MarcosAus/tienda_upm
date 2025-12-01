@@ -120,7 +120,7 @@ public class CommandProdAdd extends Command {
                             System.out.println(Comments.PROD_ADD);
                         } else System.out.println(Comments.CATEGORY_WRONG);
                     }
-                }else System.out.println(Comments.LENGTH_WRONG);
+                } else System.out.println(Comments.LENGTH_WRONG);
             }
         } catch (NumberFormatException e) {
             System.out.println(Comments.ID_PRICE_NOT_NUMBER);
