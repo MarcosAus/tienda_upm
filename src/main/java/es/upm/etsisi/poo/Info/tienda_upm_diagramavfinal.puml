@@ -16,8 +16,21 @@ note top of Info
 end note
 
 Class Utilities{
+    +{static}MAX_LIST: int = 200
+    +{static}MAX_IN_TICKET: int = 100
+
+    +{static}numGenerator(int cantidad): int
+    +{static}idAleatorio(ProductHandler productHandler): int
 }
 
+Class Comments{
+    +{static}LENGTH_WRONG: String
+    +{static}TICKET_NEW_OK: String
+    +{static}PRODUCT_NOT_FOUND: String
+    ...
+}
+
+Info -[hidden]left- Comments
 Info -[hidden]left- Utilities
 
 Class App {}
@@ -78,16 +91,11 @@ class TicketItem{
 TicketItem -right-o Ticket
 TicketItem o-[norank]- Product
 
-
-
-
 enum State{
 EMPTY
 ACTIVE
 CLOSED
 }
-
-Ticket ..>State
 
 class TicketHandler {
     -ticket : ArrayList<Ticket>
@@ -123,7 +131,6 @@ PAPELERIA
 ROPA
 LIBRO
 }
-ProductBasic -->Category
 Product <|-- ProductBasic
 
 class Products.ProductPers{
@@ -218,6 +225,7 @@ abstract class Commands.Command <<abstract>>{
     +{abstract}execute(args:String[])
 }
 
+
 class Commands.CommandProd{
     - ArrayList<Command> commands
     + checkCommand(String[] comdiv, String actCom)
@@ -225,14 +233,14 @@ class Commands.CommandProd{
 }
 
 class Commands.CommandsForProd.CommandProdEx{
-    -ProductHandler handler
-    + isThisCommand(String name)
-    + apply(args : String[])
+    +CommandProdEx(String name, ProductHandler productHandler)
+    +isThisCommand(String name): boolean
+    +execute(String[] args)
 }
 
-CommandProd *-- CommandProdEx
-
+CommandProd *-- CommandsForProd
 App *-- CommandProd
+
 
 
 class Commands.CommandTicket{
@@ -242,13 +250,13 @@ class Commands.CommandTicket{
 }
 
 class Commands.CommandsForTicket.CommandTicketEx{
-     -TicketHandler handler
-     + isThisCommand(String name)
-     + apply(args : String[])
+     +CommandTicketEx(String name, TicketHandler ticketHandler, UserHandler userHandler, ProductHandler productHandler*)
+     +isThisCommand(String name): boolean
+     +execute(String[] args)
 }
 
 
-CommandTicket *-- CommandTicketEx
+CommandTicket *-- CommandsForTicket
 App *-[norank]- CommandTicket
 
 class Commands.CommandUser{
@@ -271,9 +279,10 @@ App *-[norank]- CommandUser
 App *-- CLI
 
 App *-- Command
-Command <|-- CommandProdEx
-Command <|-- CommandTicketEx
-Command <|-- CommandUserEx
+
+Command <|-- CommandsForProd
+Command <|-- CommandsForTicket
+Command <|-- CommandsForUser
 
 App --> ProductHandler
 
@@ -283,9 +292,11 @@ ProductHandler --o Product
 App --> TicketHandler
 App --> UserHandler
 
-CommandUserEx .[norank].> UserHandler
-CommandProdEx .[norank].> ProductHandler
-CommandTicketEx .[norank].> TicketHandler
+CommandsForUser --> UserHandler
+CommandsForProd --> ProductHandler
+CommandsForTicket --> TicketHandler
+CommandsForTicket --> ProductHandler
+CommandsForTicket --> UserHandler
 
 CLI -[hidden]right- ProductHandler
 @enduml
