@@ -129,7 +129,7 @@ class Ticket{
     +checkIfTicketCanClose(): boolean
     +listTicket(): String
 }
-Ticket o-- TicketItem
+Ticket o-left- TicketItem
 
 enum State{
 EMPTY
@@ -241,6 +241,8 @@ Product <|-- CampusMeals
 Product <|-- Meetings
 
 class UserHandler{
+    -HashMap<String, Client> clientsRecord
+    -HashMap<String, Cashier> cashierRecord
 
     +UserHandler()
     +getUserAmount(): int
@@ -281,7 +283,8 @@ class Users.Client {
     +getTickets(): HashMap<Integer, Ticket>
 }
 
-Client --|> User
+
+User <|--Client
 
 class Users.Cashier{
 
@@ -299,10 +302,10 @@ class Users.Cashier{
 }
 User <|-- Cashier
 
-Client --> Cashier
+Client -left-> Cashier
 
 Cashier o-- Ticket
-Client o-- Ticket
+Client o-[norank]left- Ticket
 
 
 abstract class Commands.Command <<abstract>>{
@@ -386,5 +389,6 @@ CommandsForTicket --> TicketHandler
 CommandsForTicket --> ProductHandler
 CommandsForTicket --> UserHandler
 
-CLI -[hidden]right- ProductHandler
+Users -[hidden]down- Products
+
 @enduml
