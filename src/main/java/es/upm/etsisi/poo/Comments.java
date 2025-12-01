@@ -17,6 +17,9 @@ public class Comments {
     //CASH COMMANDS ERR RESPONSES
     public static final String CASH_NOT_FOUND = "CashId does not match any cashiers";
     public static final String ID_NOT_OF_A_CASHIER = "ID is not a CASHIER";
+    public static final String NAME_HAS_WRONG_FORMAT = "Please write the name as \"name\"";
+    public static final String EMAIL_IS_PERSONAL = "Please enter your email address from de UPM (x.@upm.es)";
+    public static final String INVALID_CASH_ID = "Invalid cash id";
 
 
     //CLIENT COMMANDS ERR RESPONSES
@@ -31,6 +34,7 @@ public class Comments {
     public static final String TICKET_FULL = "Ticket is full, cannot add any more products";
     public static final String TICKET_REMOVED_SUCCESSFULLY = "Ticket removed successfully";
     public static final String DATE_NOT_VALID = "Date is not valid";
+    public static final String DUPLICATE_ACTIVITY_IN_TICKET ="Can not add the same Meeting or Food twice in a ticket";
 
 
     //PROD COMMANDS ERR RESPONSES
@@ -39,6 +43,8 @@ public class Comments {
     public static final String PRODUCT_LIST_FULL = "List of Products is full, cannot add any more products";
     public static final String PRODUCT_NOT_FOUND = "Given product id does not mach.";
     public static final String NO_PRODUCTS_WITH_THAT_ID_IN_TICKET = "No products with that ID were found in ticket";
+    public static final String INVALID_DATE = "Date is invalid";
+    public static final String MAXPEOPLE_EXCEDED = "Maximum number of people exceeded";
 
 
     //CASHIER COMMANDS OK RESPONSES
@@ -71,5 +77,5 @@ public class Comments {
     public static final String PROD_ADDMEETINGS = "prod addmeetings: ok";
 
 
-
+    public static final String ACTIVITY_IS_EXPIRED = "An activity is expired , thats why you cant closed the ticket";
 }

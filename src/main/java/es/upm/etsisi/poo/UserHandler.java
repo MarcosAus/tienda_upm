@@ -16,11 +16,6 @@ public class UserHandler {
         this.cashiersRecord = new HashMap<>();
     }
 
-    //fixme En este metodo estoy usando clientsRecord como si fuera un unico hasmap. Tambien en el metodo getUserById
-    public int getUserAmonut() {
-        return clientsRecord.size(); //fixme Repito. Estoy usando clientsRecords como si fuera un hasmap de usuarios generico.
-    }
-
     public HashMap<String, Client> getClientsRecord() {
         return clientsRecord;
     }
@@ -33,10 +28,10 @@ public class UserHandler {
     public void registerUser(User user) {
         if (user instanceof Client) {
             clientsRecord.putIfAbsent(user.getId(), (Client) user);
-            System.out.println("Client{identifier = '" + user.getId() + "', name = " + user.getName() + ", email = '" + user.getMail() + ", cash = ' " +((Client) user).getCashier().getId() + " '}");
+            System.out.println("Client{identifier = '" + user.getId() + "', name = '" + user.getName() + "', email = '" + user.getMail() + "', cash = ' " +((Client) user).getCashier().getId() + " '}");
         } else if (user instanceof Cashier) {
             cashiersRecord.putIfAbsent(user.getId(), (Cashier) user);
-            System.out.println("Cash{identifier = '" + user.getId() + "', name = " + user.getName() + ", email = '" + user.getMail() + "'}");
+            System.out.println("Cash{identifier = '" + user.getId() + "', name = '" + user.getName() + "', email = '" + user.getMail() + "'}");
         }
 
     }

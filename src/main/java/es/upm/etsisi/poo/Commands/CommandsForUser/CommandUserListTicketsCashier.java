@@ -17,6 +17,7 @@ public class CommandUserListTicketsCashier extends Command {
     public void execute(String[] args) {
         if (args.length == 3) {
             userHandler.listTicketsCashier(args[2]);
+            System.out.println(Comments.CASH_TICKETS);
         } else {
             System.out.println(Comments.LENGTH_WRONG);
         }

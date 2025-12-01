@@ -54,24 +54,21 @@ public class Ticket {
         this.stateTicket = stateTicket;
     }
 
-    public void addProduct(Product product, int cantidad) {
+    public void addProduct(Product product, int cantidad) { // fixme quitar instanceOf;
         if (this.stateTicket != State.CLOSED) {
             stateTicket = State.ACTIVE;
             if (cantidad + this.getNumeroProductos() < MAXSIZE) {
                 if (product != null) {
                     TicketItem tI = busquedaProductoPorID(items,product.getId());
                     if (tI != null) {
-                        if (product instanceof ProductBasic) {
+                        if (product.getMinTime().isZero()) {
                             tI.addAmount(cantidad);
+                            printTicket();
+                        } else {
+                            System.out.println(Comments.DUPLICATE_ACTIVITY_IN_TICKET);
                         }
-                        else if(product instanceof CampusMeals || product instanceof Meetings) {
-                            System.out.println("no se puede añadir mas de una misma comida o reunion al ticket");
-                        }
-                    }
-                    else {
-                        if (product instanceof CampusMeals || product instanceof Meetings){
-
-                        }
+                    } else {
+                        printTicket();
                         items.add(new TicketItem(product, cantidad));
                     }
                 }
@@ -116,31 +113,33 @@ public class Ticket {
     }
 
     public void printTicket() {
-        if(checkIfTicketCanClose()){
-            int cantidadCategoria;
-            double precioTotal = 0;
-            Product product;
-            double descuentoTotal = 0;
-            Map<Category, Integer> cantidadProductoCategoria = getCantidadProductoCategoria();
-            StringBuilder sb = new StringBuilder("Ticket: ").append(id);
-            for (TicketItem tI : items) {
-                cantidadCategoria =  cantidadProductoCategoria.getOrDefault(tI.getProduct().getCategory(),0);
-                product = tI.getProduct();
-                sb.append(product.toString(tI.getAmount(),cantidadCategoria));
-                if (cantidadCategoria>=2){
-                    descuentoTotal += product.TotalPrice()* product.getDiscount();
-                }
-                precioTotal += product.TotalPrice();
+        int cantidadCategoria;
+        double precioTotal = 0;
+        Product product;
+        double descuentoTotal = 0;
+        Map<Category, Integer> cantidadProductoCategoria = getCantidadProductoCategoria();
+        StringBuilder sb = new StringBuilder("Ticket: ").append(id);
+        for (TicketItem tI : items) {
+            cantidadCategoria =  cantidadProductoCategoria.getOrDefault(tI.getProduct().getCategory(),0);
+            product = tI.getProduct();
+            sb.append(product.toString(tI.getAmount(),cantidadCategoria));
+            if (cantidadCategoria>=2){
+                descuentoTotal += product.TotalPrice()* product.getDiscount();
             }
-            System.out.println(sb);
-            System.out.println("Total price: "+ precioTotal);
-            System.out.println("Total discount: "+ descuentoTotal);
-            System.out.println("Final price: " + (precioTotal - descuentoTotal));
+            precioTotal += product.TotalPrice();
+        }
+        System.out.println(sb);
+        System.out.println("Total price: "+ precioTotal);
+        System.out.println("Total discount: "+ descuentoTotal);
+        System.out.println("Final price: " + (precioTotal - descuentoTotal));
+    }
+    public void closeTicket() {
+        if(checkIfTicketCanClose()){
+            printTicket();
             stateTicket = State.CLOSED;
             ticketDate = LocalDate.now().toString();
-        }
-        else{
-            System.out.println("The meals or meeting is expired ......");
+        }else{
+            System.out.println(Comments.ACTIVITY_IS_EXPIRED);
         }
     }
     public boolean checkIfTicketCanClose() {
@@ -148,16 +147,12 @@ public class Ticket {
 
         for (TicketItem item : items) {
             Product p = item.getProduct();
-
             Duration minTime = p.getMinTime();
             LocalDateTime eventDate = p.getStartDate();
-
             if (eventDate == null || minTime.isZero()) {
                 continue;
             }
-
             Duration timeLeft = Duration.between(now, eventDate);
-
             if (timeLeft.compareTo(minTime) < 0) {
                 return false;
             }
@@ -167,7 +162,11 @@ public class Ticket {
 
     public String listTicket() {
         StringBuilder sb = new StringBuilder();
-        sb.append(id).append("->").append(stateTicket.toString());
+        if (!ticketDate.isEmpty()) {
+            sb.append(ticketDate).append('-').append(id).append("->").append(stateTicket.toString());
+        } else {
+            sb.append(id).append("->").append(stateTicket.toString());
+        }
         return sb.toString();
     }
 }

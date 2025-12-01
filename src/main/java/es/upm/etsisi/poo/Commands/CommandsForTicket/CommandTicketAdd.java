@@ -40,8 +40,7 @@ public class CommandTicketAdd extends Command {
                                            new ProductPers(actProduct.getCategory(),actProduct.getId(),actProduct.getName(),
                                                    actProduct.getPrecio(),((ProductPers) actProduct).getMaxTextos());
                                    actTicket.addProduct(newProduct,amount);
-                               }
-                               else {
+                               } else {
                                    if (actProduct.getMinTime().isZero()) {
                                        ProductBasic newProduct =
                                                new ProductBasic(actProduct.getCategory(),actProduct.getName(),actProduct.getId(),
@@ -74,7 +73,6 @@ public class CommandTicketAdd extends Command {
                                    }
                                    actTicket.addProduct(newProduct,amount);
                                }
-
                            }
                        } else {
                            System.out.println(Comments.TICKET_ID_NOT_FOUND);

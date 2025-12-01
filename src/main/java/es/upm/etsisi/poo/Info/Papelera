@@ -1,4 +1,42 @@
+String fechaTexto = "2025-12-01";
 
+        LocalDateTime fechaHora = LocalDate.parse(fechaTexto)
+                .atTime(12, 0);
+
+        System.out.println(fechaHora);
+
+2025-12-01T12:00
+
+// Imprime el ticket y lo cierra
+    public void printTicketsClose(int TId){
+        int busqueda=0;
+        while(busqueda<tickets.size()) {
+            if (tickets.get(busqueda).getId() == TId) {
+                tickets.get(busqueda).printTicket();
+                tickets.get(busqueda).updateState(State.CLOSED);
+                busqueda = tickets.size();
+            }
+            busqueda++;
+        }
+    }
+
+    //Imprime el ticket pero se queda habierto al contrario qe printTicketClose
+    public void printTicketsShow(int TId) {
+        int busqueda=0;
+        while(busqueda<tickets.size()){
+            if (tickets.get(busqueda).getId() == TId){
+                tickets.get(busqueda).printTicket();
+                busqueda =  tickets.size();
+            }
+            busqueda++;
+        }
+    }
+
+public void printAllTickets() {
+        for (Ticket ticket : tickets.values()) {
+            tickets.get(ticket.getId()).printTicket();
+        }
+    }
  //    //Adds all the tickets from a stack
  //    public void addTicketsFromOtherUser(HashMap<String,Ticket> newTickets){
  //        int ticketsToAdd = newTickets.size();

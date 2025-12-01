@@ -24,10 +24,9 @@ public class CommandTicketRemove extends Command {
                 int idProduct = Integer.parseInt(args[4]);
                 Cashier cashier = userHandler.getUserById(args[3]).getThisCash();
                 if (cashier != null) {
-                    if(ticketHandler.getTicket(idTicket).removeProduct(idProduct)){
+                    if (ticketHandler.getTicket(idTicket).removeProduct(idProduct)){
                         System.out.println(Comments.TICKET_REMOVED_SUCCESSFULLY);
-                    }
-                    else{
+                    } else{
                         System.out.println(Comments.PRODUCT_NOT_FOUND);
                     }
                 }else{

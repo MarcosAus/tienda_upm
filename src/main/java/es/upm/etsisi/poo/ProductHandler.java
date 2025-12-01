@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ProductHandler {
     private List<Product> productList = new ArrayList<>();
-    private static final int capacity = 200; //fixme leer el LEERPORFA
+    private static final int capacity = 200;
 
 
     // Añade un producto a la lista de productos. No lo añade si el id se repite.
@@ -26,7 +26,6 @@ public class ProductHandler {
         }
         return add;
     }
-
 
     // Elimina un producto SOLO del array no, se va a tickets
     public void removeProduct(int id) {
@@ -83,11 +82,11 @@ public class ProductHandler {
 
     public void updateProductCategory(int id, Category newCategory) {
         Product p = getProduct(id);
-        if (p instanceof ProductBasic productBasic){ //fixme CAMBIAR INSTANCE OF
-            productBasic.setCategory(newCategory);
+        if (p.getMinTime().isZero() && p.isPersonalizable()){
+            ((ProductPers)p).setCategory(newCategory);
         }
-        if (p instanceof ProductPers productPers){ //fixme CAMBIAR INSTANCE OF
-            productPers.setCategory(newCategory);
+        else if (p.getMinTime().isZero() && !p.isPersonalizable()){
+            ((ProductBasic)p).setCategory(newCategory);
         }
     }
 
@@ -97,7 +96,7 @@ public class ProductHandler {
 
 
     public void listProducts() {
-        System.out.println("Catalog:\n");
+        System.out.print("Catalog:\n");
         for (Product product : productList) {
             System.out.println(product.toString());
         }
