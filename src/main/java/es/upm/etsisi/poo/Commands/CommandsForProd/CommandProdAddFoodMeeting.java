@@ -83,6 +83,9 @@ public class CommandProdAddFoodMeeting extends Command {
 
                     if (args[1].equals("addFood")) {
                         product = new CampusMeals(id, name, price, date, maxParticipantes);
+
+
+
                         fechaProducto = product.getStartDate();
                         if (fechaProducto.isBefore(now)) {
                             add = false;

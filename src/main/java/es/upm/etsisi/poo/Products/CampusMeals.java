@@ -90,7 +90,7 @@ public class CampusMeals extends Product {
     }
 
     @Override
-    public LocalDateTime getStartDate() {
+    public LocalDateTime getStartDate() { //fixme
         return LocalDateTime.parse(dateOfEnd).minusHours(getMinTime().toHours());
     }
 }
