@@ -9,7 +9,10 @@ import es.upm.etsisi.poo.Products.Product;
 import es.upm.etsisi.poo.Utilities;
 
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
 public class CommandProdAddFoodMeeting extends Command {
     private ProductHandler productHandler;
@@ -28,7 +31,6 @@ public class CommandProdAddFoodMeeting extends Command {
         int maxParticipantes;
         Product product = null;
         boolean add = true;
-
         try{
             if (productHandler.getHandlerSize() == Utilities.MAX_LIST) {
                 System.out.println(Comments.PRODUCT_LIST_FULL);
@@ -41,72 +43,86 @@ public class CommandProdAddFoodMeeting extends Command {
                     date = args[4];
                     maxParticipantes = Integer.parseInt(args[5]);
                     LocalDateTime fechaProducto;
-
-                    if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) { // Se verifica que el nombre tenga el formato correcto
-                        name = name.substring(1, name.length()-1);
-                        if (args[1].equals("addFood")) {
-                            product = new CampusMeals(id, name, price, date, maxParticipantes);
-                            fechaProducto = product.getStartDate();
-                            if (fechaProducto.isBefore(now)) {
-                                add = false;
-                            }
-                        } else if (args[1].equals("addMeeting")) {
-                            product = new Meetings(id, name, price, date, maxParticipantes);
-                            fechaProducto = product.getStartDate();
-                            if (fechaProducto.isBefore(now)) {
-                                add = false;
-                            }
-                        }
-
-                        if (add && product != null) {
-                            productHandler.addProduct(product);
+                    if(CampusMeals.getMAXPEOPLEALLOWED()>=maxParticipantes) {
+                        if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) { // Se verifica que el nombre tenga el formato correcto
+                            name = name.substring(1, name.length()-1);
                             if (args[1].equals("addFood")) {
-                                System.out.println(Comments.PROD_ADDFOOD);
+                                product = new CampusMeals(id, name, price, date, maxParticipantes);
+                                fechaProducto = product.getStartDate();
+                                if (fechaProducto.isBefore(now)) {
+                                    add = false;
+                                }
                             } else if (args[1].equals("addMeeting")) {
-                                System.out.println(Comments.PROD_ADDMEETINGS);
+                                product = new Meetings(id, name, price, date, maxParticipantes);
+                                fechaProducto = product.getStartDate();
+                                if (fechaProducto.isBefore(now)) {
+                                    add = false;
+                                }
                             }
-                        } else {
-                            System.out.println(Comments.DATE_NOT_VALID);
+
+                            if (add && product != null) {
+                                productHandler.addProduct(product);
+                                System.out.println(product);
+                                if (args[1].equals("addFood")) {
+                                    System.out.println(Comments.PROD_ADDFOOD);
+                                } else if (args[1].equals("addMeeting")) {
+                                    System.out.println(Comments.PROD_ADDMEETINGS);
+                                }
+                            } else {
+                                System.out.println(Comments.DATE_NOT_VALID);
+                            }
+                        } else{
+                            System.out.println(Comments.NAME_HAS_WRONG_FORMAT);
                         }
-                    } else{
-                        System.out.println(Comments.NAME_HAS_WRONG_FORMAT);
                     }
-
-
+                    else{
+                        System.out.println(Comments.MAXPEOPLE_EXCEDED);
+                    }
                 } else if(args.length == 7) {
                     id = Integer.parseInt(args[2]);
-                    name =  args[3];
-                    price = Double.parseDouble(args[4]);
-                    date = args[5];
-                    maxParticipantes = Integer.parseInt(args[6]);
-                    LocalDateTime fechaProducto;
+                    if(id>0 && id<=99999){
+                        name =  args[3];
+                        price = Double.parseDouble(args[4]);
+                        date = args[5]; ;
+                        maxParticipantes = Integer.parseInt(args[6]);
+                        LocalDateTime fechaProducto;
+                        if(CampusMeals.getMAXPEOPLEALLOWED()<maxParticipantes) {
+                            if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) {
+                                if (args[1].equals("addFood")) {
+                                    product = new CampusMeals(id, name, price, date, maxParticipantes);
+                                    fechaProducto = product.getStartDate();
+                                    if (fechaProducto.isBefore(now)) {
+                                        add = false;
+                                    }
 
-                    if (args[1].equals("addFood")) {
-                        product = new CampusMeals(id, name, price, date, maxParticipantes);
+                                } else if (args[1].equals("addMeeting")) {
+                                    product = new Meetings(id, name, price, date, maxParticipantes);
+                                    fechaProducto = product.getStartDate();
+                                    if (fechaProducto.isBefore(now)) {
+                                        add = false;
+                                    }
+                                }
 
-
-
-                        fechaProducto = product.getStartDate();
-                        if (fechaProducto.isBefore(now)) {
-                            add = false;
+                                if (add && product != null) {
+                                    productHandler.addProduct(product);
+                                    System.out.println(product);
+                                    if (args[1].equals("addFood")) {
+                                        System.out.println(Comments.PROD_ADDFOOD);
+                                    } else if (args[1].equals("addMeeting")) {
+                                        System.out.println(Comments.PROD_ADDMEETINGS);
+                                    }
+                                }
+                                else {
+                                    System.out.println(Comments.DATE_NOT_VALID);
+                                }
+                            }else{
+                                System.out.println(Comments.NAME_HAS_WRONG_FORMAT);
+                            }
+                        }else{
+                            System.out.println(Comments.MAXPEOPLE_EXCEDED);
                         }
-                    } else if (args[1].equals("addMeeting")) {
-                        product = new Meetings(id, name, price, date, maxParticipantes);
-                        fechaProducto = product.getStartDate();
-                        if (fechaProducto.isBefore(now)) {
-                            add = false;
-                        }
-                    }
-
-                    if (add && product != null) {
-                        productHandler.addProduct(product);
-                        if (args[1].equals("addFood")) {
-                            System.out.println(Comments.PROD_ADDFOOD);
-                        } else if (args[1].equals("addMeeting")) {
-                            System.out.println(Comments.PROD_ADDMEETINGS);
-                        }
-                    } else {
-                        System.out.println(Comments.DATE_NOT_VALID);
+                    }else{
+                        System.out.println(Comments.ID_NOT_IN_BOUNDARIES);
                     }
 
                 } else System.out.println(Comments.LENGTH_WRONG);
@@ -114,6 +130,9 @@ public class CommandProdAddFoodMeeting extends Command {
             }
         } catch (NumberFormatException e) {
         System.out.println(Comments.ID_PRICE_AMOUNT_NOT_NUMBER);
+        }catch (DateTimeParseException e){
+            System.out.println(Comments.INVALID_DATE);
         }
+
     }
 }

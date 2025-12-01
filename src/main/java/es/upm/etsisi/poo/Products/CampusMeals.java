@@ -17,6 +17,9 @@ public class CampusMeals extends Product {
         this.maxParticipantes = maxParticipantes;
     }
 
+    public static int  getMAXPEOPLEALLOWED( ) {
+        return MAXPEOPLEALLOWED;
+    }
     public String getDateOfEnd() {
         return dateOfEnd;
     }
@@ -91,6 +94,6 @@ public class CampusMeals extends Product {
 
     @Override
     public LocalDateTime getStartDate() { //fixme
-        return LocalDateTime.parse(dateOfEnd).minusHours(getMinTime().toHours());
+        return  LocalDate.parse(dateOfEnd).atTime(12,0).minusHours(getMinTime().toHours());
     }
 }

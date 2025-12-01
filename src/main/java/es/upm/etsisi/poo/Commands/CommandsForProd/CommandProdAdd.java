@@ -56,47 +56,52 @@ public class CommandProdAdd extends Command {
                 }else if(args.length == 7){
                     id = Integer.parseInt(args[2]);
                     name = args[3];
+                    if(id>0 && id<=99999){
+                        if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) {
+                            name = name.substring(1, name.length()-1);
+                            try {
+                                category = Category.valueOf(args[4]);
+                            } catch (IllegalArgumentException e) {
+                                category = null;
+                                System.out.println("Category added is invalid");
+                            }
+                            if (category != null) {
+                                price = Double.parseDouble(args[5]);
+                                MaxText = Integer.parseInt(args[6]);
 
-                    if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) {
-                        name = name.substring(1, name.length()-1);
-                        try {
-                            category = Category.valueOf(args[4]);
-                        } catch (IllegalArgumentException e) {
-                            category = null;
-                            System.out.println("Category added is invalid");
+                                product = new ProductPers(category, id, name, price, MaxText);
+
+                                productHandler.addProduct(product);
+                                System.out.println(product.toString());
+                                System.out.println(Comments.PROD_ADD);
+                            } else System.out.println(Comments.CATEGORY_WRONG);
                         }
-                        if (category != null) {
-                            price = Double.parseDouble(args[5]);
-                            MaxText = Integer.parseInt(args[6]);
-
-                            product = new ProductPers(category, id, name, price, MaxText);
-
-                            productHandler.addProduct(product);
-                            System.out.println(product.toString());
-                            System.out.println(Comments.PROD_ADD);
-                        } else System.out.println(Comments.CATEGORY_WRONG);
+                        else {
+                            System.out.println(Comments.NAME_HAS_WRONG_FORMAT);
+                        }
+                    } else{
+                        System.out.println(Comments.ID_NOT_IN_BOUNDARIES);
                     }
-                    else {
-                        System.out.println(Comments.NAME_HAS_WRONG_FORMAT);
-                    }
-
                 } else if(args.length == 6) {
                     try {
                         id = Integer.parseInt(args[2]);
-                        name = args[3];
-                        try {
-                            category = Category.valueOf(args[4]);
-                        } catch (IllegalArgumentException e) {
-                            category = null;
+                        if (id>0 && id<=99999) {
+                            name = args[3];
+                            try {
+                                category = Category.valueOf(args[4]);
+                            } catch (IllegalArgumentException e) {
+                                category = null;
+                            }
+                            if (category != null) {
+                                price = Double.parseDouble(args[5]);
+                                product = new ProductBasic(category, name, id, price);
+                                productHandler.addProduct(product);
+                                System.out.println(product.toString());
+                                System.out.println(Comments.PROD_ADD);
+                            } else System.out.println(Comments.CATEGORY_WRONG);
+                        }else{
+                            System.out.println(Comments.ID_NOT_IN_BOUNDARIES);
                         }
-                        if (category != null) {
-                            price = Double.parseDouble(args[5]);
-                            product = new ProductBasic(category, name, id, price);
-                            productHandler.addProduct(product);
-                            System.out.println(product.toString());
-                            System.out.println(Comments.PROD_ADD);
-                        } else System.out.println(Comments.CATEGORY_WRONG);
-
                     } catch(IllegalArgumentException e){
                         id = Utilities.idAleatorio(productHandler);
                         name = args[2];

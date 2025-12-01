@@ -16,11 +16,6 @@ public class UserHandler {
         this.cashiersRecord = new HashMap<>();
     }
 
-    //fixme En este metodo estoy usando clientsRecord como si fuera un unico hasmap. Tambien en el metodo getUserById
-    public int getUserAmonut() {
-        return clientsRecord.size(); //fixme Repito. Estoy usando clientsRecords como si fuera un hasmap de usuarios generico.
-    }
-
     public HashMap<String, Client> getClientsRecord() {
         return clientsRecord;
     }

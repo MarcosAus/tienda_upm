@@ -54,24 +54,21 @@ public class Ticket {
         this.stateTicket = stateTicket;
     }
 
-    public void addProduct(Product product, int cantidad) {
+    public void addProduct(Product product, int cantidad) { // fixme quitar instanceOf;
         if (this.stateTicket != State.CLOSED) {
             stateTicket = State.ACTIVE;
             if (cantidad + this.getNumeroProductos() < MAXSIZE) {
                 if (product != null) {
                     TicketItem tI = busquedaProductoPorID(items,product.getId());
                     if (tI != null) {
-                        if (product instanceof ProductBasic) {
+                        if (product.getMinTime().isZero()) {
                             tI.addAmount(cantidad);
                         }
-                        else if(product instanceof CampusMeals || product instanceof Meetings) {
-                            System.out.println("no se puede añadir mas de una misma comida o reunion al ticket");
+                        else {
+                            System.out.println(Comments.DUPLICATE_ACTIVITY_IN_TICKET);
                         }
                     }
                     else {
-                        if (product instanceof CampusMeals || product instanceof Meetings){
-
-                        }
                         items.add(new TicketItem(product, cantidad));
                     }
                 }
@@ -148,16 +145,12 @@ public class Ticket {
 
         for (TicketItem item : items) {
             Product p = item.getProduct();
-
             Duration minTime = p.getMinTime();
             LocalDateTime eventDate = p.getStartDate();
-
             if (eventDate == null || minTime.isZero()) {
                 continue;
             }
-
             Duration timeLeft = Duration.between(now, eventDate);
-
             if (timeLeft.compareTo(minTime) < 0) {
                 return false;
             }

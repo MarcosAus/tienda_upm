@@ -1,6 +1,7 @@
 package es.upm.etsisi.poo.Products;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Meetings extends Product {
@@ -13,6 +14,10 @@ public class Meetings extends Product {
         super(id, name, price);
         this.dateOfEnd = dateOfEnd;
         this.maxParticipantes = maxParticipantes;
+    }
+
+    public static int  getMAXPEOPLEALLOWED() {
+        return MAXPEOPLEALLOWED;
     }
 
     public int getMaxParticipantes() {
@@ -85,6 +90,6 @@ public class Meetings extends Product {
 
     @Override
     public LocalDateTime getStartDate() {
-        return LocalDateTime.parse(dateOfEnd).minusHours(getMinTime().toHours());
+        return LocalDate.parse(dateOfEnd).atTime(12,0).minusHours(getMinTime().toHours());
     }
 }
