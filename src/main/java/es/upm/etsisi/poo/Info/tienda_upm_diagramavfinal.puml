@@ -20,7 +20,7 @@ Class Utilities{
     +{static}MAX_IN_TICKET: int = 100
 
     +{static}numGenerator(int cantidad): int
-    +{static}idAleatorio(ProductHandler productHandler): int
+    +{static}idAleatorio(ProductHandler): int
 }
 
 Class Comments{
@@ -33,63 +33,103 @@ Class Comments{
 Info -[hidden]left- Comments
 Info -[hidden]left- Utilities
 
-Class App {}
+Class App {
+    -ticketHandler: TicketHandler
+    -userHandler: UserHandler
+    -productHandler: ProductHandler
+
+    +{static}main(String[] args): void
+}
 class CLI {
-    -CommandProd
-    -CommandTicket
-    -CommandUser
+    -commandsProducts: CommandProd
+    -commandsTicket: CommandTicket
+    -commandsUser: CommandUser
+
+    +CLI(CommandProd commandsProductos, CommandTicket commandsTicket, CommandUser commandsUser)
+    +start(): void
+    +start(String fichero): void
+    +dispatcherCentralCommand(String actCommand): void
+    +sliceCommand(String args): String[]
+    +{static}mostrarComandos(): void
 }
 
-class Products.Product  {
-#id: int
-#name:str
-#price: double
+class Products.Product<<Abstract>>  {
+    #id: int
+    #name:str
+    #price: double
+
+    +Product(int id, String name, double price)
+    +getPrecio(): double
+    +setPrice(double precio): void
+    +getName(): String
+    +setName(String name): void
+    +getId(): int
+    +equals(Product): boolean
+    +{abstract}isPersonalizable(): boolean
+    +{abstract}toString(): String
+    +{abstract}getCategory(): Category
+    +{abstract}totalPrice(): double
+    +{abstract}getDiscount(): double
+    +{abstract}amountTicket(int amount): int
+    +{abstract}getMinTime(): Duration
+    +getStartDate(): LocalDateTime
 }
 
 class ProductHandler {
-    -products:arrayList<Product>
+    -{static}CAPACITY = MAX_LIST
 
-    +addProduct(Product)
-    +removeProduct(int id)
-    +getProduct(int id)
-    +getProductList()
-    +getHandlerSize()
-    +updateProduct(id,field,newFact)
-    +updateProductName(id ,newName)
-    +updateProductCategory(id,newCat)
-    +updateProductPrice(id, newPrice)
-    +listProducts()
+    +ProductHandler()
+    +addProduct(Product): boolean
+    +removeProduct(int id): void
+    +getProduct(int id): Product
+    +getProductList(): List<Producto>
+    +getHandlerSize(): int
+    +updateProduct(id,field,newFact): void
+    +updateProductName(id ,newName):void
+    +updateProductCategory(id,newCat):void
+    +updateProductPrice(id, newPrice): void
+    +listProducts():void
+    +capacityLeft(): int
+    +getCapacity(): int
 }
 
-class Ticket{
-    -items:arrayList<TicketItem>
-    -id:String
-    -stateTicket:State
-    -MAXSIZE=100
-
-    +getId()
-    +getTicketState()
-    +updateState(State stateTicket)
-    +addProduct(Product product, int cantidad)
-    +removeProduct(int id)
-    +busquedaProductoPorID(ArrayList<TicketItem>, int)
-    +getCantidadProductoCategoria()
-    +printTicket()
-    +calcularPrecioProducto(TicketItem tI )
-    +calcularDescuentoProducto(TicketItem,Map<Category,Integer>)
-}
 
 class TicketItem{
-    -product:Product
-    -amount:int
+    -amount: int
 
-    getProduct()
-    getAmount()
-    addAmount(int n)
-    subtotal()
+    +TicketItem(Product product, int amount)
+    +getProduct(): Product
+    +getAmount(): int
+    +addAmount(int n): void
+    +subtotal(): double
 }
-TicketItem -right-o Ticket
-TicketItem o-[norank]- Product
+
+TicketItem --> Product
+
+class Ticket{
+    -id: int
+    -stateTicket: State
+    -{static}MAXSIZE = 100
+    -ticketDate: String
+
+    +Ticket()
+    +Ticket(int id)
+    +getTicketDate(): String
+    +getId(): int
+    +getProducts(): ArrayList<TicketItem>
+    +getNumeroProductos(): int
+    +ticketIsFull(): boolean
+    +getTicketState(): State
+    +updateState(State stateTicket): void
+    +addProduct(Product product, int cantidad): void
+    +removeProduct(int id): boolean
+    +busquedaProductoPorID(ArrayList<TicketItem>, int id): TicketItem
+    +getCantidadProductoCategoria(): Map<Category,Integer>
+    +printTicket(): void
+    +checkIfTicketCanClose(): boolean
+    +listTicket(): String
+}
+Ticket o-- TicketItem
 
 enum State{
 EMPTY
@@ -98,30 +138,37 @@ CLOSED
 }
 
 class TicketHandler {
-    -ticket : ArrayList<Ticket>
 
-    +newTicket(String idT)
-    +auxFindIdForTicket(int TId)
-    +addTicket(int TId, Product newproduct ,int cantidad)
-    +getTicket(int TId)
-    +removeTicket(int TId)
-    +printTicketsClose(int TId)
-    +printTicketsShow(int TId)
+    +TicketHandler()
+    +getTickets(): ArrayList<Ticket>
+    +newTicket(int idT): int
+    +newTicket(): int
+    +auxFindIdForTicket(int TId): int
+    +addTicket(int TId, Product newproduct ,int cantidad): void
+    +getTicket(int TId): Ticket
+    +removeTicket(int TId): boolean
+    +printTicketsClose(int TId): void
+    +printTicketsShow(int TId): void
 }
-
 
 TicketHandler o-- Ticket
 
 
 
-
-
 class Products.ProductBasic{
+    -category: Category
 
--id: int
--name:str
--category:Category
--price:double
+    +Product(Category category, int id, String name, double price)
+    +isPersonalizable(): boolean
+    +toString(): String
+    +toString(int num, double amount): String
+    +getCategory(): Category
+    +setCategory(Category): void
+    +totalPrice(): double
+    +getDiscount(): double
+    +amountTicket(int amount): int
+    +getMinTime(): Duration
+
 }
 
 enum Products.Category {
@@ -135,102 +182,144 @@ Product <|-- ProductBasic
 
 class Products.ProductPers{
 
--id:int
--name:str
--category:Category
--price:double
--texts:ArrayList<Str>
+    -texts:ArrayList<Str>
+    -MAX_TEXTOS: int
+    -{static}MAX_PERS = 10
+
+    +ProductPers(Category category,int id, String name, double price, int maxText)
+    +addText(String text): boolean
+    +getMaxText(): int
+    +toString(): String
+    +toString(int num, duble amount): String
+    +totalPrice(): double
+    +isFull(): boolean
+    +isPersonalizable(): boolean
 }
 ProductBasic <|--  ProductPers
 
 class Products.CampusMeals{
-    -maxParticipantes
+    -maxParticipantes: int
     -MAXPEOPLEALLOWED:100
-    -minTime:72
-    String dateOfEnd
+    -{static}MIN_TIME = 72
+    -dateOfEnd: LocalDateTime
 
-    +getMaxParticipantes()
-    +getMinTime()
-    +toString()
-    +TotalPrice()
-
+    +CampusMeals(int id, String name, double price, LocalDateTime dateOfEnd, int maxParticipantes)
+    +getDateOfEnd(): LocalDateTime
+    +getMaxParticipantes(): int
+    +getMinTime(): Duration
+    +toString(): String
+    +toString(int num, int amount): String
+    +TotalPrice(): double
+    +getDiscount(): double
+    +amountTicket(int amount): int
+    +getCategory(): Category
+    +isPersonalizable(): boolean
+    +getStartDate(): LocalDateTime
 }
 
-
 class Products.Meetings{
--maxParticipantes:100
--MINTIME:12
+    -maxParticipantes: int
+    -MAXPEOPLEALLOWED:100
+    -{static}MIN_TIME = 12
+    -dateOfEnd: LocalDateTime
+
+    +Meetings(int id, String name, double price, LocalDateTime dateOfEnd, int maxParticipantes)
+    +getDateOfEnd(): LocalDateTime
+    +getMaxParticipantes(): int
+    +getMinTime(): Duration
+    +toString(): String
+    +toString(int num, int amount): String
+    +TotalPrice(): double
+    +getDiscount(): double
+    +amountTicket(int amount): int
+    +getCategory(): Category
+    +isPersonalizable(): boolean
+    +getStartDate(): LocalDateTime
 }
 
 Product <|-- CampusMeals
 Product <|-- Meetings
 
 class UserHandler{
-    -Users:ArrayList<User>
 
-    +getClientsRecord()
-    +getCashiersRecord()
-    +registerUser(User user)
-    +getUserById(String id)
-    +listCashierRecord()
-    listClientRecord()
-    listTicketsCashier(String idCash)
+    +UserHandler()
+    +getUserAmount(): int
+    +getClientsRecord(): HashMap<String, Client>
+    +getCashiersRecord(): HashMap<String, Cashier>
+    +registerUser(User): void
+    +getUserById(String id): User
+    +listCashierRecord(): void
+    +listClientRecord(): void
+    +listTicketsCashier(String idCash): void
 }
 
 abstract class Users.User<<abstract>> {
     -String dni
     -String nombre
     -String correo
-    ..getters..
-    +getName()
-    +getMail()
-    +getId()
+
+    +User(String dni, String nombre, String correo)
+    +getName(): String
+    +getMail(): String
+    +getId(): String
+    +getThisCash(): Cashier
+    +getThisCli(): Client
+    +isCash(): boolean
+    +addTicket(Ticket): void
+    +removeTicket(): void
 }
 UserHandler o-- User
 
 class Users.Client {
-    -cajero:Cajero
-    -ticket:Ticket
 
-    +getCashier()
-    +setTicketToClient()
-    +getTicket()
+    +Client(String dni, String nombre, String correo, Cashier cash)
+    +getCashier(): Cashier
+    +setTicketToClient(Ticket): void
+    +getThisCli(): Client
+    +removeTicketFromClient(int idTicket): void
+    +getTicket(int idT): Ticket
+    +getTickets(): HashMap<Integer, Ticket>
 }
 
-User <|-- Client
+Client --|> User
 
 class Users.Cashier{
-    -tickets:HashMap<String,Ticket>
 
-    +getTickets()
-    +addTicketsFromOtherUser(HashMap<String,Ticket>)
-    +addSectionOfTicketsFromOtherUser(Stack<Ticket>, int, int)
-    +addTicket(Ticket)
-    +removeTicket(String id)
-    +removeTicket(int id)
-    +isCashierInCharge(int idTicket)
-    +printAllTickets()
-    +validarId(String id)
+    +Cashier(String id, String nombre, String correo)
+    +getTickets(): HashMap<Integer,Ticket>
+    +addTicket(int id): void
+    +removeTicket(int id): void
+    +printTicket(int id): void
+    +printAllTickets(): void
+    +validarId(int id): String
+    +listAllTickets(): void
+    +getThisCash(): Cashier
+    +isCash(): boolean
+    +extractNumericId(String CashierId): int
 }
 User <|-- Cashier
+
+Client --> Cashier
 
 Cashier o-- Ticket
 Client o-- Ticket
 
 
 abstract class Commands.Command <<abstract>>{
-    #name:Str
+    #name: String
 
-    +{abstract}isThisCommand(args:String[])
-    +{abstract}execute(args:String[])
+    +Command(String name)
+    +{abstract}isThisCommand(String[] args)
+    +{abstract}execute(String[] args)
 }
 
 
 class Commands.CommandProd{
-    - ArrayList<Command> commands
-    + checkCommand(String[] comdiv, String actCom)
-    + addCommand(Command command)
+
+    +checkCommand(String[] comdiv, String actCom)
+    +addCommand(Command)
 }
+CommandProd o-- Command
 
 class Commands.CommandsForProd.CommandProdEx{
     +CommandProdEx(String name, ProductHandler productHandler)
@@ -239,15 +328,17 @@ class Commands.CommandsForProd.CommandProdEx{
 }
 
 CommandProd *-- CommandsForProd
-App *-- CommandProd
+App ..> CommandProd
 
 
 
 class Commands.CommandTicket{
-    - ArrayList<Command> commands
+
     + checkCommand(String[] comdiv, String actCom)
-    + addCommand(Command command)
+    + addCommand(Command)
 }
+
+CommandTicket o-- Command
 
 class Commands.CommandsForTicket.CommandTicketEx{
      +CommandTicketEx(String name, TicketHandler ticketHandler, UserHandler userHandler, ProductHandler productHandler*)
@@ -257,38 +348,35 @@ class Commands.CommandsForTicket.CommandTicketEx{
 
 
 CommandTicket *-- CommandsForTicket
-App *-[norank]- CommandTicket
+App .[norank].> CommandTicket
 
 class Commands.CommandUser{
-    - ArrayList<Command> commands
-    + checkCommand(String[] comdiv, String actCom)
-    + addCommand(Command command)
+
+    + checkCommand(String[] comdiv, String actCommand)
+    + addCommand(Command)
 }
+
+CommandUser o-- Command
 
 class Commands.CommandsForUser.CommandUserEx{
-    -UserHandler handler
-    + isThisCommand(String name)
-    + apply(args : String[])
+    +CommandUserEx(String name, UserHandler userHandler)
+    +isThisCommand(String name)
+    +execute(String[] args)
 }
 
-
-
 CommandUser *-- CommandUserEx
-App *-[norank]- CommandUser
+App .[norank].> CommandUser
 
-App *-- CLI
-
-App *-- Command
+App ..> CLI
 
 Command <|-- CommandsForProd
 Command <|-- CommandsForTicket
 Command <|-- CommandsForUser
 
+
+ProductHandler o-- Product
+
 App --> ProductHandler
-
-ProductHandler --o Product
-
-
 App --> TicketHandler
 App --> UserHandler
 
