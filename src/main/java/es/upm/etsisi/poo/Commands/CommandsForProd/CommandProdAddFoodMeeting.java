@@ -86,7 +86,7 @@ public class CommandProdAddFoodMeeting extends Command {
                         date = args[5]; ;
                         maxParticipantes = Integer.parseInt(args[6]);
                         LocalDateTime fechaProducto;
-                        if(CampusMeals.getMAXPEOPLEALLOWED()<maxParticipantes) {
+                        if(CampusMeals.getMAXPEOPLEALLOWED()>=maxParticipantes) {
                             if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) {
                                 if (args[1].equals("addFood")) {
                                     product = new CampusMeals(id, name, price, date, maxParticipantes);

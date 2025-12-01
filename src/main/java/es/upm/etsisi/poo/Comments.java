@@ -18,7 +18,7 @@ public class Comments {
     public static final String CASH_NOT_FOUND = "CashId does not match any cashiers";
     public static final String ID_NOT_OF_A_CASHIER = "ID is not a CASHIER";
     public static final String NAME_HAS_WRONG_FORMAT = "Please write the name as \"name\"";
-    public static final String EMAIL_IS_PERSONAL = "Please enter your email address from de UPM (x.@upm.es)";
+    public static final String EMAIL_IS_PERSONAL = "Please enter your email address from the UPM (x.@upm.es)";
     public static final String INVALID_CASH_ID = "Invalid cash id";
 
 
@@ -32,7 +32,6 @@ public class Comments {
     public static final String TICKET_ID_NOT_FOUND = "Ticket ID does not exist.";
     public static final String MORE_THAN_TICKET_CAPACITY = "You cannot add more product than the ticket capacity allows";
     public static final String TICKET_FULL = "Ticket is full, cannot add any more products";
-    public static final String TICKET_REMOVED_SUCCESSFULLY = "Ticket removed successfully";
     public static final String DATE_NOT_VALID = "Date is not valid";
     public static final String DUPLICATE_ACTIVITY_IN_TICKET ="Can not add the same Meeting or Food twice in a ticket";
 
@@ -63,10 +62,9 @@ public class Comments {
     //TICKET COMMANDS OK RESPONSES
     public static final String TICKET_NEW = "ticket new: ok";
     public static final String TICKET_PRINT = "ticket print: ok";
-    public static final String TICKET_REMOVE = "ticket remove: ok";
     public static final String TICKET_ADD = "ticket add: ok" ;
     public static final String TICKET_LIST = "ticket list: ok";
-
+    public static final String TICKET_REMOVED = "Ticket removed successfully";
 
     //PROD COMMANDS OK RESPONSES
     public static final String PROD_ADD = "prod add: ok";
@@ -78,4 +76,6 @@ public class Comments {
 
 
     public static final String ACTIVITY_IS_EXPIRED = "An activity is expired , thats why you cant closed the ticket";
+    public static final String TICKET_IS_NOT_IN_CASH = "Only the cashier who created the ticket can modify it.";
+    public static final String MAXPARTICIPANTS_EXCEDED = "Max participants exceeded";
 }

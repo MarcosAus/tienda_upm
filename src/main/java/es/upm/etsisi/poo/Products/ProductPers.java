@@ -86,7 +86,7 @@ public class ProductPers extends ProductBasic {
     }
     @Override
     public double TotalPrice() {
-        int aumento = (textos.size()/10)+1;
+        double aumento = ((double) textos.size() /10)+1;
         return this.getPrecio() * aumento;
     }
     public boolean isFull(){

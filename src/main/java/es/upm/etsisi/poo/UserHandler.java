@@ -79,12 +79,8 @@ public class UserHandler {
     }
     public void listTicketsCashier(String idCash) {
         Cashier cashier = cashiersRecord.get(idCash);
-        Ticket ticketAux;
         System.out.println("Tickets:");
-        for (int i = 0; i < cashier.getTickets().size(); i++) {
-            ticketAux = cashier.getTickets().get(i);
-            System.out.printf("%22s -> %6s",ticketAux.getId(),ticketAux.getTicketState());
-        }
+        cashier.listAllTickets();
     }
 //    public void listTickets() {
 //        Map<String, Cashier> ticketsSorted =

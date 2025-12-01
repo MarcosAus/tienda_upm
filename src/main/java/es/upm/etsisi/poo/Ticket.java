@@ -13,7 +13,8 @@ public class Ticket {
     private int id;
     private State stateTicket;
     private static final int MAXSIZE = 100;
-    private String ticketDate;
+    private String ticketDateOpen;
+    private String ticketDateClosed;
 
     public Ticket(int id) {
         this.id = id;
@@ -24,11 +25,11 @@ public class Ticket {
         this.id = Utilities.numGenerator(5);
         this.items = new ArrayList<>();
         this.stateTicket = State.EMPTY;
-        this.ticketDate = LocalDate.now().toString();
+        this.ticketDateOpen = LocalDate.now().toString();
     }
 
-    public String getTicketDate() {
-        return ticketDate;
+    public String getTicketDateOpen() {
+        return ticketDateOpen;
     }
     public int getId() {return id;}
     public ArrayList<TicketItem> getProducts() {
@@ -54,22 +55,33 @@ public class Ticket {
         this.stateTicket = stateTicket;
     }
 
-    public void addProduct(Product product, int cantidad) { // fixme quitar instanceOf;
+    public void addProduct(Product product, int cantidad) { //
         if (this.stateTicket != State.CLOSED) {
-            stateTicket = State.ACTIVE;
+            stateTicket = State.OPEN;
             if (cantidad + this.getNumeroProductos() < MAXSIZE) {
                 if (product != null) {
                     TicketItem tI = busquedaProductoPorID(items,product.getId());
                     if (tI != null) {
-                        if (product.getMinTime().isZero()) {
+                        if ( product.isPersonalizable()) {
+                            List<String> textosA= ((ProductPers)product).getTextos();
+                            List<String> textosB= ((ProductPers)tI.getProduct()).getTextos();
+                            if(new HashSet<>(textosA).equals(new HashSet<>(textosB))){
+                                tI.addAmount(cantidad);
+                                printTicket();
+                            }else{
+                                items.add(new TicketItem(product,cantidad));
+                                printTicket();
+                            }
+                        } else if (product.getMinTime().isZero()) {
                             tI.addAmount(cantidad);
                             printTicket();
                         } else {
                             System.out.println(Comments.DUPLICATE_ACTIVITY_IN_TICKET);
                         }
                     } else {
-                        printTicket();
                         items.add(new TicketItem(product, cantidad));
+                        printTicket();
+
                     }
                 }
             } else {
@@ -106,8 +118,10 @@ public class Ticket {
         Map<Category,Integer> resultado = new HashMap<>();
         Product productGeneric;
         for (int i = 0; i < items.size(); i++) {
-            productGeneric = items.get(i).getProduct();
-            resultado.put(productGeneric.getCategory(),resultado.getOrDefault(productGeneric.getCategory(),0)+1);
+            Product product = items.get(i).getProduct();
+            Category category = product.getCategory();
+            int amount = items.get(i).getAmount();
+            resultado.put(category,resultado.getOrDefault(category,0)+amount);
         }
         return resultado;
     }
@@ -119,25 +133,29 @@ public class Ticket {
         double descuentoTotal = 0;
         Map<Category, Integer> cantidadProductoCategoria = getCantidadProductoCategoria();
         StringBuilder sb = new StringBuilder("Ticket: ").append(id);
+        if (ticketDateClosed != null) {
+            sb.append("-").append(ticketDateClosed);
+        }
+        sb.append("\n");
         for (TicketItem tI : items) {
             cantidadCategoria =  cantidadProductoCategoria.getOrDefault(tI.getProduct().getCategory(),0);
             product = tI.getProduct();
             sb.append(product.toString(tI.getAmount(),cantidadCategoria));
-            if (cantidadCategoria>=2){
-                descuentoTotal += product.TotalPrice()* product.getDiscount();
+            if (cantidadCategoria>=2) {
+                descuentoTotal += product.TotalPrice() * product.getDiscount() * tI.getAmount();
             }
-            precioTotal += product.TotalPrice();
+            precioTotal += product.TotalPrice() * tI.getAmount();
         }
-        System.out.println(sb);
+        System.out.print(sb);
         System.out.println("Total price: "+ precioTotal);
         System.out.println("Total discount: "+ descuentoTotal);
         System.out.println("Final price: " + (precioTotal - descuentoTotal));
     }
     public void closeTicket() {
         if(checkIfTicketCanClose()){
+            ticketDateClosed = LocalDate.now().toString();
             printTicket();
             stateTicket = State.CLOSED;
-            ticketDate = LocalDate.now().toString();
         }else{
             System.out.println(Comments.ACTIVITY_IS_EXPIRED);
         }
@@ -162,10 +180,12 @@ public class Ticket {
 
     public String listTicket() {
         StringBuilder sb = new StringBuilder();
-        if (!ticketDate.isEmpty()) {
-            sb.append(ticketDate).append('-').append(id).append("->").append(stateTicket.toString());
+        if (ticketDateClosed != null) {
+            sb.append(id).append(ticketDateClosed).append("->").append(stateTicket.toString());
+        } else if (ticketDateOpen != null) {
+            sb.append(ticketDateOpen).append('-').append(id).append("->").append(stateTicket.toString());
         } else {
-            sb.append(id).append("->").append(stateTicket.toString());
+        sb.append(id).append("->").append(stateTicket.toString());
         }
         return sb.toString();
     }

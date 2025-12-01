@@ -30,10 +30,11 @@ public class CommandTicketList extends Command {
                 int id2 = Integer.parseInt(c2.getId().substring(2));
                 return Integer.compare(id1, id2);
             });
-
+            System.out.println("Ticket List:");
             for (Cashier cashier : cashiers) {
                 cashier.listAllTickets();
             }
+            System.out.println(Comments.TICKET_LIST);
         } else {
             System.out.println(Comments.LENGTH_WRONG);
         }

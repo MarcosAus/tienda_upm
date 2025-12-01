@@ -62,33 +62,32 @@ public class CLI {
 
     public void start(String fichero) {
         try (BufferedReader br = new BufferedReader(new FileReader(fichero))) {
+            System.out.println("Welcome to the ticket module App.\n" +
+                    "Ticket module. Type 'help' to see commands");
             String linea;
-            while ((linea = br.readLine()) != null) {
+            boolean repeat = true;
+            while ((linea = br.readLine()) != null && repeat) {
                 if (linea.trim().isEmpty() || linea.trim().startsWith("#")) continue;
 
-                System.out.println("Welcome to the ticket module App.\n" +
-                        "Ticket module. Type 'help' to see commands");
-                boolean repeat = true;
+                System.out.print("tUPM> ");
 
-
-                while (repeat) {
-                    System.out.print("> ");
-
-                    if (linea.equalsIgnoreCase("exit")) repeat = false;
-                    else if (linea.equalsIgnoreCase("help")) {
-                        mostrarComandos();
-                    }
-                    else if (linea.startsWith("echo " )) {
-                        System.out.print(linea.substring(5));
-                    }
-                    else {
-                        dispatcherCentralCommand(linea);
-                    }
+                if (linea.equalsIgnoreCase("exit")) {
+                    repeat = false;
                 }
-                //Mensaje de salida de la aplicación
-                System.out.println("Closing application.\n" +
-                        "Goodbye!");
+                else if (linea.equalsIgnoreCase("help")) {
+                    mostrarComandos();
+                }
+                else if (linea.startsWith("echo " )) {
+                    System.out.println(linea);
+                }
+                else {
+                    System.out.println(linea);
+                    dispatcherCentralCommand(linea);
+                }
             }
+            //Mensaje de salida de la aplicación
+            System.out.println("Closing application.\n" +
+                    "Goodbye!");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

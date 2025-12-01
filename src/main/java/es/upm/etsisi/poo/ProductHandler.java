@@ -60,27 +60,32 @@ public class ProductHandler {
 
 
     // Actualiza el producto. El nombre, categoria o precio respectivamente.
-    public void updateProduct(int id, String field, String newFact) {
+    public void updateProduct(int id, String field, String newValue) {
+        Product product = null;
         switch (field) {
             case "NAME":
-                updateProductName(id,newFact);
+                 product = updateProductName(id,newValue);
                 break;
             case "CATEGORY":
-                Category newCategory = Category.valueOf(newFact);
-                updateProductCategory(id,newCategory);
+                Category newCategory = Category.valueOf(newValue);
+                product = updateProductCategory(id,newCategory);
                 break;
             case "PRICE":
-                double price = Double.parseDouble(newFact);
-                updateProductPrice(id,price);
+                double price = Double.parseDouble(newValue);
+                product = updateProductPrice(id,price);
         }
-
+        if(product !=null) {
+            System.out.println(product);
+        }
     }
 
-    public void updateProductName(int id ,String newName) {
-        getProduct(id).setName(newName);
+    public Product updateProductName(int id ,String newName) {
+        Product result =  getProduct(id);
+        result.setName(newName);
+        return result;
     }
 
-    public void updateProductCategory(int id, Category newCategory) {
+    public Product updateProductCategory(int id, Category newCategory) {
         Product p = getProduct(id);
         if (p.getMinTime().isZero() && p.isPersonalizable()){
             ((ProductPers)p).setCategory(newCategory);
@@ -88,10 +93,13 @@ public class ProductHandler {
         else if (p.getMinTime().isZero() && !p.isPersonalizable()){
             ((ProductBasic)p).setCategory(newCategory);
         }
+        return p;
     }
 
-    public void updateProductPrice(int id, double newPrice) {
-        getProduct(id).setPrice(newPrice);
+    public Product updateProductPrice(int id, double newPrice) {
+        Product p = getProduct(id);
+        p.setPrice(newPrice);
+        return p;
     }
 
 

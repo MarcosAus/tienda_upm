@@ -2,7 +2,10 @@ package es.upm.etsisi.poo.Users;
 
 import es.upm.etsisi.poo.Ticket;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Cashier extends User {
     HashMap<Integer,Ticket> tickets; //fixme tickets a cambiado de un Stack a un HasMap
@@ -31,6 +34,9 @@ public class Cashier extends User {
         } catch (Exception noProductWithProdId) {
             System.out.println("No ticket with id " + ticketId + " was found");
         }
+    }
+    public boolean ticketExists(int ticketId) {
+        return tickets.containsKey(ticketId);
     }
 
 
@@ -83,9 +89,11 @@ public class Cashier extends User {
         return Integer.parseInt(cashierId.substring(2));
     }
     public void listAllTickets() {
-        for (Ticket ticket : tickets.values()) {
-            String listTicket = ticket.listTicket();
-            System.out.println(listTicket);
+        List<Map.Entry<Integer, Ticket>> lista = new ArrayList<>(tickets.entrySet());
+        lista.sort(Map.Entry.comparingByKey());
+        for (Map.Entry<Integer, Ticket> entry : lista) {
+            Ticket ticket = entry.getValue();
+            System.out.println(ticket.listTicket());
         }
     }
 }

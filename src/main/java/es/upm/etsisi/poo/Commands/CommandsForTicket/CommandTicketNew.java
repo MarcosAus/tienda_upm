@@ -37,8 +37,7 @@ public class CommandTicketNew extends Command {
                             actClient = actUser.getThisCli();
                             if (actCashier == null || actClient == null) {
                                 System.out.println("The selected ids dont mach with the command. Please insert the ids of a cashier and a client.");
-                            }
-                            else{
+                            } else{
                                 idChosen = ticketHandler.newTicket(idTry);
                                 ticket = ticketHandler.getTicket(idChosen);
 
@@ -47,11 +46,11 @@ public class CommandTicketNew extends Command {
                                 }
                                 actCashier.addTicket(ticket);
                                 actClient.addTicket(ticket);
+                                ticket.printTicket();
                                 System.out.println(Comments.TICKET_NEW);
                             }
 
-                        }
-                        else{
+                        } else{
                             System.out.println(Comments.USER_NOT_FOUND);
                         }
                     }
@@ -91,19 +90,16 @@ public class CommandTicketNew extends Command {
                         ticket = ticketHandler.getTicket(idChosen);
                         actCashier.addTicket(ticket);
                         actClient.addTicket(ticket);
-                        System.out.println("The ticket have" + idChosen + " as his id.");
                         System.out.println(Comments.TICKET_NEW);
+                        ticket.printTicket();
                     }
 
-                }
-                else{
+                } else{
                     System.out.println(Comments.USER_NOT_FOUND);
                 }
-            }
-            else {
+            } else {
                 System.out.println(Comments.USER_NOT_FOUND);
             }
-        }
-        else System.out.println(Comments.LENGTH_WRONG);
+        } else System.out.println(Comments.LENGTH_WRONG);
     }
 }

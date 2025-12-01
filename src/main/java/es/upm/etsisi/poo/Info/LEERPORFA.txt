@@ -14,8 +14,8 @@ de haberlo mirado seguir la lista de "to do" en orden:
 -[ ]Crear comandos de Ticket
 -[ ]En CLI, no se contampla que el usuario escriba EchO como comando. No se me ocurre como arreglarlo. (a ser posible no pongais echo en el dispacher,
     soy tuga y estoy intentando evitar eso ya que dividir del comndo es más ineficiente cuando solo quieres volverlo a copiar por consola)
-
--[ ]Limpiar comentarios basura de codigo que ya no se usa.
+-[] Corroborar que el cajero que crea el ticket solo lo pueda modificar.
+-[]Limpiar comentarios basura de codigo que ya no se usa.
 -[] Arreglar el add para que no acepte ids negativos.
 -[] cambiar lo de instanceOf
 

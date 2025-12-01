@@ -56,7 +56,7 @@ public class App {
         commandsUser.addCommand(new CommandUserListCash("cash list", userHandler));
         commandsUser.addCommand(new CommandUserListClients("client list", userHandler));
         commandsUser.addCommand(new CommandUserListTicketsCashier("cash tickets", userHandler));
-        commandsUser.addCommand(new CommandUserRemoveClient("client remove  ", userHandler));
+        commandsUser.addCommand(new CommandUserRemoveClient("client remove", userHandler));
 
 
         CLI cli = new CLI(commandsProducts, commandsTickets, commandsUser);
@@ -67,22 +67,3 @@ public class App {
         //FALTA TOMAR EN CUENTA LOS ARCHIVOS EXTERNOS
     }
 }
-
-
-
-
-
-//        .--.       .--.
-//    _  `    \     /    `  _
-//     `\.===. \.^./ .===./`
-//            \/`"`\/
-//         ,  | y2k |  ,
-//        / `\|;-.-'|/` \
-//       /    |::\  |    \
-//    .-' ,-'`|:::; |`'-, '-.
-//        |   |::::\|   |
-//        |   |::::;|   |
-//        |   \:::://   |
-//        |    `.://'   |
-//jgs    .'             `.
-//    _,'                 `,_ //fixme

@@ -3,10 +3,6 @@ package es.upm.etsisi.poo;
 import es.upm.etsisi.poo.Products.Product;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class TicketHandler {
     private ArrayList<Ticket> tickets;
@@ -67,7 +63,7 @@ public class TicketHandler {
         try {
             actTicket.addProduct(newproduct, cantidad);
             if (actTicket.getTicketState().equals(State.EMPTY)){
-                actTicket.updateState(State.ACTIVE);
+                actTicket.updateState(State.OPEN);
             }
         }
         catch (Exception noProductWithprodId){
