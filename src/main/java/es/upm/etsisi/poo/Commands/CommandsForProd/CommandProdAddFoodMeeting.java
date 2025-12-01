@@ -18,10 +18,6 @@ public class CommandProdAddFoodMeeting extends Command {
         this.productHandler = productHandler;
     }
 
-    @Override
-    public boolean isThisCommand(String name) {
-        return  this.name.equals(name.toLowerCase().substring(0,name.length()));
-    }
 
     @Override
     public void execute(String[] args) {
@@ -34,7 +30,7 @@ public class CommandProdAddFoodMeeting extends Command {
         boolean add = true;
         try{
             if (productHandler.getHandlerSize() == Utilities.MAX_LIST) {
-                System.out.println(Utilities.PRODUCT_LIST_FULL);
+                System.out.println(Comments.PRODUCT_LIST_FULL);
             } else {
                 LocalDateTime now = LocalDateTime.now();
                 if(args.length == 6) {
@@ -61,6 +57,11 @@ public class CommandProdAddFoodMeeting extends Command {
 
                     if (add && product != null) {
                         productHandler.addProduct(product);
+                        if (args[1].equals("addFood")) {
+                            System.out.println(Comments.PROD_ADDFOOD);
+                        } else if (args[1].equals("addMeeting")) {
+                            System.out.println(Comments.PROD_ADDMEETINGS);
+                        }
                     } else {
                         System.out.println(Comments.DATE_NOT_VALID);
                     }
@@ -89,6 +90,11 @@ public class CommandProdAddFoodMeeting extends Command {
 
                     if (add && product != null) {
                         productHandler.addProduct(product);
+                        if (args[1].equals("addFood")) {
+                            System.out.println(Comments.PROD_ADDFOOD);
+                        } else if (args[1].equals("addMeeting")) {
+                            System.out.println(Comments.PROD_ADDMEETINGS);
+                        }
                     } else {
                         System.out.println(Comments.DATE_NOT_VALID);
                     }

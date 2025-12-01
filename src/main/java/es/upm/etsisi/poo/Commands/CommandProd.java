@@ -7,8 +7,8 @@ import es.upm.etsisi.poo.Utilities;
 public class CommandProd {
     private ArrayList<Command> commands;
 
-    public CommandProd(ArrayList<Command> commands) {
-        this.commands = commands;
+    public CommandProd() {
+        this.commands =new ArrayList<>();
     }
 
     public void checkCommand(String[] commanddiv, String actCommand) {
@@ -16,7 +16,7 @@ public class CommandProd {
         boolean flag = false;
         try {
             while (counter < commands.size() && !flag) {
-                flag = commands.get(counter).isThisCommand(actCommand);
+                flag = commands.get(counter).isThisCommand(commanddiv[0]+" "+commanddiv[1]);
                 if (!flag) {
                     counter++;
                 }
@@ -24,7 +24,10 @@ public class CommandProd {
             if (flag) {
                 commands.get(counter).execute(commanddiv);
             }
-        }catch (Exception e){
+            else {
+                System.out.println(Comments.UNKNOWN_COMMAND);
+            }
+        } catch (Exception e){
             System.out.println(Comments.UNKNOWN_COMMAND);
         }
     }

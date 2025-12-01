@@ -33,7 +33,7 @@ public class CLI {
 
 
         while (repeat) {
-            System.out.print("> ");
+            System.out.print("tUPM> ");
             String actCommand = sc.nextLine(); //Usamos act para comando actual. Usamos div para cuando el comando esté dividido
 
             //Se comprueban los comandos "simples". Ejemplo: exit o help
@@ -111,7 +111,7 @@ public class CLI {
                 commandsTickets.checkCommand(commanddiv, actCommand);
                 break;
 
-            case "product"://Comandos prod
+            case "prod"://Comandos prod
                 commandsProducts.checkCommand(commanddiv, actCommand);
                 break;
 

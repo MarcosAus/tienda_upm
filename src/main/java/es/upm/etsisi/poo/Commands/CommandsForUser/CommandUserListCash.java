@@ -14,11 +14,6 @@ public class CommandUserListCash extends Command {
     }
 
     @Override
-    public boolean isThisCommand(String name) {
-        return  this.name.equals(name.toLowerCase().substring(0,name.length()));
-    }
-
-    @Override
     public void execute(String[] args) {
         if (args.length == 2) {
             userHandler.listCashierRecord();

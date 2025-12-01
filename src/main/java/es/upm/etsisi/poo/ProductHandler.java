@@ -82,11 +82,11 @@ public class ProductHandler {
     }
 
     public void updateProductCategory(int id, Category newCategory) {
-        Product p = productList.get(id);
-        if (p instanceof ProductBasic productBasic){
+        Product p = getProduct(id);
+        if (p instanceof ProductBasic productBasic){ //fixme CAMBIAR INSTANCE OF
             productBasic.setCategory(newCategory);
         }
-        if (p instanceof ProductPers productPers){
+        if (p instanceof ProductPers productPers){ //fixme CAMBIAR INSTANCE OF
             productPers.setCategory(newCategory);
         }
     }

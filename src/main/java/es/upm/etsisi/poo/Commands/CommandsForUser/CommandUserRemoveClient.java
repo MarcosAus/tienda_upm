@@ -15,11 +15,6 @@ public class CommandUserRemoveClient extends Command {
     }
 
     @Override
-    public boolean isThisCommand(String name) {
-        return  this.name.equals(name.toLowerCase().substring(0,name.length()));
-    }
-
-    @Override
     public void execute(String[] args) {
         if (args.length == 3) {
             Client client = userHandler.getClientsRecord().get(args[2]);
@@ -27,6 +22,7 @@ public class CommandUserRemoveClient extends Command {
                 client.removeTicketFromClient(client.getTickets().get(i).getId());
             }
             userHandler.getClientsRecord().remove(args[2]);
+            System.out.println(Comments.CLIENT_REMOVED);
         } else {
             System.out.println(Comments.LENGTH_WRONG);
         }

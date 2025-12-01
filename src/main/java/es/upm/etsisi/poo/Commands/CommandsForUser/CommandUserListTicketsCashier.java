@@ -14,11 +14,6 @@ public class CommandUserListTicketsCashier extends Command {
     }
 
     @Override
-    public boolean isThisCommand(String name) {
-        return  this.name.equals(name.toLowerCase().substring(0,name.length()));
-    }
-
-    @Override
     public void execute(String[] args) {
         if (args.length == 3) {
             userHandler.listTicketsCashier(args[2]);

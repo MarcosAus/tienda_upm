@@ -15,10 +15,6 @@ public class CommandUserAddCashier extends Command {
         this.userHandler = productHandler;
     }
 
-    @Override
-    public boolean isThisCommand(String name) {
-        return  this.name.equals(name.toLowerCase().substring(0,this.name.length()));
-    }
 
     @Override
     public void execute(String[] args) {

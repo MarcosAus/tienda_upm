@@ -5,7 +5,6 @@ import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.TicketHandler;
 import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Users.Cashier;
-import es.upm.etsisi.poo.Utilities;
 
 public class CommandTicketPrint extends Command {
     private TicketHandler ticketHandler;
@@ -14,11 +13,6 @@ public class CommandTicketPrint extends Command {
         super(name);
         this.ticketHandler = ticketHandler;
         this.userHandler = userHandler;
-    }
-
-    @Override
-    public boolean isThisCommand(String name) {
-        return  this.name.equals(name.toLowerCase().substring(0,name.length()));
     }
 
     @Override
@@ -33,10 +27,10 @@ public class CommandTicketPrint extends Command {
                     ticketHandler.removeTicket(Integer.parseInt(args[2]));
                 }
                 else {
-                    System.out.println(Comments.ID_NOT_OF_A_CASIER);
+                    System.out.println(Comments.ID_NOT_OF_A_CASHIER);
                 }
             } catch (NullPointerException e) {
-                System.out.println(Comments.CASHIER_ID_NOT_EXISTS);
+                System.out.println(Comments.CASH_NOT_FOUND);
             }
         } else {
             System.out.println(Comments.LENGTH_WRONG);

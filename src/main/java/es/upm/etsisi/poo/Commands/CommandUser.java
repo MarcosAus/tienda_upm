@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class CommandUser{
     private ArrayList<Command> commands;
 
-    public CommandUser(ArrayList<Command> commands) {
-        this.commands = commands;
+    public CommandUser() {
+        this.commands =new ArrayList<>();
     }
 
     public void checkCommand(String[] commanddiv, String actCommand) {
@@ -17,7 +17,7 @@ public class CommandUser{
         boolean flag = false;
         try {
             while (counter < commands.size() && !flag) {
-                flag = commands.get(counter).isThisCommand(actCommand);
+                flag = commands.get(counter).isThisCommand(commanddiv[0]+" "+commanddiv[1]);
                 if (!flag) {
                     counter++;
                 }
@@ -25,7 +25,10 @@ public class CommandUser{
             if (flag) {
                 commands.get(counter).execute(commanddiv);
             }
-        }catch (Exception e){
+            else{
+                System.out.println(Comments.UNKNOWN_COMMAND);
+            }
+        } catch (Exception e){
             System.out.println(Comments.UNKNOWN_COMMAND);
         }
     }
