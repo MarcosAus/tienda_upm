@@ -54,13 +54,13 @@ public class App {
         commandsTickets.addCommand(new CommandTicketPrint("ticket print ", ticketHandler, userHandler));
         commandsTickets.addCommand(new CommandTicketRemove("ticket remove ", ticketHandler, userHandler));
 
-        commandsUser.addCommand(new CommandsUserRemoveCashier("cash add ", userHandler));
-        commandsUser.addCommand(new CommandUserAddCashier("cash remove ", userHandler));
+        commandsUser.addCommand(new CommandUserRemoveCashier("cash remove ", userHandler));
+        commandsUser.addCommand(new CommandUserAddCashier("cash add ", userHandler));
         commandsUser.addCommand(new CommandUserAddClient("client add ", userHandler));
         commandsUser.addCommand(new CommandUserListCash("cash list ", userHandler));
         commandsUser.addCommand(new CommandUserListClients("client list ", userHandler));
         commandsUser.addCommand(new CommandUserListTicketsCashier("cash tickets ", userHandler));
-        commandsUser.addCommand(new CommandUserRemoveClient("cash remove ", userHandler));
+        commandsUser.addCommand(new CommandUserRemoveClient("client remove ", userHandler));
 
         /*
         CommandProdAdd commandProdAdd = new CommandProdAdd("prod add ", productHandler);
@@ -87,7 +87,7 @@ public class App {
 
 
         CLI cli = new CLI(commandsProducts, commandsTickets, commandsUser);
-        if (args[0] != null) {
+        if (args.length != 0) {
             cli.start(args[0]);
         } else cli.start();
 

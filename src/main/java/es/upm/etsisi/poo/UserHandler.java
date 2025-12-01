@@ -36,6 +36,7 @@ public class UserHandler {
         } else if (user instanceof Cashier) {
             cashiersRecord.putIfAbsent(user.getId(), (Cashier) user);
         }
+        System.out.println("Cash{identifier = " + user.getId() + ", name = " + user.getName() + ", email = " + user.getMail() + "}");
     }
 
     public User getUserById(String id) {

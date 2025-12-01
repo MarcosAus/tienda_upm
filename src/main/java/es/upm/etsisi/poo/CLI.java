@@ -42,7 +42,7 @@ public class CLI {
                 mostrarComandos();
             }
             else if (actCommand.startsWith("echo " )) { //IMPORTANTE
-                System.out.print(actCommand.substring(5));
+                System.out.println(actCommand.substring(5));
             }
 
             //Se comprueban los comandos que necesitan ser divididos por palabras.

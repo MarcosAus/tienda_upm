@@ -4,11 +4,10 @@ import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Users.Cashier;
-import es.upm.etsisi.poo.Utilities;
 
-public class CommandsUserRemoveCashier extends Command {
+public class CommandUserRemoveCashier extends Command {
     private UserHandler userHandler;
-    public CommandsUserRemoveCashier(String name, UserHandler productHandler) {
+    public CommandUserRemoveCashier(String name, UserHandler productHandler) {
         super(name);
         this.userHandler = productHandler;
     }

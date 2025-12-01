@@ -1,6 +1,7 @@
 package es.upm.etsisi.poo.Products;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class CampusMeals extends Product {
