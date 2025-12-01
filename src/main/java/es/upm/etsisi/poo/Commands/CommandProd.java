@@ -7,8 +7,8 @@ import es.upm.etsisi.poo.Utilities;
 public class CommandProd {
     private ArrayList<Command> commands;
 
-    public CommandProd(ArrayList<Command> commands) {
-        this.commands = commands;
+    public CommandProd() {
+        this.commands =new ArrayList<>();
     }
 
     public void checkCommand(String[] commanddiv, String actCommand) {

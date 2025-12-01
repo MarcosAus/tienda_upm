@@ -1,6 +1,7 @@
 package es.upm.etsisi.poo.Commands.CommandsForProd;
 
 import es.upm.etsisi.poo.Commands.Command;
+import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.ProductHandler;
 import es.upm.etsisi.poo.Utilities;
 
@@ -13,7 +14,7 @@ public class CommandProdRemove extends Command {
 
     @Override
     public boolean isThisCommand(String name) {
-        return  this.name.equals(name.toLowerCase().substring(0,name.length()));
+        return name != null && name.toLowerCase().startsWith(this.name);
     }
 
     @Override
@@ -23,10 +24,11 @@ public class CommandProdRemove extends Command {
             try {
                 id = Integer.parseInt(args[2]);
                 productHandler.removeProduct(id);
+                System.out.println(Comments.PROD_REMOVE);
             } catch (NumberFormatException e) {
-                System.out.println(Utilities.ID_NOT_NUMBER);
+                System.out.println(Comments.ID_NOT_NUMBER);
             }
         }
-        else System.out.println(Utilities.LENGTH_WRONG);
+        else System.out.println(Comments.LENGTH_WRONG);
     }
 }

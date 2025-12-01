@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class CommandTicket {
     private ArrayList<Command> commands;
 
-    public CommandTicket(ArrayList<Command> commands) {
-        this.commands = commands;
+    public CommandTicket() {
+        this.commands = new ArrayList<>();
     }
 
     public void checkCommand(String[] commanddiv, String actCommand) {

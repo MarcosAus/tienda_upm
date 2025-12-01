@@ -18,7 +18,7 @@ public class CommandTicketNew extends Command {
 
     @Override
     public boolean isThisCommand(String name) {
-        return  this.name.equals(name.toLowerCase().substring(0,name.length()));
+        return name != null && name.toLowerCase().startsWith(this.name);
     }
 
 
@@ -53,26 +53,26 @@ public class CommandTicketNew extends Command {
                                 }
                                 actCashier.addTicket(ticket);
                                 actClient.addTicket(ticket);
-                                System.out.println(Utilities.TICKET_NEW_OK);
+                                System.out.println(Comments.TICKET_NEW);
                             }
 
                         }
                         else{
-                            System.out.println(Utilities.USER_NOT_FOUND);
+                            System.out.println(Comments.USER_NOT_FOUND);
                         }
                     }
                     else {
-                        System.out.println(Utilities.USER_NOT_FOUND);
+                        System.out.println(Comments.USER_NOT_FOUND);
                     }
 
                 }
                 else{
-                    System.out.println(Utilities.ID_NOT_IN_BOUNDARIES);
+                    System.out.println(Comments.ID_NOT_IN_BOUNDARIES);
                 }
 
             }
             catch(Exception e){
-                System.out.println(Utilities.ID_NOT_NUMBER);
+                System.out.println(Comments.ID_NOT_NUMBER);
             }
 
         } else if (args.length == 4) {
@@ -98,7 +98,7 @@ public class CommandTicketNew extends Command {
                         actCashier.addTicket(ticket);
                         actClient.addTicket(ticket);
                         System.out.println("The ticket have" + idChosen + " as his id.");
-                        System.out.println(Comments.TICKET_NEW_OK);
+                        System.out.println(Comments.TICKET_NEW);
                     }
 
                 }

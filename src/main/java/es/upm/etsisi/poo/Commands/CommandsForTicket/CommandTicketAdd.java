@@ -20,7 +20,7 @@ public class CommandTicketAdd extends Command {
 
     @Override
     public boolean isThisCommand(String name) {
-        return  this.name.equals(name.toLowerCase().substring(0,name.length()));
+        return name != null && name.toLowerCase().startsWith(this.name);
     }
 
     //fixme Si quereis podeis poner los errores en Utilities. Hacer ctr f System.out y vais cambiando. Yo no lo veo necesario.
@@ -81,19 +81,19 @@ public class CommandTicketAdd extends Command {
 
                            }
                        } else {
-                           System.out.println(Utilities.TICKET_ID_NOT_FOUND);
+                           System.out.println(Comments.TICKET_ID_NOT_FOUND);
                        }
                    } else {
-                       System.out.println(Utilities.PRODUCT_NOT_FOUND);
+                       System.out.println(Comments.PRODUCT_NOT_FOUND);
                    }
                } else {
-                   System.out.println(Utilities.CASHIER_ID_NOT_EXISTS);
+                   System.out.println(Comments.CASH_NOT_FOUND);
                }
            } catch (Exception e) {
-               System.out.println(Utilities.INT_NOT_NUMBER);
+               System.out.println(Comments.INT_NOT_NUMBER);
            }
        } else {
-              System.out.println(Utilities.LENGTH_WRONG);
+              System.out.println(Comments.LENGTH_WRONG);
        }
     }
 }

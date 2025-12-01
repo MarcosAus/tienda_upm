@@ -6,7 +6,6 @@ import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Users.Cashier;
 import es.upm.etsisi.poo.Users.Client;
 import es.upm.etsisi.poo.Users.User;
-import es.upm.etsisi.poo.Utilities;
 
 public class CommandUserAddClient extends Command {
     private UserHandler userHandler;
@@ -17,7 +16,7 @@ public class CommandUserAddClient extends Command {
 
     @Override
     public boolean isThisCommand(String name) {
-        return  this.name.equals(name.toLowerCase().substring(0,name.length()));
+        return name != null && name.toLowerCase().startsWith(this.name);
     }
 
     @Override
@@ -27,9 +26,13 @@ public class CommandUserAddClient extends Command {
                 String nombre = args[2];
                 String id = args[3];
                 String email = args[4];
-                Cashier cashier = userHandler.getCashiersRecord().get(args[5]);
-                User client = new Client(id, nombre, email, cashier);
-                userHandler.registerUser(client);
+                try {
+                    Cashier cashier = userHandler.getCashiersRecord().get(args[5]);
+                    User client = new Client(id, nombre, email, cashier);
+                    userHandler.registerUser(client);
+                } catch (Exception e) {
+                    System.out.println(Comments.CASH_NOT_FOUND);
+                    }
             } else {
                 System.out.println(Comments.LENGTH_WRONG);
             }

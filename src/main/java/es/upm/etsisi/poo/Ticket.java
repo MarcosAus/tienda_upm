@@ -76,7 +76,7 @@ public class Ticket {
                     }
                 }
             } else {
-                System.out.println(Utilities.CAPACITY_REACHED);
+                System.out.println(Comments.CAPACITY_REACHED);
             }
         }
     }

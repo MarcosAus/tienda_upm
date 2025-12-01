@@ -14,18 +14,23 @@ public class CommandUserRemoveCashier extends Command {
 
     @Override
     public boolean isThisCommand(String name) {
-        return  this.name.equals(name.toLowerCase().substring(0,name.length()));
+        return name != null && name.toLowerCase().startsWith(this.name);
     }
 
     @Override
     public void execute(String[] args) {
         if (args.length == 3) {
-            Cashier cashier = userHandler.getCashiersRecord().get(args[2]);
-            for (int i = 0; i < cashier.getTickets().size(); i++){
-                cashier.removeTicket(cashier.getTickets().get(i).getId());
+            try {
+                Cashier cashier = userHandler.getCashiersRecord().get(args[2]);
+                for (int i = 0; i < cashier.getTickets().size(); i++) {
+                    cashier.removeTicket(cashier.getTickets().get(i).getId());
+                }
+                userHandler.getCashiersRecord().remove(cashier.getId());
+                System.out.println(Comments.CASHIER_REMOVED);
+            } catch (NullPointerException e) {
+                System.out.println(Comments.CASH_NOT_FOUND);
             }
-            userHandler.getCashiersRecord().remove(cashier.getId());
-        } else {
+            } else {
             System.out.println(Comments.LENGTH_WRONG);
         }
     }

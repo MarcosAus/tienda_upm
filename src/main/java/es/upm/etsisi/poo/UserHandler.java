@@ -33,10 +33,12 @@ public class UserHandler {
     public void registerUser(User user) {
         if (user instanceof Client) {
             clientsRecord.putIfAbsent(user.getId(), (Client) user);
+            System.out.println("Client{identifier = '" + user.getId() + "', name = " + user.getName() + ", email = '" + user.getMail() + ", cash = ' " +((Client) user).getCashier().getId() + " '}");
         } else if (user instanceof Cashier) {
             cashiersRecord.putIfAbsent(user.getId(), (Cashier) user);
+            System.out.println("Cash{identifier = '" + user.getId() + "', name = " + user.getName() + ", email = '" + user.getMail() + "'}");
         }
-        System.out.println("Cash{identifier = " + user.getId() + ", name = " + user.getName() + ", email = " + user.getMail() + "}");
+
     }
 
     public User getUserById(String id) {
@@ -77,7 +79,7 @@ public class UserHandler {
                                 )
                         );
         for (Client client : clientRecordSorted.values()) {
-            System.out.println("Client{identifier = " + client.getId() + ", name = " + client.getName() + ", email = " + client.getMail() + ", cash = " + client.getCashier().getId());
+            System.out.println("Client{identifier = " + client.getId() + ", name = " + client.getName() + ", email = " + client.getMail() + ", cash = " + client.getCashier().getId() + "}");
         }
     }
     public void listTicketsCashier(String idCash) {

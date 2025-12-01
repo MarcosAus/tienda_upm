@@ -1,6 +1,7 @@
 package es.upm.etsisi.poo.Commands.CommandsForProd;
 
 import es.upm.etsisi.poo.Commands.Command;
+import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.Products.Category;
 import es.upm.etsisi.poo.ProductHandler;
 import es.upm.etsisi.poo.Products.Product;
@@ -18,12 +19,12 @@ public class CommandProdAdd extends Command {
 
 
     @Override
-    public boolean isThisCommand(String name){
-        return  this.name.equals(name.toLowerCase().substring(0,name.length()));
+    public boolean isThisCommand(String name) {
+        return name != null && name.toLowerCase().startsWith(this.name);
     }
 
     @Override
-    public void execute(String[] args){ //hay que modificarlo porque no maneja el tiempo minimo de creacion de 72 o 12 horas
+    public void execute(String[] args) { //hay que modificarlo porque no maneja el tiempo minimo de creacion de 72 o 12 horas
         Category category;
         int id;
         String name;
@@ -32,13 +33,13 @@ public class CommandProdAdd extends Command {
         Product product;
         try {
             if (productHandler.getHandlerSize() == Utilities.MAX_LIST) {
-                System.out.println(Utilities.PRODUCT_LIST_FULL);
+                System.out.println(Comments.PRODUCT_LIST_FULL);
             } else {
                 if(args.length == 5) {
                     id = Utilities.idAleatorio(productHandler);
                     name = args[2];
                     try {
-                        category = Category.valueOf(args[3]);
+                        category = Category.valueOf(args[3].toUpperCase());
                     } catch (IllegalArgumentException e) {
                         category = null;
                         System.out.println("Category added is invalid");
@@ -47,9 +48,10 @@ public class CommandProdAdd extends Command {
                         price = Double.parseDouble(args[4]);
 
                         product = new ProductBasic(category, name, id, price);
-
                         productHandler.addProduct(product);
-                    } else System.out.println(Utilities.CATEGORY_WRONG);
+                        System.out.println(product.toString());
+                        System.out.println(Comments.PROD_ADD);
+                    } else System.out.println(Comments.CATEGORY_WRONG);
                 }else if(args.length == 7){
                     id = Integer.parseInt(args[2]);
                     name = args[3];
@@ -66,11 +68,27 @@ public class CommandProdAdd extends Command {
                         product = new ProductPers(category, id, name, price, MaxText);
 
                         productHandler.addProduct(product);
-                    }else System.out.println(Utilities.CATEGORY_WRONG);
-                }else if(args.length == 6){
-                    try{
+                        System.out.println(product.toString());
+                        System.out.println(Comments.PROD_ADD);
+                    } else System.out.println(Comments.CATEGORY_WRONG);
+                } else if(args.length == 6) {
+                    try {
                         id = Integer.parseInt(args[2]);
-                    }catch(IllegalArgumentException e){
+                        name = args[3];
+                        try {
+                            category = Category.valueOf(args[4]);
+                        } catch (IllegalArgumentException e) {
+                            category = null;
+                        }
+                        if (category != null) {
+                            price = Double.parseDouble(args[5]);
+                            product = new ProductBasic(category, name, id, price);
+                            productHandler.addProduct(product);
+                            System.out.println(product.toString());
+                            System.out.println(Comments.PROD_ADD);
+                        } else System.out.println(Comments.CATEGORY_WRONG);
+
+                    } catch(IllegalArgumentException e){
                         id = Utilities.idAleatorio(productHandler);
                         name = args[2];
                         try {
@@ -80,7 +98,7 @@ public class CommandProdAdd extends Command {
                         }
                         if (category != null) {
                             price = Double.parseDouble(args[4]);
-                            if (Integer.toString(id).equals(args[2])) {
+                            if (!Integer.toString(id).equals(args[2])) {
                                 MaxText = Integer.parseInt(args[5]);
                                 product = new ProductPers(category, id, name, price, MaxText);
                             } else{
@@ -89,12 +107,14 @@ public class CommandProdAdd extends Command {
                             }
 
                             productHandler.addProduct(product);
-                        } else System.out.println(Utilities.CATEGORY_WRONG);
+                            System.out.println(product.toString());
+                            System.out.println(Comments.PROD_ADD);
+                        } else System.out.println(Comments.CATEGORY_WRONG);
                     }
-                }else System.out.println(Utilities.LENGTH_WRONG);
+                }else System.out.println(Comments.LENGTH_WRONG);
             }
         } catch (NumberFormatException e) {
-            System.out.println(Utilities.ID_PRICE_NOT_NUMBER);
+            System.out.println(Comments.ID_PRICE_NOT_NUMBER);
         }
     }
 }
