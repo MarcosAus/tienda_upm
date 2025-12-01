@@ -17,6 +17,8 @@ public class Comments {
     //CASH COMMANDS ERR RESPONSES
     public static final String CASH_NOT_FOUND = "CashId does not match any cashiers";
     public static final String ID_NOT_OF_A_CASHIER = "ID is not a CASHIER";
+    public static final String NAME_HAS_WRONG_FORMAT = "Please write the name as \"name\"";
+    public static final String EMAIL_IS_PERSONAL = "Please enter your email address from de UPM (x.@upm.es)";
 
 
     //CLIENT COMMANDS ERR RESPONSES

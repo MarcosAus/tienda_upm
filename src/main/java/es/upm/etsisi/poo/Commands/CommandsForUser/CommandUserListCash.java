@@ -17,6 +17,7 @@ public class CommandUserListCash extends Command {
     public void execute(String[] args) {
         if (args.length == 2) {
             userHandler.listCashierRecord();
+            System.out.println(Comments.CASH_LIST);
         } else {
             System.out.println(Comments.LENGTH_WRONG);
         }

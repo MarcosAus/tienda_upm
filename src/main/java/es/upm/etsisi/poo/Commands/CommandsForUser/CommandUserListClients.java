@@ -16,6 +16,7 @@ public class CommandUserListClients extends Command {
     public void execute(String[] args) {
         if (args.length == 2) {
             userHandler.listClientRecord();
+            System.out.println(Comments.CLIENT_LIST);
         } else {
             System.out.println(Comments.LENGTH_WRONG);
         }

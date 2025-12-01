@@ -33,39 +33,53 @@ public class CommandProdAdd extends Command {
                 if(args.length == 5) {
                     id = Utilities.idAleatorio(productHandler);
                     name = args[2];
-                    try {
-                        category = Category.valueOf(args[3].toUpperCase());
-                    } catch (IllegalArgumentException e) {
-                        category = null;
-                        System.out.println("Category added is invalid");
-                    }
-                    if (category != null) {
-                        price = Double.parseDouble(args[4]);
+                    if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) {
+                        name = name.substring(1, name.length()-1);
+                        try {
+                            category = Category.valueOf(args[3].toUpperCase());
+                        } catch (IllegalArgumentException e) {
+                            category = null;
+                            System.out.println("Category added is invalid");
+                        }
+                        if (category != null) {
+                            price = Double.parseDouble(args[4]);
 
-                        product = new ProductBasic(category, name, id, price);
-                        productHandler.addProduct(product);
-                        System.out.println(product.toString());
-                        System.out.println(Comments.PROD_ADD);
-                    } else System.out.println(Comments.CATEGORY_WRONG);
+                            product = new ProductBasic(category, name, id, price);
+                            productHandler.addProduct(product);
+                            System.out.println(product.toString());
+                            System.out.println(Comments.PROD_ADD);
+                        } else System.out.println(Comments.CATEGORY_WRONG);
+                    } else{
+                        System.out.println(Comments.NAME_HAS_WRONG_FORMAT);
+                    }
+
                 }else if(args.length == 7){
                     id = Integer.parseInt(args[2]);
                     name = args[3];
-                    try {
-                        category = Category.valueOf(args[4]);
-                    } catch (IllegalArgumentException e) {
-                        category = null;
-                        System.out.println("Category added is invalid");
+
+                    if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) {
+                        name = name.substring(1, name.length()-1);
+                        try {
+                            category = Category.valueOf(args[4]);
+                        } catch (IllegalArgumentException e) {
+                            category = null;
+                            System.out.println("Category added is invalid");
+                        }
+                        if (category != null) {
+                            price = Double.parseDouble(args[5]);
+                            MaxText = Integer.parseInt(args[6]);
+
+                            product = new ProductPers(category, id, name, price, MaxText);
+
+                            productHandler.addProduct(product);
+                            System.out.println(product.toString());
+                            System.out.println(Comments.PROD_ADD);
+                        } else System.out.println(Comments.CATEGORY_WRONG);
                     }
-                    if (category != null) {
-                        price = Double.parseDouble(args[5]);
-                        MaxText = Integer.parseInt(args[6]);
+                    else {
+                        System.out.println(Comments.NAME_HAS_WRONG_FORMAT);
+                    }
 
-                        product = new ProductPers(category, id, name, price, MaxText);
-
-                        productHandler.addProduct(product);
-                        System.out.println(product.toString());
-                        System.out.println(Comments.PROD_ADD);
-                    } else System.out.println(Comments.CATEGORY_WRONG);
                 } else if(args.length == 6) {
                     try {
                         id = Integer.parseInt(args[2]);

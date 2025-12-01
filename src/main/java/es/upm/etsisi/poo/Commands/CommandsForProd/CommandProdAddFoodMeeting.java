@@ -28,6 +28,7 @@ public class CommandProdAddFoodMeeting extends Command {
         int maxParticipantes;
         Product product = null;
         boolean add = true;
+
         try{
             if (productHandler.getHandlerSize() == Utilities.MAX_LIST) {
                 System.out.println(Comments.PRODUCT_LIST_FULL);
@@ -41,30 +42,36 @@ public class CommandProdAddFoodMeeting extends Command {
                     maxParticipantes = Integer.parseInt(args[5]);
                     LocalDateTime fechaProducto;
 
-                    if (args[1].equals("addFood")) {
-                        product = new CampusMeals(id, name, price, date, maxParticipantes);
-                        fechaProducto = product.getStartDate();
-                        if (fechaProducto.isBefore(now)) {
-                            add = false;
+                    if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) { // Se verifica que el nombre tenga el formato correcto
+                        name = name.substring(1, name.length()-1);
+                        if (args[1].equals("addFood")) {
+                            product = new CampusMeals(id, name, price, date, maxParticipantes);
+                            fechaProducto = product.getStartDate();
+                            if (fechaProducto.isBefore(now)) {
+                                add = false;
+                            }
+                        } else if (args[1].equals("addMeeting")) {
+                            product = new Meetings(id, name, price, date, maxParticipantes);
+                            fechaProducto = product.getStartDate();
+                            if (fechaProducto.isBefore(now)) {
+                                add = false;
+                            }
                         }
-                    } else if (args[1].equals("addMeeting")) {
-                        product = new Meetings(id, name, price, date, maxParticipantes);
-                        fechaProducto = product.getStartDate();
-                        if (fechaProducto.isBefore(now)) {
-                            add = false;
+
+                        if (add && product != null) {
+                            productHandler.addProduct(product);
+                            if (args[1].equals("addFood")) {
+                                System.out.println(Comments.PROD_ADDFOOD);
+                            } else if (args[1].equals("addMeeting")) {
+                                System.out.println(Comments.PROD_ADDMEETINGS);
+                            }
+                        } else {
+                            System.out.println(Comments.DATE_NOT_VALID);
                         }
+                    } else{
+                        System.out.println(Comments.NAME_HAS_WRONG_FORMAT);
                     }
 
-                    if (add && product != null) {
-                        productHandler.addProduct(product);
-                        if (args[1].equals("addFood")) {
-                            System.out.println(Comments.PROD_ADDFOOD);
-                        } else if (args[1].equals("addMeeting")) {
-                            System.out.println(Comments.PROD_ADDMEETINGS);
-                        }
-                    } else {
-                        System.out.println(Comments.DATE_NOT_VALID);
-                    }
 
                 } else if(args.length == 7) {
                     id = Integer.parseInt(args[2]);

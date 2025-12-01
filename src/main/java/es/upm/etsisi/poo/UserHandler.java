@@ -33,10 +33,10 @@ public class UserHandler {
     public void registerUser(User user) {
         if (user instanceof Client) {
             clientsRecord.putIfAbsent(user.getId(), (Client) user);
-            System.out.println("Client{identifier = '" + user.getId() + "', name = " + user.getName() + ", email = '" + user.getMail() + ", cash = ' " +((Client) user).getCashier().getId() + " '}");
+            System.out.println("Client{identifier = '" + user.getId() + "', name = '" + user.getName() + "', email = '" + user.getMail() + "', cash = ' " +((Client) user).getCashier().getId() + " '}");
         } else if (user instanceof Cashier) {
             cashiersRecord.putIfAbsent(user.getId(), (Cashier) user);
-            System.out.println("Cash{identifier = '" + user.getId() + "', name = " + user.getName() + ", email = '" + user.getMail() + "'}");
+            System.out.println("Cash{identifier = '" + user.getId() + "', name = '" + user.getName() + "', email = '" + user.getMail() + "'}");
         }
 
     }
