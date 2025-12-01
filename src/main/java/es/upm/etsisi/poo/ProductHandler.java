@@ -82,11 +82,11 @@ public class ProductHandler {
 
     public void updateProductCategory(int id, Category newCategory) {
         Product p = getProduct(id);
-        if (p instanceof ProductBasic productBasic){ //fixme CAMBIAR INSTANCE OF
-            productBasic.setCategory(newCategory);
+        if (p.getMinTime().isZero() && p.isPersonalizable()){
+            ((ProductPers)p).setCategory(newCategory);
         }
-        if (p instanceof ProductPers productPers){ //fixme CAMBIAR INSTANCE OF
-            productPers.setCategory(newCategory);
+        else if (p.getMinTime().isZero() && !p.isPersonalizable()){
+            ((ProductBasic)p).setCategory(newCategory);
         }
     }
 

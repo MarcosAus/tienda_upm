@@ -102,29 +102,4 @@ public class TicketHandler {
         }
         return result;
     }
-
-    // Imprime el ticket y lo cierra
-    public void printTicketsClose(int TId){
-        int busqueda=0;
-        while(busqueda<tickets.size()) {
-            if (tickets.get(busqueda).getId() == TId) {
-                tickets.get(busqueda).printTicket();
-                tickets.get(busqueda).updateState(State.CLOSED);
-                busqueda = tickets.size();
-            }
-            busqueda++;
-        }
-    }
-
-    //Imprime el ticket pero se queda habierto al contrario qe printTicketClose
-    public void printTicketsShow(int TId) {
-        int busqueda=0;
-        while(busqueda<tickets.size()){
-            if (tickets.get(busqueda).getId() == TId){
-                tickets.get(busqueda).printTicket();
-                busqueda =  tickets.size();
-            }
-            busqueda++;
-        }
-    }
 }

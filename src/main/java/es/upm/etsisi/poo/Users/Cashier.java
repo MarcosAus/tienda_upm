@@ -51,13 +51,7 @@ public class Cashier extends User {
 //    }
 
     public void printTicket(int ticketId) {
-        this.tickets.get(ticketId).printTicket();
-    }
-
-    public void printAllTickets() {
-        for (Ticket ticket : tickets.values()) {
-            tickets.get(ticket.getId()).printTicket();
-        }
+        this.tickets.get(ticketId).closeTicket();
     }
 
 

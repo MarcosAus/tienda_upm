@@ -77,5 +77,5 @@ public class Comments {
     public static final String PROD_ADDMEETINGS = "prod addmeetings: ok";
 
 
-
+    public static final String ACTIVITY_IS_EXPIRED = "An activity is expired , thats why you cant closed the ticket";
 }

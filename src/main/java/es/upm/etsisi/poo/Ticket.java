@@ -63,12 +63,12 @@ public class Ticket {
                     if (tI != null) {
                         if (product.getMinTime().isZero()) {
                             tI.addAmount(cantidad);
-                        }
-                        else {
+                            printTicket();
+                        } else {
                             System.out.println(Comments.DUPLICATE_ACTIVITY_IN_TICKET);
                         }
-                    }
-                    else {
+                    } else {
+                        printTicket();
                         items.add(new TicketItem(product, cantidad));
                     }
                 }
@@ -113,31 +113,33 @@ public class Ticket {
     }
 
     public void printTicket() {
-        if(checkIfTicketCanClose()){
-            int cantidadCategoria;
-            double precioTotal = 0;
-            Product product;
-            double descuentoTotal = 0;
-            Map<Category, Integer> cantidadProductoCategoria = getCantidadProductoCategoria();
-            StringBuilder sb = new StringBuilder("Ticket: ").append(id);
-            for (TicketItem tI : items) {
-                cantidadCategoria =  cantidadProductoCategoria.getOrDefault(tI.getProduct().getCategory(),0);
-                product = tI.getProduct();
-                sb.append(product.toString(tI.getAmount(),cantidadCategoria));
-                if (cantidadCategoria>=2){
-                    descuentoTotal += product.TotalPrice()* product.getDiscount();
-                }
-                precioTotal += product.TotalPrice();
+        int cantidadCategoria;
+        double precioTotal = 0;
+        Product product;
+        double descuentoTotal = 0;
+        Map<Category, Integer> cantidadProductoCategoria = getCantidadProductoCategoria();
+        StringBuilder sb = new StringBuilder("Ticket: ").append(id);
+        for (TicketItem tI : items) {
+            cantidadCategoria =  cantidadProductoCategoria.getOrDefault(tI.getProduct().getCategory(),0);
+            product = tI.getProduct();
+            sb.append(product.toString(tI.getAmount(),cantidadCategoria));
+            if (cantidadCategoria>=2){
+                descuentoTotal += product.TotalPrice()* product.getDiscount();
             }
-            System.out.println(sb);
-            System.out.println("Total price: "+ precioTotal);
-            System.out.println("Total discount: "+ descuentoTotal);
-            System.out.println("Final price: " + (precioTotal - descuentoTotal));
+            precioTotal += product.TotalPrice();
+        }
+        System.out.println(sb);
+        System.out.println("Total price: "+ precioTotal);
+        System.out.println("Total discount: "+ descuentoTotal);
+        System.out.println("Final price: " + (precioTotal - descuentoTotal));
+    }
+    public void closeTicket() {
+        if(checkIfTicketCanClose()){
+            printTicket();
             stateTicket = State.CLOSED;
             ticketDate = LocalDate.now().toString();
-        }
-        else{
-            System.out.println("The meals or meeting is expired ......");
+        }else{
+            System.out.println(Comments.ACTIVITY_IS_EXPIRED);
         }
     }
     public boolean checkIfTicketCanClose() {
