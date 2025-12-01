@@ -12,10 +12,6 @@ public class CommandProdRemove extends Command {
         this.productHandler = productHandler;
     }
 
-    @Override
-    public boolean isThisCommand(String name) {
-        return name != null && name.toLowerCase().startsWith(this.name);
-    }
 
     @Override
     public void execute(String[] args) {

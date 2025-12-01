@@ -16,11 +16,6 @@ public class CommandTicketPrint extends Command {
     }
 
     @Override
-    public boolean isThisCommand(String name) {
-        return name != null && name.toLowerCase().startsWith(this.name);
-    }
-
-    @Override
     public void execute(String[] args) {
         if (args.length == 4) {
             try {// Se comprueba que los datos del usuario están bien.

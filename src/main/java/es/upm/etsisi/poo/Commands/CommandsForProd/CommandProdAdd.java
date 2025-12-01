@@ -19,11 +19,6 @@ public class CommandProdAdd extends Command {
 
 
     @Override
-    public boolean isThisCommand(String name) {
-        return name != null && name.toLowerCase().startsWith(this.name);
-    }
-
-    @Override
     public void execute(String[] args) { //hay que modificarlo porque no maneja el tiempo minimo de creacion de 72 o 12 horas
         Category category;
         int id;
@@ -92,7 +87,7 @@ public class CommandProdAdd extends Command {
                         id = Utilities.idAleatorio(productHandler);
                         name = args[2];
                         try {
-                            category = Category.valueOf(args[3]);
+                            category = Category.valueOf(args[3].toUpperCase());
                         } catch (IllegalArgumentException ex) {
                             category = null;
                         }

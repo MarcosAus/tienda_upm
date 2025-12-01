@@ -7,7 +7,11 @@ public abstract class Command {
         this.name = name;
     }
 
-    public abstract boolean isThisCommand(String name);
+    public boolean isThisCommand(String name) {
+        return name != null && name.equals(this.name);
+    }
+
 
     public abstract void execute(String[] args);
+
 }

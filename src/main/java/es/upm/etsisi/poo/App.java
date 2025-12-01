@@ -36,26 +36,26 @@ public class App {
         //Se crean los commandos
         //Los comandos deben tener un nombre igual en minusculas al comando en sí. Ej: TickedAdd tiene que tener name = "ticket add"
         //El espacio al final es importante para que no haya conflictos con otros comandos que empiecen igual.
-        commandsProducts.addCommand(new CommandProdAdd("prod add ", productHandler));
-        commandsProducts.addCommand(new CommandProdAddFoodMeeting("prod addFood ", productHandler));
-        commandsProducts.addCommand(new CommandProdAddFoodMeeting("prod addMeeting ", productHandler));
-        commandsProducts.addCommand(new CommandProdList("prod list ", productHandler));
-        commandsProducts.addCommand(new CommandProdRemove("prod remove ", productHandler));
-        commandsProducts.addCommand(new CommandProdUpdate("prod update ", productHandler));
+        commandsProducts.addCommand(new CommandProdAdd("prod add", productHandler));
+        commandsProducts.addCommand(new CommandProdAddFoodMeeting("prod addFood", productHandler));
+        commandsProducts.addCommand(new CommandProdAddFoodMeeting("prod addMeeting", productHandler));
+        commandsProducts.addCommand(new CommandProdList("prod list", productHandler));
+        commandsProducts.addCommand(new CommandProdRemove("prod remove", productHandler));
+        commandsProducts.addCommand(new CommandProdUpdate("prod update", productHandler));
 
-        commandsTickets.addCommand(new CommandTicketAdd("ticket add ", ticketHandler, userHandler, productHandler));
-        commandsTickets.addCommand(new CommandTicketList("ticket list ", ticketHandler, userHandler));
-        commandsTickets.addCommand(new CommandTicketNew("ticket new ", ticketHandler, userHandler));
-        commandsTickets.addCommand(new CommandTicketPrint("ticket print ", ticketHandler, userHandler));
-        commandsTickets.addCommand(new CommandTicketRemove("ticket remove ", ticketHandler, userHandler));
+        commandsTickets.addCommand(new CommandTicketAdd("ticket add", ticketHandler, userHandler, productHandler));
+        commandsTickets.addCommand(new CommandTicketList("ticket list", ticketHandler, userHandler));
+        commandsTickets.addCommand(new CommandTicketNew("ticket new", ticketHandler, userHandler));
+        commandsTickets.addCommand(new CommandTicketPrint("ticket print", ticketHandler, userHandler));
+        commandsTickets.addCommand(new CommandTicketRemove("ticket remove", ticketHandler, userHandler));
 
-        commandsUser.addCommand(new CommandUserRemoveCashier("cash remove ", userHandler));
-        commandsUser.addCommand(new CommandUserAddCashier("cash add ", userHandler));
-        commandsUser.addCommand(new CommandUserAddClient("client add ", userHandler));
+        commandsUser.addCommand(new CommandUserRemoveCashier("cash remove", userHandler));
+        commandsUser.addCommand(new CommandUserAddCashier("cash add", userHandler));
+        commandsUser.addCommand(new CommandUserAddClient("client add", userHandler));
         commandsUser.addCommand(new CommandUserListCash("cash list", userHandler));
         commandsUser.addCommand(new CommandUserListClients("client list", userHandler));
-        commandsUser.addCommand(new CommandUserListTicketsCashier("cash tickets ", userHandler));
-        commandsUser.addCommand(new CommandUserRemoveClient("client remove ", userHandler));
+        commandsUser.addCommand(new CommandUserListTicketsCashier("cash tickets", userHandler));
+        commandsUser.addCommand(new CommandUserRemoveClient("client remove  ", userHandler));
 
 
         CLI cli = new CLI(commandsProducts, commandsTickets, commandsUser);
@@ -66,3 +66,22 @@ public class App {
         //FALTA TOMAR EN CUENTA LOS ARCHIVOS EXTERNOS
     }
 }
+
+
+
+
+
+//        .--.       .--.
+//    _  `    \     /    `  _
+//     `\.===. \.^./ .===./`
+//            \/`"`\/
+//         ,  | y2k |  ,
+//        / `\|;-.-'|/` \
+//       /    |::\  |    \
+//    .-' ,-'`|:::; |`'-, '-.
+//        |   |::::\|   |
+//        |   |::::;|   |
+//        |   \:::://   |
+//        |    `.://'   |
+//jgs    .'             `.
+//    _,'                 `,_ //fixme

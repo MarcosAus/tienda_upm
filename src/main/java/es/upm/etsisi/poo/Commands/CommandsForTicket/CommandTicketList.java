@@ -18,11 +18,6 @@ public class CommandTicketList extends Command {
         this.userHandler = userHandler;
     }
 
-    @Override
-    public boolean isThisCommand(String name) {
-        return name != null && name.toLowerCase().startsWith(this.name);
-    }
-
 
     //fixme No recorre los cajeros de manera ordenada. Lo suyo sería que se ordenasen en UserHandler, se le pasase una lista, y este metodo solo la recorriese.
     @Override

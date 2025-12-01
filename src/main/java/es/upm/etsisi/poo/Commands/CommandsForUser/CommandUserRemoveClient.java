@@ -15,11 +15,6 @@ public class CommandUserRemoveClient extends Command {
     }
 
     @Override
-    public boolean isThisCommand(String name) {
-        return name != null && name.toLowerCase().startsWith(this.name);
-    }
-
-    @Override
     public void execute(String[] args) {
         if (args.length == 3) {
             Client client = userHandler.getClientsRecord().get(args[2]);

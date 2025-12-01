@@ -18,10 +18,6 @@ public class CommandTicketAdd extends Command {
         this.productHandler = productHandler;
     }
 
-    @Override
-    public boolean isThisCommand(String name) {
-        return name != null && name.toLowerCase().startsWith(this.name);
-    }
 
     //fixme Si quereis podeis poner los errores en Utilities. Hacer ctr f System.out y vais cambiando. Yo no lo veo necesario.
 
