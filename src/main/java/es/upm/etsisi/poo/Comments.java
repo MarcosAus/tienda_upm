@@ -44,6 +44,7 @@ public class Comments {
     public static final String NO_PRODUCTS_WITH_THAT_ID_IN_TICKET = "No products with that ID were found in ticket";
     public static final String INVALID_DATE = "Date is invalid";
     public static final String MAXPEOPLE_EXCEDED = "Maximum number of people exceeded";
+    public static final String CATEGORY_INVALID = "Category added is invalid";
 
 
     //CASHIER COMMANDS OK RESPONSES

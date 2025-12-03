@@ -63,7 +63,5 @@ public class App {
         if (args.length != 0) {
             cli.start(args[0]);
         } else cli.start();
-
-        //FALTA TOMAR EN CUENTA LOS ARCHIVOS EXTERNOS
     }
 }

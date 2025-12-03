@@ -40,22 +40,6 @@ public class Cashier extends User {
     }
 
 
-
-//    // Devuelve el Cashier que creo el ticket
-//    public boolean isCashierInCharge(int idTicket) {
-//        boolean inCharge = false;
-//        int busqueda=0;
-//        while(busqueda<tickets.size()){
-//            if(Integer.parseInt(tickets.get(busqueda).getId())==idTicket){
-//                tickets.get(busqueda).printTicket();
-//                busqueda =  tickets.size();
-//                inCharge = true;
-//            }
-//            busqueda++;
-//        }
-//        return inCharge;
-//    }
-
     public void printTicket(int ticketId) {
         this.tickets.get(ticketId).closeTicket();
     }

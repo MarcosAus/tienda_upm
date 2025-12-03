@@ -39,7 +39,7 @@ public class CommandProdAdd extends Command {
                             category = Category.valueOf(args[3].toUpperCase());
                         } catch (IllegalArgumentException e) {
                             category = null;
-                            System.out.println("Category added is invalid");
+                            System.out.println(Comments.CATEGORY_INVALID);
                         }
                         if (category != null) {
                             price = Double.parseDouble(args[4]);
@@ -63,7 +63,7 @@ public class CommandProdAdd extends Command {
                                 category = Category.valueOf(args[4]);
                             } catch (IllegalArgumentException e) {
                                 category = null;
-                                System.out.println("Category added is invalid");
+                                System.out.println(Comments.CATEGORY_INVALID);
                             }
                             if (category != null) {
                                 price = Double.parseDouble(args[5]);
