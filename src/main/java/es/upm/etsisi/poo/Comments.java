@@ -34,6 +34,7 @@ public class Comments {
     public static final String TICKET_FULL = "Ticket is full, cannot add any more products";
     public static final String DATE_NOT_VALID = "Date is not valid";
     public static final String DUPLICATE_ACTIVITY_IN_TICKET ="Can not add the same Meeting or Food twice in a ticket";
+    public static final String ID_NOT_MATCHES_COMMAND = "The selected ids dont mach with the command. Please insert the ids of a cashier and a client.";
 
 
     //PROD COMMANDS ERR RESPONSES
