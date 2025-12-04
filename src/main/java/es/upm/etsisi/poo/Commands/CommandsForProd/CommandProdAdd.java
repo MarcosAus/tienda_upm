@@ -129,6 +129,8 @@ public class CommandProdAdd extends Command {
             }
         } catch (NumberFormatException e) {
             System.out.println(Comments.ID_PRICE_NOT_NUMBER);
+        } catch (IllegalArgumentException e) {
+            System.out.println(Comments.MAX_PERS_EXCEEDED);
         }
     }
 }

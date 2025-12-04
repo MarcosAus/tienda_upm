@@ -46,6 +46,7 @@ public class Comments {
     public static final String INVALID_DATE = "Date is invalid";
     public static final String MAXPEOPLE_EXCEDED = "Maximum number of people exceeded";
     public static final String CATEGORY_INVALID = "Category added is invalid";
+    public static final String MAX_PERS_EXCEEDED = "Maximum number of pers exceeded";
 
 
     //CASHIER COMMANDS OK RESPONSES
