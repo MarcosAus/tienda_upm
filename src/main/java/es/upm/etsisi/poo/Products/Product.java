@@ -50,4 +50,5 @@ public abstract class Product {
     public LocalDateTime getStartDate() {
         return null;
     }
+    public abstract Product copyProduct(); //fixme Le pregunte a chatgpt y me dijo que clonable es raro. Que es mejor esto. En esencia es lo mismo.
 }

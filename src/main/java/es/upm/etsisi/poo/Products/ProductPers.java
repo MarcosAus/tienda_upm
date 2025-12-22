@@ -7,7 +7,6 @@ import java.util.List;
 public class ProductPers extends ProductBasic {
     private ArrayList<String> textos ;
     private final int maxTextos;
-    private static final int MAXPERS = 10;
 
     public ProductPers(Category categoria, int id, String name, double price, int maxTextos){
         super(categoria,name,id,price);
@@ -96,5 +95,13 @@ public class ProductPers extends ProductBasic {
     @Override
     public boolean isPersonalizable() {
         return true;
+    }
+
+    @Override
+    public Product  copyProduct() {
+        return new ProductPers(getCategory(),getId(),getName(),getPrecio(),getMaxTextos());
+    }
+    public ProductPers copyProductPers() {
+        return new ProductPers(getCategory(),getId(),getName(),getPrecio(),getMaxTextos());
     }
 }

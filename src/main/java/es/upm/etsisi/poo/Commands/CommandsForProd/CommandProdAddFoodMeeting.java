@@ -4,13 +4,12 @@ import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.ProductHandler;
 import es.upm.etsisi.poo.Products.CampusMeals;
+import es.upm.etsisi.poo.Products.Event;
 import es.upm.etsisi.poo.Products.Meetings;
 import es.upm.etsisi.poo.Products.Product;
 import es.upm.etsisi.poo.Utilities;
 
 
-import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
@@ -47,15 +46,15 @@ public class CommandProdAddFoodMeeting extends Command {
                         if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) { // Se verifica que el nombre tenga el formato correcto
                             name = name.substring(1, name.length()-1);
                             if (args[1].equals("addFood")) {
-                                product = new CampusMeals(id, name, price, date, maxParticipantes);
+                                product = new Event(id, name, price, date, maxParticipantes, Utilities.getMinTimeMels());
                                 fechaProducto = product.getStartDate();
-                                if (fechaProducto.isBefore(now)) {
+                                if (fechaProducto.isBefore(now) || maxParticipantes >= Utilities.getMinTimeMels() || maxParticipantes <= 0) {
                                     add = false;
                                 }
                             } else if (args[1].equals("addMeeting")) {
-                                product = new Meetings(id, name, price, date, maxParticipantes);
+                                product = new Event(id, name, price, date, maxParticipantes, Utilities.getMinTimeMeetings());
                                 fechaProducto = product.getStartDate();
-                                if (fechaProducto.isBefore(now)) {
+                                if (fechaProducto.isBefore(now) || maxParticipantes >= Utilities.getMinTimeMels() || maxParticipantes <= 0) {
                                     add = false;
                                 }
                             }
@@ -69,7 +68,11 @@ public class CommandProdAddFoodMeeting extends Command {
                                     System.out.println(Comments.PROD_ADDMEETINGS);
                                 }
                             } else {
-                                System.out.println(Comments.DATE_NOT_VALID);
+                                if(maxParticipantes >= Utilities.getMinTimeMels() || maxParticipantes <= 0){
+                                    System.out.println(Comments.MAXPEOPLE_EXCEDED);
+                                }else {
+                                    System.out.println(Comments.DATE_NOT_VALID);
+                                }
                             }
                         } else{
                             System.out.println(Comments.NAME_HAS_WRONG_FORMAT);
@@ -89,16 +92,16 @@ public class CommandProdAddFoodMeeting extends Command {
                         if(CampusMeals.getMAXPEOPLEALLOWED()>=maxParticipantes) {
                             if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) {
                                 if (args[1].equals("addFood")) {
-                                    product = new CampusMeals(id, name, price, date, maxParticipantes);
+                                    product = new Event(id, name, price, date, maxParticipantes, Utilities.getMinTimeMeetings());
                                     fechaProducto = product.getStartDate();
-                                    if (fechaProducto.isBefore(now)) {
+                                    if (fechaProducto.isBefore(now) || maxParticipantes >= Utilities.getMinTimeMels() || maxParticipantes <= 0) {
                                         add = false;
                                     }
 
                                 } else if (args[1].equals("addMeeting")) {
-                                    product = new Meetings(id, name, price, date, maxParticipantes);
+                                    product = new Event(id, name, price, date, maxParticipantes, Utilities.getMinTimeMels());
                                     fechaProducto = product.getStartDate();
-                                    if (fechaProducto.isBefore(now)) {
+                                    if (fechaProducto.isBefore(now) || maxParticipantes >= Utilities.getMinTimeMels() || maxParticipantes <= 0) {
                                         add = false;
                                     }
                                 }
@@ -113,7 +116,11 @@ public class CommandProdAddFoodMeeting extends Command {
                                     }
                                 }
                                 else {
-                                    System.out.println(Comments.DATE_NOT_VALID);
+                                    if(maxParticipantes >= Utilities.getMinTimeMels() || maxParticipantes <= 0){
+                                        System.out.println(Comments.MAXPEOPLE_EXCEDED);
+                                    }else {
+                                        System.out.println(Comments.DATE_NOT_VALID);
+                                    }
                                 }
                             }else{
                                 System.out.println(Comments.NAME_HAS_WRONG_FORMAT);

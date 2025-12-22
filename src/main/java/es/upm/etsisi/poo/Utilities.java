@@ -69,4 +69,15 @@ public class Utilities {
         }
         return idRandom;
     }
+
+    public static int getMinTimeMeetings(){
+        return 12;
+    }
+    public static int getMinTimeMels(){
+        return 72;
+    }
+
+    public static int getMaxPeopleAllowed(){
+        return 100;
+    }
 }

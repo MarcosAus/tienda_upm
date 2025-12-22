@@ -1,3 +1,70 @@
+Importante: Nada
+
+Cosas que hacer
+//Esto son las correcciones que hay que hacer.
+-Corregir el uml X
+-Actualizar el uml {}
+-Hacerlo más bonito X
+-Implementar clonable. X
+-Meetings y Campus meels son la misma clase con distintas variables. Unir y Corrregir los comandos relacionados. X
+
+//Esto es lo nuevo
+-Limpiar comandos. (Lo pone en el tema 4. No deberiamos de hacer comandos con metodos tan largos. Podemos crear metodos y clases auxiliares para algunas cosas. Ej
+    Metodo verificador que comprueba los errores generales en el comando antes de crear un nuevo producto.)
+-Implementar Services (comandos y metodos)
+-Persistencia del sistema
+-Al menos un patron de diseño. (Tema 4)
+-Librerias de alto nivel del tema 5
+-//fixme poner lo que veais conveniente
+
+//Una vez todº implementado se hace esto.
+-Verificar que el uml coincide con el codigo.
+-Test final completo
+-Preparación entrega
+
+
+Sugerencias/Problemas (Si surge un problema que implique cambiar la estructura del uml o que cambie el proposito de una clase se debe poner aquí):
+
+
+
+
+ACLARACIONES (Si hay algo que no se entienda, que se halla cambiado recientemente, que se este haciendo mal o lo que veais ponerlo aquí):
+-He cambiado todº el uml. Está programado por capas. Primero se definen los grupos, luego las clases y luego los enlaces. Hay marcadores que indican el inicio y el fin de cada capa.
+    También las clases y los enlaces estan programados de izquierda a derecha.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Practica 2: (Estos esto es antiguo y por lo tanto no hace falta leerlo)
+
+
 IMPORTANTE: LA APP YA COMPILA. La mayoria de los comandos no funcionan o estan por implementar. Si un comando no ha sido implementado mostrara "Does nothing and wins"
 Solo quedaría ir comando a comando corrigiendo el execute. Os sugiero empezar a corregir en el orden de que hay abajo en el to do. También podeis eliminar la parte de
 Inventory, CashierManager; y partes de otras clases que estan terminadas pero tienen comentarios basura. SI VEIS ALGÚN METODO MAL COMENTADO CORREGIRLO, suy tuga y he
@@ -74,14 +141,3 @@ necesario crear un toString, en caso de que el string tenga que ser distintos si
     * A la hora de listar los clientes y los cajeros, hay que hacerlo en orden alfabético, pero como utilizamos una estructura HashMap,
       he tenido que recurrir a una forma muy complicada de hacerlo (ya que no creo que haya otra forma sin joder aún más lo que ya tenemos).
       Si se os ocurre otra forma o lo que sea avisad y lo cambiamos.
-
-
-
-Borrar esto cuando lo veais. Es una checklist que tengo(tuga) para saber que tengo que hacer
--compilar o o
-- ticket new x o
-- ticket add x o
-- ticket remove x o
-- ticket print x o
-- ticket list x o
-

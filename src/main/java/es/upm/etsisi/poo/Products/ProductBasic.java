@@ -3,21 +3,21 @@ package es.upm.etsisi.poo.Products;
 import java.time.Duration;
 
 public class ProductBasic extends Product {
-        private Category categoria;
+    private Category categoria;
 
-        public ProductBasic(Category categoria, String name, int id, double price){
-                super(id,name,price);
-                this.categoria = categoria;
-        }
-        @Override
-        public String toString(){
-            StringBuilder sb = new StringBuilder();
-            sb.append("{class:Product, id:").append(this.getId());
-            sb.append(", name:").append(this.getName());
-            sb.append(", category:").append(this.getCategory().name());
-            sb.append(", price:").append(this.TotalPrice()).append("}");
-            return sb.toString();
-        }
+    public ProductBasic(Category categoria, String name, int id, double price){
+        super(id,name,price);
+        this.categoria = categoria;
+    }
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("{class:Product, id:").append(this.getId());
+        sb.append(", name:").append(this.getName());
+        sb.append(", category:").append(this.getCategory().name());
+        sb.append(", price:").append(this.TotalPrice()).append("}");
+        return sb.toString();
+    }
 
     @Override
     public Category getCategory() {
@@ -35,13 +35,14 @@ public class ProductBasic extends Product {
             }
             auxSb.append("\n");
             return auxSb.toString().repeat(num);
-        }
-        @Override
-        public double TotalPrice(){
-                return getPrecio();
-        }
+    }
 
-        public void setCategory(Category categoria) {this.categoria = categoria;}
+    @Override
+    public double TotalPrice(){
+        return getPrecio();
+    }
+
+    public void setCategory(Category categoria) {this.categoria = categoria;}
 
     @Override
     public double getDiscount() {
@@ -61,5 +62,14 @@ public class ProductBasic extends Product {
     @Override
     public Duration getMinTime() {
         return Duration.ZERO;
+    }
+
+    @Override
+    public Product copyProduct() {
+        return new ProductBasic(this.categoria,getName(),getId(),getPrecio());
+    }
+
+    public ProductBasic copyProductBasic(){
+        return new ProductBasic(this.categoria,getName(),getId(),getPrecio());
     }
 }

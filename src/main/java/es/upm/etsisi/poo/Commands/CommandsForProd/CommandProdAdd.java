@@ -19,7 +19,7 @@ public class CommandProdAdd extends Command {
 
 
     @Override
-    public void execute(String[] args) { //hay que modificarlo porque no maneja el tiempo minimo de creacion de 72 o 12 horas
+    public void execute(String[] args) { // fixme hay que modificarlo porque no maneja el tiempo minimo de creacion de 72 o 12 horas
         Category category;
         int id;
         String name;

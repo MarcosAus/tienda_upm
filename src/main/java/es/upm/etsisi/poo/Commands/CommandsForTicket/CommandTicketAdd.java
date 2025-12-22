@@ -19,8 +19,6 @@ public class CommandTicketAdd extends Command {
     }
 
 
-    //fixme Si quereis podeis poner los errores en Utilities. Hacer ctr f System.out y vais cambiando. Yo no lo veo necesario.
-
     @Override
     public void execute(String[] args) {
        if (args.length >= 6) {
@@ -37,21 +35,16 @@ public class CommandTicketAdd extends Command {
                            if(actCashier.ticketExists(actTicket.getId())) {
                                if (args.length == 6){//CASO PRODUCT BASIC , MEETING , CAMPUSMEALS y PRODUCTO PERS SIN PERSONALIZAR
                                    if (actProduct.isPersonalizable()){
-                                       Product newProduct =
-                                               new ProductPers(actProduct.getCategory(),actProduct.getId(),actProduct.getName(),
-                                                       actProduct.getPrecio(),((ProductPers) actProduct).getMaxTextos());
+                                       Product newProduct = actProduct.copyProduct();
                                        actTicket.addProduct(newProduct,amount);
                                    } else {
                                        if (actProduct.getMinTime().isZero()) {
-                                           Product newProduct =
-                                                   new ProductBasic(actProduct.getCategory(),actProduct.getName(),actProduct.getId(),
-                                                           actProduct.getPrecio());
+                                           Product newProduct = actProduct.copyProduct();
                                            actTicket.addProduct(newProduct,amount);
                                        } else {
                                            if (actProduct.getMinTime().compareTo(Duration.ofHours(72))==0){
-                                               CampusMeals newProduct=
-                                                       new CampusMeals(actProduct.getId(),actProduct.getName(),actProduct.getPrecio(),
-                                                               ((CampusMeals) actProduct).getDateOfEnd(),((CampusMeals) actProduct).getMaxParticipantes());
+                                               Event newProduct=
+                                                       (Event) actProduct.copyProduct();
                                                if(newProduct.getMaxParticipantes()>=amount){
                                                    actTicket.addProduct(newProduct,amount);
                                                }else{
@@ -59,9 +52,7 @@ public class CommandTicketAdd extends Command {
                                                }
 
                                            } else {
-                                               Meetings newProduct=
-                                                       new Meetings(actProduct.getId(),actProduct.getName(),actProduct.getPrecio(),
-                                                               ((Meetings) actProduct).getDateOfEnd(),((Meetings) actProduct).getMaxParticipantes());
+                                               Event newProduct= (Event) actProduct.copyProduct();
                                                if(newProduct.getMaxParticipantes()>=amount){
                                                    actTicket.addProduct(newProduct,amount);
                                                }else{
@@ -73,9 +64,7 @@ public class CommandTicketAdd extends Command {
                                    }
                                } else {
                                    if (actProduct.isPersonalizable()){
-                                       ProductPers newProduct =
-                                               new ProductPers(actProduct.getCategory(),actProduct.getId(),actProduct.getName(),
-                                                       actProduct.getPrecio(),((ProductPers) actProduct).getMaxTextos());
+                                       ProductPers newProduct = (ProductPers) actProduct.copyProduct();
                                        for (int i = 6; i < args.length; i++){ //CASO PRODUCTO PERS
                                            if (args[i].startsWith("--p")){
                                                if (!newProduct.isFull() && !newProduct.getTextos().contains(args[i].substring(3))) newProduct.addTexto(args[i].substring(3));

@@ -10,6 +10,7 @@ public class Meetings extends Product {
     private static final int minTime = 12;
     private String dateOfEnd;
 
+    //fixme Pone que tiene un uso pero lit que es mentira. Se tiene que eliminar esta clase. La reemplaza Event.
     public Meetings(int id, String name, double price, String dateOfEnd, int maxParticipantes) {
         super(id, name, price);
         this.dateOfEnd = dateOfEnd;
@@ -91,5 +92,10 @@ public class Meetings extends Product {
     @Override
     public LocalDateTime getStartDate() {
         return LocalDate.parse(dateOfEnd).atTime(12,0).minusHours(getMinTime().toHours());
+    }
+
+    @Override
+    public Product copyProduct() {
+        return null;
     }
 }

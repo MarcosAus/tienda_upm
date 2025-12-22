@@ -1,0 +1,414 @@
+@startuml
+'Estilo:
+skinparam backgroundColor #CFEFFA
+
+'Capa 1:-----------------------------------------------
+Class App {
+    -ticketHandler: TicketHandler
+    -userHandler: UserHandler
+    -productHandler: ProductHandler
+
+    +{static}main(String[] args): void
+}
+
+
+
+'Capa 2:-------------------------------------
+'grupos y clases
+namespace Commands #FFFEDB {
+}
+nameSpace Info  #FFAA99{
+
+}
+note top of Info
+<size:9>Aquí se guardan archivos que poco tienen que ver con el programa en si</size>
+<size:9>No creo que se deba representar en el diagrama pero es más visual</size>
+end note
+class CLI {
+    -commandsProducts: CommandProd
+    -commandsTicket: CommandTicket
+    -commandsUser: CommandUser
+
+    +CLI(CommandProd commandsProductos, CommandTicket commandsTicket, CommandUser commandsUser)
+    +start(): void
+    +start(String fichero): void
+    +dispatcherCentralCommand(String actCommand): void
+    +sliceCommand(String args): String[]
+    +{static}mostrarComandos(): void
+}
+class Commands.CommandProd{
+
+    +checkCommand(String[] comdiv, String actCom)
+    +addCommand(Command)
+}
+
+class Commands.CommandTicket{
+
+    + checkCommand(String[] comdiv, String actCom)
+    + addCommand(Command)
+}
+class Commands.CommandUser{
+
+    + checkCommand(String[] comdiv, String actCommand)
+    + addCommand(Command)
+}
+Class Utilities{
+    +{static}MAX_LIST: int = 200
+    +{static}MAX_IN_TICKET: int = 100
+
+    +{static}numGenerator(int cantidad): int
+    +{static}idAleatorio(ProductHandler): int
+}
+Class Comments{
+    +{static}LENGTH_WRONG: String
+    +{static}TICKET_NEW_OK: String
+    +{static}PRODUCT_NOT_FOUND: String
+    ...
+}
+'relaciones necesarias:
+App ..> CLI
+App ..> CommandProd
+App ..> CommandTicket
+App ..> CommandUser
+
+
+'relaciones invisibles de orden
+App .[hidden]. Commands
+CLI .[hidden]right. Commands
+CommandProd .[hidden]right. CommandTicket
+CommandTicket .[hidden]right. CommandUser
+App .[hidden]. Utilities
+Commands .[hidden]right. CLI
+App .[hidden]. Comments
+Utilities .[hidden]right. Comments
+Comments .[hidden]right. Info
+
+
+'capa 3: ---------------------------
+'grupos y clases
+abstract class Commands.Command <<abstract>>{
+    #name: String
+
+    +Command(String name)
+    +{abstract}isThisCommand(String[] args)
+    +{abstract}execute(String[] args)
+}
+'relaciones necesarias:
+CommandProd o-- Command
+CommandTicket o-- Command
+CommandUser o-- Command
+
+'Capa 4:-------------------------
+'grupos y clases
+class Commands.CommandsForProd.CommandProdEx{
+    +CommandProdEx(String name, ProductHandler productHandler)
+    +isThisCommand(String name): boolean
+    +execute(String[] args)
+}
+class Commands.CommandsForTicket.CommandTicketEx{
+     +CommandTicketEx(String name, TicketHandler ticketHandler, UserHandler userHandler, ProductHandler productHandler*)
+     +isThisCommand(String name): boolean
+     +execute(String[] args)
+}
+class Commands.CommandsForUser.CommandUserEx{
+    +CommandUserEx(String name, UserHandler userHandler)
+    +isThisCommand(String name)
+    +execute(String[] args)
+}
+'relaciones necesarias:
+Command <|-- Commands.CommandsForProd.CommandProdEx
+Command <|-- Commands.CommandsForTicket.CommandTicketEx
+Command <|-- Commands.CommandsForUser.CommandUserEx
+CommandProd *-- Commands.CommandsForProd.CommandProdEx
+CommandTicket *-- CommandTicketEx
+CommandUser *-- CommandUserEx
+
+
+'relaciones invisibles de orden
+CommandProdEx .[hidden]right. CommandTicketEx
+Commands.CommandsForProd .[hidden]right. Commands.CommandsForTicket
+CommandTicketEx .[hidden]right. CommandUserEx
+Commands.CommandsForTicket .[hidden]right. Commands.CommandsForUser
+
+'Capa 5:----------------------------------
+'grupos y clases
+class ProductHandler {
+    -{static}CAPACITY = MAX_LIST
+
+    +ProductHandler()
+    +addProduct(Product): boolean
+    +removeProduct(int id): void
+    +getProduct(int id): Product
+    +getProductList(): List<Producto>
+    +getHandlerSize(): int
+    +updateProduct(id,field,newFact): void
+    +updateProductName(id ,newName):void
+    +updateProductCategory(id,newCat):void
+    +updateProductPrice(id, newPrice): void
+    +listProducts():void
+    +capacityLeft(): int
+    +getCapacity(): int
+}
+class TicketHandler {
+
+    +TicketHandler()
+    +getTickets(): ArrayList<Ticket>
+    +newTicket(int idT): int
+    +newTicket(): int
+    +auxFindIdForTicket(int TId): int
+    +addTicket(int TId, Product newproduct ,int cantidad): void
+    +getTicket(int TId): Ticket
+    +removeTicket(int TId): boolean
+    +printTicketsClose(int TId): void
+    +printTicketsShow(int TId): void
+}
+class UserHandler{
+    -HashMap<String, Client> clientsRecord
+    -HashMap<String, Cashier> cashierRecord
+
+    +UserHandler()
+    +getUserAmount(): int
+    +getClientsRecord(): HashMap<String, Client>
+    +getCashiersRecord(): HashMap<String, Cashier>
+    +registerUser(User): void
+    +getUserById(String id): User
+    +listCashierRecord(): void
+    +listClientRecord(): void
+    +listTicketsCashier(String idCash): void
+}
+
+'relaciones necesarias:
+CommandProdEx --> ProductHandler
+CommandTicketEx --> TicketHandler
+CommandUserEx --> UserHandler
+
+CommandProdEx -[norank,#grey,dotted]-> TicketHandler
+CommandProdEx -[norank,#grey,dotted]-> UserHandler
+CommandTicketEx -[norank,#grey,dotted]-> ProductHandler
+CommandTicketEx -[norank,#grey,dotted]-> UserHandler
+CommandUserEx -[norank,#grey,dotted]-> ProductHandler
+CommandUserEx -[norank,#grey,dotted]-> TicketHandler
+
+App -[norank,#grey,dotted]-> ProductHandler
+App -[norank,#grey,dotted]-> TicketHandler
+App -[norank,#grey,dotted]-> UserHandler
+
+'capa 6:---------------------------------
+'grupos y clases
+namespace Products #FFFEDB {
+}
+namespace Tickets #FFFEDB {
+}
+namespace Users #FFFEDB {
+}
+abstract Products.Product<<Abstract>>  {
+    #id: int
+    #name:str
+    #price: double
+
+    +Product(int id, String name, double price)
+    +getPrecio(): double
+    +setPrice(double precio): void
+    +getName(): String
+    +setName(String name): void
+    +getId(): int
+    +equals(Product): boolean
+    +{abstract}isPersonalizable(): boolean
+    +{abstract}toString(): String
+    +{abstract}getCategory(): Category
+    +{abstract}totalPrice(): double
+    +{abstract}getDiscount(): double
+    +{abstract}amountTicket(int amount): int
+    +{abstract}getMinTime(): Duration
+    +getStartDate(): LocalDateTime
+    +{abstract}copyProduct(): Duration
+}
+enum Products.Category {
+MERCH
+ELECTRONICA
+PAPELERIA
+ROPA
+LIBRO
+}
+enum Products.ServicesTipes{
+TRANSPORTES
+ESPECTACULOS
+SEGUROS
+}
+abstract class Tickets.Ticket<<Abstract>>{
+    -id: int
+    -stateTicket: State
+    -{static}MAXSIZE = 100
+    -ticketDate: String
+
+    +Ticket()
+    +Ticket(int id)
+    +getTicketDate(): String
+    +getId(): int
+    +getProducts(): ArrayList<TicketItem>
+    +getNumeroProductos(): int
+    +ticketIsFull(): boolean
+    +getTicketState(): State
+    +updateState(State stateTicket): void
+    +addProduct(Product product, int cantidad): void
+    +removeProduct(int id): boolean
+    +busquedaProductoPorID(ArrayList<TicketItem>, int id): TicketItem
+    +getCantidadProductoCategoria(): Map<Category,Integer>
+    +printTicket(): void
+    +checkIfTicketCanClose(): boolean
+    +listTicket(): String
+}
+abstract class Users.User<<abstract>> {
+    -String dni
+    -String nombre
+    -String correo
+
+    +User(String dni, String nombre, String correo)
+    +getName(): String
+    +getMail(): String
+    +getId(): String
+    +getThisCash(): Cashier
+    +getThisCli(): Client
+    +isCash(): boolean
+    +addTicket(Ticket): void
+    +removeTicket(): void
+}
+class Users.Client {
+
+    +Client(String dni, String nombre, String correo, Cashier cash)
+    +getCashier(): Cashier
+    +setTicketToClient(Ticket): void
+    +getThisCli(): Client
+    +removeTicketFromClient(int idTicket): void
+    +getTicket(int idT): Ticket
+    +getTickets(): HashMap<Integer, Ticket>
+}
+class Users.Cashier{
+
+    +Cashier(String id, String nombre, String correo)
+    +getTickets(): HashMap<Integer,Ticket>
+    +addTicket(int id): void
+    +removeTicket(int id): void
+    +printTicket(int id): void
+    +printAllTickets(): void
+    +validarId(int id): String
+    +listAllTickets(): void
+    +getThisCash(): Cashier
+    +isCash(): boolean
+    +extractNumericId(String CashierId): int
+}
+
+'relaciones necesarias
+ProductHandler o-- Product
+UserHandler o-- User
+'fixme posible error. Revisar si la relacion anterior es correcta
+TicketHandler o-- Ticket
+User <|--left Client
+User <|--right Cashier
+UserHandler o-[norank]- Client
+UserHandler o-[norank]- Cashier
+
+'capa 7:----------------------------------
+'grupos y clases
+class Products.ProductBasic{
+    -category: Category
+
+    +Product(Category category, int id, String name, double price)
+    +isPersonalizable(): boolean
+    +toString(): String
+    +toString(int num, double amount): String
+    +getCategory(): Category
+    +setCategory(Category): void
+    +totalPrice(): double
+    +getDiscount(): double
+    +amountTicket(int amount): int
+    +getMinTime(): Duration
+
+}
+class Products.Event{
+    -maxParticipantes: int
+    -MAXPEOPLEALLOWED : int
+    -{static}MIN_TIME : int
+    -dateOfEnd: LocalDateTime
+
+    +CampusMeals(int id, String name, double price, LocalDateTime dateOfEnd, int maxParticipantes)
+    +getDateOfEnd(): LocalDateTime
+    +getMaxParticipantes(): int
+    +getMinTime(): Duration
+    +toString(): String
+    +toString(int num, int amount): String
+    +TotalPrice(): double
+    +getDiscount(): double
+    +amountTicket(int amount): int
+    +getCategory(): Category
+    +isPersonalizable(): boolean
+    +getStartDate(): LocalDateTime
+}
+class Products.Services{
+
+}
+class Tickets.TicketClient{
+
+}
+class Tickets.TicketBusiness{
+
+}
+
+
+'relaciones necesarias
+Product <|-- Products.ProductBasic
+Product <|-- Products.Event
+Product <|-- Products.Services
+Ticket <|-[#3D61E3]- TicketClient
+Ticket <|-[#05AB74]- Tickets.TicketBusiness
+
+TicketClient -[norank,#3D61E3]-o Cashier
+TicketClient -[norank,#3D61E3]-o Client
+TicketBusiness -[norank,#05AB74]-o Cashier
+TicketBusiness -[norank,#05AB74]-o Client
+
+'relaciones invisibles de orden
+
+
+'capa 8:----------------------------------
+'grupos y clases
+class TicketItem{
+    -amount: int
+
+    +TicketItem(Product product, int amount)
+    +getProduct(): Product
+    +getAmount(): int
+    +addAmount(int n): void
+    +subtotal(): double
+}
+class Products.ProductPers{
+
+    -texts:ArrayList<Str>
+    -MAX_TEXTOS: int
+    -{static}MAX_PERS = 10
+
+    +ProductPers(Category category,int id, String name, double price, int maxText)
+    +addText(String text): boolean
+    +getMaxText(): int
+    +toString(): String
+    +toString(int num, duble amount): String
+    +totalPrice(): double
+    +isFull(): boolean
+    +isPersonalizable(): boolean
+}
+
+'relaciones necesarias
+TicketClient o-[#3D61E3]- TicketItem
+TicketBusiness o-[#05AB74]- TicketItem
+Products.ProductBasic <|-- ProductPers
+Product <-[norank]- TicketItem
+
+'relaciones invisibles de orden
+
+
+
+'capa X:----------------------------------
+'grupos y clases
+'relaciones necesarias
+'relaciones invisibles de orden
+@enduml

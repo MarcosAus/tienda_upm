@@ -1,25 +1,24 @@
 package es.upm.etsisi.poo.Products;
 
+import es.upm.etsisi.poo.Utilities;
+
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class CampusMeals extends Product {
+public class Event extends Product {
     private  int maxParticipantes;
     private String dateOfEnd;
-    private static int MAXPEOPLEALLOWED = 100;
-    private static final int minTime = 72;
+    private final int minTime;
 
-    //fixme Se tiene que eliminar esta clase. La reemplaza Event.
-    public CampusMeals(int id, String name, double price, String dateOfEnd, int maxParticipantes) {
+
+    public Event(int id, String name, double price, String dateOfEnd, int maxParticipantes, int minTime) {
         super(id, name, price);
         this.dateOfEnd = dateOfEnd;
         this.maxParticipantes = maxParticipantes;
+        this.minTime = minTime;
     }
 
-    public static int  getMAXPEOPLEALLOWED( ) {
-        return MAXPEOPLEALLOWED;
-    }
     public String getDateOfEnd() {
         return dateOfEnd;
     }
@@ -35,7 +34,7 @@ public class CampusMeals extends Product {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{class:CampusMeals, id:");
+        sb.append("{class:Events, id:");
         sb.append(getId());
         sb.append(", name:");
         sb.append(getName());
@@ -52,7 +51,7 @@ public class CampusMeals extends Product {
 
     public String toString(int num,int amount){
         StringBuilder sb = new StringBuilder();
-        sb.append("{class:CampusMeals, id:");
+        sb.append("{class:Events, id:");
         sb.append(getId());
         sb.append(", name:");
         sb.append(getName());
@@ -99,6 +98,7 @@ public class CampusMeals extends Product {
 
     @Override
     public Product copyProduct() {
-        return null;
+        return new Event(getId(),getName(),getPrecio(),getDateOfEnd(),getMaxParticipantes(),minTime);
     }
+
 }
