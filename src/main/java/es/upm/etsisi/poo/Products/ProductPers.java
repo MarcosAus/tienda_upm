@@ -10,7 +10,8 @@ public class ProductPers extends ProductBasic {
 
     public ProductPers(Category categoria, int id, String name, double price, int maxTextos){
         super(categoria,name,id,price);
-        this.maxTextos = maxTextos;
+        if (maxTextos <= MAXPERS) this.maxTextos = maxTextos;
+        else throw new IllegalArgumentException();
         textos = new ArrayList<>();
     }
 

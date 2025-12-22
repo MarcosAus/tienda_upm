@@ -34,6 +34,7 @@ public class Comments {
     public static final String TICKET_FULL = "Ticket is full, cannot add any more products";
     public static final String DATE_NOT_VALID = "Date is not valid";
     public static final String DUPLICATE_ACTIVITY_IN_TICKET ="Can not add the same Meeting or Food twice in a ticket";
+    public static final String ID_NOT_MATCHES_COMMAND = "The selected ids dont mach with the command. Please insert the ids of a cashier and a client.";
 
 
     //PROD COMMANDS ERR RESPONSES
@@ -44,6 +45,8 @@ public class Comments {
     public static final String NO_PRODUCTS_WITH_THAT_ID_IN_TICKET = "No products with that ID were found in ticket";
     public static final String INVALID_DATE = "Date is invalid";
     public static final String MAXPEOPLE_EXCEDED = "Maximum number of people exceeded";
+    public static final String CATEGORY_INVALID = "Category added is invalid";
+    public static final String MAX_PERS_EXCEEDED = "Maximum number of pers exceeded";
 
 
     //CASHIER COMMANDS OK RESPONSES

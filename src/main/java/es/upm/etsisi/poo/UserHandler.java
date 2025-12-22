@@ -26,10 +26,10 @@ public class UserHandler {
     }
 
     public void registerUser(User user) {
-        if (user instanceof Client) {
+        if (user.getThisCli() != null) {
             clientsRecord.putIfAbsent(user.getId(), (Client) user);
             System.out.println("Client{identifier = '" + user.getId() + "', name = '" + user.getName() + "', email = '" + user.getMail() + "', cash = ' " +((Client) user).getCashier().getId() + " '}");
-        } else if (user instanceof Cashier) {
+        } else if (user.getThisCash() != null) {
             cashiersRecord.putIfAbsent(user.getId(), (Cashier) user);
             System.out.println("Cash{identifier = '" + user.getId() + "', name = '" + user.getName() + "', email = '" + user.getMail() + "'}");
         }
@@ -82,21 +82,4 @@ public class UserHandler {
         System.out.println("Tickets:");
         cashier.listAllTickets();
     }
-//    public void listTickets() {
-//        Map<String, Cashier> ticketsSorted =
-//                cashiersRecord.entrySet()
-//                        .stream()
-//                        .sorted(Comparator.comparing(e -> e.getValue().extractNumericId(e.getValue().getId())))
-//                        .collect(
-//                                Collectors.toMap(
-//                                        Map.Entry::getKey,
-//                                        Map.Entry::getValue,
-//                                        (a,b) -> a,
-//                                        LinkedHashMap::new
-//                                )
-//                        );
-//        for (Ticket ticket : ticketsSorted.values()) {
-//
-//        }
-//    }
 }

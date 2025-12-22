@@ -36,7 +36,7 @@ public class CommandTicketNew extends Command {
                         if (actUser != null) {
                             actClient = actUser.getThisCli();
                             if (actCashier == null || actClient == null) {
-                                System.out.println("The selected ids dont mach with the command. Please insert the ids of a cashier and a client.");
+                                System.out.println(Comments.ID_NOT_MATCHES_COMMAND);
                             } else{
                                 idChosen = ticketHandler.newTicket(idTry);
                                 ticket = ticketHandler.getTicket(idChosen);
@@ -82,7 +82,7 @@ public class CommandTicketNew extends Command {
                 if (actUser != null) {
                     actClient = actUser.getThisCli();
                     if (actCashier == null || actClient == null) {
-                        System.out.println("The selected ids dont mach with the command. Please insert the ids of a cashier and a client.");
+                        System.out.println(Comments.ID_NOT_MATCHES_COMMAND);
                     }
                     else {
 
