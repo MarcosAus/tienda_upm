@@ -2,15 +2,10 @@ package es.upm.etsisi.poo.Products;
 
 import java.time.Duration;
 
-public class Services extends Product{
+public class Service extends Product{
 
-    public Services(int id, String nombre, double precio) {
+    public Service(int id, String nombre, double precio) {
         super(id, nombre, precio);
-    }
-
-    @Override
-    public boolean isPersonalizable() {
-        return false;
     }
 
     @Override
@@ -21,11 +16,6 @@ public class Services extends Product{
     @Override
     public String toString(int num, int amount) {
         return "";
-    }
-
-    @Override
-    public Category getCategory() {
-        return null;
     }
 
     @Override
@@ -51,5 +41,10 @@ public class Services extends Product{
     @Override
     public Product copyProduct() {
         return null;
+    }
+
+    @Override
+    public Service isService(){
+        return this;
     }
 }

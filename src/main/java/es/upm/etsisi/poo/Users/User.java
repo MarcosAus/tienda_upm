@@ -1,6 +1,6 @@
 package es.upm.etsisi.poo.Users;
 
-import es.upm.etsisi.poo.Ticket;
+import es.upm.etsisi.poo.Ticket.Ticket;
 
 public abstract class User {
     private String dni;

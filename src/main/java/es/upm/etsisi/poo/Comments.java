@@ -35,7 +35,9 @@ public class Comments {
     public static final String DATE_NOT_VALID = "Date is not valid";
     public static final String DUPLICATE_ACTIVITY_IN_TICKET ="Can not add the same Meeting or Food twice in a ticket";
     public static final String ID_NOT_MATCHES_COMMAND = "The selected ids dont mach with the command. Please insert the ids of a cashier and a client.";
-
+    public static final String INVALID_PRODUCT_TIPE_FOR_TICKET = "This Product can't be added to this type of Ticket";
+    public static final String CLIENTS_CANT_SELECT_TYPE = "The client needs to be a business to select ticket type.";
+    public static final String CLIENT_IS_NOT_BUSINESS = "The client needs to be a business.";
 
     //PROD COMMANDS ERR RESPONSES
     public static final String CATEGORY_WRONG = "Category is wrong";

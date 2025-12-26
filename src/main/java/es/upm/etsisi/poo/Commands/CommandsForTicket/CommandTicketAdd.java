@@ -3,6 +3,7 @@ package es.upm.etsisi.poo.Commands.CommandsForTicket;
 import es.upm.etsisi.poo.*;
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Products.*;
+import es.upm.etsisi.poo.Ticket.Ticket;
 import es.upm.etsisi.poo.Users.Cashier;
 
 import java.time.Duration;

@@ -1,6 +1,9 @@
 package es.upm.etsisi.poo;
 
 import es.upm.etsisi.poo.Products.Product;
+import es.upm.etsisi.poo.Ticket.Ticket;
+import es.upm.etsisi.poo.Ticket.TicketBusiness;
+import es.upm.etsisi.poo.Ticket.TicketClient;
 
 import java.util.ArrayList;
 
@@ -14,9 +17,31 @@ public class TicketHandler {
         return tickets;
     }
 
-    //Crea un nuevo ticket. Si encuentra que existe un ticket con el id marcado buscará el siguien id libre más cercano.
-    //Luego lo añade al array. Devulvuelve el id usado.
-    public int newTicket(int idT){
+    public int newTicketClient(){
+        //Genera un ticket con id aleatorio
+        TicketClient actTicket = new TicketClient();
+        tickets.add(actTicket);
+        return actTicket.getId();
+    }
+    public int newTicketClient(int id){
+        TicketClient actTicket = new TicketClient(newTicketIdFinder(id));
+        tickets.add(actTicket);
+        return actTicket.getId();
+    }
+    public int newTicketBusiness(){
+        //Genera un ticket con id aleatorio
+        TicketBusiness actTicket = new TicketBusiness();
+        tickets.add(actTicket);
+        return actTicket.getId();
+    }
+    public int newTicketBusiness(int id){
+        TicketBusiness actTicket = new TicketBusiness(newTicketIdFinder(id));
+        tickets.add(actTicket);
+        return actTicket.getId();
+    }
+
+    //Busca si el id es correcto.
+    private int newTicketIdFinder(int idT){
         int idChosen = -1;
 
         // Si se encuentra un ticket con el mismo
@@ -33,16 +58,8 @@ public class TicketHandler {
         else {
             idChosen=auxFindIdForTicket(idT+1);
         }
-        Ticket actTicket = new Ticket(idT);
-        tickets.add(actTicket);
-        return idChosen;
-    }
 
-    public int newTicket(){
-        //Genera un ticket con id aleatorio
-        Ticket actTicket = new Ticket();
-        tickets.add(actTicket);
-        return actTicket.getId();
+        return idChosen;
     }
 
     // Metodo auxiliar para buscar el siguiente id libre.

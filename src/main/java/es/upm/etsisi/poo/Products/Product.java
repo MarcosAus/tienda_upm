@@ -37,12 +37,17 @@ public abstract class Product {
         return product.getId()==this.getId();
     }
 
-    public abstract boolean isPersonalizable();
+    public boolean isPersonalizable(){
+        return false;
+    }
+
+    public  Category getCategory(){
+        return null;
+    }
 
     @Override
     public abstract String toString();
     public abstract String toString(int num , int amount);
-    public abstract Category getCategory();
     public abstract double TotalPrice();
     public abstract double getDiscount();
     public abstract int amountTicket(int amount);
@@ -51,4 +56,19 @@ public abstract class Product {
         return null;
     }
     public abstract Product copyProduct(); //fixme Le pregunte a chatgpt y me dijo que clonable es raro. Que es mejor esto. En esencia es lo mismo.
+
+
+    //Los siguientes metodos devuelven se devuelven a si mismo si son del tipo correcto. No devuelven una copia.
+    public ProductPers isProductPers(){
+        return null;
+    }
+    public ProductBasic isProductBasic(){
+        return null;
+    }
+    public Service isService(){
+        return null;
+    }
+    public Event isEvent(){
+        return null;
+    }
 }

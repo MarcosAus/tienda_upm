@@ -9,9 +9,13 @@ import java.util.Iterator;
 public class Utilities {
     //Constantes:
 
-    public static final int MAX_LIST = 200; // Número máximo de productos en la Tienda
-    public static final int MAX_IN_TICKET = 100; //Número máximo de productos en el Ticket
-    
+    public static final int MAX_LIST = 200;         // Número máximo de productos en la Tienda
+    public static final int MAX_IN_TICKET = 100;    //Número máximo de productos en el Ticket
+    public static final int MAX_PPOPLE_EVENT = 100; //Maximo de personas en un evento.
+    public static final int MIN_TIME_MEETING = 12;  //Tiempo minimo para un meeting
+    public static final int MIN_TIME_MEELS = 72;    //Timepo minimo para un meel
+    public static final int MAX_PERS_PRODUCT = 10;  //Maximo de personalizaciones del productPers
+
     public static Cashier buscarCajeroPorID(ArrayList<Cashier> cashiers, String id) {
         Cashier resultado = null;
         boolean existe = false;
@@ -71,13 +75,21 @@ public class Utilities {
     }
 
     public static int getMinTimeMeetings(){
-        return 12;
+        return MIN_TIME_MEETING;
     }
     public static int getMinTimeMels(){
-        return 72;
+        return MIN_TIME_MEELS;
+    }
+
+    public static int getMaxPersProduct(){
+        return MAX_PERS_PRODUCT;
+    }
+
+    public static int getMaxCustomizationsProducts(){
+        return MAX_IN_TICKET;
     }
 
     public static int getMaxPeopleAllowed(){
-        return 100;
+        return MAX_PPOPLE_EVENT;
     }
 }

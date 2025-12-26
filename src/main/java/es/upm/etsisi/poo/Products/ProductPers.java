@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import es.upm.etsisi.poo.Utilities;
+
 public class ProductPers extends ProductBasic {
     private ArrayList<String> textos ;
     private final int maxTextos;
 
     public ProductPers(Category categoria, int id, String name, double price, int maxTextos){
         super(categoria,name,id,price);
-        if (maxTextos <= MAXPERS) this.maxTextos = maxTextos;
+        if (maxTextos <= Utilities.getMaxPersProduct()) this.maxTextos = maxTextos;
         else throw new IllegalArgumentException();
         textos = new ArrayList<>();
     }
@@ -104,5 +106,10 @@ public class ProductPers extends ProductBasic {
     }
     public ProductPers copyProductPers() {
         return new ProductPers(getCategory(),getId(),getName(),getPrecio(),getMaxTextos());
+    }
+
+    @Override
+    public ProductPers isProductPers(){
+        return this;
     }
 }

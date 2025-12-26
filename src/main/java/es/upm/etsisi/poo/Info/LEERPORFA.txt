@@ -12,7 +12,8 @@ Cosas que hacer
 -Limpiar comandos. (Lo pone en el tema 4. No deberiamos de hacer comandos con metodos tan largos. Podemos crear metodos y clases auxiliares para algunas cosas. Ej
     Metodo verificador que comprueba los errores generales en el comando antes de crear un nuevo producto.)
 -Implementar Services (comandos y metodos)
--Persistencia del sistema
+-Diferenciar tickets comunes y los de empresa X (falta hacer que no se puedan añadir servicios a clientes o p y no se puedan añadir productos a s. Soy tuga y solo habría que cambiar el comando app pero este tiene que modificarse primero como pone en la practica y necesito que la parte de services esté hecha. Si puedo lo haré otro día pero se me va el wifi cada 10 minutos ahora mismo.)
+-Persistencia del sistema + actualizar uml con lo añadido
 -Al menos un patron de diseño. (Tema 4)
 -Librerias de alto nivel del tema 5
 -//fixme poner lo que veais conveniente
@@ -24,6 +25,14 @@ Cosas que hacer
 
 
 Sugerencias/Problemas (Si surge un problema que implique cambiar la estructura del uml o que cambie el proposito de una clase se debe poner aquí):
+-Tuga: Tengo una duda sobre la creación de los distintos tipos de Ticket. Yo he creado dos clases distintas para que ambas esten diferenciadas y puedan tener distintas funcionalidades.
+    El enunciado dice literalmente:"que estarán diferenciados por el usuario en el comando de creación del ticket," y entiendo que esto significa que se diferencian **en el comando** y
+    de esa manera pero en el codigo deberían de ser dos clases distintas para que sea más escalable el codigo. Si en un supuesto futuro se añade otro tipo de ticket o si se añaden metodos
+    especificos como un print especial para los tickets de empresas esta implementación sería mejor. Y a parte, los otros dos handlers funcionan igual. Ahora el diseño es más "consistente".
+-Tuga: Presupongo que los ticketClient pueden añadirEvents ya que no es un servicio como tal. Puede parecer que un evento es un servicio (y en la vida real lo es) pero la practica divide
+    claramente en, cito:"(transportes, espectáculos o seguros)" y los eventos solo se parecen a espectaculos y ni eso. Entonces los eventos creo que deberían de ser usados por los clientes
+    y las empresas como un producto más.
+-Tuga: Considero que "(transportes, espectáculos o seguros)" son tipos de servicios que tenemos. En el contexto del enunciado también podrían ser ejemplos.
 
 
 
@@ -31,7 +40,6 @@ Sugerencias/Problemas (Si surge un problema que implique cambiar la estructura d
 ACLARACIONES (Si hay algo que no se entienda, que se halla cambiado recientemente, que se este haciendo mal o lo que veais ponerlo aquí):
 -He cambiado todº el uml. Está programado por capas. Primero se definen los grupos, luego las clases y luego los enlaces. Hay marcadores que indican el inicio y el fin de cada capa.
     También las clases y los enlaces estan programados de izquierda a derecha.
-
 
 
 

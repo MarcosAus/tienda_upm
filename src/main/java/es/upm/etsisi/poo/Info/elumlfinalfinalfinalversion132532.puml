@@ -257,6 +257,8 @@ abstract class Tickets.Ticket<<Abstract>>{
     +printTicket(): void
     +checkIfTicketCanClose(): boolean
     +listTicket(): String
+    +isClientType(): boolean
+    isBusinessType(): boolean
 }
 abstract class Users.User<<abstract>> {
     -String dni
@@ -344,21 +346,23 @@ class Products.Event{
     +isPersonalizable(): boolean
     +getStartDate(): LocalDateTime
 }
-class Products.Services{
+class Products.Service{
 
 }
 class Tickets.TicketClient{
-
+    +isClientType(): boolean
+    +addProduct(Product product, int cantidad): boolean
 }
 class Tickets.TicketBusiness{
-
+    +isBusinessType(): boolean
+    +addProduct(Product product, int cantidad): boolean
 }
 
 
 'relaciones necesarias
 Product <|-- Products.ProductBasic
 Product <|-- Products.Event
-Product <|-- Products.Services
+Product <|-- Products.Service
 Ticket <|-[#3D61E3]- TicketClient
 Ticket <|-[#05AB74]- Tickets.TicketBusiness
 

@@ -87,11 +87,6 @@ public class Event extends Product {
     }
 
     @Override
-    public boolean isPersonalizable() {
-        return false;
-    }
-
-    @Override
     public LocalDateTime getStartDate() {
         return  LocalDate.parse(dateOfEnd).atTime(12,0).minusHours(getMinTime().toHours());
     }
@@ -101,4 +96,8 @@ public class Event extends Product {
         return new Event(getId(),getName(),getPrecio(),getDateOfEnd(),getMaxParticipantes(),minTime);
     }
 
+    @Override
+    public Event isEvent(){
+        return this;
+    }
 }

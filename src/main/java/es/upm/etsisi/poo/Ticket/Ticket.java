@@ -1,6 +1,10 @@
-package es.upm.etsisi.poo;
+package es.upm.etsisi.poo.Ticket;
 
+import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.Products.*;
+import es.upm.etsisi.poo.State;
+import es.upm.etsisi.poo.TicketItem;
+import es.upm.etsisi.poo.Utilities;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -8,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 
-public class Ticket {
+public abstract class Ticket{
     private ArrayList<TicketItem> items;
     private int id;
     private State stateTicket;
@@ -43,8 +47,9 @@ public class Ticket {
         return resultado;
     }
 
-    public boolean ticketIsFull() {
-        return this.getNumeroProductos() == MAXSIZE;
+    //Devuelve  la cantidad excedida si se le añaden addedAmount. Negativo significa que sobra espacio y 0 que esta completo.
+    public int TicketWillBeFull(int addedAmount) {
+        return (addedAmount + this.getNumeroProductos()) - MAXSIZE;
     }
 
     public State getTicketState() {
@@ -55,7 +60,12 @@ public class Ticket {
         this.stateTicket = stateTicket;
     }
 
-    public void addProduct(Product product, int cantidad) { //
+    public ArrayList<TicketItem>  getItems() {
+        return items;
+    }
+
+    public boolean addProduct(Product product, int cantidad) {
+        boolean resultado = false;
         if (this.stateTicket != State.CLOSED) {
             stateTicket = State.OPEN;
             if (cantidad + this.getNumeroProductos() < MAXSIZE) {
@@ -80,6 +90,7 @@ public class Ticket {
                         }
                     } else {
                         items.add(new TicketItem(product, cantidad));
+                        resultado = true;
                         printTicket();
 
                     }
@@ -88,7 +99,9 @@ public class Ticket {
                 System.out.println(Comments.CAPACITY_REACHED);
             }
         }
+        return resultado;
     }
+
     public boolean removeProduct(int id) {
         if (this.stateTicket != State.CLOSED) {
             boolean resultado = false;
@@ -189,4 +202,13 @@ public class Ticket {
         }
         return sb.toString();
     }
+
+    public boolean isBusinessType(){
+        return false;
+    }
+
+    public boolean isClientType(){
+        return false;
+    }
+
 }
