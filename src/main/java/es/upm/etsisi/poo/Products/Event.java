@@ -9,14 +9,20 @@ import java.time.LocalDateTime;
 public class Event extends Product {
     private  int maxParticipantes;
     private String dateOfEnd;
+    private static final int MAXPEOPLEALLOWED = 100;
     private final int minTime;
+    private Category categoria;
 
 
-    public Event(int id, String name, double price, String dateOfEnd, int maxParticipantes, int minTime) {
+    public Event(int id, String name, double price, String dateOfEnd, int maxParticipantes, int minTime, String categoria) {
         super(id, name, price);
         this.dateOfEnd = dateOfEnd;
         this.maxParticipantes = maxParticipantes;
         this.minTime = minTime;
+        this.categoria = Category.valueOf(categoria);
+    }
+    public static int getMAXPEOPLEALLOWED( ) {
+        return MAXPEOPLEALLOWED;
     }
 
     public String getDateOfEnd() {
@@ -34,7 +40,8 @@ public class Event extends Product {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{class:Events, id:");
+        sb.append("{class:").append(categoria.name());
+        sb.append(", id:");
         sb.append(getId());
         sb.append(", name:");
         sb.append(getName());
@@ -51,7 +58,8 @@ public class Event extends Product {
 
     public String toString(int num,int amount){
         StringBuilder sb = new StringBuilder();
-        sb.append("{class:Events, id:");
+        sb.append("{class:").append(categoria.name());
+        sb.append(", id:");
         sb.append(getId());
         sb.append(", name:");
         sb.append(getName());
@@ -93,7 +101,7 @@ public class Event extends Product {
 
     @Override
     public Product copyProduct() {
-        return new Event(getId(),getName(),getPrecio(),getDateOfEnd(),getMaxParticipantes(),minTime);
+        return new Event(getId(),getName(),getPrecio(),getDateOfEnd(),getMaxParticipantes(),minTime,categoria.name());
     }
 
     @Override

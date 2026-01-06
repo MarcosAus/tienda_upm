@@ -104,9 +104,6 @@ public class ProductPers extends ProductBasic {
     public Product  copyProduct() {
         return new ProductPers(getCategory(),getId(),getName(),getPrecio(),getMaxTextos());
     }
-    public ProductPers copyProductPers() {
-        return new ProductPers(getCategory(),getId(),getName(),getPrecio(),getMaxTextos());
-    }
 
     @Override
     public ProductPers isProductPers(){

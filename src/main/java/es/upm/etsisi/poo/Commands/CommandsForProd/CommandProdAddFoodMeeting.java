@@ -3,9 +3,9 @@ package es.upm.etsisi.poo.Commands.CommandsForProd;
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.ProductHandler;
-import es.upm.etsisi.poo.Products.CampusMeals;
 import es.upm.etsisi.poo.Products.Event;
-import es.upm.etsisi.poo.Products.Meetings;
+// import es.upm.etsisi.poo.Products.CampusMeals; Comentada porque ya no se usa
+// import es.upm.etsisi.poo.Products.Meetings; Comentada porque ya no se usa
 import es.upm.etsisi.poo.Products.Product;
 import es.upm.etsisi.poo.Utilities;
 
@@ -42,17 +42,17 @@ public class CommandProdAddFoodMeeting extends Command {
                     date = args[4];
                     maxParticipantes = Integer.parseInt(args[5]);
                     LocalDateTime fechaProducto;
-                    if(CampusMeals.getMAXPEOPLEALLOWED()>=maxParticipantes) {
+                    if(Event.getMAXPEOPLEALLOWED()>=maxParticipantes) {
                         if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) { // Se verifica que el nombre tenga el formato correcto
                             name = name.substring(1, name.length()-1);
                             if (args[1].equals("addFood")) {
-                                product = new Event(id, name, price, date, maxParticipantes, Utilities.getMinTimeMels());
+                                product = new Event(id, name, price, date, maxParticipantes, Utilities.getMinTimeMels(), "CampusMeals");
                                 fechaProducto = product.getStartDate();
                                 if (fechaProducto.isBefore(now) || maxParticipantes >= Utilities.getMinTimeMels() || maxParticipantes <= 0) {
                                     add = false;
                                 }
                             } else if (args[1].equals("addMeeting")) {
-                                product = new Event(id, name, price, date, maxParticipantes, Utilities.getMinTimeMeetings());
+                                product = new Event(id, name, price, date, maxParticipantes, Utilities.getMinTimeMeetings(), "Meetings");
                                 fechaProducto = product.getStartDate();
                                 if (fechaProducto.isBefore(now) || maxParticipantes >= Utilities.getMinTimeMels() || maxParticipantes <= 0) {
                                     add = false;
@@ -89,17 +89,17 @@ public class CommandProdAddFoodMeeting extends Command {
                         date = args[5]; ;
                         maxParticipantes = Integer.parseInt(args[6]);
                         LocalDateTime fechaProducto;
-                        if(CampusMeals.getMAXPEOPLEALLOWED()>=maxParticipantes) {
+                        if(Event.getMAXPEOPLEALLOWED()>=maxParticipantes) {
                             if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) {
                                 if (args[1].equals("addFood")) {
-                                    product = new Event(id, name, price, date, maxParticipantes, Utilities.getMinTimeMeetings());
+                                    product = new Event(id, name, price, date, maxParticipantes, Utilities.getMinTimeMeetings(), "CampusMeals");
                                     fechaProducto = product.getStartDate();
                                     if (fechaProducto.isBefore(now) || maxParticipantes >= Utilities.getMinTimeMels() || maxParticipantes <= 0) {
                                         add = false;
                                     }
 
                                 } else if (args[1].equals("addMeeting")) {
-                                    product = new Event(id, name, price, date, maxParticipantes, Utilities.getMinTimeMels());
+                                    product = new Event(id, name, price, date, maxParticipantes, Utilities.getMinTimeMels(),"Meetings");
                                     fechaProducto = product.getStartDate();
                                     if (fechaProducto.isBefore(now) || maxParticipantes >= Utilities.getMinTimeMels() || maxParticipantes <= 0) {
                                         add = false;

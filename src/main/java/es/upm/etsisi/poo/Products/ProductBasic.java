@@ -69,9 +69,6 @@ public class ProductBasic extends Product {
         return new ProductBasic(this.categoria,getName(),getId(),getPrecio());
     }
 
-    public ProductBasic copyProductBasic(){
-        return new ProductBasic(this.categoria,getName(),getId(),getPrecio());
-    }
 
     @Override
     public ProductBasic isProductBasic(){

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 
-public abstract class Ticket{
+public class Ticket{
     private ArrayList<TicketItem> items;
     private int id;
     private State stateTicket;
@@ -25,6 +25,7 @@ public abstract class Ticket{
         this.items = new ArrayList<>();
         this.stateTicket = State.EMPTY;
     }
+
     public Ticket() {
         this.id = Utilities.numGenerator(5);
         this.items = new ArrayList<>();
@@ -115,7 +116,7 @@ public abstract class Ticket{
         else return false;
 
     }
-    public  TicketItem busquedaProductoPorID(ArrayList<TicketItem> products, int id) {
+    public TicketItem busquedaProductoPorID(ArrayList<TicketItem> products, int id) {
         TicketItem resultado = null;
         int indice=0;
         while (indice<products.size() && products.get(indice).getProduct().getId()!=id) {

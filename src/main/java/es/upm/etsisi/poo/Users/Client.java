@@ -30,6 +30,14 @@ public class Client extends User {
         return this;
     }
 
+    public boolean isBusiness() {
+        //Suponemos que los nif empiezan por una letra y tienen 9 caracteres.
+        char firstChar = this.getId().charAt(0);
+        if (this.getId().length() == 9 && Character.isLetter(firstChar)) return true;
+        else return false;
+    }
+
+
     @Override
     public void addTicket(Ticket ticket) {
         tickets.put(ticket.getId(), ticket);
