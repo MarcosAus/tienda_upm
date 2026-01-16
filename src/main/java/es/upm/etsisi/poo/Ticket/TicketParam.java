@@ -1,48 +1,44 @@
 package es.upm.etsisi.poo.Ticket;
 
+import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.Products.Category;
 import es.upm.etsisi.poo.Products.Product;
+import es.upm.etsisi.poo.Products.ProductPers;
+import es.upm.etsisi.poo.Products.Vendible;
 import es.upm.etsisi.poo.State;
+import es.upm.etsisi.poo.Strategies.PrintStrategy;
 import es.upm.etsisi.poo.TicketItem;
-import es.upm.etsisi.poo.Users.Client;
 import es.upm.etsisi.poo.Utilities;
-import jdk.jshell.execution.Util;
 
+import java.time.Duration;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
-public class TicketParam <T extends Client> {
-    private ArrayList<TicketItem> items;
+public abstract class TicketParam <T extends Vendible> {
+    protected ArrayList<TicketItem> items;
     private int id;
-    private State stateTicket;
+    protected State stateTicket;
     private static final int MAXSIZE = 100;
     private String ticketDateOpen;
     private String ticketDateClosed;
-    private T client;
+    private PrintStrategy printStrategy;
 
-    public TicketParam(int id, T client) {
+    public TicketParam(int id, PrintStrategy printStrategy) {
         this.id = id;
-        this.client = client;
         this.items = new ArrayList<>();
         this.stateTicket = State.EMPTY;
+        this.printStrategy = printStrategy;
     }
 
-    public TicketParam(T client) {
+    public TicketParam(PrintStrategy printStrategy) {
         this.id = Utilities.numGenerator(5);
-        this.client = client;
         this.items = new ArrayList<>();
         this.stateTicket = State.EMPTY;
         this.ticketDateOpen = LocalDate.now().toString();
+        this.printStrategy = printStrategy;
     }
-    public T getClient() {
-        return client;
-    }
-    public void setClient(T client) {
-        if (this.stateTicket != State.CLOSED){
-           this.client = client;
-        }
-    }
+
     public String getTicketDateOpen() {
         return ticketDateOpen;
     }
@@ -51,48 +47,68 @@ public class TicketParam <T extends Client> {
         return items;
     }
 
+    public State getTicketState() {
+        return stateTicket;
+    }
+
+    public ArrayList<TicketItem> getTicketItems() {
+        return items;
+    }
+
+    public int getNumeroProductos() {
+        int resultado = 0;
+        for(TicketItem item : items ) {
+            resultado+= item.getProduct().amountTicket(item.getAmount());
+        }
+        return resultado;
+    }
+
+    public String getTicketDateClosed() {
+        return ticketDateClosed;
+    }
+
+    public TicketItem busquedaProductoPorID(ArrayList<TicketItem> products, int id) {
+        TicketItem resultado = null;
+        int indice=0;
+        while (indice<products.size() && products.get(indice).getProduct().getId()!=id) {
+            indice++;
+        }
+        if (indice<products.size()) {
+            resultado = products.get(indice);
+        }
+        return resultado;
+    }
 
     // Método addProduct actualizado con validación de cliente
-    public boolean addProduct(Product product, int cantidad) {
-        if (client == null) {
-            System.out.println("No se puede añadir producto sin cliente asignado");
-            return false;
-        }
-
-        // Validaciones específicas por tipo de cliente
-        if (!client.isBusiness() && product.getCategory().equals(Category.EMPRESARIAL)) {
-            System.out.println("Producto empresarial no disponible para clientes personales");
-            return false;
-        }
-
-        // Resto de la lógica original...
+    public boolean addProduct(T element, int cantidad) {
         boolean resultado = false;
         if (this.stateTicket != State.CLOSED) {
             stateTicket = State.OPEN;
             if (cantidad + this.getNumeroProductos() < MAXSIZE) {
-                if (product != null) {
-                    TicketItem tI = busquedaProductoPorID(items, product.getId());
+                if (element != null) {
+                    TicketItem tI = busquedaProductoPorID(items,element.getId());
                     if (tI != null) {
-                        if (product.isPersonalizable()) {
-                            List<String> textosA = ((ProductPers) product).getTextos();
-                            List<String> textosB = ((ProductPers) tI.getProduct()).getTextos();
-                            if (new HashSet<>(textosA).equals(new HashSet<>(textosB))) {
+                        if (element.isPersonalizable()) {
+                            List<String> textosA= ((ProductPers)element).getTextos();
+                            List<String> textosB= ((ProductPers)tI.getProduct()).getTextos();
+                            if(new HashSet<>(textosA).equals(new HashSet<>(textosB))){
                                 tI.addAmount(cantidad);
                                 printTicket();
-                            } else {
-                                items.add(new TicketItem(product, cantidad));
+                            }else{
+                                items.add(new TicketItem(element,cantidad));
                                 printTicket();
                             }
-                        } else if (product.getMinTime().isZero()) {
+                        } else if (element.getMinTime().isZero()) {
                             tI.addAmount(cantidad);
                             printTicket();
                         } else {
                             System.out.println(Comments.DUPLICATE_ACTIVITY_IN_TICKET);
                         }
                     } else {
-                        items.add(new TicketItem(product, cantidad));
+                        items.add(new TicketItem(element, cantidad));
                         resultado = true;
                         printTicket();
+
                     }
                 }
             } else {
@@ -102,55 +118,38 @@ public class TicketParam <T extends Client> {
         return resultado;
     }
 
-
+    public Map<Category,Integer> getCantidadProductoCategoria() {
+        Map<Category,Integer> resultado = new HashMap<>();
+        Product productGeneric;
+        for (int i = 0; i < items.size(); i++) {
+            Product product = items.get(i).getProduct();
+            Category category = product.getCategory();
+            int amount = items.get(i).getAmount();
+            resultado.put(category,resultado.getOrDefault(category,0)+amount);
+        }
+        return resultado;
+    }
     public void printTicket() {
-        int cantidadCategoria;
-        double precioTotal = 0;
-        Product product;
-        double descuentoTotal = 0;
-        Map<Category, Integer> cantidadProductoCategoria = getCantidadProductoCategoria();
+        printStrategy.print();
+    }
 
-        StringBuilder sb = new StringBuilder("=== TICKET ").append(id).append(" ===\n");
+    public boolean checkIfTicketCanClose() {
+        LocalDateTime now = LocalDateTime.now();
 
-        // Información del cliente
-        if (client != null) {
-            sb.append("Cliente: ").append(client.getNombre());
-            sb.append(" (").append(getClienteTipo()).append(")\n");
-            sb.append("ID: ").append(getClienteId()).append("\n");
-        }
-
-        if (ticketDateClosed != null) {
-            sb.append("Fecha cierre: ").append(ticketDateClosed).append("\n");
-        }
-        sb.append("Fecha apertura: ").append(ticketDateOpen).append("\n");
-        sb.append("Estado: ").append(stateTicket).append("\n\n");
-        sb.append("=== PRODUCTOS ===\n");
-
-        // Aplicar descuentos específicos por tipo de cliente
-        double descuentoCliente = calcularDescuentoTipoCliente();
-
-        for (TicketItem tI : items) {
-            cantidadCategoria = cantidadProductoCategoria.getOrDefault(tI.getProduct().getCategory(), 0);
-            product = tI.getProduct();
-            sb.append(product.toString(tI.getAmount(), cantidadCategoria));
-
-            double precioItem = product.TotalPrice() * tI.getAmount();
-            precioTotal += precioItem;
-
-            // Descuento por categoría
-            if (cantidadCategoria >= 2) {
-                descuentoTotal += precioItem * product.getDiscount();
+        for (TicketItem item : items) {
+            Product p = item.getProduct();
+            Duration minTime = p.getMinTime();
+            LocalDateTime eventDate = p.getStartDate();
+            if (eventDate == null || minTime.isZero()) {
+                continue;
+            }
+            Duration timeLeft = Duration.between(now, eventDate);
+            if (timeLeft.compareTo(minTime) < 0) {
+                return false;
             }
         }
-
-        // Aplicar descuento del cliente
-        descuentoTotal += precioTotal * descuentoCliente;
-
-        System.out.print(sb);
-        System.out.println("Total precio: " + precioTotal);
-        System.out.println("Descuento productos: " + (precioTotal * descuentoTotal));
-        System.out.println("Descuento cliente (" + getClienteTipo() + "): " + (precioTotal * descuentoCliente));
-        System.out.println("Descuento total: " + descuentoTotal);
-        System.out.println("Precio final: " + (precioTotal - descuentoTotal));
+        return true;
     }
+
+
 }

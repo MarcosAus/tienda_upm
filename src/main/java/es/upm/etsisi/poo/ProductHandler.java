@@ -1,20 +1,17 @@
 package es.upm.etsisi.poo;
 
-import es.upm.etsisi.poo.Products.Category;
-import es.upm.etsisi.poo.Products.Product;
-import es.upm.etsisi.poo.Products.ProductBasic;
-import es.upm.etsisi.poo.Products.ProductPers;
+import es.upm.etsisi.poo.Products.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductHandler {
-    private List<Product> productList = new ArrayList<>();
+    private List<Vendible> productList = new ArrayList<>();
     private static final int capacity = 200;
 
 
     // Añade un producto a la lista de productos. No lo añade si el id se repite.
-    public boolean addProduct(Product product) {
+    public boolean addProduct(Vendible product) {
         boolean add = true;
         for (int i = 0; i<this.productList.size(); i++) {
             if (this.productList.get(i).getId() == product.getId()) {

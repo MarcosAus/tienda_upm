@@ -74,4 +74,9 @@ public class ProductBasic extends Product {
     public ProductBasic isProductBasic(){
         return this;
     }
+
+    @Override
+    public boolean hasPrice() {
+        return true;
+    }
 }

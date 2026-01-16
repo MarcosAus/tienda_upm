@@ -3,9 +3,8 @@ package es.upm.etsisi.poo.Commands.CommandsForUser;
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.UserHandler;
-import es.upm.etsisi.poo.Users.Cashier;
-import es.upm.etsisi.poo.Users.Client;
-import es.upm.etsisi.poo.Users.User;
+import es.upm.etsisi.poo.Users.*;
+import es.upm.etsisi.poo.Utilities;
 
 public class CommandUserAddClient extends Command {
     private final UserHandler userHandler;
@@ -25,7 +24,12 @@ public class CommandUserAddClient extends Command {
                     nombre = nombre.substring(1, nombre.length()-1);
                     try {
                         Cashier cashier = userHandler.getCashiersRecord().get(args[5]);
-                        User client = new Client(id, nombre, email, cashier);
+                        Client client;
+                        if (Utilities.isBusiness(id)) {
+                            client = new ClientBusiness(id, nombre, email, cashier);
+                        } else {
+                            client = new ClientUser(id, nombre, email, cashier);
+                        }
                         userHandler.registerUser(client);
                         System.out.println(Comments.CLIENT_ADD);
                     } catch (Exception e) {

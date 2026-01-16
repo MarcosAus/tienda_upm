@@ -3,14 +3,14 @@ package es.upm.etsisi.poo.Products;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public abstract class Product {
+public abstract class Product extends Vendible {
 
     private int id;
     private String nombre;
     private double precio;
 
     public Product(int id, String nombre, double precio) {
-        this.id = id;
+        super(id);
         this.nombre = nombre;
         this.precio = precio;
     }

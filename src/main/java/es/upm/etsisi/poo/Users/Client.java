@@ -1,10 +1,12 @@
 package es.upm.etsisi.poo.Users;
 
 import es.upm.etsisi.poo.Ticket.Ticket;
+import es.upm.etsisi.poo.Ticket.TicketBusiness;
+import es.upm.etsisi.poo.Ticket.TicketClient;
 
 import java.util.HashMap;
 
-public class Client extends User {
+public abstract class Client extends User {
     private final Cashier cashier;
     private HashMap<Integer, Ticket> tickets;
 
@@ -30,18 +32,12 @@ public class Client extends User {
         return this;
     }
 
-    public boolean isBusiness() {
-        //Suponemos que los nif empiezan por una letra y tienen 9 caracteres.
-        char firstChar = this.getId().charAt(0);
-        if (this.getId().length() == 9 && Character.isLetter(firstChar)) return true;
-        else return false;
-    }
-
 
     @Override
     public void addTicket(Ticket ticket) {
         tickets.put(ticket.getId(), ticket);
     }
+
 
     public void removeTicketFromClient(int idTicket) {
         Ticket ticketActual = tickets.get(idTicket);
@@ -50,10 +46,6 @@ public class Client extends User {
         } catch (Exception noTicketWithTicketId) {
             System.out.println("No ticket with id " + idTicket + " was found");
         }
-    }
-
-    public Ticket getTicket(String id) {
-        return tickets.get(id);
     }
 
     public HashMap<Integer, Ticket> getTickets() { return tickets;}

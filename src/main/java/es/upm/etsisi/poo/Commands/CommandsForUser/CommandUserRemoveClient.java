@@ -18,7 +18,7 @@ public class CommandUserRemoveClient extends Command {
     public void execute(String[] args) {
         if (args.length == 3) {
             Client client = userHandler.getClientsRecord().get(args[2]);
-            for (int i = 0; i < client.getTickets().size(); i++){
+            for (int i = 0; i < client.getTickets().size(); i++) {
                 client.removeTicketFromClient(client.getTickets().get(i).getId());
             }
             userHandler.getClientsRecord().remove(args[2]);

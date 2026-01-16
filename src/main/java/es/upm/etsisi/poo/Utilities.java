@@ -74,6 +74,10 @@ public class Utilities {
         return idRandom;
     }
 
+    public static boolean isBusiness(String id) {
+        return id.startsWith("B");
+    }
+
     public static int getMinTimeMeetings(){
         return MIN_TIME_MEETING;
     }

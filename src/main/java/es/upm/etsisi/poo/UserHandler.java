@@ -74,7 +74,11 @@ public class UserHandler {
                                 )
                         );
         for (Client client : clientRecordSorted.values()) {
-            System.out.println("Client{identifier = " + client.getId() + ", name = " + client.getName() + ", email = " + client.getMail() + ", cash = " + client.getCashier().getId() + "}");
+            if(Utilities.isBusiness(client.getId())) {
+                System.out.println("COMPANY{identifier = " + client.getId() + ", name = " + client.getName() + ", email = " + client.getMail() + ", cash = " + client.getCashier().getId() + "}");
+            } else{
+                System.out.println("USER{identifier = " + client.getId() + ", name = " + client.getName() + ", email = " + client.getMail() + ", cash = " + client.getCashier().getId() + "}");
+            }
         }
     }
     public void listTicketsCashier(String idCash) {
