@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 
-public class Ticket{
-    private ArrayList<TicketItem> items;
+public abstract class Ticket<T extends Vendible>{
+    private ArrayList<TicketItem<T>> items;
     private int id;
     private State stateTicket;
     private static final int MAXSIZE = 100;
@@ -74,9 +74,7 @@ public class Ticket{
                     TicketItem tI = busquedaProductoPorID(items,product.getId());
                     if (tI != null) {
                         if ( product.isPersonalizable()) {
-                            List<String> textosA= ((ProductPers)product).getTextos();
-                            List<String> textosB= ((ProductPers)tI.getProduct()).getTextos();
-                            if(new HashSet<>(textosA).equals(new HashSet<>(textosB))){
+                            if(product.equals(tI.getProduct())) {
                                 tI.addAmount(cantidad);
                                 printTicket();
                             }else{

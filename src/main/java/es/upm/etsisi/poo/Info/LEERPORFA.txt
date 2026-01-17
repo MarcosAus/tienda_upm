@@ -16,6 +16,7 @@ Cosas que hacer
 -Persistencia del sistema + actualizar uml con lo añadido
 -Al menos un patron de diseño. (Tema 4)
 -Librerias de alto nivel del tema 5
+-Comprobar que los dni/Nif esten bien escritos en el input
 -//fixme poner lo que veais conveniente
 
 //Una vez todº implementado se hace esto.

@@ -3,14 +3,13 @@ package es.upm.etsisi.poo.Products;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public abstract class Product {
+public abstract class Product extends Vendible {
 
-    private int id;
     private String nombre;
     private double precio;
 
     public Product(int id, String nombre, double precio) {
-        this.id = id;
+        super(Integer.toString(id));
         this.nombre = nombre;
         this.precio = precio;
     }
@@ -27,10 +26,6 @@ public abstract class Product {
     }
     public void setName(String nombre) {
         this.nombre = nombre;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public boolean equals(Product product){
@@ -55,7 +50,7 @@ public abstract class Product {
     public LocalDateTime getStartDate() {
         return null;
     }
-    public abstract Product copyProduct(); //fixme Le pregunte a chatgpt y me dijo que clonable es raro. Que es mejor esto. En esencia es lo mismo.
+    public abstract Product copyProduct();
 
 
     //Los siguientes metodos devuelven se devuelven a si mismo si son del tipo correcto. No devuelven una copia.
@@ -63,9 +58,6 @@ public abstract class Product {
         return null;
     }
     public ProductBasic isProductBasic(){
-        return null;
-    }
-    public Service isService(){
         return null;
     }
     public Event isEvent(){

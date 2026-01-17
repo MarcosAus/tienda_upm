@@ -1,5 +1,6 @@
 package es.upm.etsisi.poo.Users;
 
+import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.Ticket.Ticket;
 
 import java.util.HashMap;
@@ -31,10 +32,16 @@ public class Client extends User {
     }
 
     public boolean isBusiness() {
-        //Suponemos que los nif empiezan por una letra y tienen 9 caracteres.
-        char firstChar = this.getId().charAt(0);
-        if (this.getId().length() == 9 && Character.isLetter(firstChar)) return true;
-        else return false;
+        //Suponemos que los nif empiezan por una B y tienen 9 caracteres.
+        if (this.getId().length() != 9){
+            System.out.println(Comments.BUSINESS_USER_ID_WRONG);
+            return false;
+        }
+        else{
+            char firstChar = this.getId().charAt(0);
+            if (firstChar == 'B') return true;
+            else return false;
+        }
     }
 
 

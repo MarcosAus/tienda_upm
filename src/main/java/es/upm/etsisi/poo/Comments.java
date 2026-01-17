@@ -25,6 +25,7 @@ public class Comments {
     //CLIENT COMMANDS ERR RESPONSES
     public static final String CLIENT_ID_NOT_EXISTS = "ClientId does not match any clients";
     public static final String USER_NOT_FOUND = "User not found";
+    public static final String BUSINESS_USER_ID_WRONG = "Business User ID is wrong. Business User IDs begin with a B.";
 
 
     //TICKET COMMANDS ERR RESPONSES

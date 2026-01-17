@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.Products;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 import es.upm.etsisi.poo.Utilities;
@@ -17,12 +18,6 @@ public class ProductPers extends ProductBasic {
         textos = new ArrayList<>();
     }
 
-    //Devuelve una vista del arraylist de textos de esta manera se evita que se pueda modificar el array original.
-    //el metodo unmodifiableList te devuelve una lista no modificable (es decir , no se permite añadir , eliminar,etc)
-    //pero que si permite lectura y lo implementa mediante un wrapper en donde devuelve un objeto unmodifiableList
-    //por ultimo Collection es una clase de Utilidades que permite hacer operaciones sobre colecciones en nuestro caso
-    //sobre un ArrayList.
-    //Sacado de chat gpt
     public List<String> getTextos() {
         return Collections.unmodifiableList(textos);
     }
@@ -105,8 +100,12 @@ public class ProductPers extends ProductBasic {
         return new ProductPers(getCategory(),getId(),getName(),getPrecio(),getMaxTextos());
     }
 
+
     @Override
-    public ProductPers isProductPers(){
-        return this;
+    public boolean equals(Product product) {
+        ProductPers p = (ProductPers) product;
+        List<String> textosA= p.getTextos();
+        List<String> textosB= this.getTextos();
+        return new HashSet<>(textosA).equals(new HashSet<>(textosB));
     }
 }

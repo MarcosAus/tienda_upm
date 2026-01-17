@@ -2,49 +2,25 @@ package es.upm.etsisi.poo.Products;
 
 import java.time.Duration;
 
-public class Service extends Product{
+public class Service extends Vendible {
+    private String dateOfEnd;
+    private ServicesTypes servicesType;
 
-    public Service(int id, String nombre, double precio) {
-        super(id, nombre, precio);
+    public Service(String dateOfEnd,String id,ServicesTypes servicesType) {
+        super(id);
+        this.dateOfEnd = dateOfEnd;
+        this.servicesType = servicesType;
     }
 
-    @Override
-    public String toString() {
-        return "";
+    public String getDateOfEnd() {
+        return dateOfEnd;
     }
 
-    @Override
-    public String toString(int num, int amount) {
-        return "";
+    public ServicesTypes getServicesType(){
+        return servicesType;
     }
 
-    @Override
-    public double TotalPrice() {
-        return 0;
-    }
-
-    @Override
-    public double getDiscount() {
-        return 0;
-    }
-
-    @Override
     public int amountTicket(int amount) {
-        return 0;
-    }
-
-    @Override
-    public Duration getMinTime() {
-        return null;
-    }
-
-    @Override
-    public Product copyProduct() {
-        return null;
-    }
-
-    @Override
-    public Service isService(){
-        return this;
+        return 1;
     }
 }

@@ -1,7 +1,9 @@
 package es.upm.etsisi.poo.Ticket;
 
+import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.Products.Category;
 import es.upm.etsisi.poo.Products.Product;
+import es.upm.etsisi.poo.Products.ProductPers;
 import es.upm.etsisi.poo.State;
 import es.upm.etsisi.poo.TicketItem;
 import es.upm.etsisi.poo.Users.Client;
@@ -10,9 +12,11 @@ import jdk.jshell.execution.Util;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
-public class TicketParam <T extends Client> {
+public class TicketParam <T extends Client> extends Ticket {
     private ArrayList<TicketItem> items;
     private int id;
     private State stateTicket;
