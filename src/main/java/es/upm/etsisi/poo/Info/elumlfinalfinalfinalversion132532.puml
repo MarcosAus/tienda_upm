@@ -17,8 +17,9 @@ Class App {
 'grupos y clases
 namespace Commands #FFFEDB {
 }
-nameSpace Info  #FFAA99{
-
+namespace Info  #FFAA99{
+}
+namespace Persistance #FFFEDB {
 }
 note top of Info
 <size:9>Aquí se guardan archivos que poco tienen que ver con el programa en si</size>
@@ -52,25 +53,39 @@ class Commands.CommandUser{
     + checkCommand(String[] comdiv, String actCommand)
     + addCommand(Command)
 }
-Class Utilities{
+class Utilities{
     +{static}MAX_LIST: int = 200
     +{static}MAX_IN_TICKET: int = 100
 
     +{static}numGenerator(int cantidad): int
     +{static}idAleatorio(ProductHandler): int
 }
-Class Comments{
+class Comments{
     +{static}LENGTH_WRONG: String
     +{static}TICKET_NEW_OK: String
     +{static}PRODUCT_NOT_FOUND: String
     ...
 }
+class Persistance.PersistanceManager{
+    -ObjectMapper mapper
+    -String PRODUCT_FILE
+    -String USER_FILE
+    -String TICKET_FILE
+
+    +saveProducts(ProductHandler ph): void
+    +loadProducts(): productHandler
+    +saveUsers(UserHandler uh): void
+    +loadUsers(): UserHandler
+    +saveTickets(TicketHandler th): saveTickets
+    +loadTickets(): TicketHandler
+}
+
 'relaciones necesarias:
 App ..> CLI
 App ..> CommandProd
 App ..> CommandTicket
 App ..> CommandUser
-
+App ..> PersistanceManager
 
 'relaciones invisibles de orden
 App .[hidden]. Commands
@@ -86,6 +101,10 @@ Comments .[hidden]right. Info
 
 'capa 3: ---------------------------
 'grupos y clases
+namespace Exceptions #FFFEDB{
+
+}
+
 abstract class Commands.Command <<abstract>>{
     #name: String
 
@@ -93,10 +112,23 @@ abstract class Commands.Command <<abstract>>{
     +{abstract}isThisCommand(String[] args)
     +{abstract}execute(String[] args)
 }
+abstract class Exceptions.AppExceptions {}
+class Exceptions.BusinessLogicException {}
+class Exceptions.InputValidationException {}
+class Exceptions.NotFoundException {}
+
+
+
 'relaciones necesarias:
 CommandProd o-- Command
 CommandTicket o-- Command
 CommandUser o-- Command
+
+AppExceptions --|> BusinessLogicException
+AppExceptions --|> InputValidationException
+AppExceptions --|> NotFoundException
+
+Info .[hidden]down. Exceptions
 
 'Capa 4:-------------------------
 'grupos y clases
@@ -129,6 +161,7 @@ CommandProdEx .[hidden]right. CommandTicketEx
 Commands.CommandsForProd .[hidden]right. Commands.CommandsForTicket
 CommandTicketEx .[hidden]right. CommandUserEx
 Commands.CommandsForTicket .[hidden]right. Commands.CommandsForUser
+
 
 'Capa 5:----------------------------------
 'grupos y clases
@@ -201,6 +234,10 @@ namespace Tickets #FFFEDB {
 }
 namespace Users #FFFEDB {
 }
+namespace Validacion #FFFEDB{
+}
+namespace Strategies #FFFEDB{
+}
 abstract Products.Product<<Abstract>>  {
     #id: int
     #name:str
@@ -223,6 +260,20 @@ abstract Products.Product<<Abstract>>  {
     +getStartDate(): LocalDateTime
     +{abstract}copyProduct(): Duration
 }
+abstract class Products.Vendible{
+    -String id
+
+    +Vendible()
+    +Vendible(String id)
+    +getId(): String
+    +setId(String id): void
+    +toString(): String
+    +amountTicket(int amount)
+    +isPersonalizable(): boolean
+    +copyProduct(): Product
+    +getMinTime(): Duration
+}
+
 enum Products.Category {
 MERCH
 ELECTRONICA
@@ -299,16 +350,49 @@ class Users.Cashier{
     +isCash(): boolean
     +extractNumericId(String CashierId): int
 }
+class Validacion.ValidacionC{
+}
+class Validacion.ValidacionP{
+}
+class Validacion.ValidacionS{
+}
+interface Validacion.ValidacionTickets{
+    +add(Vendible vendible) : boolean
+    +close(TicketParam<T> ticket) : boolean
+}
+
+class Strategies.BusinessPrintStrategy{
+}
+class Strategies.ClientPrintStrategy{
+}
+interface Strategies.PrintStrategy{
+    printTicket(TicketParam<T> ticketParam): void
+}
 
 'relaciones necesarias
-ProductHandler o-- Product
+ProductHandler o-- Vendible
 UserHandler o-- User
-'fixme posible error. Revisar si la relacion anterior es correcta
 TicketHandler o-- Ticket
 User <|--left Client
 User <|--right Cashier
 UserHandler o-[norank]- Client
 UserHandler o-[norank]- Cashier
+TicketHandler -- ValidacionS
+TicketHandler -- ValidacionC
+TicketHandler -- ValidacionP
+
+Validacion.ValidacionTickets ..|> Validacion.ValidacionS
+Validacion.ValidacionTickets ..|> Validacion.ValidacionC
+Validacion.ValidacionTickets ..|> Validacion.ValidacionP
+Validacion.ValidacionP .[hidden]right. Validacion.ValidacionC
+Validacion.ValidacionC .[hidden]right. Validacion.ValidacionS
+PrintStrategy ..|> BusinessPrintStrategy
+PrintStrategy ..|> ClientPrintStrategy
+
+TicketHandler --> BusinessPrintStrategy
+TicketHandler --> ClientPrintStrategy
+
+
 
 'capa 7:----------------------------------
 'grupos y clases
@@ -347,7 +431,16 @@ class Products.Event{
     +getStartDate(): LocalDateTime
 }
 class Products.Service{
+    -contador: int
+    -maximumDate: LocalDate
+    -ServicesTypes: serviceType
 
+    +validDate(LocalDate fecha):boolean
+    +getServiceCategory(): String
+    +toString() String
+    +amountTicket(int amount): int
+    +copyProduct(): Product
+    +getMinTime(): Duration
 }
 class Tickets.TicketClient{
     +isClientType(): boolean
@@ -362,9 +455,11 @@ class Tickets.TicketBusiness{
 'relaciones necesarias
 Product <|-- Products.ProductBasic
 Product <|-- Products.Event
-Product <|-- Products.Service
+Vendible <|-- Products.Service
 Ticket <|-[#3D61E3]- TicketClient
 Ticket <|-[#05AB74]- Tickets.TicketBusiness
+
+Vendible -right-|> Product
 
 TicketClient -[norank,#3D61E3]-o Cashier
 TicketClient -[norank,#3D61E3]-o Client
