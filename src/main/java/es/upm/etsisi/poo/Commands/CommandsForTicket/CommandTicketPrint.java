@@ -6,13 +6,18 @@ import es.upm.etsisi.poo.TicketHandler;
 import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Users.Cashier;
 
-public class CommandTicketPrint extends Command {
+public class CommandTicketPrint implements Command {
     private TicketHandler ticketHandler;
     private UserHandler userHandler;
+    String name;
     public CommandTicketPrint(String name, TicketHandler ticketHandler, UserHandler userHandler) {
-        super(name);
+        this.name = name;
         this.ticketHandler = ticketHandler;
         this.userHandler = userHandler;
+    }
+
+    public boolean isThisCommand(String name) {
+        return name != null && name.equals(this.name);
     }
 
     @Override

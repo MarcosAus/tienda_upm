@@ -7,11 +7,16 @@ import es.upm.etsisi.poo.Users.Cashier;
 import es.upm.etsisi.poo.Users.Client;
 import es.upm.etsisi.poo.Utilities;
 
-public class CommandUserRemoveClient extends Command {
+public class CommandUserRemoveClient implements Command {
     private UserHandler userHandler;
+    String name;
     public CommandUserRemoveClient(String name, UserHandler productHandler) {
-        super(name);
+        this.name = name;
         this.userHandler = productHandler;
+    }
+
+    public boolean isThisCommand(String name) {
+        return name != null && name.equals(this.name);
     }
 
     @Override

@@ -6,11 +6,16 @@ import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Users.*;
 import es.upm.etsisi.poo.Utilities;
 
-public class CommandUserAddClient extends Command {
+public class CommandUserAddClient implements Command {
     private final UserHandler userHandler;
+    String name;
     public CommandUserAddClient(String name, UserHandler productHandler) {
-        super(name);
+        this.name = name;
         this.userHandler = productHandler;
+    }
+
+    public boolean isThisCommand(String name) {
+        return name != null && name.equals(this.name);
     }
 
     @Override

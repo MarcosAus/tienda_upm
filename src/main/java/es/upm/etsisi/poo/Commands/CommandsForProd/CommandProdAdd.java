@@ -9,12 +9,17 @@ import es.upm.etsisi.poo.Products.ProductBasic;
 import es.upm.etsisi.poo.Products.ProductPers;
 import es.upm.etsisi.poo.Utilities;
 
-public class CommandProdAdd extends Command {
+public class CommandProdAdd implements Command {
     private ProductHandler productHandler;
+    String name;
 
     public CommandProdAdd(String name,  ProductHandler productList) {
-        super(name);
+        this.name = name;
         this.productHandler = productList;
+    }
+
+    public boolean isThisCommand(String name) {
+        return name != null && name.equals(this.name);
     }
 
 

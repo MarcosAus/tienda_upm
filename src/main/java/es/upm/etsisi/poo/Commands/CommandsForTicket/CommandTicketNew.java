@@ -9,14 +9,19 @@ import es.upm.etsisi.poo.Users.Cashier;
 import es.upm.etsisi.poo.Users.Client;
 import es.upm.etsisi.poo.Users.User;
 
-public class CommandTicketNew extends Command {
+public class CommandTicketNew implements Command {
     private final TicketHandler ticketHandler;
     private final UserHandler userHandler;
+    String name;
 
     public CommandTicketNew(String name, TicketHandler ticketHandler, UserHandler userHandler) {
-        super(name);
+        this.name = name;
         this.ticketHandler = ticketHandler;
         this.userHandler = userHandler;
+    }
+
+    public boolean isThisCommand(String name) {
+        return name != null && name.equals(this.name);
     }
 
     @Override

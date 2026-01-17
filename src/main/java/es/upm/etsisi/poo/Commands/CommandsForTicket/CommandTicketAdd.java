@@ -8,15 +8,20 @@ import es.upm.etsisi.poo.Users.Cashier;
 
 import java.time.Duration;
 
-public class CommandTicketAdd extends Command {
+public class CommandTicketAdd implements Command {
     private UserHandler userhandler;
     private TicketHandler ticketHandler;
     private ProductHandler productHandler;
+    String name;
     public CommandTicketAdd(String name, TicketHandler ticketHandler, UserHandler userHandler, ProductHandler productHandler) {
-        super(name);
+        this.name = name;
         this.userhandler = userHandler;
         this.ticketHandler = ticketHandler;
         this.productHandler = productHandler;
+    }
+
+    public boolean isThisCommand(String name) {
+        return name != null && name.equals(this.name);
     }
 
 

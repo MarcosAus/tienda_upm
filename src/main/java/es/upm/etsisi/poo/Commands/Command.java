@@ -1,17 +1,10 @@
 package es.upm.etsisi.poo.Commands;
 
-public abstract class Command {
-    protected String name;
+public interface Command {
 
-    public Command(String name) {
-        this.name = name;
-    }
-
-    public boolean isThisCommand(String name) {
-        return name != null && name.equals(this.name);
-    }
+    boolean isThisCommand(String name);
 
 
-    public abstract void execute(String[] args);
+    void execute(String[] args);
 
 }

@@ -197,13 +197,14 @@ class Products.ProductPers{
 }
 ProductBasic <|--  ProductPers
 
-class Products.CampusMeals{
+class Products.Event{
     -maxParticipantes: int
-    -MAXPEOPLEALLOWED:100
-    -{static}MIN_TIME = 72
+    -{static}{final}MAXPEOPLEALLOWED:100
+    -{final}MIN_TIME: int
     -dateOfEnd: LocalDateTime
 
-    +CampusMeals(int id, String name, double price, LocalDateTime dateOfEnd, int maxParticipantes)
+    +Event(int id, String name, double price, LocalDateTime dateOfEnd, int maxParticipantes, int minTime, String categoria)
+    +getMAXPEOPLEALLOWED(): int
     +getDateOfEnd(): LocalDateTime
     +getMaxParticipantes(): int
     +getMinTime(): Duration
@@ -213,32 +214,13 @@ class Products.CampusMeals{
     +getDiscount(): double
     +amountTicket(int amount): int
     +getCategory(): Category
-    +isPersonalizable(): boolean
+    +isEvent(): Event
     +getStartDate(): LocalDateTime
+    +copyProduct(): Product
 }
 
-class Products.Meetings{
-    -maxParticipantes: int
-    -MAXPEOPLEALLOWED:100
-    -{static}MIN_TIME = 12
-    -dateOfEnd: LocalDateTime
 
-    +Meetings(int id, String name, double price, LocalDateTime dateOfEnd, int maxParticipantes)
-    +getDateOfEnd(): LocalDateTime
-    +getMaxParticipantes(): int
-    +getMinTime(): Duration
-    +toString(): String
-    +toString(int num, int amount): String
-    +TotalPrice(): double
-    +getDiscount(): double
-    +amountTicket(int amount): int
-    +getCategory(): Category
-    +isPersonalizable(): boolean
-    +getStartDate(): LocalDateTime
-}
-
-Product <|-- CampusMeals
-Product <|-- Meetings
+Product <|-- Event
 
 class UserHandler{
     -HashMap<String, Client> clientsRecord
@@ -308,12 +290,10 @@ Cashier o-- Ticket
 Client o-[norank]left- Ticket
 
 
-abstract class Commands.Command <<abstract>>{
-    #name: String
+interface Commands.Command{
 
-    +Command(String name)
-    +{abstract}isThisCommand(String[] args)
-    +{abstract}execute(String[] args)
+    +isThisCommand(String name)
+    +execute(String[] args)
 }
 
 
@@ -325,6 +305,9 @@ class Commands.CommandProd{
 CommandProd o-- Command
 
 class Commands.CommandsForProd.CommandProdEx{
+    - productHandler: ProductHandler
+    - name: String
+
     +CommandProdEx(String name, ProductHandler productHandler)
     +isThisCommand(String name): boolean
     +execute(String[] args)
@@ -344,6 +327,10 @@ class Commands.CommandTicket{
 CommandTicket o-- Command
 
 class Commands.CommandsForTicket.CommandTicketEx{
+     - ticketHandler: TicketHandler
+     - userHandler: UserHandler
+     - productHandler: ProductHandler
+     - name: String
      +CommandTicketEx(String name, TicketHandler ticketHandler, UserHandler userHandler, ProductHandler productHandler*)
      +isThisCommand(String name): boolean
      +execute(String[] args)
@@ -362,6 +349,9 @@ class Commands.CommandUser{
 CommandUser o-- Command
 
 class Commands.CommandsForUser.CommandUserEx{
+     - userHandler: UserHandler
+     - name: String
+
     +CommandUserEx(String name, UserHandler userHandler)
     +isThisCommand(String name)
     +execute(String[] args)
@@ -369,6 +359,48 @@ class Commands.CommandsForUser.CommandUserEx{
 
 CommandUser *-- CommandUserEx
 App .[norank].> CommandUser
+
+abstract class Products.Vendible{
+    -id: int
+
+    +Vendible(int id)
+    +getId(): int
+    +setId(int id): void
+    +{abstract} hasPrice(): boolean
+}
+
+interface Strategies.PrintStrategy{
+    printTicket(TicketParam<?> ticketParam): void
+}
+
+class Strategies.ClientPrintStrategy{
+    printTicket(TicketParam<?> ticketParam): void
+}
+
+abstract class TicketPackage.TicketParam<T extends Vendible>{
+    #ArrayList<TicketItem> items;
+    - int id;
+    # State stateTicket;
+    - static final int MAXSIZE = 100;
+    - String ticketDateOpen;
+    - String ticketDateClosed;
+    - PrintStrategy printStrategy;
+
+    +TicketParam(int id, PrintStrategy printStrat)
+    +TicketParam(PrintStrategy printStrat)
+    //todo
+}
+
+enum Products.ServicesTypes{
+    TRANSPORTES
+    ESPECTACULOS
+    SEGUROS
+}
+
+class Products.Service{
+
+}
+
 
 App ..> CLI
 

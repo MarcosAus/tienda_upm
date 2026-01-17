@@ -8,14 +8,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-public class CommandTicketList extends Command {
+public class CommandTicketList implements Command {
     private TicketHandler ticketHandler;
     private UserHandler userHandler;
+    String name;
 
     public CommandTicketList(String name, TicketHandler ticketHandler, UserHandler userHandler) {
-        super(name);
+        this.name = name;
         this.ticketHandler = ticketHandler;
         this.userHandler = userHandler;
+    }
+
+    public boolean isThisCommand(String name) {
+        return name != null && name.equals(this.name);
     }
 
 

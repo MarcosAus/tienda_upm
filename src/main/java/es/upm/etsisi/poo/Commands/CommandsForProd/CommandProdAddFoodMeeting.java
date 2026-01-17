@@ -13,11 +13,16 @@ import es.upm.etsisi.poo.Utilities;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 
-public class CommandProdAddFoodMeeting extends Command {
+public class CommandProdAddFoodMeeting implements Command {
     private ProductHandler productHandler;
+    String name;
     public CommandProdAddFoodMeeting(String name, ProductHandler productHandler) {
-        super(name);
+        this.name = name;
         this.productHandler = productHandler;
+    }
+
+    public boolean isThisCommand(String name) {
+        return name != null && name.equals(this.name);
     }
 
 

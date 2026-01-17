@@ -6,11 +6,16 @@ import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Utilities;
 import jdk.jshell.execution.Util;
 
-public class CommandUserListTicketsCashier extends Command {
+public class CommandUserListTicketsCashier implements Command {
     private UserHandler userHandler;
+    String name;
     public CommandUserListTicketsCashier(String name, UserHandler productHandler) {
-        super(name);
+        this.name = name;
         this.userHandler = productHandler;
+    }
+
+    public boolean isThisCommand(String name) {
+        return name != null && name.equals(this.name);
     }
 
     @Override

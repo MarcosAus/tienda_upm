@@ -5,11 +5,17 @@ import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.ProductHandler;
 import es.upm.etsisi.poo.Utilities;
 
-public class CommandProdRemove extends Command {
+public class CommandProdRemove implements Command {
     private ProductHandler productHandler;
+    String name;
+
     public CommandProdRemove(String name, ProductHandler productHandler) {
-        super(name);
+        this.name = name;
         this.productHandler = productHandler;
+    }
+
+    public boolean isThisCommand(String name) {
+        return name != null && name.equals(this.name);
     }
 
 

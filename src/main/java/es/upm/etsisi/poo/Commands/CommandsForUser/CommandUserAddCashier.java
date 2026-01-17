@@ -6,11 +6,17 @@ import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Users.Cashier;
 import es.upm.etsisi.poo.Users.User;
 
-public class CommandUserAddCashier extends Command {
+public class CommandUserAddCashier implements Command {
     private final UserHandler userHandler;
+    String name;
     public CommandUserAddCashier(String name, UserHandler productHandler) {
-        super(name);
+        this.name = name;
         this.userHandler = productHandler;
+    }
+
+
+    public boolean isThisCommand(String name) {
+        return name != null && name.equals(this.name);
     }
 
 

@@ -5,11 +5,16 @@ import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Utilities;
 
-public class CommandUserListClients extends Command {
+public class CommandUserListClients implements Command {
     private UserHandler userHandler;
+    String name;
     public CommandUserListClients(String name, UserHandler productHandler) {
-        super(name);
+        this.name = name;
         this.userHandler = productHandler;
+    }
+
+    public boolean isThisCommand(String name) {
+        return name != null && name.equals(this.name);
     }
 
     @Override
