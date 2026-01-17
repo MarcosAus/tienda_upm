@@ -175,20 +175,7 @@ public class Ticket{
         }
     }
     public boolean checkIfTicketCanClose() {
-        LocalDateTime now = LocalDateTime.now();
 
-        for (TicketItem item : items) {
-            Product p = item.getProduct();
-            Duration minTime = p.getMinTime();
-            LocalDateTime eventDate = p.getStartDate();
-            if (eventDate == null || minTime.isZero()) {
-                continue;
-            }
-            Duration timeLeft = Duration.between(now, eventDate);
-            if (timeLeft.compareTo(minTime) < 0) {
-                return false;
-            }
-        }
         return true;
     }
 
@@ -204,12 +191,5 @@ public class Ticket{
         return sb.toString();
     }
 
-    public boolean isBusinessType(){
-        return false;
-    }
-
-    public boolean isClientType(){
-        return false;
-    }
 
 }

@@ -1,7 +1,5 @@
 package es.upm.etsisi.poo.Products;
 
-import es.upm.etsisi.poo.Utilities;
-
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,11 +8,11 @@ public class Event extends Product {
     private  int maxParticipantes;
     private String dateOfEnd;
     private static final int MAXPEOPLEALLOWED = 100;
-    private final int minTime;
+    private int minTime;
     private Category categoria;
 
-
-    public Event(int id, String name, double price, String dateOfEnd, int maxParticipantes, int minTime, String categoria) {
+    public Event() {}
+    public Event(String id, String name, double price, String dateOfEnd, int maxParticipantes, int minTime, String categoria) {
         super(id, name, price);
         this.dateOfEnd = dateOfEnd;
         this.maxParticipantes = maxParticipantes;
@@ -46,7 +44,7 @@ public class Event extends Product {
         sb.append(", name:");
         sb.append(getName());
         sb.append(", price:");
-        sb.append(getPrecio());
+        sb.append(getPrice());
         sb.append(", date of Event:");
         sb.append(dateOfEnd);
         sb.append(", max people allowed:");
@@ -64,7 +62,7 @@ public class Event extends Product {
         sb.append(", name:");
         sb.append(getName());
         sb.append(", price:");
-        sb.append(getPrecio()*num);
+        sb.append(getPrice()*num);
         sb.append(", date of Event:");
         sb.append(dateOfEnd);
         sb.append(", max people allowed:");
@@ -78,11 +76,11 @@ public class Event extends Product {
 
     @Override
     public double TotalPrice() {
-        return getPrecio();
+        return getPrice();
     }
 
     public double getDiscount() {
-        return Category.CAMPUSMEALS.getDiscount();
+        return categoria.getDiscount();
     }
 
     @Override
@@ -91,7 +89,8 @@ public class Event extends Product {
     }
 
     public Category getCategory() {
-        return Category.CAMPUSMEALS;
+        return categoria;
+
     }
 
     @Override
@@ -101,11 +100,7 @@ public class Event extends Product {
 
     @Override
     public Product copyProduct() {
-        return new Event(getId(),getName(),getPrecio(),getDateOfEnd(),getMaxParticipantes(),minTime,categoria.name());
+        return new Event(getId(),getName(), getPrice(),getDateOfEnd(),getMaxParticipantes(),minTime,categoria.name());
     }
 
-    @Override
-    public Event isEvent(){
-        return this;
-    }
 }

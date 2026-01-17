@@ -20,14 +20,18 @@ public class CommandProdUpdate implements Command {
 
     @Override
     public void execute(String[] args) {
-        int id;
+        String id;
         if (args.length == 5) {
             try {
-                id = Integer.parseInt(args[2]);
-                String campo = args[3];
-                String valor = args[4];
-                productHandler.updateProduct(id, campo, valor);
-                System.out.println(Comments.PROD_UPDATE);
+                id = args[2];
+                if(!id.endsWith("S")){
+                    String campo = args[3];
+                    String valor = args[4];
+                    productHandler.updateProduct(id, campo, valor);
+                    System.out.println(Comments.PROD_UPDATE);
+                }else {
+                    System.out.println(Comments.SERVICES_NO_MODIFICABLES);
+                }
             } catch (NumberFormatException e) {
                 System.out.println(Comments.ID_NOT_NUMBER);
             } catch (NullPointerException e) {

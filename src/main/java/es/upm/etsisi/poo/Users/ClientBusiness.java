@@ -8,6 +8,7 @@ import java.util.HashMap;
 public class ClientBusiness extends Client {
     private HashMap<Integer, TicketBusiness> tickets;
 
+    public ClientBusiness() {}
     public ClientBusiness(String dni, String nombre, String correo, Cashier cash){
         super(dni,nombre,correo, cash);
         this.tickets = new HashMap<>();

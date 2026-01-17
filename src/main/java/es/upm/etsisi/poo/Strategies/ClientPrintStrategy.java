@@ -2,15 +2,16 @@ package es.upm.etsisi.poo.Strategies;
 
 import es.upm.etsisi.poo.Products.Category;
 import es.upm.etsisi.poo.Products.Product;
+import es.upm.etsisi.poo.Products.Vendible;
 import es.upm.etsisi.poo.Ticket.TicketParam;
 import es.upm.etsisi.poo.TicketItem;
 
 import java.util.Map;
 
-public class ClientPrintStrategy implements PrintStrategy {
+public class ClientPrintStrategy implements PrintStrategy<Product> {
 
     @Override
-    public void printTicket(TicketParam<?> ticketParam) {
+    public void printTicket(TicketParam<Product> ticketParam) {
         int cantidadCategoria;
         double precioTotal = 0;
         Product product;
@@ -21,7 +22,7 @@ public class ClientPrintStrategy implements PrintStrategy {
             sb.append("-").append(ticketParam.getTicketDateClosed());
         }
         sb.append("\n");
-        for (TicketItem tI : ticketParam.getTicketItems()) {
+        for (TicketItem<Product> tI : ticketParam.getTicketItems()) {
             cantidadCategoria =  cantidadProductoCategoria.getOrDefault(tI.getProduct().getCategory(),0);
             product = tI.getProduct();
             sb.append(product.toString(tI.getAmount(),cantidadCategoria));

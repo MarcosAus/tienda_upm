@@ -3,13 +3,15 @@ package es.upm.etsisi.poo.Users;
 import es.upm.etsisi.poo.Ticket.Ticket;
 import es.upm.etsisi.poo.Ticket.TicketBusiness;
 import es.upm.etsisi.poo.Ticket.TicketClient;
+import es.upm.etsisi.poo.Ticket.TicketParam;
 
 import java.util.HashMap;
 
 public abstract class Client extends User {
-    private final Cashier cashier;
-    private HashMap<Integer, Ticket> tickets;
+    private Cashier cashier;
+    private HashMap<Integer, TicketParam<?>> tickets;
 
+    public Client() {}
     public Client(String dni, String nombre, String correo, Cashier cash){
         super(dni,nombre,correo);
         this.cashier = cash;
@@ -23,7 +25,7 @@ public abstract class Client extends User {
     //De alguna manera se tiene que guardar constancia de su ticket en el Client dejo estos
     //métodos como sugerencia.
 
-    public void setTicketToClient(Ticket ticket) {
+    public void setTicketToClient(TicketParam<?> ticket) {
         tickets.put(ticket.getId(),ticket);
     }
 
@@ -34,13 +36,13 @@ public abstract class Client extends User {
 
 
     @Override
-    public void addTicket(Ticket ticket) {
+    public void addTicket(TicketParam<?> ticket) {
         tickets.put(ticket.getId(), ticket);
     }
 
 
     public void removeTicketFromClient(int idTicket) {
-        Ticket ticketActual = tickets.get(idTicket);
+        TicketParam<?> ticketActual = tickets.get(idTicket);
         try {
             tickets.remove(ticketActual.getId());
         } catch (Exception noTicketWithTicketId) {
@@ -48,5 +50,5 @@ public abstract class Client extends User {
         }
     }
 
-    public HashMap<Integer, Ticket> getTickets() { return tickets;}
+    public HashMap<Integer, TicketParam<?>> getTickets() { return tickets;}
 }

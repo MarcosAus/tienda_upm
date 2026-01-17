@@ -10,6 +10,7 @@ import java.util.HashMap;
 public class ClientUser extends Client {
     private HashMap<Integer, TicketClient> tickets = new HashMap<>();
 
+    public ClientUser() {}
     public ClientUser(String dni, String nombre, String correo, Cashier cash) {
         super(dni, nombre, correo, cash);
     }

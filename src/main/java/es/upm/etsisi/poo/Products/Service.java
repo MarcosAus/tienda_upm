@@ -1,50 +1,50 @@
 package es.upm.etsisi.poo.Products;
 
 import java.time.Duration;
+import java.time.LocalDate;
 
-public class Service extends Product{
+public class Service extends Vendible {
+    private static int contador = 1;
+    private LocalDate maximumDate;
+    private ServicesTypes serviceType;
 
-    public Service(int id, String nombre, double precio) {
-        super(id, nombre, precio);
+    public Service() {}
+    public Service(String maximumDate, ServicesTypes serviceType) {
+        super(contador+"S");
+        contador = contador + 1;
+        this.maximumDate = LocalDate.parse(maximumDate);
+        this.serviceType = serviceType;
+    }
+
+    public boolean validDate(LocalDate fecha){
+        if (maximumDate.isAfter(fecha)){
+            return true;
+        }
+        else return false;
+    }
+    public String getServiceCategory() {
+        return serviceType.toString();
     }
 
     @Override
     public String toString() {
-        return "";
-    }
-
-    @Override
-    public String toString(int num, int amount) {
-        return "";
-    }
-
-    @Override
-    public double TotalPrice() {
-        return 0;
-    }
-
-    @Override
-    public double getDiscount() {
-        return 0;
+        StringBuilder sb = new StringBuilder();
+        sb.append("{class:ProductService, id:").append(this.getId().substring(0, this.getId().length() - 1));
+        sb.append(", category:").append(this.getServiceCategory());
+        sb.append(", expiration").append(maximumDate.toString());
+        return sb.toString();
     }
 
     @Override
     public int amountTicket(int amount) {
-        return 0;
+        return 1;
     }
-
-    @Override
-    public Duration getMinTime() {
-        return null;
-    }
-
     @Override
     public Product copyProduct() {
         return null;
     }
-
     @Override
-    public Service isService(){
-        return this;
-    }
+    public Duration getMinTime() {
+        return null;
+    };
 }

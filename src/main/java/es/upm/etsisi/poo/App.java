@@ -4,6 +4,7 @@ import es.upm.etsisi.poo.Commands.*;
 import es.upm.etsisi.poo.Commands.CommandsForProd.*;
 import es.upm.etsisi.poo.Commands.CommandsForTicket.*;
 import es.upm.etsisi.poo.Commands.CommandsForUser.*;
+import es.upm.etsisi.poo.Persistence.PersistenceManager;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,16 +24,15 @@ public class App {
      *             de la app. Si este parametro esta vacio el programa se inicializara normalmente.
      */
     public static void main(String[] args) {
-
         //Se crean las clases que contienen todos los comoandos. Están divididas en función del handler principal que usan.
         CommandProd commandsProducts = new CommandProd();
         CommandTicket commandsTickets = new CommandTicket();
         CommandUser commandsUser = new CommandUser();
 
-        //Se crean los handlers
-        ProductHandler productHandler = new ProductHandler();
-        TicketHandler ticketHandler = new TicketHandler();
-        UserHandler userHandler = new UserHandler();
+        //Handlers que cargan datos persistidos, si no hay datos persistidos inicializa handlers nuevos
+        ProductHandler productHandler = PersistenceManager.loadProducts();
+        TicketHandler ticketHandler = PersistenceManager.loadTickets();
+        UserHandler userHandler = PersistenceManager.loadUsers();
 
         //Se crean los commandos
         //Los comandos deben tener un nombre igual en minusculas al comando en sí. Ej: TickedAdd tiene que tener name = "ticket add"

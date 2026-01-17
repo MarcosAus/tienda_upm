@@ -9,55 +9,73 @@ import es.upm.etsisi.poo.State;
 import es.upm.etsisi.poo.Strategies.PrintStrategy;
 import es.upm.etsisi.poo.TicketItem;
 import es.upm.etsisi.poo.Utilities;
-
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import es.upm.etsisi.poo.Validacion.ValidacionTickets;
+import java.time.*;
 import java.util.*;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = TicketClient.class, name = "TicketClient"),
+        @JsonSubTypes.Type(value = TicketBusiness.class, name = "TicketBusiness")
+})
 
 public abstract class TicketParam <T extends Vendible> {
-    protected ArrayList<TicketItem> items;
+    protected ArrayList<TicketItem<T>> items;
     private int id;
     protected State stateTicket;
     private static final int MAXSIZE = 100;
     private String ticketDateOpen;
     private String ticketDateClosed;
-    private PrintStrategy printStrategy;
+    private PrintStrategy<T> printStrategy;
+    private ValidacionTickets<T> validacionTickets;
 
-    public TicketParam(int id, PrintStrategy printStrategy) {
+    public TicketParam() {
+        this.items = new ArrayList<>();
+        this.stateTicket = State.EMPTY;
+    }
+
+    public TicketParam(int id, PrintStrategy<T> printStrategy,ValidacionTickets<T> validacionTickets) {
         this.id = id;
         this.items = new ArrayList<>();
         this.stateTicket = State.EMPTY;
         this.printStrategy = printStrategy;
+        this.validacionTickets = validacionTickets;
     }
 
-    public TicketParam(PrintStrategy printStrategy) {
+    public TicketParam(PrintStrategy<T> printStrategy,ValidacionTickets<T> validacionTickets) {
         this.id = Utilities.numGenerator(5);
         this.items = new ArrayList<>();
         this.stateTicket = State.EMPTY;
         this.ticketDateOpen = LocalDate.now().toString();
         this.printStrategy = printStrategy;
+        this.validacionTickets = validacionTickets;
     }
 
     public String getTicketDateOpen() {
         return ticketDateOpen;
     }
     public int getId() {return id;}
-    public ArrayList<TicketItem> getProducts() {
+    public ArrayList<TicketItem<T>> getProducts() {
         return items;
+    }
+
+    public void updateState(State stateTicket) {
+        this.stateTicket = stateTicket;
     }
 
     public State getTicketState() {
         return stateTicket;
     }
 
-    public ArrayList<TicketItem> getTicketItems() {
+    public ArrayList<TicketItem<T>> getTicketItems() {
         return items;
     }
 
     public int getNumeroProductos() {
         int resultado = 0;
-        for(TicketItem item : items ) {
+        for(TicketItem<T> item : items ) {
             resultado+= item.getProduct().amountTicket(item.getAmount());
         }
         return resultado;
@@ -67,10 +85,10 @@ public abstract class TicketParam <T extends Vendible> {
         return ticketDateClosed;
     }
 
-    public TicketItem busquedaProductoPorID(ArrayList<TicketItem> products, int id) {
-        TicketItem resultado = null;
+    public TicketItem<T> busquedaProductoPorID(ArrayList<TicketItem<T>> products, String id) {
+        TicketItem<T> resultado = null;
         int indice=0;
-        while (indice<products.size() && products.get(indice).getProduct().getId()!=id) {
+        while (indice<products.size() && !products.get(indice).getProduct().getId().equals(id)) {
             indice++;
         }
         if (indice<products.size()) {
@@ -86,7 +104,7 @@ public abstract class TicketParam <T extends Vendible> {
             stateTicket = State.OPEN;
             if (cantidad + this.getNumeroProductos() < MAXSIZE) {
                 if (element != null) {
-                    TicketItem tI = busquedaProductoPorID(items,element.getId());
+                    TicketItem<T> tI = busquedaProductoPorID(items,element.getId());
                     if (tI != null) {
                         if (element.isPersonalizable()) {
                             List<String> textosA= ((ProductPers)element).getTextos();
@@ -95,7 +113,7 @@ public abstract class TicketParam <T extends Vendible> {
                                 tI.addAmount(cantidad);
                                 printTicket();
                             }else{
-                                items.add(new TicketItem(element,cantidad));
+                                items.add(new TicketItem<T>(element,cantidad));
                                 printTicket();
                             }
                         } else if (element.getMinTime().isZero()) {
@@ -105,7 +123,7 @@ public abstract class TicketParam <T extends Vendible> {
                             System.out.println(Comments.DUPLICATE_ACTIVITY_IN_TICKET);
                         }
                     } else {
-                        items.add(new TicketItem(element, cantidad));
+                        items.add(new TicketItem<T>(element, cantidad));
                         resultado = true;
                         printTicket();
 
@@ -122,34 +140,66 @@ public abstract class TicketParam <T extends Vendible> {
         Map<Category,Integer> resultado = new HashMap<>();
         Product productGeneric;
         for (int i = 0; i < items.size(); i++) {
-            Product product = items.get(i).getProduct();
-            Category category = product.getCategory();
-            int amount = items.get(i).getAmount();
-            resultado.put(category,resultado.getOrDefault(category,0)+amount);
+            T product = items.get(i).getProduct();
+            if(!product.getId().endsWith("S")){
+                Category category = ((Product)product).getCategory();
+                int amount = items.get(i).getAmount();
+                resultado.put(category,resultado.getOrDefault(category,0)+amount);
+            }
+
         }
         return resultado;
     }
+    public boolean removeProduct(int id) {
+        if (this.stateTicket != State.CLOSED) {
+            boolean resultado = false;
+            TicketItem tI = busquedaProductoPorID(items, id);
+            if (tI != null) {
+                items.remove(tI);
+                resultado = true;
+            }
+            return resultado;
+        }
+        else return false;
+
+    }
     public void printTicket() {
-        printStrategy.print();
+        if (printStrategy != null) {
+            printStrategy.printTicket(this);
+        } else {
+            System.out.println(Comments.NO_PRINT_STRATEGY);
+        }
+    }
+
+
+    public void closeTicket() {
+        if(checkIfTicketCanClose()){
+            ticketDateClosed = LocalDate.now().toString();
+            printStrategy.printTicket(this);
+            stateTicket = State.CLOSED;
+        }else{
+            System.out.println(Comments.ACTIVITY_IS_EXPIRED);
+        }
     }
 
     public boolean checkIfTicketCanClose() {
-        LocalDateTime now = LocalDateTime.now();
+        if (validacionTickets.close(this));
 
-        for (TicketItem item : items) {
-            Product p = item.getProduct();
-            Duration minTime = p.getMinTime();
-            LocalDateTime eventDate = p.getStartDate();
-            if (eventDate == null || minTime.isZero()) {
-                continue;
-            }
-            Duration timeLeft = Duration.between(now, eventDate);
-            if (timeLeft.compareTo(minTime) < 0) {
-                return false;
-            }
-        }
-        return true;
     }
+
+    public String listTicket() {
+        StringBuilder sb = new StringBuilder();
+        if (ticketDateClosed != null) {
+            sb.append(id).append(ticketDateClosed).append("->").append(stateTicket.toString());
+        } else if (ticketDateOpen != null) {
+            sb.append(ticketDateOpen).append('-').append(id).append("->").append(stateTicket.toString());
+        } else {
+            sb.append(id).append("->").append(stateTicket.toString());
+        }
+        return sb.toString();
+    }
+
+    public abstract void setTicketType(char type);
 
 
 }

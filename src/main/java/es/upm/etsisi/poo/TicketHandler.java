@@ -1,41 +1,71 @@
 package es.upm.etsisi.poo;
 
-import es.upm.etsisi.poo.Products.Product;
-import es.upm.etsisi.poo.Ticket.Ticket;
+import es.upm.etsisi.poo.Products.Vendible;
+import es.upm.etsisi.poo.Strategies.BusinessPrintStrategy;
+import es.upm.etsisi.poo.Strategies.ClientPrintStrategy;
 import es.upm.etsisi.poo.Ticket.TicketBusiness;
 import es.upm.etsisi.poo.Ticket.TicketClient;
+import es.upm.etsisi.poo.Ticket.TicketParam;
+import es.upm.etsisi.poo.Validacion.ValidacionC;
+import es.upm.etsisi.poo.Validacion.ValidacionP;
+import es.upm.etsisi.poo.Validacion.ValidacionS;
+import es.upm.etsisi.poo.Validacion.ValidacionTickets;
 
 import java.util.ArrayList;
 
 public class TicketHandler {
-    private ArrayList<Ticket> tickets;
+    private ArrayList<TicketParam<? extends Vendible>> tickets;
 
     public TicketHandler() {
         this.tickets = new ArrayList<>();
     }
-    public ArrayList<Ticket> getTickets() {
+    public ArrayList<TicketParam<? extends Vendible>> getTickets() {
         return tickets;
     }
 
     public int newTicketClient(){
         //Genera un ticket con id aleatorio
-        TicketClient actTicket = new TicketClient();
+        ClientPrintStrategy clientPrintStrategy = new ClientPrintStrategy();
+        ValidacionP validacionP = new ValidacionP();
+        TicketClient actTicket = new TicketClient(clientPrintStrategy,validacionP);
         tickets.add(actTicket);
         return actTicket.getId();
     }
+
     public int newTicketClient(int id){
-        TicketClient actTicket = new TicketClient(newTicketIdFinder(id));
+        ClientPrintStrategy clientPrintStrategy = new ClientPrintStrategy();
+        ValidacionP validacionP = new ValidacionP();
+        TicketClient actTicket = new TicketClient(newTicketIdFinder(id),clientPrintStrategy,validacionP);
         tickets.add(actTicket);
         return actTicket.getId();
     }
-    public int newTicketBusiness(){
+
+    public int newTicketBusiness(char type){
         //Genera un ticket con id aleatorio
-        TicketBusiness actTicket = new TicketBusiness();
+        BusinessPrintStrategy businessPrintStrategy = new BusinessPrintStrategy();
+        ValidacionTickets validacion=null;
+        if(type=='s'){
+            validacion = new ValidacionS();
+        }
+        else if (type=='c'){
+            validacion = new ValidacionC();
+        }
+
+        TicketBusiness actTicket = new TicketBusiness(businessPrintStrategy, validacion);
         tickets.add(actTicket);
         return actTicket.getId();
     }
-    public int newTicketBusiness(int id){
-        TicketBusiness actTicket = new TicketBusiness(newTicketIdFinder(id));
+
+    public int newTicketBusiness(int id,char type){
+        BusinessPrintStrategy businessPrintStrategy = new BusinessPrintStrategy();
+        ValidacionTickets validacion = null;
+        if(type=='s'){
+            validacion = new ValidacionS();
+        }
+        else if (type=='c'){
+            validacion = new ValidacionC();
+        }
+        TicketBusiness actTicket = new TicketBusiness(newTicketIdFinder(id), businessPrintStrategy, validacion);
         tickets.add(actTicket);
         return actTicket.getId();
     }
@@ -75,11 +105,14 @@ public class TicketHandler {
     }
 
     // Añade un producto al ticket
-    public void addTicket(int TId, Product newproduct ,int cantidad){
-        Ticket actTicket = tickets.get(TId);
+    public void addTicket(int TId, Vendible newproduct , int cantidad){
+        TicketParam<?> rawTicket = tickets.get(TId);
         try {
+            // Esto es para que el IDE no nos marque advertencia al hacer el casting -M
+            @SuppressWarnings("unchecked")
+            TicketParam<Vendible> actTicket = (TicketParam<Vendible>) rawTicket;
             actTicket.addProduct(newproduct, cantidad);
-            if (actTicket.getTicketState().equals(State.EMPTY)){
+            if (actTicket.getTicketState().equals(State.EMPTY)) {
                 actTicket.updateState(State.OPEN);
             }
         }
@@ -89,8 +122,8 @@ public class TicketHandler {
     }
 
     // Busca el ticket en el array. Si no lo encuentra devuelve null.
-    public Ticket getTicket(int TId){
-        Ticket actTicket = null;
+    public TicketParam<? extends Vendible> getTicket(int TId){
+        TicketParam<?> actTicket = null;
         int busqueda=0;
         while(busqueda<tickets.size()){
             if (tickets.get(busqueda).getId() == TId){

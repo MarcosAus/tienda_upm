@@ -8,9 +8,12 @@ import es.upm.etsisi.poo.Utilities;
 
 public class ProductPers extends ProductBasic {
     private ArrayList<String> textos ;
-    private final int maxTextos;
+    private int maxTextos;
 
-    public ProductPers(Category categoria, int id, String name, double price, int maxTextos){
+    public ProductPers() {
+        this.textos = new ArrayList<>();
+    }
+    public ProductPers(Category categoria, String id, String name, double price, int maxTextos){
         super(categoria,name,id,price);
         if (maxTextos <= Utilities.getMaxPersProduct()) this.maxTextos = maxTextos;
         else throw new IllegalArgumentException();
@@ -89,7 +92,7 @@ public class ProductPers extends ProductBasic {
     @Override
     public double TotalPrice() {
         double aumento = ((double) textos.size() /10)+1;
-        return this.getPrecio() * aumento;
+        return this.getPrice() * aumento;
     }
     public boolean isFull(){
         return textos.size() == maxTextos;
@@ -102,11 +105,7 @@ public class ProductPers extends ProductBasic {
 
     @Override
     public Product  copyProduct() {
-        return new ProductPers(getCategory(),getId(),getName(),getPrecio(),getMaxTextos());
+        return new ProductPers(getCategory(),getId(),getName(), getPrice(),getMaxTextos());
     }
 
-    @Override
-    public ProductPers isProductPers(){
-        return this;
-    }
 }

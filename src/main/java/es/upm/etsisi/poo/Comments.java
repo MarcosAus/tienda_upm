@@ -12,6 +12,7 @@ public class Comments {
     public static final String ID_PRICE_AMOUNT_NOT_NUMBER = "ID, price or amount is not a number";
     public static final String CAPACITY_REACHED = "Capacity has been reached";
     public static final String UNKNOWN_COMMAND = "Unknown command";
+    public static final String NO_PRINT_STRATEGY = "No print strategy exists";
 
 
     //CASH COMMANDS ERR RESPONSES
@@ -83,4 +84,5 @@ public class Comments {
     public static final String ACTIVITY_IS_EXPIRED = "An activity is expired , thats why you cant closed the ticket";
     public static final String TICKET_IS_NOT_IN_CASH = "Only the cashier who created the ticket can modify it.";
     public static final String MAXPARTICIPANTS_EXCEDED = "Max participants exceeded";
+    public static final String SERVICES_NO_MODIFICABLES = "Services are not modifiable";
 }

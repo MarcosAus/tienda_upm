@@ -51,13 +51,13 @@ public class CommandProdAddFoodMeeting implements Command {
                         if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) { // Se verifica que el nombre tenga el formato correcto
                             name = name.substring(1, name.length()-1);
                             if (args[1].equals("addFood")) {
-                                product = new Event(id, name, price, date, maxParticipantes, Utilities.getMinTimeMels(), "CampusMeals");
+                                product = new Event(Integer.toString(id), name, price, date, maxParticipantes, Utilities.getMinTimeMels(), "CampusMeals");
                                 fechaProducto = product.getStartDate();
                                 if (fechaProducto.isBefore(now) || maxParticipantes >= Utilities.getMinTimeMels() || maxParticipantes <= 0) {
                                     add = false;
                                 }
                             } else if (args[1].equals("addMeeting")) {
-                                product = new Event(id, name, price, date, maxParticipantes, Utilities.getMinTimeMeetings(), "Meetings");
+                                product = new Event(Integer.toString(id), name, price, date, maxParticipantes, Utilities.getMinTimeMeetings(), "Meetings");
                                 fechaProducto = product.getStartDate();
                                 if (fechaProducto.isBefore(now) || maxParticipantes >= Utilities.getMinTimeMels() || maxParticipantes <= 0) {
                                     add = false;
@@ -97,14 +97,14 @@ public class CommandProdAddFoodMeeting implements Command {
                         if(Event.getMAXPEOPLEALLOWED()>=maxParticipantes) {
                             if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) {
                                 if (args[1].equals("addFood")) {
-                                    product = new Event(id, name, price, date, maxParticipantes, Utilities.getMinTimeMeetings(), "CampusMeals");
+                                    product = new Event(Integer.toString(id), name, price, date, maxParticipantes, Utilities.getMinTimeMeetings(), "CampusMeals");
                                     fechaProducto = product.getStartDate();
                                     if (fechaProducto.isBefore(now) || maxParticipantes >= Utilities.getMinTimeMels() || maxParticipantes <= 0) {
                                         add = false;
                                     }
 
                                 } else if (args[1].equals("addMeeting")) {
-                                    product = new Event(id, name, price, date, maxParticipantes, Utilities.getMinTimeMels(),"Meetings");
+                                    product = new Event(Integer.toString(id), name, price, date, maxParticipantes, Utilities.getMinTimeMels(),"Meetings");
                                     fechaProducto = product.getStartDate();
                                     if (fechaProducto.isBefore(now) || maxParticipantes >= Utilities.getMinTimeMels() || maxParticipantes <= 0) {
                                         add = false;

@@ -4,6 +4,7 @@ import es.upm.etsisi.poo.*;
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Products.*;
 import es.upm.etsisi.poo.Ticket.Ticket;
+import es.upm.etsisi.poo.Ticket.TicketParam;
 import es.upm.etsisi.poo.Users.Cashier;
 
 import java.time.Duration;
@@ -31,9 +32,9 @@ public class CommandTicketAdd implements Command {
            try {
                //Se separan todas las variables que se dan en el comando
                int amount = Integer.parseInt(args[5]);
-               Ticket actTicket = ticketHandler.getTicket(Integer.parseInt(args[2]));
+               TicketParam<Vendible> actTicket = (TicketParam<Vendible>) ticketHandler.getTicket(Integer.parseInt(args[2]));
                Cashier actCashier = userhandler.getUserById(args[3]).getThisCash();
-               Product actProduct = productHandler.getProduct(Integer.parseInt(args[4]));
+               Vendible actProduct = productHandler.getProduct(args[4]);
 
                if (actCashier != null) {// Se comprueban posibles errores que se pueden dar con las variables dadas por el usuario.
                    if (actProduct != null) {
@@ -98,7 +99,28 @@ public class CommandTicketAdd implements Command {
            } catch (Exception e) {
                System.out.println(Comments.INT_NOT_NUMBER);
            }
-       } else {
+       } else if (args.length == 5) {
+           try {
+               TicketParam<Vendible> actTicket = (TicketParam<Vendible>) ticketHandler.getTicket(Integer.parseInt(args[2]));
+               Cashier actCashier = userhandler.getUserById(args[3]).getThisCash();
+               Vendible service = productHandler.getProduct(args[4]);
+               if (actTicket == null) {
+                   System.out.println(Comments.TICKET_ID_NOT_FOUND);
+               } else if (actCashier == null) {
+                   System.out.println(Comments.CASH_NOT_FOUND);
+               } else if (service == null) {
+                   System.out.println(Comments.PRODUCT_NOT_FOUND);
+               } else if (!actCashier.ticketExists(actTicket.getId())) {
+                   System.out.println(Comments.TICKET_IS_NOT_IN_CASH);
+               } else {
+                   actTicket.addProduct(service,1);
+                   System.out.println(Comments.PROD_ADD);
+               }
+           } catch (Exception e) {
+               System.out.println(Comments.INT_NOT_NUMBER);
+           }
+       }
+       else {
               System.out.println(Comments.LENGTH_WRONG);
        }
     }

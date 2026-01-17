@@ -21,10 +21,10 @@ public class CommandProdRemove implements Command {
 
     @Override
     public void execute(String[] args) {
-        int id;
+        String id;
         if (args.length == 3) {
             try {
-                id = Integer.parseInt(args[2]);
+                id = args[2];
                 productHandler.removeProduct(id);
                 System.out.println(Comments.PROD_REMOVE);
             } catch (NumberFormatException e) {

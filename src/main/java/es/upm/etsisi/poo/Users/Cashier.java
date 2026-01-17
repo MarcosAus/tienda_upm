@@ -1,6 +1,7 @@
 package es.upm.etsisi.poo.Users;
 
 import es.upm.etsisi.poo.Ticket.Ticket;
+import es.upm.etsisi.poo.Ticket.TicketParam;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,8 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Cashier extends User {
-    HashMap<Integer,Ticket> tickets; //fixme tickets a cambiado de un Stack a un HasMap
+    HashMap<Integer, TicketParam<?>> tickets; //fixme tickets a cambiado de un Stack a un HasMap
 
+    public Cashier() {}
     public Cashier(String id, String nombre, String correo) {
         super(validarId(id), nombre, correo); /*Si el id del cajero no empieza por "UW", el cajero se crea igual.
                                                Esto lo arreglaremos en App (abierto a revisar) /M */
@@ -17,18 +19,17 @@ public class Cashier extends User {
     }
 
     //Getter tickets
-    public HashMap<Integer,Ticket> getTickets() {
+    public HashMap<Integer,TicketParam<?>> getTickets() {
         return tickets;
     }
 
-    @Override
-    public void addTicket(Ticket ticket) {
+    public void addTicket(TicketParam<?> ticket) {
         tickets.put(ticket.getId(),ticket);
     }
 
     //Elimina el ticket en base a un String
     public void removeTicket(int ticketId) {
-        Ticket ticketActual = tickets.get(ticketId);
+        TicketParam<?> ticketActual = tickets.get(ticketId);
         try {
             tickets.remove(ticketActual.getId());
         } catch (Exception noProductWithProdId) {
@@ -73,10 +74,10 @@ public class Cashier extends User {
         return Integer.parseInt(cashierId.substring(2));
     }
     public void listAllTickets() {
-        List<Map.Entry<Integer, Ticket>> lista = new ArrayList<>(tickets.entrySet());
+        List<Map.Entry<Integer, TicketParam<?>>> lista = new ArrayList<>(tickets.entrySet());
         lista.sort(Map.Entry.comparingByKey());
-        for (Map.Entry<Integer, Ticket> entry : lista) {
-            Ticket ticket = entry.getValue();
+        for (Map.Entry<Integer, TicketParam<?>> entry : lista) {
+            TicketParam<?> ticket = entry.getValue();
             System.out.println(ticket.listTicket());
         }
     }

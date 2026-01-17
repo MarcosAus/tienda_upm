@@ -2,11 +2,8 @@ package es.upm.etsisi.poo.Commands.CommandsForProd;
 
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Comments;
-import es.upm.etsisi.poo.Products.Category;
+import es.upm.etsisi.poo.Products.*;
 import es.upm.etsisi.poo.ProductHandler;
-import es.upm.etsisi.poo.Products.Product;
-import es.upm.etsisi.poo.Products.ProductBasic;
-import es.upm.etsisi.poo.Products.ProductPers;
 import es.upm.etsisi.poo.Utilities;
 
 public class CommandProdAdd implements Command {
@@ -24,13 +21,16 @@ public class CommandProdAdd implements Command {
 
 
     @Override
-    public void execute(String[] args) { // fixme hay que modificarlo porque no maneja el tiempo minimo de creacion de 72 o 12 horas
+    public void execute(String[] args) {
         Category category;
         int id;
         String name;
         double price;
         int MaxText;
         Product product;
+        String maximumDate;
+        ServicesTypes serviceCategory;
+        Service service;
         try {
             if (productHandler.getHandlerSize() == Utilities.MAX_LIST) {
                 System.out.println(Comments.PRODUCT_LIST_FULL);
@@ -49,7 +49,7 @@ public class CommandProdAdd implements Command {
                         if (category != null) {
                             price = Double.parseDouble(args[4]);
 
-                            product = new ProductBasic(category, name, id, price);
+                            product = new ProductBasic(category, name, Integer.toString(id), price);
                             productHandler.addProduct(product);
                             System.out.println(product.toString());
                             System.out.println(Comments.PROD_ADD);
@@ -74,7 +74,7 @@ public class CommandProdAdd implements Command {
                                 price = Double.parseDouble(args[5]);
                                 MaxText = Integer.parseInt(args[6]);
 
-                                product = new ProductPers(category, id, name, price, MaxText);
+                                product = new ProductPers(category, Integer.toString(id), name, price, MaxText);
 
                                 productHandler.addProduct(product);
                                 System.out.println(product.toString());
@@ -99,7 +99,7 @@ public class CommandProdAdd implements Command {
                             }
                             if (category != null) {
                                 price = Double.parseDouble(args[5]);
-                                product = new ProductBasic(category, name, id, price);
+                                product = new ProductBasic(category, name, Integer.toString(id), price);
                                 productHandler.addProduct(product);
                                 System.out.println(product.toString());
                                 System.out.println(Comments.PROD_ADD);
@@ -119,9 +119,9 @@ public class CommandProdAdd implements Command {
                             price = Double.parseDouble(args[4]);
                             if (!Integer.toString(id).equals(args[2])) {
                                 MaxText = Integer.parseInt(args[5]);
-                                product = new ProductPers(category, id, name, price, MaxText);
+                                product = new ProductPers(category, Integer.toString(id), name, price, MaxText);
                             } else{
-                                product = new ProductBasic(category, name, id, price);
+                                product = new ProductBasic(category, name, Integer.toString(id), price);
 
                             }
 
@@ -130,6 +130,13 @@ public class CommandProdAdd implements Command {
                             System.out.println(Comments.PROD_ADD);
                         } else System.out.println(Comments.CATEGORY_WRONG);
                     }
+                } else if (args.length == 4) {
+                    maximumDate = args[2];
+                    serviceCategory = ServicesTypes.valueOf(args[3].toUpperCase());
+                    service = new Service(maximumDate, serviceCategory);
+                    productHandler.addProduct(service);
+                    System.out.println(service.toString());
+                    System.out.println(Comments.PROD_ADD);
                 } else System.out.println(Comments.LENGTH_WRONG);
             }
         } catch (NumberFormatException e) {

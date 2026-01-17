@@ -9,46 +9,62 @@ public class ProductHandler {
     private List<Vendible> productList = new ArrayList<>();
     private static final int capacity = 200;
 
+    public ProductHandler() {}
 
     // Añade un producto a la lista de productos. No lo añade si el id se repite.
     public boolean addProduct(Vendible product) {
         boolean add = true;
-        for (int i = 0; i<this.productList.size(); i++) {
-            if (this.productList.get(i).getId() == product.getId()) {
+        for (int i = 0; i < this.productList.size(); i++) {
+            if (this.productList.get(i).getId().equals(product.getId())) {
                 add = false;
             }
         }
-        if (add) {
+        if ( add && productList.size() < capacity) {
             this.productList.add(product);
         }
         return add;
     }
 
     // Elimina un producto SOLO del array no, se va a tickets
-    public void removeProduct(int id) {
-        for (int i = 0; i < productList.size(); i++) {
-            if (productList.get(i).getId() == id) {
+    public void removeProduct(String id) {
+        boolean remove = false;
+        int i = 0;
+        while (!remove && i < this.productList.size()) {
+            if (productList.get(i).getId().equals(id)) {
                 productList.remove(i);
+                remove = true;
             }
+            i++;
         }
     }
 
+
     //Devuelve el producto en base a un id. Null si no se encuentra.
-    public Product getProduct(int id) {
-        Product encontrado = null;
+    public Vendible getProduct(String id) {
+        Vendible encontrado = null;
         int indice = 0;
         while(indice<productList.size() && encontrado==null) {
-            if( productList.get(indice).getId() == id) {
+            if( productList.get(indice).getId().equals(id)) {
                 encontrado = productList.get(indice);
             }
             indice++;
         }
         return encontrado;
     }
+    public Service getService(String id) {
+        Service found = null;
+        int indice = 0;
+        while (indice < productList.size() && found == null) {
+            if (productList.get(indice).getId().equals(id)) {
+                found = (Service) productList.get(indice);
+            }
+        }
+        return found;
+    }
 
 
     //Da la lista de produtos.
-    public List<Product> getProductList() {
+    public List<Vendible> getProductList() {
         return productList;
     }
 
@@ -57,7 +73,7 @@ public class ProductHandler {
 
 
     // Actualiza el producto. El nombre, categoria o precio respectivamente.
-    public void updateProduct(int id, String field, String newValue) {
+    public void updateProduct(String id, String field, String newValue) {
         Product product = null;
         switch (field) {
             case "NAME":
@@ -76,14 +92,14 @@ public class ProductHandler {
         }
     }
 
-    public Product updateProductName(int id ,String newName) {
-        Product result =  getProduct(id);
+    public Product updateProductName(String id ,String newName) {
+        Product result = (Product) getProduct(id);
         result.setName(newName);
         return result;
     }
 
-    public Product updateProductCategory(int id, Category newCategory) {
-        Product p = getProduct(id);
+    public Product updateProductCategory(String id, Category newCategory) {
+        Product p = (Product) getProduct(id);
         if (p.getMinTime().isZero() && p.isPersonalizable()){
             ((ProductPers)p).setCategory(newCategory);
         }
@@ -93,8 +109,8 @@ public class ProductHandler {
         return p;
     }
 
-    public Product updateProductPrice(int id, double newPrice) {
-        Product p = getProduct(id);
+    public Product updateProductPrice(String id, double newPrice) {
+        Product p = (Product) getProduct(id);
         p.setPrice(newPrice);
         return p;
     }
@@ -102,18 +118,10 @@ public class ProductHandler {
 
     public void listProducts() {
         System.out.print("Catalog:\n");
-        for (Product product : productList) {
+        for (Vendible product : productList) {
             System.out.println(product.toString());
         }
     }
 
-    // Metodo que devuelve cuantos productos se pueden crear nuevos hasta quedarse sin ids posibles.
-    public int capacityLeft() {
-        return capacity - productList.size();
 
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
 }

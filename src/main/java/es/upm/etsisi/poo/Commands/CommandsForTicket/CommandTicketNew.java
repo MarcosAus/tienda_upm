@@ -2,12 +2,16 @@ package es.upm.etsisi.poo.Commands.CommandsForTicket;
 
 import es.upm.etsisi.poo.*;
 import es.upm.etsisi.poo.Commands.Command;
+import es.upm.etsisi.poo.Strategies.ClientPrintStrategy;
+import es.upm.etsisi.poo.Strategies.PrintStrategy;
 import es.upm.etsisi.poo.Ticket.Ticket;
 import es.upm.etsisi.poo.Ticket.TicketBusiness;
 import es.upm.etsisi.poo.Ticket.TicketClient;
+import es.upm.etsisi.poo.Ticket.TicketParam;
 import es.upm.etsisi.poo.Users.Cashier;
 import es.upm.etsisi.poo.Users.Client;
 import es.upm.etsisi.poo.Users.User;
+import es.upm.etsisi.poo.Validacion.ValidacionS;
 
 public class CommandTicketNew implements Command {
     private final TicketHandler ticketHandler;
@@ -26,10 +30,116 @@ public class CommandTicketNew implements Command {
 
     @Override
     public void execute(String[] args) {
-        Ticket ticket = null;
-        int idTry = 0, idChosen = 0;
+        if (args.length < 4 || args.length > 6) {
+            System.out.println(Comments.LENGTH_WRONG);
+            return;
+        }
+
+        int idx = 2;
+        Integer customId = null;
+
+        if (Utilities.isNumeric(args[idx])) {
+            customId = Integer.parseInt(args[idx]);
+            if (customId <= 1 || customId >= 99999) {
+                System.out.println(Comments.ID_NOT_IN_BOUNDARIES);
+                return;
+            }
+            idx++;
+        }
+
+        if (idx + 1 >= args.length) {
+            System.out.println(Comments.LENGTH_WRONG);
+            return;
+        }
+
+        String cashierId = args[idx];
+        String userId = args[idx + 1];
+        idx += 2;
+
+        char ticketType = 'p';
+        if (idx < args.length) {
+            String flag = args[idx];
+            if (flag.startsWith("-") && flag.length() == 2) {
+                ticketType = flag.charAt(1);
+            } else {
+                System.out.println("Syntax error: Type must be -c, -p or -s");
+                return;
+            }
+        }
+
+        processTicketCreation(customId, cashierId, userId, ticketType);
+    }
+
+    private void processTicketCreation(Integer customId, String cashId, String userId, char type) {
+        User userObj = userHandler.getUserById(userId);
+        User cashObj = userHandler.getUserById(cashId);
+
+        if (userObj == null || cashObj == null) {
+            System.out.println(Comments.USER_NOT_FOUND);
+            return;
+        }
+
+        Client client = userObj.getThisCli();
+        Cashier cashier = cashObj.getThisCash();
+
+        if (client == null || cashier == null) {
+            System.out.println(Comments.ID_NOT_MATCHES_COMMAND);
+            return;
+        }
+
+        // Detectar tipo de cliente (Si ID empieza por 'B' es Business)
+        boolean isBusiness = client.getId().startsWith("B");
+        int finalId = 0;
+
+        // Validaciones Específicas
+        if (isBusiness) {
+            if (type == 'p') {
+                System.out.println("Error: Business tickets accept only Services (-s) or Combined (-c).");
+                return;
+            }
+        } else {
+            // Cliente normal
+            if (type != 'p') {
+                System.out.println(Comments.CLIENTS_CANT_SELECT_TYPE);
+                return;
+            }
+        }
+
+        // Creación del Ticket (Usando Handler)
+        if (isBusiness) {
+            finalId = (customId != null) ? ticketHandler.newTicketBusiness(customId,type) : ticketHandler.newTicketBusiness(type);
+        } else {
+
+            finalId = (customId != null) ? ticketHandler.newTicketClient(customId) : ticketHandler.newTicketClient();
+        }
+
+        // Aviso si el ID estaba ocupado
+        if (customId != null && finalId != customId) {
+            System.out.println("ID requested was busy. Assigned ID: " + finalId);
+        }
+
+        TicketParam<?> ticket = ticketHandler.getTicket(finalId);
+
+        if (ticket != null) {
+            ticket.setTicketType(type);
+
+            // Finalizar operación
+            cashier.addTicket(ticket);
+            client.addTicket(ticket);
+            System.out.println(Comments.TICKET_NEW);
+            ticket.printTicket();
+        }
+    }
+
+
+
+
+
+
+
+
         //El metodo se subdivide en 4 comandos distintos. Uno de longitud 4 y otro de 6 y los 2 restantes en funcion de args[2].
-        if (args.length == 5) {
+       /* if (args.length == 5) {
             Leght5(args, idTry, idChosen, ticket);
         } else if (args.length == 4) {
             Legth4(args, idTry, idChosen, ticket);
@@ -100,7 +210,7 @@ public class CommandTicketNew implements Command {
                             System.out.println(Comments.ID_NOT_MATCHES_COMMAND);
                         } else{
 
-                            if (actClient.getId().endsWith("s")) {
+                            if (actClient.getId().startsWith("B")) {
                                 idChosen = ticketHandler.newTicketBusiness(idTry);
                                 ticket = ticketHandler.getTicket(idChosen);
                                 if(idChosen !=idTry){
@@ -154,7 +264,7 @@ public class CommandTicketNew implements Command {
                     }
                     else {
 
-                        if (actClient.getId().endsWith("s")) {
+                        if (actClient.getId().startsWith("B")) {
                             char type = args[4].charAt(0);
                             if (type != 'c' && type != 'p' && type != 's') {
                                 System.out.println("Wrong types for ticket selected.");
@@ -240,6 +350,5 @@ public class CommandTicketNew implements Command {
         }
         catch(Exception e){
             System.out.println(Comments.ID_NOT_NUMBER);
-        }
-    }
+        }*/
 }

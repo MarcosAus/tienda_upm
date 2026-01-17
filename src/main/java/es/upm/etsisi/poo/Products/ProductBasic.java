@@ -5,7 +5,8 @@ import java.time.Duration;
 public class ProductBasic extends Product {
     private Category categoria;
 
-    public ProductBasic(Category categoria, String name, int id, double price){
+    public ProductBasic() {}
+    public ProductBasic(Category categoria, String name, String  id, double price){
         super(id,name,price);
         this.categoria = categoria;
     }
@@ -39,7 +40,7 @@ public class ProductBasic extends Product {
 
     @Override
     public double TotalPrice(){
-        return getPrecio();
+        return getPrice();
     }
 
     public void setCategory(Category categoria) {this.categoria = categoria;}
@@ -54,10 +55,6 @@ public class ProductBasic extends Product {
         return amount;
     }
 
-    @Override
-    public boolean isPersonalizable() {
-        return false;
-    }
 
     @Override
     public Duration getMinTime() {
@@ -66,17 +63,7 @@ public class ProductBasic extends Product {
 
     @Override
     public Product copyProduct() {
-        return new ProductBasic(this.categoria,getName(),getId(),getPrecio());
+        return new ProductBasic(this.categoria,getName(),getId(), getPrice());
     }
 
-
-    @Override
-    public ProductBasic isProductBasic(){
-        return this;
-    }
-
-    @Override
-    public boolean hasPrice() {
-        return true;
-    }
 }

@@ -5,7 +5,10 @@ import es.upm.etsisi.poo.Products.Product;
 import es.upm.etsisi.poo.Products.ProductPers;
 import es.upm.etsisi.poo.Products.Vendible;
 import es.upm.etsisi.poo.State;
+import es.upm.etsisi.poo.Strategies.PrintStrategy;
 import es.upm.etsisi.poo.TicketItem;
+import es.upm.etsisi.poo.Validacion.ValidacionS;
+import es.upm.etsisi.poo.Validacion.ValidacionTickets;
 
 import java.util.HashSet;
 import java.util.List;
@@ -14,88 +17,39 @@ public class TicketBusiness extends TicketParam<Vendible> {
 
     private char ticketType;
 
-    public TicketBusiness(int id){
-        super(id);
-        ticketType = 'p';
+    public TicketBusiness() { super(); }
+
+    public TicketBusiness(int id, PrintStrategy<Vendible> printStrategy,ValidacionTickets<Vendible> validacion) {
+        super(id, printStrategy,validacion);
+
     }
 
-    public TicketBusiness(){
-        super();
-        ticketType = 'p';
+    public TicketBusiness(PrintStrategy<Vendible> printStrategy,ValidacionTickets<Vendible> validacion) {
+        super(printStrategy,validacion);
     }
 
+    @Override
     public void setTicketType(char ticketType){
         this.ticketType = ticketType;
+        // Cambiamos la estrategia de validación dinámicamente
+        if (ticketType == 's') {
+            this.validacion = new ValidacionS(); // Estrategia estricta
+        } else {
+            this.validacion = new ValidacionCombinada(); // Estrategia permisiva
+        }
     }
-
 
     @Override
-    public boolean isBusinessType() {
-        return true;
+    public boolean addProduct(Vendible element, int cantidad) {
+        // Delegamos la decisión a la clase de validación
+        if (this.validacion != null && !this.validacion.esValido(element)) {
+            System.out.println("Producto no válido para este tipo de ticket.");
+            return false;
+        }
+        return super.addProduct(element, cantidad);
     }
 
-    @Override
-    public boolean addProduct(Product product, int cantidad) {
-        boolean resultado = false;
-        if (this.getTicketState() != State.CLOSED) {
-            updateState(State.OPEN);
-            if (TicketWillBeFull(cantidad) <= 0) {
-                if (product != null) {
-                    if (ProductMatchesType(product)) {
-                        TicketItem tI = busquedaProductoPorID(getItems(),product.getId());
-                        if (tI != null) {
-                            if ( product.isPersonalizable()) {
-                                List<String> textosA= ((ProductPers)product).getTextos();
-                                List<String> textosB= ((ProductPers)tI.getProduct()).getTextos();
-                                if(new HashSet<>(textosA).equals(new HashSet<>(textosB))){
-                                    tI.addAmount(cantidad);
-                                    printTicket();
-                                }else{
-                                    getItems().add(new TicketItem(product,cantidad));
-                                    printTicket();
-                                }
-                            } else if (product.getMinTime().isZero()) {
-                                tI.addAmount(cantidad);
-                                printTicket();
-                            } else {
-                                System.out.println(Comments.DUPLICATE_ACTIVITY_IN_TICKET);
-                            }
-                        } else {
-                            getItems().add(new TicketItem(product, cantidad));
-                            resultado = true;
-                            printTicket();
-
-                        }
-                    }
-                    else{
-                        System.out.println(Comments.INVALID_PRODUCT_TIPE_FOR_TICKET);
-                    }
-
-                }
-            } else {
-                System.out.println(Comments.CAPACITY_REACHED);
-            }
-        }
-        return resultado;
-    }
-
-    private boolean ProductMatchesType(Product product) {
-        boolean result =  false;
-        switch (ticketType) {
-            case 'c':
-                result = true;
-                break;
-            case 'p':
-                if (product.isService() == null) {
-                    result = true;
-                }
-                break;
-            case 's':
-                if (product.isService() != null) {
-                    result = true;
-                }
-
-        }
-        return result;
+    public char getTicketType() {
+        return ticketType;
     }
 }
