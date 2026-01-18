@@ -120,30 +120,34 @@ public abstract class TicketParam <T extends Vendible> {
         if (this.stateTicket != State.CLOSED) {
             stateTicket = State.OPEN;
             if (cantidad + this.getNumeroProductos() < MAXSIZE) {
-                if (element != null && canAdd(element)) {
-                    TicketItem<T> tI = busquedaProductoPorID(items, element.getId());
-                    if (tI != null) {
-                        if (element.isPersonalizable()) {
-                            List<String> textosA = ((ProductPers) element).getTextos();
-                            List<String> textosB = ((ProductPers) tI.getProduct()).getTextos();
-                            if (new HashSet<>(textosA).equals(new HashSet<>(textosB))) {
+                if (element != null) {
+                    if (canAdd(element)) {
+                        TicketItem<T> tI = busquedaProductoPorID(items, element.getId());
+                        if (tI != null) {
+                            if (element.isPersonalizable()) {
+                                List<String> textosA = ((ProductPers) element).getTextos();
+                                List<String> textosB = ((ProductPers) tI.getProduct()).getTextos();
+                                if (new HashSet<>(textosA).equals(new HashSet<>(textosB))) {
+                                    tI.addAmount(cantidad);
+                                    printTicket();
+                                } else {
+                                    items.add(new TicketItem<T>(element, cantidad));
+                                    printTicket();
+                                }
+                            } else if (element.getMinTime().isZero()) {
                                 tI.addAmount(cantidad);
                                 printTicket();
                             } else {
-                                items.add(new TicketItem<T>(element, cantidad));
-                                printTicket();
+                                System.out.println(Comments.DUPLICATE_ACTIVITY_IN_TICKET);
                             }
-                        } else if (element.getMinTime().isZero()) {
-                            tI.addAmount(cantidad);
-                            printTicket();
                         } else {
-                            System.out.println(Comments.DUPLICATE_ACTIVITY_IN_TICKET);
+                            items.add(new TicketItem<T>(element, cantidad));
+                            resultado = true;
+                            printTicket();
+
                         }
                     } else {
-                        items.add(new TicketItem<T>(element, cantidad));
-                        resultado = true;
-                        printTicket();
-
+                        System.out.println(Comments.TYPE_OF_PRODUCT_WRONG);
                     }
                 }
             } else {

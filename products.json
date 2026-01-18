@@ -1,10 +1,9 @@
 {
   "productList" : [ {
-    "type" : "service",
-    "id" : "1S",
-    "minTime" : null,
-    "serviceCategory" : "TRANSPORT",
-    "personalizable" : false
-  } ],
-  "handlerSize" : 1
-}
+    "type" : "personalized",
+    "id" : "5",
+    "textos" : [ ],
+    "maxTextos" : 3,
+    "personalizable" : true,
+    "full" : false,
+    "minTime"
