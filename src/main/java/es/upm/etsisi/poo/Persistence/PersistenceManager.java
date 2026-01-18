@@ -3,6 +3,7 @@ package es.upm.etsisi.poo.Persistence;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import es.upm.etsisi.poo.Comments;
 import es.upm.etsisi.poo.ProductHandler;
@@ -16,8 +17,11 @@ import java.util.Map;
 
 public class PersistenceManager {
     private static final ObjectMapper mapper = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
             .enable(SerializationFeature.INDENT_OUTPUT)
-            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            .setSerializationInclusion(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)
+            .setSerializationInclusion(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY);
 
     private static final String PRODUCT_FILE = "products.json";
     private static final String USER_FILE = "users.json";

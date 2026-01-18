@@ -1,10 +1,12 @@
 package es.upm.etsisi.poo.Users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import es.upm.etsisi.poo.Ticket.TicketParam;
 
 import java.util.HashMap;
 
 public abstract class Client extends User {
+    @JsonIgnore
     private Cashier cashier;
     private HashMap<Integer, TicketParam<?>> tickets;
 
@@ -15,6 +17,7 @@ public abstract class Client extends User {
         this.tickets = new HashMap<>();
     }
 
+    @JsonIgnore
     public Cashier getCashier() {
         return cashier;
     }
@@ -27,6 +30,7 @@ public abstract class Client extends User {
     }
 
     @Override
+    @JsonIgnore
     public Client getThisCli(){
         return this;
     }

@@ -1,7 +1,140 @@
 {
   "tickets" : [ {
+    "type" : "TicketClient",
+    "id" : 25681,
+    "ticketDateOpen" : "2026-01-18",
+    "ticketState" : "EMPTY",
+    "numeroProductos" : 0
+  }, {
+    "type" : "TicketClient",
+    "id" : 212121,
+    "ticketDateClosed" : "2026-01-18",
+    "ticketState" : "CLOSED",
+    "numeroProductos" : 20,
+    "products" : [ {
+      "product" : {
+        "type" : "basic",
+        "id" : "1",
+        "minTime" : 0.0,
+        "category" : "BOOK",
+        "discount" : 0.1,
+        "name" : "\"Libro POO V2\"",
+        "price" : 30.0,
+        "personalizable" : false
+      },
+      "amount" : 20
+    } ]
+  }, {
+    "type" : "TicketClient",
+    "id" : 212123,
+    "ticketDateClosed" : "2026-01-18",
+    "ticketState" : "CLOSED",
+    "numeroProductos" : 23,
+    "products" : [ {
+      "product" : {
+        "type" : "basic",
+        "id" : "1",
+        "minTime" : 0.0,
+        "category" : "BOOK",
+        "discount" : 0.1,
+        "name" : "\"Libro POO V2\"",
+        "price" : 30.0,
+        "personalizable" : false
+      },
+      "amount" : 20
+    }, {
+      "product" : {
+        "type" : "basic",
+        "id" : "2",
+        "minTime" : 0.0,
+        "category" : "CLOTHES",
+        "discount" : 0.07,
+        "name" : "\"Camiseta talla:M UPM\"",
+        "price" : 15.0,
+        "personalizable" : false
+      },
+      "amount" : 3
+    } ]
+  }, {
+    "type" : "TicketClient",
+    "id" : 212127,
+    "ticketDateClosed" : "2026-01-18",
+    "ticketState" : "CLOSED",
+    "numeroProductos" : 3,
+    "products" : [ {
+      "product" : {
+        "type" : "basic",
+        "id" : "2",
+        "minTime" : 0.0,
+        "category" : "CLOTHES",
+        "discount" : 0.07,
+        "name" : "\"Camiseta talla:M UPM\"",
+        "price" : 15.0,
+        "personalizable" : false
+      },
+      "amount" : 3
+    } ]
+  }, {
+    "type" : "TicketClient",
+    "id" : 212128,
+    "ticketDateClosed" : "2026-01-18",
+    "ticketState" : "CLOSED",
+    "numeroProductos" : 7,
+    "products" : [ {
+      "product" : {
+        "type" : "personalized",
+        "id" : "5",
+        "maxTextos" : 3,
+        "full" : false,
+        "personalizable" : true,
+        "minTime" : 0.0,
+        "category" : "CLOTHES",
+        "discount" : 0.07,
+        "name" : "Camiseta talla:M UPM",
+        "price" : 15.0
+      },
+      "amount" : 1
+    }, {
+      "product" : {
+        "type" : "personalized",
+        "id" : "5",
+        "textos" : [ "red", "blue", "green" ],
+        "maxTextos" : 3,
+        "full" : true,
+        "personalizable" : true,
+        "minTime" : 0.0,
+        "category" : "CLOTHES",
+        "discount" : 0.07,
+        "name" : "Camiseta talla:M UPM",
+        "price" : 15.0
+      },
+      "amount" : 3
+    }, {
+      "product" : {
+        "type" : "personalized",
+        "id" : "6",
+        "textos" : [ "red", "blue" ],
+        "maxTextos" : 4,
+        "full" : false,
+        "personalizable" : true,
+        "minTime" : 0.0,
+        "category" : "CLOTHES",
+        "discount" : 0.07,
+        "name" : "Camiseta talla:L UPM",
+        "price" : 20.0
+      },
+      "amount" : 3
+    } ]
+  }, {
     "type" : "TicketBusiness",
-    "id" : 21212,
-    "ticketDateOpen" : null,
-    "ticketDateClosed" : null,
-    "printStrategy"
+    "id" : 212129,
+    "ticketDateClosed" : "2026-01-18",
+    "ticketState" : "CLOSED",
+    "numeroProductos" : 0
+  }, {
+    "type" : "TicketBusiness",
+    "id" : 212130,
+    "ticketState" : "EMPTY",
+    "numeroProductos" : 0
+  } ]
+}

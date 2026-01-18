@@ -1,5 +1,7 @@
 package es.upm.etsisi.poo.Users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import es.upm.etsisi.poo.Ticket.TicketParam;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -24,9 +26,8 @@ public abstract class User {
     }
 
     public String getName() {
-        return this.nombre;
-    }
-
+        return this.nombre;}
+    
     public String getMail() {
         return this.correo;
     }
@@ -36,12 +37,14 @@ public abstract class User {
     }
 
 
+    @JsonIgnore
     public Cashier getThisCash(){   return null;}
-
+    @JsonIgnore
     public Client getThisCli(){    return null;}
-
+    @JsonIgnore
     public boolean isCash() {   return false;}
-
+    @JsonIgnore
     public void addTicket(TicketParam<?> ticket) {}
+    @JsonIgnore
     public void removeTicket() {}
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Cashier extends User {
     HashMap<Integer, TicketParam<?>> tickets; //fixme tickets a cambiado de un Stack a un HasMap
@@ -60,6 +61,7 @@ public class Cashier extends User {
     }
 
     @Override
+    @JsonIgnore
     public Cashier getThisCash(){
         return this;
     }

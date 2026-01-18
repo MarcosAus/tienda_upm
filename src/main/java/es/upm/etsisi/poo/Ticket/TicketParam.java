@@ -13,6 +13,7 @@ import es.upm.etsisi.poo.Validation.ValidacionCloseTickets;
 import es.upm.etsisi.poo.Validation.ValidacionAddTickets;
 import java.time.*;
 import java.util.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -29,8 +30,11 @@ public abstract class TicketParam <T extends Vendible> {
     private static final int MAXSIZE = 100;
     private String ticketDateOpen;
     private String ticketDateClosed;
+    @JsonIgnore
     private PrintStrategy<T> printStrategy;
+    @JsonIgnore
     private ValidacionAddTickets validacionTickets;
+    @JsonIgnore
     private ValidacionCloseTickets<T> validacionCloseTickets;
 
     public TicketParam() {
@@ -56,11 +60,11 @@ public abstract class TicketParam <T extends Vendible> {
         this.validacionTickets = validacionTickets;
         this.validacionCloseTickets = validacionCloseTickets;
     }
-
+    @JsonIgnore
     public ValidacionAddTickets getValidacionTickets() {
         return validacionTickets;
     }
-
+    @JsonIgnore
     public PrintStrategy<T> getPrintStrategy() {
         return printStrategy;
     }
@@ -84,7 +88,7 @@ public abstract class TicketParam <T extends Vendible> {
     public State getTicketState() {
         return stateTicket;
     }
-
+    @JsonIgnore
     public ArrayList<TicketItem<T>> getTicketItems() {
         return items;
     }
@@ -157,6 +161,7 @@ public abstract class TicketParam <T extends Vendible> {
         return resultado;
     }
 
+    @JsonIgnore
     public Map<Category, Integer> getCantidadProductoCategoria() {
         Map<Category, Integer> resultado = new HashMap<>();
         Product productGeneric;

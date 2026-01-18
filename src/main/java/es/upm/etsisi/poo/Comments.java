@@ -46,7 +46,7 @@ public class Comments {
     public static final String CATEGORY_WRONG = "Category is wrong";
     public static final String ID_PRICE_NOT_NUMBER = "ID or price is not a number";
     public static final String PRODUCT_LIST_FULL = "List of Products is full, cannot add any more products";
-    public static final String PRODUCT_NOT_FOUND = "Given product id does not mach.";
+    public static final String PRODUCT_NOT_FOUND = "Given product ID does not match.";
     public static final String NO_PRODUCTS_WITH_THAT_ID_IN_TICKET = "No products with that ID were found in ticket";
     public static final String INVALID_DATE = "Date is invalid";
     public static final String MAXPEOPLE_EXCEDED = "Maximum number of people exceeded";

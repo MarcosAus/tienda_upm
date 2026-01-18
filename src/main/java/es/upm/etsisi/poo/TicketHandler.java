@@ -129,25 +129,6 @@ public class TicketHandler {
         return result;
     }
 
-    // Añade un producto al ticket
-    /**public void addTicket(int TId, Vendible newproduct , int cantidad){
-        TicketParam<?> rawTicket = tickets.get(TId);
-        try {
-            // Esto es para que el IDE no nos marque advertencia al hacer el casting -M
-            @SuppressWarnings("unchecked")
-            TicketParam<Vendible> actTicket = (TicketParam<Vendible>) rawTicket;
-            actTicket.addProduct(newproduct, cantidad);
-            if (actTicket.getTicketState().equals(State.EMPTY)) {
-                actTicket.updateState(State.OPEN);
-            }
-        }
-        catch (Exception noProductWithprodId){
-            System.out.println("No product with id "+TId+" was found");
-        }
-    }
-    **/
-
-
     // Busca el ticket en el array. Si no lo encuentra devuelve null.
     public TicketParam<? extends Vendible> getTicket(int TId){
         TicketParam<?> actTicket = null;
@@ -161,18 +142,4 @@ public class TicketHandler {
         }
         return actTicket;
     }
-
-    // Elimina el ticket. Si no encuentra un ricket con TId da false.
-    /**public boolean removeTicket(int TId){
-        boolean result = false;
-        int i = 0;
-        while (i < this.tickets.size() && !result) {
-            if (this.tickets.get(i).getId() == TId) {
-                tickets.remove(i);
-                result = true;
-            }
-            i++;
-        }
-        return result;
-    }**/
 }

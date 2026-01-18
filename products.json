@@ -1,9 +1,63 @@
 {
   "productList" : [ {
+    "type" : "basic",
+    "id" : "1",
+    "minTime" : 0.0,
+    "category" : "BOOK",
+    "discount" : 0.1,
+    "name" : "\"Libro POO V2\"",
+    "price" : 30.0,
+    "personalizable" : false
+  }, {
+    "type" : "basic",
+    "id" : "2",
+    "minTime" : 0.0,
+    "category" : "CLOTHES",
+    "discount" : 0.07,
+    "name" : "\"Camiseta talla:M UPM\"",
+    "price" : 15.0,
+    "personalizable" : false
+  }, {
+    "type" : "basic",
+    "id" : "74",
+    "minTime" : 0.0,
+    "category" : "CLOTHES",
+    "discount" : 0.07,
+    "name" : "Camiseta talla:M UPM",
+    "price" : 15.0,
+    "personalizable" : false
+  }, {
     "type" : "personalized",
     "id" : "5",
-    "textos" : [ ],
     "maxTextos" : 3,
-    "personalizable" : true,
     "full" : false,
-    "minTime"
+    "personalizable" : true,
+    "minTime" : 0.0,
+    "category" : "CLOTHES",
+    "discount" : 0.07,
+    "name" : "Camiseta talla:M UPM",
+    "price" : 15.0
+  }, {
+    "type" : "personalized",
+    "id" : "6",
+    "maxTextos" : 4,
+    "full" : false,
+    "personalizable" : true,
+    "minTime" : 0.0,
+    "category" : "CLOTHES",
+    "discount" : 0.07,
+    "name" : "Camiseta talla:L UPM",
+    "price" : 20.0
+  }, {
+    "type" : "service",
+    "id" : "1S",
+    "serviceCategory" : "INSURANCE",
+    "personalizable" : false
+  }, {
+    "type" : "service",
+    "id" : "2S",
+    "serviceCategory" : "TRANSPORT",
+    "personalizable" : false
+  } ],
+  "handlerSize" : 7
+}
