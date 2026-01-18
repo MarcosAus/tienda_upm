@@ -29,9 +29,10 @@ public class Service extends Vendible {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{class:ProductService, id:").append(this.getId().substring(0, this.getId().length() - 1));
+        sb.append("{class:ProductService, id:").append(this.getId(), 0, this.getId().length() - 1);
         sb.append(", category:").append(this.getServiceCategory());
-        sb.append(", expiration").append(maximumDate.toString());
+        sb.append(", expiration:").append(maximumDate.toString());
+        sb.append("}");
         return sb.toString();
     }
 

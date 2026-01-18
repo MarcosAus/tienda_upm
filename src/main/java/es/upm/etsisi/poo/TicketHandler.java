@@ -1,5 +1,6 @@
 package es.upm.etsisi.poo;
 
+import es.upm.etsisi.poo.Products.Service;
 import es.upm.etsisi.poo.Products.Vendible;
 import es.upm.etsisi.poo.Strategies.BusinessPrintStrategy;
 import es.upm.etsisi.poo.Strategies.ClientPrintStrategy;
@@ -43,11 +44,15 @@ public class TicketHandler {
     public int newTicketBusiness(char type){
         //Genera un ticket con id aleatorio
         BusinessPrintStrategy businessPrintStrategy = new BusinessPrintStrategy();
-        ValidacionTickets validacion=null;
-        if(type=='s'){
-            validacion = new ValidacionS();
-        }
-        else if (type=='c'){
+
+        ValidacionTickets<Vendible> validacion;
+
+        if (type == 's') {
+            // Casting seguro: ValidacionS implementa ValidacionTickets<Service>
+            // que es compatible con ValidacionTickets<? super Vendible> si ajustas la interfaz
+            // o lo manejas como ValidacionTickets (raw) para simplificar este factory
+            validacion = (ValidacionTickets) new ValidacionS();
+        } else {
             validacion = new ValidacionC();
         }
 
@@ -58,13 +63,17 @@ public class TicketHandler {
 
     public int newTicketBusiness(int id,char type){
         BusinessPrintStrategy businessPrintStrategy = new BusinessPrintStrategy();
-        ValidacionTickets validacion = null;
-        if(type=='s'){
-            validacion = new ValidacionS();
-        }
-        else if (type=='c'){
+        ValidacionTickets<Vendible> validacion;
+
+        if (type == 's') {
+            // Casting seguro: ValidacionS implementa ValidacionTickets<Service>
+            // que es compatible con ValidacionTickets<? super Vendible> si ajustas la interfaz
+            // o lo manejas como ValidacionTickets (raw) para simplificar este factory
+            validacion = (ValidacionTickets) new ValidacionS();
+        } else {
             validacion = new ValidacionC();
         }
+
         TicketBusiness actTicket = new TicketBusiness(newTicketIdFinder(id), businessPrintStrategy, validacion);
         tickets.add(actTicket);
         return actTicket.getId();
@@ -105,7 +114,7 @@ public class TicketHandler {
     }
 
     // Añade un producto al ticket
-    public void addTicket(int TId, Vendible newproduct , int cantidad){
+    /**public void addTicket(int TId, Vendible newproduct , int cantidad){
         TicketParam<?> rawTicket = tickets.get(TId);
         try {
             // Esto es para que el IDE no nos marque advertencia al hacer el casting -M
@@ -120,6 +129,8 @@ public class TicketHandler {
             System.out.println("No product with id "+TId+" was found");
         }
     }
+    **/
+
 
     // Busca el ticket en el array. Si no lo encuentra devuelve null.
     public TicketParam<? extends Vendible> getTicket(int TId){
@@ -136,7 +147,7 @@ public class TicketHandler {
     }
 
     // Elimina el ticket. Si no encuentra un ricket con TId da false.
-    public boolean removeTicket(int TId){
+    /**public boolean removeTicket(int TId){
         boolean result = false;
         int i = 0;
         while (i < this.tickets.size() && !result) {
@@ -147,5 +158,5 @@ public class TicketHandler {
             i++;
         }
         return result;
-    }
+    }**/
 }

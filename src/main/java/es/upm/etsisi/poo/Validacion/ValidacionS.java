@@ -29,7 +29,7 @@ public class ValidacionS implements ValidacionTickets<Service> {
             }
             i++;
         }
-        if(!fechaErronea) return true;
+        if (!fechaErronea) return true;
         else return false;
     }
 }

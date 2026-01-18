@@ -1,6 +1,5 @@
 package es.upm.etsisi.poo.Users;
 
-import es.upm.etsisi.poo.Ticket.Ticket;
 import es.upm.etsisi.poo.Ticket.TicketParam;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

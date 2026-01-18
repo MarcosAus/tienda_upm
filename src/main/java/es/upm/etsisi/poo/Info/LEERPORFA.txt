@@ -16,7 +16,7 @@ Cosas que hacer
 -Persistencia del sistema + actualizar uml con lo añadido
 -Al menos un patron de diseño. (Tema 4)
 -Librerias de alto nivel del tema 5
--//fixme poner lo que veais conveniente
+-Comprobar fecha a la hora de agregar un servicio al ticket
 
 //Una vez todº implementado se hace esto.
 -Verificar que el uml coincide con el codigo.

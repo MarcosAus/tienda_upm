@@ -5,15 +5,12 @@ import es.upm.etsisi.poo.Commands.CommandsForProd.*;
 import es.upm.etsisi.poo.Commands.CommandsForTicket.*;
 import es.upm.etsisi.poo.Commands.CommandsForUser.*;
 import es.upm.etsisi.poo.Persistence.PersistenceManager;
+import es.upm.etsisi.poo.Products.Product;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class App {
-
-    private TicketHandler ticketHandler;
-    private UserHandler userHandler;
-    private ProductHandler productHandler;
 
     /**
      * Metodo principal del programa, inicializa las listas que contendran los productos de inventario y ticket
@@ -30,9 +27,19 @@ public class App {
         CommandUser commandsUser = new CommandUser();
 
         //Handlers que cargan datos persistidos, si no hay datos persistidos inicializa handlers nuevos
-        ProductHandler productHandler = PersistenceManager.loadProducts();
-        TicketHandler ticketHandler = PersistenceManager.loadTickets();
-        UserHandler userHandler = PersistenceManager.loadUsers();
+        ProductHandler productHandler;
+        TicketHandler ticketHandler;
+        UserHandler userHandler;
+        try {
+            productHandler = PersistenceManager.loadProducts();
+            ticketHandler = PersistenceManager.loadTickets();
+            userHandler = PersistenceManager.loadUsers();
+        }catch (Exception e){
+            System.out.println(Comments.PERSISTENCE_ERROR);
+            productHandler = new ProductHandler();
+            ticketHandler = new TicketHandler();
+            userHandler = new UserHandler();
+        }
 
         //Se crean los commandos
         //Los comandos deben tener un nombre igual en minusculas al comando en sí. Ej: TickedAdd tiene que tener name = "ticket add"
@@ -58,10 +65,15 @@ public class App {
         commandsUser.addCommand(new CommandUserListTicketsCashier("cash tickets", userHandler));
         commandsUser.addCommand(new CommandUserRemoveClient("client remove", userHandler));
 
+        try {
+            CLI cli = new CLI(commandsProducts, commandsTickets, commandsUser);
+            if (args.length != 0) {
+                cli.start(args[0]);
+            } else cli.start();
+        }catch (Exception e){
+            System.out.println(Comments.CLI_ERROR);
 
-        CLI cli = new CLI(commandsProducts, commandsTickets, commandsUser);
-        if (args.length != 0) {
-            cli.start(args[0]);
-        } else cli.start();
+        }
+
     }
 }

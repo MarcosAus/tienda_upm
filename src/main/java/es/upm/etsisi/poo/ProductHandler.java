@@ -4,6 +4,7 @@ import es.upm.etsisi.poo.Products.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class ProductHandler {
     private List<Vendible> productList = new ArrayList<>();
@@ -13,6 +14,7 @@ public class ProductHandler {
 
     // Añade un producto a la lista de productos. No lo añade si el id se repite.
     public boolean addProduct(Vendible product) {
+
         boolean add = true;
         for (int i = 0; i < this.productList.size(); i++) {
             if (this.productList.get(i).getId().equals(product.getId())) {

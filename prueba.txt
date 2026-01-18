@@ -1,7 +1,9 @@
 cash add UW1234567 "pepecurro3" pepe0@upm.es
-client add "Pepe2" 98948334B pepe2@upm.es UW1234567
+client add "Pepe2" B12345678 pepe2@upm.es UW1234567
+client add "PEPE"  12345678L pepe2@upm.es UW1234567
 prod add 6 "Camiseta talla:L UPM" CLOTHES 20 4
 prod add 5 "Camiseta talla:M UPM" CLOTHES 15 3
-ticket new 212128 UW1234567 98948334B
-ticket add 212128 UW1234567 5 1
-ticket add 212128 UW1234567 5 3 --pred --pblue --pgreen
+prod add 2026-12-12 TRANSPORT
+ticket new 21212 UW1234567 B12345678 -s
+ticket add 21212 UW1234567 5 1
+ticket add 21212 UW1234567 5 3 --pred --pblue --pgreen

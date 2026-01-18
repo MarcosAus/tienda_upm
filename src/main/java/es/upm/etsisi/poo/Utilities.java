@@ -1,11 +1,5 @@
 package es.upm.etsisi.poo;
 
-import es.upm.etsisi.poo.Products.Product;
-import es.upm.etsisi.poo.Users.Cashier;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-
 public class Utilities {
     //Constantes:
 
@@ -48,8 +42,31 @@ public class Utilities {
         }
     }
 
-    public static boolean isBusiness(String id) {
-        return id.startsWith("B");
+    public static boolean isBusiness(String id){
+        if(id.startsWith("B")){
+            try {
+                int num = Integer.parseInt(id.substring(1));
+                return true;
+            } catch (NumberFormatException e) {
+                System.out.println(Comments.ID_BUSINESS_NOT_VALID);
+                return false;
+                
+            }
+        }
+        return false;
+    }
+    public static boolean isDNICorrect(String id){
+        char ultimaLetra= id.charAt(id.length()-1);
+        if (Character.isLetter(ultimaLetra)){
+            try {
+                int num = Integer.parseInt(id.substring(0,id.length()-1));
+                return true;
+            } catch (NumberFormatException e) {
+                System.out.println(Comments.ID_CLIENT_NOT_VALID);
+                return false;
+            }
+        }
+        return false;
     }
 
     public static int getMinTimeMeetings(){

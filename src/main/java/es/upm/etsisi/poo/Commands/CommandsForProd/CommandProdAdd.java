@@ -10,7 +10,7 @@ public class CommandProdAdd implements Command {
     private ProductHandler productHandler;
     String name;
 
-    public CommandProdAdd(String name,  ProductHandler productList) {
+    public CommandProdAdd(String name, ProductHandler productList) {
         this.name = name;
         this.productHandler = productList;
     }
@@ -35,11 +35,11 @@ public class CommandProdAdd implements Command {
             if (productHandler.getHandlerSize() == Utilities.MAX_LIST) {
                 System.out.println(Comments.PRODUCT_LIST_FULL);
             } else {
-                if(args.length == 5) {
+                if (args.length == 5) {
                     id = Utilities.idAleatorio(productHandler);
                     name = args[2];
-                    if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) {
-                        name = name.substring(1, name.length()-1);
+                    if (name.length() >= 3 && name.startsWith("\"") && name.endsWith("\"")) {
+                        name = name.substring(1, name.length() - 1);
                         try {
                             category = Category.valueOf(args[3].toUpperCase());
                         } catch (IllegalArgumentException e) {
@@ -54,16 +54,16 @@ public class CommandProdAdd implements Command {
                             System.out.println(product.toString());
                             System.out.println(Comments.PROD_ADD);
                         } else System.out.println(Comments.CATEGORY_WRONG);
-                    } else{
+                    } else {
                         System.out.println(Comments.NAME_HAS_WRONG_FORMAT);
                     }
 
-                }else if(args.length == 7){
+                } else if (args.length == 7) {
                     id = Integer.parseInt(args[2]);
                     name = args[3];
-                    if(id>0 && id<=99999){
-                        if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) {
-                            name = name.substring(1, name.length()-1);
+                    if (id > 0 && id <= 99999) {
+                        if (name.length() >= 3 && name.startsWith("\"") && name.endsWith("\"")) {
+                            name = name.substring(1, name.length() - 1);
                             try {
                                 category = Category.valueOf(args[4]);
                             } catch (IllegalArgumentException e) {
@@ -75,22 +75,20 @@ public class CommandProdAdd implements Command {
                                 MaxText = Integer.parseInt(args[6]);
 
                                 product = new ProductPers(category, Integer.toString(id), name, price, MaxText);
-
                                 productHandler.addProduct(product);
                                 System.out.println(product.toString());
                                 System.out.println(Comments.PROD_ADD);
                             } else System.out.println(Comments.CATEGORY_WRONG);
-                        }
-                        else {
+                        } else {
                             System.out.println(Comments.NAME_HAS_WRONG_FORMAT);
                         }
-                    } else{
+                    } else {
                         System.out.println(Comments.ID_NOT_IN_BOUNDARIES);
                     }
-                } else if(args.length == 6) {
+                } else if (args.length == 6) {
                     try {
                         id = Integer.parseInt(args[2]);
-                        if (id>0 && id<=99999) {
+                        if (id > 0 && id <= 99999) {
                             name = args[3];
                             try {
                                 category = Category.valueOf(args[4]);
@@ -104,10 +102,10 @@ public class CommandProdAdd implements Command {
                                 System.out.println(product.toString());
                                 System.out.println(Comments.PROD_ADD);
                             } else System.out.println(Comments.CATEGORY_WRONG);
-                        }else{
+                        } else {
                             System.out.println(Comments.ID_NOT_IN_BOUNDARIES);
                         }
-                    } catch(IllegalArgumentException e){
+                    } catch (IllegalArgumentException e) {
                         id = Utilities.idAleatorio(productHandler);
                         name = args[2];
                         try {
@@ -120,7 +118,7 @@ public class CommandProdAdd implements Command {
                             if (!Integer.toString(id).equals(args[2])) {
                                 MaxText = Integer.parseInt(args[5]);
                                 product = new ProductPers(category, Integer.toString(id), name, price, MaxText);
-                            } else{
+                            } else {
                                 product = new ProductBasic(category, name, Integer.toString(id), price);
 
                             }
@@ -132,17 +130,23 @@ public class CommandProdAdd implements Command {
                     }
                 } else if (args.length == 4) {
                     maximumDate = args[2];
-                    serviceCategory = ServicesTypes.valueOf(args[3].toUpperCase());
-                    service = new Service(maximumDate, serviceCategory);
-                    productHandler.addProduct(service);
-                    System.out.println(service.toString());
-                    System.out.println(Comments.PROD_ADD);
+                    try {
+                        serviceCategory = ServicesTypes.valueOf(args[3].toUpperCase());
+                    } catch (IllegalArgumentException e) {
+                        serviceCategory = null;
+                    }
+                    if (serviceCategory == null) {
+                        System.out.println(Comments.CATEGORY_WRONG);
+                    } else {
+                        service = new Service(maximumDate, serviceCategory);
+                        productHandler.addProduct(service);
+                        System.out.println(service.toString());
+                        System.out.println(Comments.PROD_ADD);
+                    }
                 } else System.out.println(Comments.LENGTH_WRONG);
             }
         } catch (NumberFormatException e) {
             System.out.println(Comments.ID_PRICE_NOT_NUMBER);
-        } catch (IllegalArgumentException e) {
-            System.out.println(Comments.MAX_PERS_EXCEEDED);
         }
     }
 }

@@ -53,6 +53,14 @@ public abstract class TicketParam <T extends Vendible> {
         this.validacionTickets = validacionTickets;
     }
 
+    public ValidacionTickets<T> getValidacionTickets() {
+        return validacionTickets;
+    }
+
+    public PrintStrategy<T> getPrintStrategy() {
+        return printStrategy;
+    }
+
     public String getTicketDateOpen() {
         return ticketDateOpen;
     }
@@ -76,6 +84,7 @@ public abstract class TicketParam <T extends Vendible> {
     public ArrayList<TicketItem<T>> getTicketItems() {
         return items;
     }
+
 
     public int getNumeroProductos() {
         int resultado = 0;
@@ -107,7 +116,7 @@ public abstract class TicketParam <T extends Vendible> {
         if (this.stateTicket != State.CLOSED) {
             stateTicket = State.OPEN;
             if (cantidad + this.getNumeroProductos() < MAXSIZE) {
-                if (element != null) {
+                if (element != null && canAdd(element)) {
                     TicketItem<T> tI = busquedaProductoPorID(items, element.getId());
                     if (tI != null) {
                         if (element.isPersonalizable()) {
@@ -176,6 +185,10 @@ public abstract class TicketParam <T extends Vendible> {
         }
     }
 
+    public boolean canAdd(T element){
+        if(validacionTickets.add(element)) return true;
+        else return false;
+    }
 
     public void closeTicket() {
         if (checkIfTicketCanClose()) {

@@ -27,16 +27,4 @@ public class TicketBusiness extends TicketParam<Vendible> {
     public TicketBusiness(PrintStrategy<Vendible> printStrategy,ValidacionTickets<Vendible> validacion) {
         super(printStrategy,validacion);
     }
-
-
-    @Override
-    public boolean addProduct(Vendible element, int cantidad) {
-        // Delegamos la decisión a la clase de validación
-        if ()) {
-            System.out.println();
-            return false;
-        }
-        return super.addProduct(element, cantidad);
-    }
-
 }

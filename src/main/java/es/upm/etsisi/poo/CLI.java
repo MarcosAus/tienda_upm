@@ -4,7 +4,6 @@ import es.upm.etsisi.poo.Commands.CommandProd;
 import es.upm.etsisi.poo.Commands.CommandTicket;
 import es.upm.etsisi.poo.Commands.CommandUser;
 
-import javax.smartcardio.CommandAPDU;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -47,7 +46,13 @@ public class CLI {
 
             //Se comprueban los comandos que necesitan ser divididos por palabras.
             else{
-                dispatcherCentralCommand(actCommand);
+                try {
+                    dispatcherCentralCommand(actCommand);
+                }catch (IllegalArgumentException | IllegalStateException | java.util.NoSuchElementException e ){
+                    System.out.println(Comments.DISPATCHER_ERROR);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
 
 
@@ -82,7 +87,13 @@ public class CLI {
                 }
                 else {
                     System.out.println(linea);
-                    dispatcherCentralCommand(linea);
+                    try {
+                        dispatcherCentralCommand(linea);
+                    }catch (IllegalArgumentException | IllegalStateException | java.util.NoSuchElementException e ){
+                        System.out.println(Comments.DISPATCHER_ERROR);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
             //Mensaje de salida de la aplicación
@@ -95,7 +106,7 @@ public class CLI {
 
     //Metodo privado de CLI que se encarga de dirigir la solicitud del usuario a la cadena de comandos correspondiente en función de la primera palabra
     // que escriba el usuario.
-    private void dispatcherCentralCommand(String actCommand) {
+    private void dispatcherCentralCommand(String actCommand) throws IllegalStateException {
 
         String[] commanddiv =  sliceCommand(actCommand);
 
@@ -113,7 +124,8 @@ public class CLI {
             case "prod"://Comandos prod
                 commandsProducts.checkCommand(commanddiv, actCommand);
                 break;
-
+            default:
+                throw new IllegalStateException(Comments.UNKNOWN_COMMAND);
         }
     }
 
@@ -130,19 +142,20 @@ public class CLI {
     public static void mostrarComandos() {
         System.out.println("""
                 Commands:
-                  client add "<nombre>" <DNI> <email> <cashId>
+                  client add "<nombre>" <DNI>|<NIF> <email> <cashId>
                   client remove <DNI>
                   client list
                   cash add [<id>] "<nombre>"<email>
                   cash remove <id>
                   cash list
                   cash tickets <id>
-                  ticket new [<id>] <cashId> <userId>
+                  ticket new [<id>] <cashId> <userId> -[c|p|s]
                   ticket add <ticketId><cashId> <prodId> <amount> [--p<txt> --p<txt>]\s
                   ticket remove <ticketId><cashId> <prodId>\s
                   ticket print <ticketId> <cashId>\s
                   ticket list
                   prod add <id> "<name>" <category> <price>
+                  prod add <expiration: yyyy-MM-dd> <category>
                   prod update <id> NAME|CATEGORY|PRICE <value>
                   prod addFood [<id>] "<name>" <price> <expiration:yyyy-MM-dd> <max_people>
                   prod addMeeting [<id>] "<name>" <price> <expiration:yyyy-MM-dd> <max_people>

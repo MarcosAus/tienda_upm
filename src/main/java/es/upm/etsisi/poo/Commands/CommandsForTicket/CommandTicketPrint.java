@@ -29,7 +29,6 @@ public class CommandTicketPrint implements Command {
 
                 if (cashier != null) { // Si el cashies es un cajero se puede poner el ticket a close ya que este como tal no se elimina.
                     cashier.printTicket(Integer.parseInt(args[2]));
-                    ticketHandler.removeTicket(Integer.parseInt(args[2]));
                     System.out.println(Comments.TICKET_PRINT);
                 }
                 else {

@@ -29,14 +29,22 @@ public class CommandUserAddClient implements Command {
                     nombre = nombre.substring(1, nombre.length()-1);
                     try {
                         Cashier cashier = userHandler.getCashiersRecord().get(args[5]);
-                        Client client;
-                        if (Utilities.isBusiness(id)) {
-                            client = new ClientBusiness(id, nombre, email, cashier);
-                        } else {
-                            client = new ClientUser(id, nombre, email, cashier);
+                        Client client = null;
+                        if (id.length() == 9) {
+                            if (Utilities.isBusiness(id)) {
+                                client = new ClientBusiness(id, nombre, email, cashier);
+                            } else if( Utilities.isDNICorrect(id)) {
+                                client = new ClientUser(id, nombre, email, cashier);
+                            }else {
+                                System.out.println(Comments.DNI_NIF_FORMAT_WRONG);
+                            }
+                        }else {
+                            System.out.println(Comments.ID_LENGTH_WRONG);
                         }
-                        userHandler.registerUser(client);
-                        System.out.println(Comments.CLIENT_ADD);
+                        if(client!=null){
+                            userHandler.registerUser(client);
+                            System.out.println(Comments.CLIENT_ADD);
+                        }
                     } catch (Exception e) {
                         System.out.println(Comments.CASH_NOT_FOUND);
                     }

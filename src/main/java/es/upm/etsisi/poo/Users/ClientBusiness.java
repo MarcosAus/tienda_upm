@@ -1,6 +1,5 @@
 package es.upm.etsisi.poo.Users;
 
-import es.upm.etsisi.poo.Ticket.Ticket;
 import es.upm.etsisi.poo.Ticket.TicketBusiness;
 
 import java.util.HashMap;

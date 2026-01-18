@@ -2,16 +2,10 @@ package es.upm.etsisi.poo.Commands.CommandsForTicket;
 
 import es.upm.etsisi.poo.*;
 import es.upm.etsisi.poo.Commands.Command;
-import es.upm.etsisi.poo.Strategies.ClientPrintStrategy;
-import es.upm.etsisi.poo.Strategies.PrintStrategy;
-import es.upm.etsisi.poo.Ticket.Ticket;
-import es.upm.etsisi.poo.Ticket.TicketBusiness;
-import es.upm.etsisi.poo.Ticket.TicketClient;
 import es.upm.etsisi.poo.Ticket.TicketParam;
 import es.upm.etsisi.poo.Users.Cashier;
 import es.upm.etsisi.poo.Users.Client;
 import es.upm.etsisi.poo.Users.User;
-import es.upm.etsisi.poo.Validacion.ValidacionS;
 
 public class CommandTicketNew implements Command {
     private final TicketHandler ticketHandler;
@@ -121,7 +115,6 @@ public class CommandTicketNew implements Command {
         TicketParam<?> ticket = ticketHandler.getTicket(finalId);
 
         if (ticket != null) {
-            ticket.setTicketType(type);
 
             // Finalizar operación
             cashier.addTicket(ticket);

@@ -3,7 +3,6 @@ package es.upm.etsisi.poo.Commands.CommandsForTicket;
 import es.upm.etsisi.poo.*;
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Products.*;
-import es.upm.etsisi.poo.Ticket.Ticket;
 import es.upm.etsisi.poo.Ticket.TicketParam;
 import es.upm.etsisi.poo.Users.Cashier;
 
@@ -76,7 +75,7 @@ public class CommandTicketAdd implements Command {
                                            if (args[i].startsWith("--p")){
                                                if (!newProduct.isFull() && !newProduct.getTextos().contains(args[i].substring(3))) newProduct.addTexto(args[i].substring(3));
                                                else {
-                                                   System.out.println("No se pueden añadir mas textos");
+                                                   System.out.println(Comments.MAX_PERS_EXCEEDED);
                                                }
                                            }
                                        }
@@ -99,7 +98,7 @@ public class CommandTicketAdd implements Command {
            } catch (Exception e) {
                System.out.println(Comments.INT_NOT_NUMBER);
            }
-       } else if (args.length == 5) {
+       } else if (args.length == 5) { //todo comprobar fecha antes de agregar servicio
            try {
                TicketParam<Vendible> actTicket = (TicketParam<Vendible>) ticketHandler.getTicket(Integer.parseInt(args[2]));
                Cashier actCashier = userhandler.getUserById(args[3]).getThisCash();
@@ -114,7 +113,7 @@ public class CommandTicketAdd implements Command {
                    System.out.println(Comments.TICKET_IS_NOT_IN_CASH);
                } else {
                    actTicket.addProduct(service,1);
-                   System.out.println(Comments.PROD_ADD);
+                   System.out.println(Comments.TICKET_ADD);
                }
            } catch (Exception e) {
                System.out.println(Comments.INT_NOT_NUMBER);
