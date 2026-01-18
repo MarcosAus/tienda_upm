@@ -1,40 +1,59 @@
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\App.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\CLI.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\Command.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandProd.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForProd\CommandProdAdd.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForProd\CommandProdAddFoodMeeting.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForProd\CommandProdList.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForProd\CommandProdRemove.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForProd\CommandProdUpdate.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForTicket\CommandTicketAdd.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForTicket\CommandTicketList.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForTicket\CommandTicketNew.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForTicket\CommandTicketPrint.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForTicket\CommandTicketRemove.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForUser\CommandUserAddCashier.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForUser\CommandUserAddClient.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForUser\CommandUserListCash.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForUser\CommandUserListClients.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForUser\CommandUserListTicketsCashier.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForUser\CommandUserRemoveCashier.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForUser\CommandUserRemoveClient.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandTicket.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandUser.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Comments.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\ProductHandler.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Products\CampusMeals.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Products\Category.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Products\Meetings.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Products\Product.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Products\ProductBasic.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Products\ProductPers.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\State.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Ticket.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\TicketHandler.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\TicketItem.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\UserHandler.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Users\Cashier.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Users\Client.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Users\User.java
-C:\Users\danie\IdeaProjects\tienda_upm\src\main\java\es\upm\etsisi\poo\Utilities.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\App.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\CLI.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\Command.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandProd.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForProd\CommandProdAdd.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForProd\CommandProdAddFoodMeeting.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForProd\CommandProdList.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForProd\CommandProdRemove.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForProd\CommandProdUpdate.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForTicket\CommandTicketAdd.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForTicket\CommandTicketList.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForTicket\CommandTicketNew.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForTicket\CommandTicketPrint.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForTicket\CommandTicketRemove.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForUser\CommandUserAddCashier.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForUser\CommandUserAddClient.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForUser\CommandUserListCash.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForUser\CommandUserListClients.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForUser\CommandUserListTicketsCashier.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForUser\CommandUserRemoveCashier.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandsForUser\CommandUserRemoveClient.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandTicket.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Commands\CommandUser.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Comments.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Persistence\PersistenceManager.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\ProductHandler.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Products\Category.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Products\Event.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Products\Product.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Products\ProductBasic.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Products\ProductPers.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Products\Service.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Products\ServicesTypes.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Products\Vendible.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\State.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Strategies\BusinessPrintStrategyCombined.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Strategies\BusinessPrintStrategyService.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Strategies\ClientPrintStrategy.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Strategies\PrintStrategy.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Ticket\TicketBusiness.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Ticket\TicketClient.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Ticket\TicketParam.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\TicketHandler.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\TicketItem.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\UserHandler.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Users\Cashier.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Users\Client.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Users\ClientBusiness.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Users\ClientUser.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Users\User.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Utilities.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Validation\ValidacionAddC.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Validation\ValidacionAddP.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Validation\ValidacionAddS.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Validation\ValidacionAddTickets.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Validation\ValidacionCloseC.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Validation\ValidacionCloseP.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Validation\ValidacionCloseS.java
+C:\Users\Marcos\Downloads\FP Practica 4 - Arrays y Ficheros\FP Practica 4 - Arrays y Ficheros\tienda_upm\src\main\java\es\upm\etsisi\poo\Validation\ValidacionCloseTickets.java

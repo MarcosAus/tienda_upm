@@ -1,95 +1,93 @@
 {
   "tickets" : [ {
     "type" : "TicketClient",
-    "id" : 25681,
+    "id" : 30168,
     "ticketDateOpen" : "2026-01-18",
-    "ticketState" : "EMPTY",
-    "numeroProductos" : 0
+    "numeroProductos" : 0,
+    "ticketState" : "EMPTY"
   }, {
     "type" : "TicketClient",
     "id" : 212121,
     "ticketDateClosed" : "2026-01-18",
-    "ticketState" : "CLOSED",
-    "numeroProductos" : 20,
     "products" : [ {
       "product" : {
         "type" : "basic",
         "id" : "1",
-        "minTime" : 0.0,
         "category" : "BOOK",
         "discount" : 0.1,
+        "minTime" : 0.0,
         "name" : "\"Libro POO V2\"",
-        "price" : 30.0,
-        "personalizable" : false
+        "personalizable" : false,
+        "price" : 30.0
       },
       "amount" : 20
-    } ]
+    } ],
+    "numeroProductos" : 20,
+    "ticketState" : "CLOSED"
   }, {
     "type" : "TicketClient",
     "id" : 212123,
     "ticketDateClosed" : "2026-01-18",
-    "ticketState" : "CLOSED",
-    "numeroProductos" : 23,
     "products" : [ {
       "product" : {
         "type" : "basic",
         "id" : "1",
-        "minTime" : 0.0,
         "category" : "BOOK",
         "discount" : 0.1,
+        "minTime" : 0.0,
         "name" : "\"Libro POO V2\"",
-        "price" : 30.0,
-        "personalizable" : false
+        "personalizable" : false,
+        "price" : 30.0
       },
       "amount" : 20
     }, {
       "product" : {
         "type" : "basic",
         "id" : "2",
-        "minTime" : 0.0,
         "category" : "CLOTHES",
         "discount" : 0.07,
+        "minTime" : 0.0,
         "name" : "\"Camiseta talla:M UPM\"",
-        "price" : 15.0,
-        "personalizable" : false
+        "personalizable" : false,
+        "price" : 15.0
       },
       "amount" : 3
-    } ]
+    } ],
+    "numeroProductos" : 23,
+    "ticketState" : "CLOSED"
   }, {
     "type" : "TicketClient",
     "id" : 212127,
     "ticketDateClosed" : "2026-01-18",
-    "ticketState" : "CLOSED",
-    "numeroProductos" : 3,
     "products" : [ {
       "product" : {
         "type" : "basic",
         "id" : "2",
-        "minTime" : 0.0,
         "category" : "CLOTHES",
         "discount" : 0.07,
+        "minTime" : 0.0,
         "name" : "\"Camiseta talla:M UPM\"",
-        "price" : 15.0,
-        "personalizable" : false
+        "personalizable" : false,
+        "price" : 15.0
       },
       "amount" : 3
-    } ]
+    } ],
+    "numeroProductos" : 3,
+    "ticketState" : "CLOSED"
   }, {
     "type" : "TicketClient",
     "id" : 212128,
     "ticketDateClosed" : "2026-01-18",
-    "ticketState" : "CLOSED",
-    "numeroProductos" : 7,
     "products" : [ {
       "product" : {
         "type" : "personalized",
         "id" : "5",
         "maxTextos" : 3,
-        "full" : false,
         "personalizable" : true,
-        "minTime" : 0.0,
+        "full" : false,
         "category" : "CLOTHES",
         "discount" : 0.07,
+        "minTime" : 0.0,
         "name" : "Camiseta talla:M UPM",
         "price" : 15.0
       },
@@ -100,11 +98,11 @@
         "id" : "5",
         "textos" : [ "red", "blue", "green" ],
         "maxTextos" : 3,
-        "full" : true,
         "personalizable" : true,
-        "minTime" : 0.0,
+        "full" : true,
         "category" : "CLOTHES",
         "discount" : 0.07,
+        "minTime" : 0.0,
         "name" : "Camiseta talla:M UPM",
         "price" : 15.0
       },
@@ -115,26 +113,28 @@
         "id" : "6",
         "textos" : [ "red", "blue" ],
         "maxTextos" : 4,
-        "full" : false,
         "personalizable" : true,
-        "minTime" : 0.0,
+        "full" : false,
         "category" : "CLOTHES",
         "discount" : 0.07,
+        "minTime" : 0.0,
         "name" : "Camiseta talla:L UPM",
         "price" : 20.0
       },
       "amount" : 3
-    } ]
+    } ],
+    "numeroProductos" : 7,
+    "ticketState" : "CLOSED"
   }, {
     "type" : "TicketBusiness",
     "id" : 212129,
     "ticketDateClosed" : "2026-01-18",
-    "ticketState" : "CLOSED",
-    "numeroProductos" : 0
+    "numeroProductos" : 0,
+    "ticketState" : "CLOSED"
   }, {
     "type" : "TicketBusiness",
     "id" : 212130,
-    "ticketState" : "EMPTY",
-    "numeroProductos" : 0
+    "numeroProductos" : 0,
+    "ticketState" : "EMPTY"
   } ]
 }

@@ -27,7 +27,7 @@ public abstract class User {
 
     public String getName() {
         return this.nombre;}
-    
+
     public String getMail() {
         return this.correo;
     }
