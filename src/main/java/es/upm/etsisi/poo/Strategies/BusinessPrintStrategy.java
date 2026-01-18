@@ -36,6 +36,7 @@ public class BusinessPrintStrategy implements PrintStrategy<Vendible>{
                 sb.append((tI.getProduct()).toString()).append("\n");
             }
         }
+        System.out.println(sb);
         if(!productsInTicket.isEmpty()){
             double porcentajeDescuentoServicios = numServices * 0.15;
             if(porcentajeDescuentoServicios>1.0) porcentajeDescuentoServicios=1.0;
