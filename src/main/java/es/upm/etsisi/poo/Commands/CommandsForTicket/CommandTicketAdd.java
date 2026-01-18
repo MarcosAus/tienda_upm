@@ -8,6 +8,7 @@ import es.upm.etsisi.poo.Ticket.TicketParam;
 import es.upm.etsisi.poo.Users.Cashier;
 
 import java.time.Duration;
+import java.time.LocalDate;
 
 public class CommandTicketAdd implements Command {
     private UserHandler userhandler;
@@ -117,6 +118,8 @@ public class CommandTicketAdd implements Command {
                    System.out.println(Comments.PRODUCT_NOT_FOUND);
                } else if (!actCashier.ticketExists(actTicket.getId())) {
                    System.out.println(Comments.TICKET_IS_NOT_IN_CASH);
+               } else if ( !(((Service)service).validDate(LocalDate.now()))) {
+                   System.out.println(Comments.DATE_NOT_VALID);
                } else {
                    actTicket.addProduct(service,1);
                    PersistenceManager.saveTickets(ticketHandler);

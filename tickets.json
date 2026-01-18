@@ -1,7 +1,7 @@
 {
   "tickets" : [ {
-    "type" : "TicketClient",
-    "id" : 36014,
-    "ticketDateOpen" : "2026-01-18",
+    "type" : "TicketBusiness",
+    "id" : 21212,
+    "ticketDateOpen" : null,
     "ticketDateClosed" : null,
     "printStrategy"

@@ -1,13 +1,13 @@
 {
   "clientsRecord" : {
-    "B12345674" : {
+    "B12345678" : {
       "type" : "ClientBusiness",
       "cashier" : {
         "type" : "Cashier",
         "tickets" : {
-          "212130" : {
+          "21212" : {
             "type" : "TicketBusiness",
-            "id" : 212130,
+            "id" : 21212,
             "ticketDateOpen" : null,
             "ticketDateClosed" : null,
             "printStrategy"

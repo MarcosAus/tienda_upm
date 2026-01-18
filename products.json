@@ -1,5 +1,10 @@
 {
   "productList" : [ {
-    "type" : "basic",
-    "id" : "1",
-    "minTime"
+    "type" : "service",
+    "id" : "1S",
+    "minTime" : null,
+    "serviceCategory" : "TRANSPORT",
+    "personalizable" : false
+  } ],
+  "handlerSize" : 1
+}
