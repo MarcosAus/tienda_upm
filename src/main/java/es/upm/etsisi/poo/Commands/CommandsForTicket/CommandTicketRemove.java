@@ -26,7 +26,7 @@ public class CommandTicketRemove implements Command {
             try {
                 //Primero se comprueban los inputs del usuario.
                 int idTicket = Integer.parseInt(args[2]);
-                int idProduct = Integer.parseInt(args[4]);
+                String idProduct = args[4];
                 Cashier cashier = userHandler.getUserById(args[3]).getThisCash();
                 if (cashier != null) {
                     if (ticketHandler.getTicket(idTicket).removeProduct(idProduct)){

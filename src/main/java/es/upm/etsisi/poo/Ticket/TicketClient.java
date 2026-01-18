@@ -60,6 +60,4 @@ public class TicketClient extends TicketParam<Product> {
 //        return resultado;
 //    }
 
-    @Override
-    public void setTicketType(char type) {}
 }

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class ValidacionS implements ValidacionTickets<Service> {
 
     @Override
-    public boolean add(Vendible vendible) {
+    public boolean add(Service vendible) {
         String id = vendible.getId();
         char ultimoCaracter = id.charAt(id.length() - 1);
         return ultimoCaracter == 'S';

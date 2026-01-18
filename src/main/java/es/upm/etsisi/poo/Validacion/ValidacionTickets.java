@@ -6,7 +6,7 @@ import es.upm.etsisi.poo.Ticket.TicketParam;
 
 public interface ValidacionTickets<T extends Vendible> {
 
-    boolean add(Vendible vendible);
+    boolean add(T vendible);
 
     boolean close(TicketParam<T> ticket);
 

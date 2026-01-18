@@ -28,28 +28,15 @@ public class TicketBusiness extends TicketParam<Vendible> {
         super(printStrategy,validacion);
     }
 
-    @Override
-    public void setTicketType(char ticketType){
-        this.ticketType = ticketType;
-        // Cambiamos la estrategia de validación dinámicamente
-        if (ticketType == 's') {
-            this.validacion = new ValidacionS(); // Estrategia estricta
-        } else {
-            this.validacion = new ValidacionCombinada(); // Estrategia permisiva
-        }
-    }
 
     @Override
     public boolean addProduct(Vendible element, int cantidad) {
         // Delegamos la decisión a la clase de validación
-        if (this.validacion != null && !this.validacion.esValido(element)) {
-            System.out.println("Producto no válido para este tipo de ticket.");
+        if ()) {
+            System.out.println();
             return false;
         }
         return super.addProduct(element, cantidad);
     }
 
-    public char getTicketType() {
-        return ticketType;
-    }
 }

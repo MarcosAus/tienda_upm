@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class ValidacionP implements ValidacionTickets<Product>{
 
     @Override
-    public boolean add(Vendible vendible) {
+    public boolean add(Product vendible) {
         char ultimaLetra = vendible.getId().charAt(vendible.getId().length()-1);
         return Character.isDigit(ultimaLetra);
     }

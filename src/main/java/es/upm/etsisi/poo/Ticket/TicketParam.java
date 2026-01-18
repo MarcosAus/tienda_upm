@@ -36,7 +36,7 @@ public abstract class TicketParam <T extends Vendible> {
         this.stateTicket = State.EMPTY;
     }
 
-    public TicketParam(int id, PrintStrategy<T> printStrategy,ValidacionTickets<T> validacionTickets) {
+    public TicketParam(int id, PrintStrategy<T> printStrategy, ValidacionTickets<T> validacionTickets) {
         this.id = id;
         this.items = new ArrayList<>();
         this.stateTicket = State.EMPTY;
@@ -44,7 +44,7 @@ public abstract class TicketParam <T extends Vendible> {
         this.validacionTickets = validacionTickets;
     }
 
-    public TicketParam(PrintStrategy<T> printStrategy,ValidacionTickets<T> validacionTickets) {
+    public TicketParam(PrintStrategy<T> printStrategy, ValidacionTickets<T> validacionTickets) {
         this.id = Utilities.numGenerator(5);
         this.items = new ArrayList<>();
         this.stateTicket = State.EMPTY;
@@ -56,7 +56,11 @@ public abstract class TicketParam <T extends Vendible> {
     public String getTicketDateOpen() {
         return ticketDateOpen;
     }
-    public int getId() {return id;}
+
+    public int getId() {
+        return id;
+    }
+
     public ArrayList<TicketItem<T>> getProducts() {
         return items;
     }
@@ -75,8 +79,8 @@ public abstract class TicketParam <T extends Vendible> {
 
     public int getNumeroProductos() {
         int resultado = 0;
-        for(TicketItem<T> item : items ) {
-            resultado+= item.getProduct().amountTicket(item.getAmount());
+        for (TicketItem<T> item : items) {
+            resultado += item.getProduct().amountTicket(item.getAmount());
         }
         return resultado;
     }
@@ -87,11 +91,11 @@ public abstract class TicketParam <T extends Vendible> {
 
     public TicketItem<T> busquedaProductoPorID(ArrayList<TicketItem<T>> products, String id) {
         TicketItem<T> resultado = null;
-        int indice=0;
-        while (indice<products.size() && !products.get(indice).getProduct().getId().equals(id)) {
+        int indice = 0;
+        while (indice < products.size() && !products.get(indice).getProduct().getId().equals(id)) {
             indice++;
         }
-        if (indice<products.size()) {
+        if (indice < products.size()) {
             resultado = products.get(indice);
         }
         return resultado;
@@ -104,16 +108,16 @@ public abstract class TicketParam <T extends Vendible> {
             stateTicket = State.OPEN;
             if (cantidad + this.getNumeroProductos() < MAXSIZE) {
                 if (element != null) {
-                    TicketItem<T> tI = busquedaProductoPorID(items,element.getId());
+                    TicketItem<T> tI = busquedaProductoPorID(items, element.getId());
                     if (tI != null) {
                         if (element.isPersonalizable()) {
-                            List<String> textosA= ((ProductPers)element).getTextos();
-                            List<String> textosB= ((ProductPers)tI.getProduct()).getTextos();
-                            if(new HashSet<>(textosA).equals(new HashSet<>(textosB))){
+                            List<String> textosA = ((ProductPers) element).getTextos();
+                            List<String> textosB = ((ProductPers) tI.getProduct()).getTextos();
+                            if (new HashSet<>(textosA).equals(new HashSet<>(textosB))) {
                                 tI.addAmount(cantidad);
                                 printTicket();
-                            }else{
-                                items.add(new TicketItem<T>(element,cantidad));
+                            } else {
+                                items.add(new TicketItem<T>(element, cantidad));
                                 printTicket();
                             }
                         } else if (element.getMinTime().isZero()) {
@@ -136,33 +140,34 @@ public abstract class TicketParam <T extends Vendible> {
         return resultado;
     }
 
-    public Map<Category,Integer> getCantidadProductoCategoria() {
-        Map<Category,Integer> resultado = new HashMap<>();
+    public Map<Category, Integer> getCantidadProductoCategoria() {
+        Map<Category, Integer> resultado = new HashMap<>();
         Product productGeneric;
         for (int i = 0; i < items.size(); i++) {
             T product = items.get(i).getProduct();
-            if(!product.getId().endsWith("S")){
-                Category category = ((Product)product).getCategory();
+            if (!product.getId().endsWith("S")) {
+                Category category = ((Product) product).getCategory();
                 int amount = items.get(i).getAmount();
-                resultado.put(category,resultado.getOrDefault(category,0)+amount);
+                resultado.put(category, resultado.getOrDefault(category, 0) + amount);
             }
 
         }
         return resultado;
     }
-    public boolean removeProduct(int id) {
+
+    public boolean removeProduct(String id) {
         if (this.stateTicket != State.CLOSED) {
             boolean resultado = false;
-            TicketItem tI = busquedaProductoPorID(items, id);
+            TicketItem<T> tI = busquedaProductoPorID(items, id);
             if (tI != null) {
                 items.remove(tI);
                 resultado = true;
             }
             return resultado;
-        }
-        else return false;
+        } else return false;
 
     }
+
     public void printTicket() {
         if (printStrategy != null) {
             printStrategy.printTicket(this);
@@ -173,17 +178,18 @@ public abstract class TicketParam <T extends Vendible> {
 
 
     public void closeTicket() {
-        if(checkIfTicketCanClose()){
+        if (checkIfTicketCanClose()) {
             ticketDateClosed = LocalDate.now().toString();
             printStrategy.printTicket(this);
             stateTicket = State.CLOSED;
-        }else{
+        } else {
             System.out.println(Comments.ACTIVITY_IS_EXPIRED);
         }
     }
 
     public boolean checkIfTicketCanClose() {
-        if (validacionTickets.close(this));
+        if (validacionTickets.close(this)) return true;
+        else return false;
 
     }
 
@@ -198,8 +204,4 @@ public abstract class TicketParam <T extends Vendible> {
         }
         return sb.toString();
     }
-
-    public abstract void setTicketType(char type);
-
-
 }
