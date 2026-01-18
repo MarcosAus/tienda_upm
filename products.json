@@ -1,0 +1,9 @@
+{
+  "productList" : [ {
+    "type" : "personalized",
+    "id" : "5",
+    "textos" : [ ],
+    "maxTextos" : 3,
+    "personalizable" : true,
+    "full" : false,
+    "minTime"

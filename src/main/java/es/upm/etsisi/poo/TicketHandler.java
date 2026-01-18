@@ -1,16 +1,16 @@
 package es.upm.etsisi.poo;
 
+import es.upm.etsisi.poo.Products.Product;
 import es.upm.etsisi.poo.Products.Service;
 import es.upm.etsisi.poo.Products.Vendible;
-import es.upm.etsisi.poo.Strategies.BusinessPrintStrategy;
+import es.upm.etsisi.poo.Strategies.BusinessPrintStrategyCombined;
+import es.upm.etsisi.poo.Strategies.BusinessPrintStrategyService;
 import es.upm.etsisi.poo.Strategies.ClientPrintStrategy;
+import es.upm.etsisi.poo.Strategies.PrintStrategy;
 import es.upm.etsisi.poo.Ticket.TicketBusiness;
 import es.upm.etsisi.poo.Ticket.TicketClient;
 import es.upm.etsisi.poo.Ticket.TicketParam;
-import es.upm.etsisi.poo.Validacion.ValidacionC;
-import es.upm.etsisi.poo.Validacion.ValidacionP;
-import es.upm.etsisi.poo.Validacion.ValidacionS;
-import es.upm.etsisi.poo.Validacion.ValidacionTickets;
+import es.upm.etsisi.poo.Validation.*;
 
 import java.util.ArrayList;
 
@@ -26,55 +26,71 @@ public class TicketHandler {
 
     public int newTicketClient(){
         //Genera un ticket con id aleatorio
-        ClientPrintStrategy clientPrintStrategy = new ClientPrintStrategy();
-        ValidacionP validacionP = new ValidacionP();
-        TicketClient actTicket = new TicketClient(clientPrintStrategy,validacionP);
+
+        PrintStrategy<Product> clientPrintStrategy = new ClientPrintStrategy();
+        ValidacionAddTickets validacionP = new ValidacionAddP();
+        ValidacionCloseTickets<Product> validacionCloseP = new ValidacionCloseP();
+
+        TicketClient actTicket = new TicketClient(clientPrintStrategy,validacionP,validacionCloseP);
         tickets.add(actTicket);
+
         return actTicket.getId();
     }
 
     public int newTicketClient(int id){
-        ClientPrintStrategy clientPrintStrategy = new ClientPrintStrategy();
-        ValidacionP validacionP = new ValidacionP();
-        TicketClient actTicket = new TicketClient(newTicketIdFinder(id),clientPrintStrategy,validacionP);
+
+        PrintStrategy<Product> clientPrintStrategy = new ClientPrintStrategy();
+        ValidacionAddTickets validacionP = new ValidacionAddP();
+        ValidacionCloseTickets<Product> validacionCloseP = new ValidacionCloseP();
+
+        TicketClient actTicket = new TicketClient(newTicketIdFinder(id),clientPrintStrategy,validacionP,validacionCloseP);
         tickets.add(actTicket);
         return actTicket.getId();
     }
 
-    public int newTicketBusiness(char type){
-        //Genera un ticket con id aleatorio
-        BusinessPrintStrategy businessPrintStrategy = new BusinessPrintStrategy();
+    public int newTicketBusinessService(){
 
-        ValidacionTickets<Vendible> validacion;
+        PrintStrategy<Service> businessPrintStrategy = new BusinessPrintStrategyService();
+        ValidacionCloseTickets<Service> validacionCloseTickets = new ValidacionCloseS();
+        ValidacionAddTickets validacion = new ValidacionAddS();
 
-        if (type == 's') {
-            // Casting seguro: ValidacionS implementa ValidacionTickets<Service>
-            // que es compatible con ValidacionTickets<? super Vendible> si ajustas la interfaz
-            // o lo manejas como ValidacionTickets (raw) para simplificar este factory
-            validacion = (ValidacionTickets) new ValidacionS();
-        } else {
-            validacion = new ValidacionC();
-        }
 
-        TicketBusiness actTicket = new TicketBusiness(businessPrintStrategy, validacion);
+        TicketBusiness<Service> actTicket = new TicketBusiness<>(businessPrintStrategy, validacion,validacionCloseTickets);
+        tickets.add(actTicket);
+        return actTicket.getId();
+    }
+    public int newTicketBusinessService(int id){
+
+        PrintStrategy<Service> businessPrintStrategy = new BusinessPrintStrategyService();
+        ValidacionCloseTickets<Service> validacionCloseTickets = new ValidacionCloseS();
+        ValidacionAddTickets validacion = new ValidacionAddS();
+
+
+        TicketBusiness<Service> actTicket = new TicketBusiness<>(newTicketIdFinder(id),businessPrintStrategy, validacion,validacionCloseTickets);
         tickets.add(actTicket);
         return actTicket.getId();
     }
 
-    public int newTicketBusiness(int id,char type){
-        BusinessPrintStrategy businessPrintStrategy = new BusinessPrintStrategy();
-        ValidacionTickets<Vendible> validacion;
+    public int newTicketBusinessCombined(){
 
-        if (type == 's') {
-            // Casting seguro: ValidacionS implementa ValidacionTickets<Service>
-            // que es compatible con ValidacionTickets<? super Vendible> si ajustas la interfaz
-            // o lo manejas como ValidacionTickets (raw) para simplificar este factory
-            validacion = (ValidacionTickets) new ValidacionS();
-        } else {
-            validacion = new ValidacionC();
-        }
+        PrintStrategy<Vendible> businessPrintStrategy = new BusinessPrintStrategyCombined();
+        ValidacionCloseTickets<Vendible> validacionCloseTickets  = new ValidacionCloseC();
+        ValidacionAddTickets validacion = new ValidacionAddC();
 
-        TicketBusiness actTicket = new TicketBusiness(newTicketIdFinder(id), businessPrintStrategy, validacion);
+
+        TicketBusiness<Vendible> actTicket = new TicketBusiness<>(businessPrintStrategy, validacion,validacionCloseTickets);
+        tickets.add(actTicket);
+        return actTicket.getId();
+    }
+
+    public int newTicketBusinessCombined(int id){
+
+        PrintStrategy<Vendible> businessPrintStrategy = new BusinessPrintStrategyCombined();
+        ValidacionCloseTickets<Vendible> validacionCloseTickets  = new ValidacionCloseC();
+        ValidacionAddTickets validacion = new ValidacionAddC();
+
+
+        TicketBusiness<Vendible> actTicket = new TicketBusiness<>(newTicketIdFinder(id), businessPrintStrategy, validacion,validacionCloseTickets);
         tickets.add(actTicket);
         return actTicket.getId();
     }
@@ -87,15 +103,15 @@ public class TicketHandler {
         for (int i = 0; i<this.tickets.size();i++) {
             if (this.tickets.get(i).getId() == idT) {
 
-                idChosen=-2;
+                idChosen = -2;
             }
         }
 
-        if(idChosen==-1){
-            idChosen=idT;
+        if (idChosen == -1){
+            idChosen = idT;
         }
         else {
-            idChosen=auxFindIdForTicket(idT+1);
+            idChosen = auxFindIdForTicket(idT+1);
         }
 
         return idChosen;

@@ -1,4 +1,4 @@
-package es.upm.etsisi.poo.Validacion;
+package es.upm.etsisi.poo.Validation;
 
 import es.upm.etsisi.poo.Products.Product;
 import es.upm.etsisi.poo.Products.Service;
@@ -12,11 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ValidacionC implements ValidacionTickets<Vendible>{
-    @Override
-    public boolean add(Vendible vendible) {
-        return true;
-    }
+public class ValidacionCloseC implements ValidacionCloseTickets<Vendible>{
 
     @Override
     public boolean close(TicketParam<Vendible> ticket) {

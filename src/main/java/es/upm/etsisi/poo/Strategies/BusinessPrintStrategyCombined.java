@@ -2,7 +2,6 @@ package es.upm.etsisi.poo.Strategies;
 
 import es.upm.etsisi.poo.Products.Category;
 import es.upm.etsisi.poo.Products.Product;
-import es.upm.etsisi.poo.Products.Service;
 import es.upm.etsisi.poo.Products.Vendible;
 import es.upm.etsisi.poo.Ticket.TicketParam;
 import es.upm.etsisi.poo.TicketItem;
@@ -10,7 +9,7 @@ import es.upm.etsisi.poo.TicketItem;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class BusinessPrintStrategy implements PrintStrategy<Vendible>{
+public class BusinessPrintStrategyCombined implements PrintStrategy<Vendible>{
     @Override
     public void printTicket(TicketParam<Vendible> ticketParam) {
         int cantidadCategoria;
@@ -29,7 +28,7 @@ public class BusinessPrintStrategy implements PrintStrategy<Vendible>{
         for (TicketItem<Vendible> tI : ticketParam.getTicketItems()) {
             Vendible vendible = tI.getProduct();
             char ultimaLetra = vendible.getId().charAt(vendible.getId().length() - 1);
-            if (Character.isDigit(ultimaLetra)) {//es producto, si no es servicio
+            if (Character.isDigit(ultimaLetra)) {
                 productsInTicket.add(tI);
             } else {
                 numServices++;

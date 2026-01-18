@@ -1,7 +1,6 @@
-package es.upm.etsisi.poo.Validacion;
+package es.upm.etsisi.poo.Validation;
 
 import es.upm.etsisi.poo.Products.Product;
-import es.upm.etsisi.poo.Products.Vendible;
 import es.upm.etsisi.poo.Ticket.TicketParam;
 import es.upm.etsisi.poo.TicketItem;
 
@@ -9,13 +8,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class ValidacionP implements ValidacionTickets<Product>{
-
-    @Override
-    public boolean add(Product vendible) {
-        char ultimaLetra = vendible.getId().charAt(vendible.getId().length()-1);
-        return Character.isDigit(ultimaLetra);
-    }
+public class ValidacionCloseP implements ValidacionCloseTickets<Product> {
 
     @Override
     public boolean close(TicketParam<Product> ticketParam) {

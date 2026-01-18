@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.Commands.CommandsForTicket;
 
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Comments;
+import es.upm.etsisi.poo.Persistence.PersistenceManager;
 import es.upm.etsisi.poo.TicketHandler;
 import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Users.Cashier;
@@ -30,6 +31,7 @@ public class CommandTicketRemove implements Command {
                 Cashier cashier = userHandler.getUserById(args[3]).getThisCash();
                 if (cashier != null) {
                     if (ticketHandler.getTicket(idTicket).removeProduct(idProduct)){
+                        PersistenceManager.saveTickets(ticketHandler);
                         System.out.println(Comments.TICKET_REMOVED);
                     } else{
                         System.out.println(Comments.PRODUCT_NOT_FOUND);

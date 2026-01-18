@@ -5,12 +5,13 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.time.Duration;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = ProductBasic.class, name = "ProductBasic"),
-        @JsonSubTypes.Type(value = ProductPers.class, name = "ProductPers"),
-        @JsonSubTypes.Type(value = Event.class, name = "Event"),
-        @JsonSubTypes.Type(value = Service.class, name = "ServiceMarcos")
+        @JsonSubTypes.Type(value = ProductBasic.class, name = "basic"),
+        @JsonSubTypes.Type(value = ProductPers.class, name = "personalized"),
+        @JsonSubTypes.Type(value = Service.class, name = "service")
 })
 
 public abstract class Vendible {

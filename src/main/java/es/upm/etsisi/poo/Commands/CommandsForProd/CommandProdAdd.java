@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.Commands.CommandsForProd;
 
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Comments;
+import es.upm.etsisi.poo.Persistence.PersistenceManager;
 import es.upm.etsisi.poo.Products.*;
 import es.upm.etsisi.poo.ProductHandler;
 import es.upm.etsisi.poo.Utilities;
@@ -51,6 +52,7 @@ public class CommandProdAdd implements Command {
 
                             product = new ProductBasic(category, name, Integer.toString(id), price);
                             productHandler.addProduct(product);
+                            PersistenceManager.saveProducts(productHandler);
                             System.out.println(product.toString());
                             System.out.println(Comments.PROD_ADD);
                         } else System.out.println(Comments.CATEGORY_WRONG);
@@ -76,6 +78,7 @@ public class CommandProdAdd implements Command {
 
                                 product = new ProductPers(category, Integer.toString(id), name, price, MaxText);
                                 productHandler.addProduct(product);
+                                PersistenceManager.saveProducts(productHandler);
                                 System.out.println(product.toString());
                                 System.out.println(Comments.PROD_ADD);
                             } else System.out.println(Comments.CATEGORY_WRONG);
@@ -99,6 +102,7 @@ public class CommandProdAdd implements Command {
                                 price = Double.parseDouble(args[5]);
                                 product = new ProductBasic(category, name, Integer.toString(id), price);
                                 productHandler.addProduct(product);
+                                PersistenceManager.saveProducts(productHandler);
                                 System.out.println(product.toString());
                                 System.out.println(Comments.PROD_ADD);
                             } else System.out.println(Comments.CATEGORY_WRONG);
@@ -124,6 +128,7 @@ public class CommandProdAdd implements Command {
                             }
 
                             productHandler.addProduct(product);
+                            PersistenceManager.saveProducts(productHandler);
                             System.out.println(product.toString());
                             System.out.println(Comments.PROD_ADD);
                         } else System.out.println(Comments.CATEGORY_WRONG);
@@ -140,6 +145,7 @@ public class CommandProdAdd implements Command {
                     } else {
                         service = new Service(maximumDate, serviceCategory);
                         productHandler.addProduct(service);
+                        PersistenceManager.saveProducts(productHandler);
                         System.out.println(service.toString());
                         System.out.println(Comments.PROD_ADD);
                     }

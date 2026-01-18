@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.Commands.CommandsForTicket;
 
 import es.upm.etsisi.poo.*;
 import es.upm.etsisi.poo.Commands.Command;
+import es.upm.etsisi.poo.Persistence.PersistenceManager;
 import es.upm.etsisi.poo.Ticket.TicketParam;
 import es.upm.etsisi.poo.Users.Cashier;
 import es.upm.etsisi.poo.Users.Client;
@@ -34,7 +35,7 @@ public class CommandTicketNew implements Command {
 
         if (Utilities.isNumeric(args[idx])) {
             customId = Integer.parseInt(args[idx]);
-            if (customId <= 1 || customId >= 99999) {
+            if (customId <= 1 || customId >= 999999) {
                 System.out.println(Comments.ID_NOT_IN_BOUNDARIES);
                 return;
             }
@@ -101,9 +102,20 @@ public class CommandTicketNew implements Command {
 
         // Creación del Ticket (Usando Handler)
         if (isBusiness) {
-            finalId = (customId != null) ? ticketHandler.newTicketBusiness(customId,type) : ticketHandler.newTicketBusiness(type);
+            if (customId != null ){
+                if(type=='s'){
+                    finalId= ticketHandler.newTicketBusinessService(customId);
+                }else{
+                    finalId = ticketHandler.newTicketBusinessCombined(customId);
+                }
+            }else{
+                if(type=='s'){
+                    finalId = ticketHandler.newTicketBusinessService();
+                }else{
+                    finalId = ticketHandler.newTicketBusinessCombined();
+                }
+            }
         } else {
-
             finalId = (customId != null) ? ticketHandler.newTicketClient(customId) : ticketHandler.newTicketClient();
         }
 
@@ -119,6 +131,10 @@ public class CommandTicketNew implements Command {
             // Finalizar operación
             cashier.addTicket(ticket);
             client.addTicket(ticket);
+
+            PersistenceManager.saveTickets(ticketHandler);
+            PersistenceManager.saveUsers(userHandler);
+
             System.out.println(Comments.TICKET_NEW);
             ticket.printTicket();
         }

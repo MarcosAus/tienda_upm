@@ -9,7 +9,8 @@ import es.upm.etsisi.poo.State;
 import es.upm.etsisi.poo.Strategies.PrintStrategy;
 import es.upm.etsisi.poo.TicketItem;
 import es.upm.etsisi.poo.Utilities;
-import es.upm.etsisi.poo.Validacion.ValidacionTickets;
+import es.upm.etsisi.poo.Validation.ValidacionCloseTickets;
+import es.upm.etsisi.poo.Validation.ValidacionAddTickets;
 import java.time.*;
 import java.util.*;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -29,31 +30,34 @@ public abstract class TicketParam <T extends Vendible> {
     private String ticketDateOpen;
     private String ticketDateClosed;
     private PrintStrategy<T> printStrategy;
-    private ValidacionTickets<T> validacionTickets;
+    private ValidacionAddTickets validacionTickets;
+    private ValidacionCloseTickets<T> validacionCloseTickets;
 
     public TicketParam() {
         this.items = new ArrayList<>();
         this.stateTicket = State.EMPTY;
     }
 
-    public TicketParam(int id, PrintStrategy<T> printStrategy, ValidacionTickets<T> validacionTickets) {
+    public TicketParam(int id, PrintStrategy<T> printStrategy, ValidacionAddTickets validacionTickets, ValidacionCloseTickets<T> validacionCloseTickets) {
         this.id = id;
         this.items = new ArrayList<>();
         this.stateTicket = State.EMPTY;
         this.printStrategy = printStrategy;
         this.validacionTickets = validacionTickets;
+        this.validacionCloseTickets = validacionCloseTickets;
     }
 
-    public TicketParam(PrintStrategy<T> printStrategy, ValidacionTickets<T> validacionTickets) {
+    public TicketParam(PrintStrategy<T> printStrategy, ValidacionAddTickets validacionTickets, ValidacionCloseTickets<T> validacionCloseTickets) {
         this.id = Utilities.numGenerator(5);
         this.items = new ArrayList<>();
         this.stateTicket = State.EMPTY;
         this.ticketDateOpen = LocalDate.now().toString();
         this.printStrategy = printStrategy;
         this.validacionTickets = validacionTickets;
+        this.validacionCloseTickets = validacionCloseTickets;
     }
 
-    public ValidacionTickets<T> getValidacionTickets() {
+    public ValidacionAddTickets getValidacionTickets() {
         return validacionTickets;
     }
 
@@ -116,30 +120,34 @@ public abstract class TicketParam <T extends Vendible> {
         if (this.stateTicket != State.CLOSED) {
             stateTicket = State.OPEN;
             if (cantidad + this.getNumeroProductos() < MAXSIZE) {
-                if (element != null && canAdd(element)) {
-                    TicketItem<T> tI = busquedaProductoPorID(items, element.getId());
-                    if (tI != null) {
-                        if (element.isPersonalizable()) {
-                            List<String> textosA = ((ProductPers) element).getTextos();
-                            List<String> textosB = ((ProductPers) tI.getProduct()).getTextos();
-                            if (new HashSet<>(textosA).equals(new HashSet<>(textosB))) {
+                if (element != null) {
+                    if (canAdd(element)) {
+                        TicketItem<T> tI = busquedaProductoPorID(items, element.getId());
+                        if (tI != null) {
+                            if (element.isPersonalizable()) {
+                                List<String> textosA = ((ProductPers) element).getTextos();
+                                List<String> textosB = ((ProductPers) tI.getProduct()).getTextos();
+                                if (new HashSet<>(textosA).equals(new HashSet<>(textosB))) {
+                                    tI.addAmount(cantidad);
+                                    printTicket();
+                                } else {
+                                    items.add(new TicketItem<T>(element, cantidad));
+                                    printTicket();
+                                }
+                            } else if (element.getMinTime().isZero()) {
                                 tI.addAmount(cantidad);
                                 printTicket();
                             } else {
-                                items.add(new TicketItem<T>(element, cantidad));
-                                printTicket();
+                                System.out.println(Comments.DUPLICATE_ACTIVITY_IN_TICKET);
                             }
-                        } else if (element.getMinTime().isZero()) {
-                            tI.addAmount(cantidad);
-                            printTicket();
                         } else {
-                            System.out.println(Comments.DUPLICATE_ACTIVITY_IN_TICKET);
+                            items.add(new TicketItem<T>(element, cantidad));
+                            resultado = true;
+                            printTicket();
+
                         }
                     } else {
-                        items.add(new TicketItem<T>(element, cantidad));
-                        resultado = true;
-                        printTicket();
-
+                        System.out.println(Comments.TYPE_OF_PRODUCT_WRONG);
                     }
                 }
             } else {
@@ -201,7 +209,7 @@ public abstract class TicketParam <T extends Vendible> {
     }
 
     public boolean checkIfTicketCanClose() {
-        if (validacionTickets.close(this)) return true;
+        if (validacionCloseTickets.close(this)) return true;
         else return false;
 
     }

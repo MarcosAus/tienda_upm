@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.Commands.CommandsForUser;
 
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Comments;
+import es.upm.etsisi.poo.Persistence.PersistenceManager;
 import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Users.Cashier;
 import es.upm.etsisi.poo.Users.User;
@@ -34,6 +35,7 @@ public class CommandUserAddCashier implements Command {
                         if (email.length() >=8 && email.endsWith("@upm.es")) {
                             User cashier = new Cashier(id, nombre, email);
                             userHandler.registerUser(cashier);
+                            PersistenceManager.saveUsers(userHandler);
                             System.out.println(Comments.CASHIER_ADD);
                         } else{
                             System.out.println(Comments.EMAIL_IS_PERSONAL);
@@ -51,6 +53,7 @@ public class CommandUserAddCashier implements Command {
                 if (nombre.length() >=3 && nombre.startsWith("\"") && nombre.endsWith("\"")) {
                     User cashier = new Cashier(null, nombre, email);
                     userHandler.registerUser(cashier);
+                    PersistenceManager.saveUsers(userHandler);
                     System.out.println(Comments.CASHIER_ADD);
                 } else {
                     System.out.println(Comments.NAME_HAS_WRONG_FORMAT);
