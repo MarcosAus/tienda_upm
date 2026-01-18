@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.Commands.CommandsForTicket;
 
 import es.upm.etsisi.poo.*;
 import es.upm.etsisi.poo.Commands.Command;
+import es.upm.etsisi.poo.Persistence.PersistenceManager;
 import es.upm.etsisi.poo.Products.*;
 import es.upm.etsisi.poo.Ticket.TicketParam;
 import es.upm.etsisi.poo.Users.Cashier;
@@ -43,16 +44,19 @@ public class CommandTicketAdd implements Command {
                                    if (actProduct.isPersonalizable()){
                                        Product newProduct = actProduct.copyProduct();
                                        actTicket.addProduct(newProduct,amount);
+                                       PersistenceManager.saveTickets(ticketHandler);
                                    } else {
                                        if (actProduct.getMinTime().isZero()) {
                                            Product newProduct = actProduct.copyProduct();
                                            actTicket.addProduct(newProduct,amount);
+                                           PersistenceManager.saveTickets(ticketHandler);
                                        } else {
                                            if (actProduct.getMinTime().compareTo(Duration.ofHours(72))==0){
                                                Event newProduct=
                                                        (Event) actProduct.copyProduct();
                                                if(newProduct.getMaxParticipantes()>=amount){
                                                    actTicket.addProduct(newProduct,amount);
+                                                   PersistenceManager.saveTickets(ticketHandler);
                                                }else{
                                                    System.out.println(Comments.MAXPARTICIPANTS_EXCEDED);
                                                }
@@ -61,6 +65,7 @@ public class CommandTicketAdd implements Command {
                                                Event newProduct= (Event) actProduct.copyProduct();
                                                if(newProduct.getMaxParticipantes()>=amount){
                                                    actTicket.addProduct(newProduct,amount);
+                                                   PersistenceManager.saveTickets(ticketHandler);
                                                }else{
                                                    System.out.println(Comments.MAXPARTICIPANTS_EXCEDED);
                                                }
@@ -80,6 +85,7 @@ public class CommandTicketAdd implements Command {
                                            }
                                        }
                                        actTicket.addProduct(newProduct,amount);
+                                       PersistenceManager.saveTickets(ticketHandler);
                                        System.out.println(Comments.TICKET_ADD);
                                    }
                                }
@@ -113,6 +119,7 @@ public class CommandTicketAdd implements Command {
                    System.out.println(Comments.TICKET_IS_NOT_IN_CASH);
                } else {
                    actTicket.addProduct(service,1);
+                   PersistenceManager.saveTickets(ticketHandler);
                    System.out.println(Comments.TICKET_ADD);
                }
            } catch (Exception e) {

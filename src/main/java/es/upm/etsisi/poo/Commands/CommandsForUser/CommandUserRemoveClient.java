@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.Commands.CommandsForUser;
 
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Comments;
+import es.upm.etsisi.poo.Persistence.PersistenceManager;
 import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Users.Cashier;
 import es.upm.etsisi.poo.Users.Client;
@@ -27,6 +28,7 @@ public class CommandUserRemoveClient implements Command {
                 client.removeTicketFromClient(client.getTickets().get(i).getId());
             }
             userHandler.getClientsRecord().remove(args[2]);
+            PersistenceManager.saveUsers(userHandler);
             System.out.println(Comments.CLIENT_REMOVED);
         } else {
             System.out.println(Comments.LENGTH_WRONG);

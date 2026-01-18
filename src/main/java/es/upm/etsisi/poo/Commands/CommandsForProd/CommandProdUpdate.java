@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.Commands.CommandsForProd;
 
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Comments;
+import es.upm.etsisi.poo.Persistence.PersistenceManager;
 import es.upm.etsisi.poo.ProductHandler;
 import es.upm.etsisi.poo.Utilities;
 
@@ -28,6 +29,7 @@ public class CommandProdUpdate implements Command {
                     String campo = args[3];
                     String valor = args[4];
                     productHandler.updateProduct(id, campo, valor);
+                    PersistenceManager.saveProducts(productHandler);
                     System.out.println(Comments.PROD_UPDATE);
                 }else {
                     System.out.println(Comments.SERVICES_NO_MODIFICABLES);

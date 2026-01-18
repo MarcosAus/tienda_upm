@@ -88,6 +88,12 @@ public class Comments {
     public static final String SERVICES_NO_MODIFICABLES = "Services are not modifiable";
 
     public static final String CLI_ERROR = "CLI has a problem in execution";
+    public static final String PROD_SAVE_ERROR = "Sorry! Failed to save product!";
+    public static final String TICKET_SAVE_ERROR = "Sorry! Failed to save ticket!";
+    public static final String USER_SAVE_ERROR = "Sorry! Failed to save user!";
+    public static final String NEW_PROD_HANDLER = "No previous products found.";
+    public static final String NEW_TICKET_HANDLER = "No previous tickets found.";
+    public static final String NEW_USER_HANDLER = "No previous users found.";
     public static final String PERSISTENCE_ERROR = "Persistence has a problem in execution running without a data base";
     public static final String DISPATCHER_ERROR = "Dispatcher has a problem in execution and command dispatching";
     public static final String DUPLICATE_PRODUCT_ID = "Duplicate product ID found";

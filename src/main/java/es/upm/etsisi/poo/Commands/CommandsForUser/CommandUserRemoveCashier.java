@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.Commands.CommandsForUser;
 
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Comments;
+import es.upm.etsisi.poo.Persistence.PersistenceManager;
 import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Users.Cashier;
 
@@ -26,6 +27,7 @@ public class CommandUserRemoveCashier implements Command {
                     cashier.removeTicket(cashier.getTickets().get(i).getId());
                 }
                 userHandler.getCashiersRecord().remove(cashier.getId());
+                PersistenceManager.saveUsers(userHandler);
                 System.out.println(Comments.CASHIER_REMOVED);
             } catch (NullPointerException e) {
                 System.out.println(Comments.CASH_NOT_FOUND);

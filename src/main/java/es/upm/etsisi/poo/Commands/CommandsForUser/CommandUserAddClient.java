@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.Commands.CommandsForUser;
 
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Comments;
+import es.upm.etsisi.poo.Persistence.PersistenceManager;
 import es.upm.etsisi.poo.UserHandler;
 import es.upm.etsisi.poo.Users.*;
 import es.upm.etsisi.poo.Utilities;
@@ -43,6 +44,7 @@ public class CommandUserAddClient implements Command {
                         }
                         if(client!=null){
                             userHandler.registerUser(client);
+                            PersistenceManager.saveUsers(userHandler);
                             System.out.println(Comments.CLIENT_ADD);
                         }
                     } catch (Exception e) {

@@ -35,7 +35,6 @@ public class App {
             ticketHandler = PersistenceManager.loadTickets();
             userHandler = PersistenceManager.loadUsers();
         }catch (Exception e){
-            System.out.println(Comments.PERSISTENCE_ERROR);
             productHandler = new ProductHandler();
             ticketHandler = new TicketHandler();
             userHandler = new UserHandler();

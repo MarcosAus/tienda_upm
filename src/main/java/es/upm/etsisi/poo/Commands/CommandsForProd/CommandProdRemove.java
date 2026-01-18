@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.Commands.CommandsForProd;
 
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Comments;
+import es.upm.etsisi.poo.Persistence.PersistenceManager;
 import es.upm.etsisi.poo.ProductHandler;
 import es.upm.etsisi.poo.Utilities;
 
@@ -26,6 +27,7 @@ public class CommandProdRemove implements Command {
             try {
                 id = args[2];
                 productHandler.removeProduct(id);
+                PersistenceManager.saveProducts(productHandler);
                 System.out.println(Comments.PROD_REMOVE);
             } catch (NumberFormatException e) {
                 System.out.println(Comments.ID_NOT_NUMBER);

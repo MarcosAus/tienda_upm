@@ -2,6 +2,7 @@ package es.upm.etsisi.poo.Commands.CommandsForProd;
 
 import es.upm.etsisi.poo.Commands.Command;
 import es.upm.etsisi.poo.Comments;
+import es.upm.etsisi.poo.Persistence.PersistenceManager;
 import es.upm.etsisi.poo.ProductHandler;
 import es.upm.etsisi.poo.Products.Event;
 // import es.upm.etsisi.poo.Products.CampusMeals; Comentada porque ya no se usa
@@ -47,7 +48,7 @@ public class CommandProdAddFoodMeeting implements Command {
                     date = args[4];
                     maxParticipantes = Integer.parseInt(args[5]);
                     LocalDateTime fechaProducto;
-                    if(Event.getMAXPEOPLEALLOWED()>=maxParticipantes) {
+                    if(Event.getMAXPEOPLEALLOWED() >= maxParticipantes) {
                         if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) { // Se verifica que el nombre tenga el formato correcto
                             name = name.substring(1, name.length()-1);
                             if (args[1].equals("addFood")) {
@@ -66,6 +67,7 @@ public class CommandProdAddFoodMeeting implements Command {
 
                             if (add && product != null) {
                                 productHandler.addProduct(product);
+                                PersistenceManager.saveProducts(productHandler);
                                 System.out.println(product);
                                 if (args[1].equals("addFood")) {
                                     System.out.println(Comments.PROD_ADDFOOD);
@@ -73,9 +75,9 @@ public class CommandProdAddFoodMeeting implements Command {
                                     System.out.println(Comments.PROD_ADDMEETINGS);
                                 }
                             } else {
-                                if(maxParticipantes >= Utilities.getMinTimeMels() || maxParticipantes <= 0){
+                                if (maxParticipantes >= Utilities.MAX_PPOPLE_EVENT || maxParticipantes <= 0) {
                                     System.out.println(Comments.MAXPEOPLE_EXCEDED);
-                                }else {
+                                } else {
                                     System.out.println(Comments.DATE_NOT_VALID);
                                 }
                             }
@@ -94,7 +96,7 @@ public class CommandProdAddFoodMeeting implements Command {
                         date = args[5]; ;
                         maxParticipantes = Integer.parseInt(args[6]);
                         LocalDateTime fechaProducto;
-                        if(Event.getMAXPEOPLEALLOWED()>=maxParticipantes) {
+                        if(Event.getMAXPEOPLEALLOWED() >= maxParticipantes) {
                             if (name.length() >=3 && name.startsWith("\"") && name.endsWith("\"")) {
                                 if (args[1].equals("addFood")) {
                                     product = new Event(Integer.toString(id), name, price, date, maxParticipantes, Utilities.getMinTimeMeetings(), "CampusMeals");
@@ -113,6 +115,7 @@ public class CommandProdAddFoodMeeting implements Command {
 
                                 if (add && product != null) {
                                     productHandler.addProduct(product);
+                                    PersistenceManager.saveProducts(productHandler);
                                     System.out.println(product);
                                     if (args[1].equals("addFood")) {
                                         System.out.println(Comments.PROD_ADDFOOD);
@@ -121,9 +124,9 @@ public class CommandProdAddFoodMeeting implements Command {
                                     }
                                 }
                                 else {
-                                    if(maxParticipantes >= Utilities.getMinTimeMels() || maxParticipantes <= 0){
+                                    if (maxParticipantes >= Utilities.getMinTimeMels() || maxParticipantes <= 0){
                                         System.out.println(Comments.MAXPEOPLE_EXCEDED);
-                                    }else {
+                                    } else {
                                         System.out.println(Comments.DATE_NOT_VALID);
                                     }
                                 }
